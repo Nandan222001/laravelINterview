@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel Interview Question Bank - Comprehensive collection of advanced interview questions and production-ready code for senior-level software engineering positions">
+    <meta name="keywords" content="Laravel, PHP, Interview Questions, API Security, Payment Integration, Razorpay, Stripe">
+    <meta name="author" content="Laravel Interview Bank">
+    <title>Laravel Interview Question Bank</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: #e3342f;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e3342f;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 0.75rem 1.5rem;
+            background-color: #e3342f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #cc1f1a;
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        aside {
+            width: 280px;
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 140px;
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+
+        .filter-section h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #e3342f;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .filter-section ul {
+            list-style: none;
+        }
+
+        .filter-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .filter-section label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .filter-section label:hover {
+            color: #e3342f;
+        }
+
+        .filter-section input[type="checkbox"] {
+            cursor: pointer;
+        }
+
+        main {
+            flex: 1;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .intro {
+            margin-bottom: 2rem;
+        }
+
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #e3342f 0%, #cc1f1a 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+
+        .accordion {
+            margin-top: 2rem;
+        }
+
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .accordion-header:hover {
+            background-color: #f0f0f0;
+        }
+
+        .accordion-header h3 {
+            font-size: 1.25rem;
+            color: #333;
+        }
+
+        .accordion-icon {
+            font-size: 1.5rem;
+            color: #e3342f;
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 1000px;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            background-color: #fff;
+        }
+
+        .topic-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .topic-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .topic-features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .topic-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .topic-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #e3342f;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .topic-link:hover {
+            background-color: #cc1f1a;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: #28a745;
+            color: white;
+            font-size: 0.75rem;
+            border-radius: 12px;
+            margin-left: 0.5rem;
+            font-weight: 600;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #e3342f;
+        }
+
+        .footer-bottom {
+            padding-top: 1rem;
+            border-top: 1px solid #555;
+            margin-top: 1rem;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        @media (max-width: 1024px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            aside {
+                width: 100%;
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+                position: absolute;
+                right: 2rem;
+                top: 1.5rem;
+            }
+
+            nav.hidden {
+                display: none;
+            }
+
+            .main-wrapper {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .stat-card {
+                min-width: 100%;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .intro h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="header-top">
+                    <div class="logo">
+                        <h1>🚀 Laravel Interview Question Bank</h1>
+                    </div>
+                    <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">☰</button>
+                    <nav id="main-nav">
+                        <a href="#home">Home</a>
+                        <a href="#topics">Topics</a>
+                        <a href="#code-examples">Code Examples</a>
+                        <a href="#templates">Templates</a>
+                        <a href="#about">About</a>
+                    </nav>
+                </div>
+                <div class="search-bar">
+                    <input type="search" placeholder="Search interview questions, topics, or code examples..." aria-label="Search">
+                    <button type="button">Search</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-wrapper">
+            <aside>
+                <section class="filter-section">
+                    <h3>Topic Filters</h3>
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="topic" value="php-laravel">
+                                PHP & Laravel
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="topic" value="api-security">
+                                API Security
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="topic" value="payment">
+                                Payment Integration
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="topic" value="realtime">
+                                Realtime Communication
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="topic" value="database">
+                                Database Optimization
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="topic" value="frontend">
+                                Frontend React & Next.js
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="topic" value="devops">
+                                DevOps & Cloud
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="topic" value="ai">
+                                AI & LLM
+                            </label>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="filter-section">
+                    <h3>Difficulty Levels</h3>
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="difficulty" value="beginner">
+                                Beginner
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="difficulty" value="intermediate">
+                                Intermediate
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="difficulty" value="advanced">
+                                Advanced
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="difficulty" value="expert">
+                                Expert
+                            </label>
+                        </li>
+                    </ul>
+                </section>
+            </aside>
+
+            <main id="main-content">
+                <section class="intro">
+                    <h2>Comprehensive Interview Question Bank</h2>
+                    <p>A comprehensive collection of advanced interview questions and production-ready code for senior-level software engineering positions, covering full-stack development, cloud infrastructure, payment systems, and modern AI integration.</p>
+                </section>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>1000+</h3>
+                        <p>Interview Questions</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>8</h3>
+                        <p>Major Topics</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>100%</h3>
+                        <p>Production-Ready</p>
+                    </div>
+                </div>
+
+                <section class="accordion" id="topics">
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>
+                                ⭐ PHP, Laravel & Advanced API Security
+                                <span class="badge">NEW</span>
+                            </h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    Advanced PHP 8.x features (attributes, enums, JIT, fibers), Laravel request lifecycle, middleware pipelines, service container deep-dive, payment gateway integration (Razorpay/Stripe), webhook security, idempotency implementation, PCI DSS compliance, OWASP Top 10 mitigations, and advanced rate limiting strategies.
+                                </p>
+                                <ul class="topic-features">
+                                    <li>1000 interview questions across 8 major sections</li>
+                                    <li>Production-ready Laravel code with Sanctum auth</li>
+                                    <li>Complete Razorpay & Stripe integration</li>
+                                    <li>Webhook signature verification (HMAC-SHA256)</li>
+                                    <li>Idempotency key implementation</li>
+                                    <li>Queue workers for async payment processing</li>
+                                    <li>PCI DSS compliance checklist</li>
+                                    <li>OWASP Top 10 mitigation guide</li>
+                                    <li>Advanced rate limiting with Redis</li>
+                                    <li>Comprehensive error handling</li>
+                                </ul>
+                                <a href="interview-bank/php-laravel-api-security/" class="topic-link">Explore Questions →</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>Realtime Communication</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    WebSockets, Server-Sent Events, Laravel Broadcasting, Redis pub/sub, and real-time data synchronization.
+                                </p>
+                                <ul class="topic-features">
+                                    <li>WebSocket implementation patterns</li>
+                                    <li>Server-Sent Events (SSE) architecture</li>
+                                    <li>Laravel Broadcasting with Pusher/Socket.io</li>
+                                    <li>Redis pub/sub for horizontal scaling</li>
+                                    <li>Real-time data synchronization strategies</li>
+                                    <li>Connection management and reconnection logic</li>
+                                </ul>
+                                <a href="interview-bank/realtime-communication/" class="topic-link">Explore Questions →</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>Database Optimization</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    Query optimization, indexing strategies, N+1 problem solutions, caching patterns, and database scaling.
+                                </p>
+                                <ul class="topic-features">
+                                    <li>Query optimization techniques</li>
+                                    <li>Index design and implementation</li>
+                                    <li>N+1 query problem solutions</li>
+                                    <li>Caching strategies (Redis, Memcached)</li>
+                                    <li>Database replication and sharding</li>
+                                    <li>Connection pooling and optimization</li>
+                                </ul>
+                                <a href="interview-bank/database-optimization/" class="topic-link">Explore Questions →</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>Frontend React & Next.js</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    Modern React patterns, Next.js architecture, state management, SSR/SSG, and performance optimization.
+                                </p>
+                                <ul class="topic-features">
+                                    <li>React hooks and custom hooks</li>
+                                    <li>Next.js App Router and Pages Router</li>
+                                    <li>State management (Redux, Zustand, Context)</li>
+                                    <li>Server-Side Rendering (SSR) and Static Site Generation (SSG)</li>
+                                    <li>Performance optimization techniques</li>
+                                    <li>Code splitting and lazy loading</li>
+                                </ul>
+                                <a href="interview-bank/frontend-react-nextjs/" class="topic-link">Explore Questions →</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>DevOps, Cloud & Kubernetes</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    Container orchestration, CI/CD pipelines, cloud architecture, monitoring, and infrastructure as code.
+                                </p>
+                                <ul class="topic-features">
+                                    <li>Kubernetes deployment and orchestration</li>
+                                    <li>Docker containerization best practices</li>
+                                    <li>CI/CD with GitHub Actions, Jenkins, GitLab CI</li>
+                                    <li>AWS/GCP/Azure cloud services</li>
+                                    <li>Infrastructure as Code (Terraform, CloudFormation)</li>
+                                    <li>Monitoring and logging (Prometheus, ELK stack)</li>
+                                </ul>
+                                <a href="interview-bank/devops-cloud-k8s/" class="topic-link">Explore Questions →</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>AI, LLM & Serverless</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    Large Language Model integration, serverless architectures, AI-powered features, and event-driven systems.
+                                </p>
+                                <ul class="topic-features">
+                                    <li>LLM integration (OpenAI, Claude, Gemini)</li>
+                                    <li>Prompt engineering and optimization</li>
+                                    <li>Serverless architecture (AWS Lambda, Cloud Functions)</li>
+                                    <li>Event-driven design patterns</li>
+                                    <li>AI-powered feature implementation</li>
+                                    <li>Vector databases and embeddings</li>
+                                </ul>
+                                <a href="interview-bank/ai-llm-serverless/" class="topic-link">Explore Questions →</a>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+            </main>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="https://laravel.com/docs" target="_blank" rel="noopener noreferrer">Laravel Docs</a>
+                    <a href="https://www.php.net/releases/8.0/en.php" target="_blank" rel="noopener noreferrer">PHP 8 Features</a>
+                    <a href="https://razorpay.com/docs/api/" target="_blank" rel="noopener noreferrer">Razorpay API</a>
+                    <a href="https://stripe.com/docs/api" target="_blank" rel="noopener noreferrer">Stripe API</a>
+                    <a href="https://www.pcisecuritystandards.org/" target="_blank" rel="noopener noreferrer">PCI Standards</a>
+                    <a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener noreferrer">OWASP Top 10</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Laravel Interview Question Bank. For educational purposes.</p>
+                    <p>⭐ Star this repository if you find it helpful for your interview preparation!</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('hidden');
+        });
+
+        // Accordion functionality
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const isActive = item.classList.contains('active');
+
+                // Close all accordion items
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Search functionality (basic placeholder)
+        const searchInput = document.querySelector('.search-bar input');
+        const searchButton = document.querySelector('.search-bar button');
+
+        searchButton.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                console.log('Searching for:', query);
+                // Implement search logic here
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchButton.click();
+            }
+        });
+
+        // Filter functionality (basic placeholder)
+        const checkboxes = document.querySelectorAll('aside input[type="checkbox"]');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const selectedTopics = Array.from(document.querySelectorAll('input[name="topic"]:checked'))
+                    .map(cb => cb.value);
+                const selectedDifficulties = Array.from(document.querySelectorAll('input[name="difficulty"]:checked'))
+                    .map(cb => cb.value);
+
+                console.log('Selected topics:', selectedTopics);
+                console.log('Selected difficulties:', selectedDifficulties);
+                // Implement filter logic here
+            });
+        });
+    </script>
+</body>
+</html>
