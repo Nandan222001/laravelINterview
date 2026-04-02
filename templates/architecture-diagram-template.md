@@ -2,6 +2,155 @@
 
 Use this template to include architecture diagrams and system design illustrations in interview questions.
 
+## Mermaid Diagram Templates
+
+### Flowchart Example
+
+```mermaid
+flowchart TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Process 1]
+    B -->|No| D[Process 2]
+    C --> E[End]
+    D --> E
+```
+
+### Sequence Diagram Example
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant API
+    participant Database
+    participant Cache
+    
+    Client->>API: Request Data
+    API->>Cache: Check Cache
+    
+    alt Cache Hit
+        Cache-->>API: Return Cached Data
+    else Cache Miss
+        API->>Database: Query Database
+        Database-->>API: Return Data
+        API->>Cache: Store in Cache
+    end
+    
+    API-->>Client: Return Response
+```
+
+### System Architecture Example
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        Web[Web App]
+        Mobile[Mobile App]
+    end
+    
+    subgraph "API Gateway"
+        Gateway[Load Balancer]
+    end
+    
+    subgraph "Application Layer"
+        App1[App Server 1]
+        App2[App Server 2]
+        App3[App Server 3]
+    end
+    
+    subgraph "Data Layer"
+        DB[(Primary DB)]
+        Replica1[(Replica 1)]
+        Redis[(Redis Cache)]
+    end
+    
+    Web --> Gateway
+    Mobile --> Gateway
+    Gateway --> App1
+    Gateway --> App2
+    Gateway --> App3
+    App1 --> DB
+    App2 --> DB
+    App3 --> DB
+    DB --> Replica1
+    App1 --> Redis
+    App2 --> Redis
+    App3 --> Redis
+```
+
+### Class Diagram Example
+
+```mermaid
+classDiagram
+    class User {
+        +String id
+        +String email
+        +String name
+        +login()
+        +logout()
+    }
+    
+    class Order {
+        +String id
+        +Date createdAt
+        +Float total
+        +calculateTotal()
+        +process()
+    }
+    
+    class Product {
+        +String id
+        +String name
+        +Float price
+        +getDetails()
+    }
+    
+    User "1" -- "*" Order
+    Order "*" -- "*" Product
+```
+
+### State Diagram Example
+
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Review: Submit
+    Review --> Approved: Approve
+    Review --> Rejected: Reject
+    Rejected --> Draft: Revise
+    Approved --> Published: Publish
+    Published --> Archived: Archive
+    Archived --> [*]
+```
+
+### Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--|{ LINE-ITEM : contains
+    CUSTOMER }|..|{ DELIVERY-ADDRESS : uses
+    
+    CUSTOMER {
+        string id PK
+        string email UK
+        string name
+    }
+    
+    ORDER {
+        string id PK
+        string customer_id FK
+        date order_date
+        decimal total
+    }
+    
+    LINE-ITEM {
+        string id PK
+        string order_id FK
+        string product_id FK
+        int quantity
+    }
+```
+
 ## ASCII Diagram Template
 
 ```
