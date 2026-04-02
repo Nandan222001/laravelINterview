@@ -1,0 +1,439 @@
+# Interview Bank - Complete Index
+
+Quick navigation to all interview questions organized by topic and difficulty level.
+
+## 📊 Question Statistics
+
+| Domain | Total Questions | Basic | Intermediate | Advanced | Expert |
+|--------|----------------|-------|--------------|----------|--------|
+| PHP Laravel & API Security | 1000+ | 200 | 300 | 350 | 150 |
+| Realtime Communication | 1000+ | 250 | 350 | 300 | 100 |
+| Database Optimization | 500+ | 150 | 200 | 120 | 30 |
+| Frontend React & Next.js | 20+ | 5 | 7 | 6 | 2 |
+| DevOps, Cloud & K8s | 25+ | 5 | 8 | 10 | 2 |
+| AI, LLM & Serverless | 30+ | 5 | 10 | 12 | 3 |
+
+---
+
+## 🔐 PHP, Laravel & Advanced API Security
+
+**Location**: `/interview-bank/php-laravel-api-security/`
+
+### Key Topics
+- PHP 8.x Features (Attributes, Enums, JIT, Fibers)
+- Laravel Request Lifecycle & Service Container
+- Payment Gateway Integration (Razorpay/Stripe)
+- Webhook Security & Signature Verification
+- Idempotency Implementation
+- PCI DSS Compliance
+- OWASP Top 10 Mitigations
+- Advanced Rate Limiting with Redis
+
+### Question Files
+- [`questions.md`](php-laravel-api-security/questions.md) - 1000 curated questions
+- [`README.md`](php-laravel-api-security/README.md) - Domain overview
+- [`INDEX.md`](php-laravel-api-security/INDEX.md) - Detailed question index
+
+### Code Examples
+- Complete payment service implementation
+- Razorpay & Stripe integration
+- Webhook handlers with signature verification
+- Idempotency service
+- Security middleware
+- PCI DSS & OWASP compliance guides
+
+---
+
+## 🔄 Realtime Communication
+
+**Location**: `/interview-bank/realtime-communication/`
+
+### Key Topics
+- WebSockets & Server-Sent Events
+- Laravel Broadcasting (Pusher, Redis, Socket.io)
+- Redis Pub/Sub Architecture
+- Real-time Data Synchronization
+- Presence Channels
+- Private & Encrypted Channels
+- Message Queuing
+- Scaling Real-time Systems
+
+### Question Files
+- [`questions_realtime_communication_1000.md`](realtime-communication/questions_realtime_communication_1000.md) - 1000 comprehensive questions
+- [`README.md`](realtime-communication/README.md) - Domain overview
+
+### Topics Covered
+1. **WebSocket Fundamentals** (100 questions)
+2. **Laravel Broadcasting** (150 questions)
+3. **Redis Pub/Sub** (100 questions)
+4. **Server-Sent Events** (50 questions)
+5. **Socket.io Integration** (100 questions)
+6. **Presence & Private Channels** (100 questions)
+7. **Scaling & Performance** (150 questions)
+8. **Security** (100 questions)
+9. **Production Deployment** (150 questions)
+10. **Advanced Patterns** (100 questions)
+
+---
+
+## 🗄️ Database Optimization
+
+**Location**: `/interview-bank/database-optimization/`
+
+### Key Topics
+- Query Optimization Techniques
+- Indexing Strategies (B-Tree, Hash, Full-Text)
+- N+1 Problem Solutions
+- Caching Patterns (Redis, Memcached)
+- Database Scaling (Replication, Sharding)
+- Transaction Management
+- Connection Pooling
+- Query Analysis & EXPLAIN
+- Database Migrations
+- Performance Monitoring
+
+### Question Files
+- [`questions.md`](database-optimization/questions.md) - 500+ questions
+- [`README.md`](database-optimization/README.md) - Domain overview
+- [`INDEX.md`](database-optimization/INDEX.md) - Question catalog
+
+### Code Examples
+- Query optimization examples
+- Index strategy implementations
+- Caching layer setup
+- Database sharding examples
+- Connection pool configuration
+- Performance monitoring scripts
+
+---
+
+## ⚛️ Frontend React & Next.js
+
+**Location**: `/interview-bank/frontend-react-nextjs/`
+
+### Key Topics
+- **React Core**: Hooks, Context, Composition Patterns
+- **Next.js 13+**: App Router, Server Components, Server Actions
+- **State Management**: Zustand, Redux Toolkit, React Query
+- **Performance**: Code Splitting, Virtual Scrolling, Memoization
+- **TypeScript**: Advanced Patterns, Generics, Type Safety
+- **Data Fetching**: SWR, React Query, Server Components
+- **Rendering**: SSR, SSG, ISR, Streaming
+
+### Question Files
+- [`questions.md`](frontend-react-nextjs/questions.md) - 20+ advanced questions with complete implementations
+
+### Featured Questions
+1. ⭐⭐⭐ **Custom Hooks with Advanced Patterns**
+   - `useAsyncData` hook with retry logic
+   - Request deduplication
+   - Optimistic updates
+   - Automatic cancellation
+
+2. ⭐⭐⭐ **React Server Components vs Client Components**
+   - Architecture patterns
+   - When to use each
+   - Composition strategies
+   - Production examples
+
+3. ⭐⭐⭐ **Zustand vs Redux - Modern State Management**
+   - Complete implementations of both
+   - Trade-off analysis
+   - Performance comparison
+   - Best practices
+
+4. ⭐⭐⭐⭐ **Virtual Scrolling Implementation**
+   - Custom virtual scroll component
+   - Dynamic row heights
+   - Performance optimization
+   - 100,000+ item handling
+
+5. ⭐⭐⭐ **Advanced TypeScript Patterns**
+   - Generic components
+   - Discriminated unions
+   - Type-safe tables
+   - Complex type inference
+
+---
+
+## ☁️ DevOps, Cloud & Kubernetes
+
+**Location**: `/interview-bank/devops-cloud-k8s/`
+
+### Key Topics
+- **Kubernetes**: Deployments, StatefulSets, Services, Ingress
+- **CI/CD**: GitHub Actions, GitLab CI, ArgoCD
+- **Infrastructure as Code**: Terraform, Helm, Kustomize
+- **Monitoring**: Prometheus, Grafana, ELK Stack
+- **Container Security**: Image scanning, Runtime security
+- **Cloud Platforms**: AWS, GCP, Azure
+- **Service Mesh**: Istio, Linkerd
+
+### Question Files
+- [`questions.md`](devops-cloud-k8s/questions.md) - 25+ production-ready examples
+
+### Featured Questions
+1. ⭐⭐⭐⭐ **Production-Ready Kubernetes Deployment**
+   - Multi-zone high availability
+   - Horizontal Pod Autoscaler
+   - Pod Disruption Budgets
+   - Network policies
+   - Security contexts
+   - Complete YAML manifests
+
+2. ⭐⭐⭐ **GitHub Actions Production Pipeline**
+   - Multi-stage builds
+   - Security scanning (Trivy, SonarCloud)
+   - Automated testing
+   - Blue-green deployments
+   - Rollback strategies
+   - Complete workflow files
+
+3. ⭐⭐⭐ **Terraform AWS Infrastructure**
+   - Multi-AZ VPC setup
+   - EKS cluster configuration
+   - RDS with read replicas
+   - ElastiCache Redis
+   - CloudFront CDN
+   - Complete module structure
+
+4. ⭐⭐⭐ **Prometheus & Grafana Setup**
+   - Custom metrics collection
+   - Alert rules configuration
+   - Dashboard templates
+   - High availability setup
+   - Service discovery
+
+5. ⭐⭐⭐ **Container Security Best Practices**
+   - Multi-stage Docker builds
+   - Vulnerability scanning
+   - Image signing with Cosign
+   - AppArmor/Seccomp profiles
+   - Secrets management
+
+---
+
+## 🤖 AI, LLM & Serverless
+
+**Location**: `/interview-bank/ai-llm-serverless/`
+
+### Key Topics
+- **LLM Integration**: OpenAI, Anthropic, Local Models
+- **Vector Databases**: Pinecone, Weaviate, pgvector
+- **RAG Systems**: Retrieval-Augmented Generation
+- **Serverless**: AWS Lambda, Cloud Functions
+- **Prompt Engineering**: Advanced techniques
+- **Cost Optimization**: Token management, caching
+- **Event-Driven Architecture**: Message queues, event sourcing
+
+### Question Files
+- [`questions.md`](ai-llm-serverless/questions.md) - 30+ advanced implementations
+
+### Featured Questions
+1. ⭐⭐⭐ **Production-Ready LLM Integration**
+   - Multi-provider support (OpenAI, Anthropic, Local)
+   - Retry logic with exponential backoff
+   - Streaming responses
+   - Token counting & cost tracking
+   - Rate limiting with Redis
+   - Prompt caching
+
+2. ⭐⭐⭐⭐ **Vector Database Implementation**
+   - Document chunking strategies
+   - Embedding generation
+   - Semantic search with Pinecone
+   - Metadata filtering
+   - Hybrid search (vector + keyword)
+   - Performance optimization
+
+3. ⭐⭐⭐⭐ **Production RAG System**
+   - Multi-stage retrieval
+   - Context ranking and filtering
+   - Citation tracking
+   - Answer validation
+   - Fallback strategies
+   - Complete architecture
+
+4. ⭐⭐⭐ **AWS Lambda Best Practices**
+   - Cold start optimization
+   - Connection pooling
+   - Secrets management
+   - Structured logging
+   - Error handling
+   - Production configuration
+
+5. ⭐⭐⭐ **Cost Optimization Strategies**
+   - Token usage tracking
+   - Response caching
+   - Model selection
+   - Prompt optimization
+   - Batch processing
+
+---
+
+## 📚 Templates & Resources
+
+**Location**: `/templates/`
+
+### Available Templates
+
+1. **Question Format Template** (`question-format-template.md`)
+   - Standardized question structure
+   - Difficulty level indicators
+   - Expected discussion points
+   - Sample solutions
+   - Follow-up questions
+   - Evaluation criteria
+
+2. **Code Snippet Template** (`code-snippet-template.md`)
+   - Syntax highlighting examples
+   - Multiple language support
+   - Before/after comparisons
+   - Annotated code blocks
+   - Test examples
+   - Configuration examples
+
+3. **Architecture Diagram Template** (`architecture-diagram-template.md`)
+   - Mermaid diagram examples
+     - Flowcharts
+     - Sequence diagrams
+     - System architecture
+     - Class diagrams
+     - State diagrams
+     - ER diagrams
+   - ASCII diagrams
+   - Component interactions
+
+4. **Answer Flow Template** (`answer-flow-template.md`)
+   - STAR method adaptation
+   - Structured approach
+   - Time allocation guide
+   - Clarification questions
+   - Trade-off discussions
+   - Testing strategy
+
+---
+
+## 🎯 Quick Start Guide
+
+### For Interview Preparation
+
+1. **Choose Your Domain**
+   - Navigate to the relevant domain folder
+   - Read the README for overview
+
+2. **Study by Difficulty**
+   - Start with Basic questions for fundamentals
+   - Progress to Advanced/Expert for depth
+
+3. **Practice Implementation**
+   - Use code examples as templates
+   - Implement solutions yourself
+   - Understand the "why" behind patterns
+
+4. **Review Security & Best Practices**
+   - Study PCI DSS and OWASP guidelines (PHP/Laravel)
+   - Learn production deployment patterns (DevOps)
+   - Understand cost optimization (AI/LLM)
+
+### For Interviewers
+
+1. **Select Relevant Questions**
+   - Filter by difficulty level
+   - Choose questions matching your stack
+   - Review expected answers
+
+2. **Evaluate Code Quality**
+   - Use production code as benchmark
+   - Focus on security implementations
+   - Assess architectural decisions
+
+3. **Present Real-World Scenarios**
+   - Use examples from the question bank
+   - Test problem-solving approach
+   - Evaluate trade-off discussions
+
+---
+
+## 🔍 Search by Technology
+
+### Languages & Frameworks
+- **PHP 8.x**: php-laravel-api-security/
+- **Laravel 10+**: php-laravel-api-security/
+- **TypeScript**: frontend-react-nextjs/, ai-llm-serverless/
+- **React**: frontend-react-nextjs/
+- **Next.js**: frontend-react-nextjs/
+- **Python**: ai-llm-serverless/ (examples)
+- **Go**: devops-cloud-k8s/ (examples)
+
+### Databases & Caching
+- **PostgreSQL**: database-optimization/, php-laravel-api-security/
+- **MySQL**: database-optimization/
+- **Redis**: All domains (caching, queues, pub/sub)
+- **Vector DBs**: ai-llm-serverless/ (Pinecone, Weaviate)
+
+### Cloud & Infrastructure
+- **AWS**: devops-cloud-k8s/, ai-llm-serverless/
+- **Kubernetes**: devops-cloud-k8s/
+- **Docker**: devops-cloud-k8s/
+- **Terraform**: devops-cloud-k8s/
+- **GitHub Actions**: devops-cloud-k8s/
+
+### AI & ML
+- **OpenAI**: ai-llm-serverless/
+- **Anthropic**: ai-llm-serverless/
+- **LangChain**: ai-llm-serverless/
+- **Vector Search**: ai-llm-serverless/
+- **RAG Systems**: ai-llm-serverless/
+
+---
+
+## 📈 Difficulty Level Guide
+
+### ⭐ Basic
+- **Time**: 15-30 minutes
+- **Focus**: Fundamental concepts, syntax, basic patterns
+- **Expectation**: Correct implementation, understanding of basics
+- **Example**: Basic CRUD operations, simple components
+
+### ⭐⭐ Intermediate
+- **Time**: 30-45 minutes
+- **Focus**: Practical application, common patterns, error handling
+- **Expectation**: Production-ready code, proper error handling
+- **Example**: API integration, state management, basic optimization
+
+### ⭐⭐⭐ Advanced
+- **Time**: 45-60 minutes
+- **Focus**: Complex scenarios, architectural decisions, trade-offs
+- **Expectation**: Scalable solutions, security considerations, testing
+- **Example**: Payment processing, distributed systems, advanced caching
+
+### ⭐⭐⭐⭐ Expert
+- **Time**: 60-90 minutes
+- **Focus**: System design, performance optimization, edge cases
+- **Expectation**: Production-grade implementation, comprehensive solution
+- **Example**: RAG systems, K8s deployments, high-availability architectures
+
+---
+
+## 🤝 Contributing
+
+To add new questions:
+1. Use templates from `/templates/`
+2. Follow existing structure and conventions
+3. Include difficulty level indicators
+4. Provide complete, tested code examples
+5. Add comprehensive documentation
+6. Consider security implications
+
+---
+
+## 📝 License & Usage
+
+This repository is for educational purposes. Review and adapt all security implementations for your specific requirements before production use.
+
+---
+
+**Last Updated**: 2024
+**Total Questions**: 2500+
+**Total Code Examples**: 500+

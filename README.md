@@ -25,14 +25,38 @@ WebSockets, Server-Sent Events, Laravel Broadcasting, Redis pub/sub, and real-ti
 ### [Database Optimization](interview-bank/database-optimization/)
 Query optimization, indexing strategies, N+1 problem solutions, caching patterns, and database scaling.
 
-### [Frontend React & Next.js](interview-bank/frontend-react-nextjs/)
-Modern React patterns, Next.js architecture, state management, SSR/SSG, and performance optimization.
+### [Frontend React & Next.js](interview-bank/frontend-react-nextjs/) - **NEW: 20+ Advanced Questions**
+Modern React patterns, Next.js 13+ App Router, Server Components, state management (Zustand, Redux, React Query), virtual scrolling, advanced TypeScript patterns, and performance optimization.
 
-### [DevOps, Cloud & Kubernetes](interview-bank/devops-cloud-k8s/)
-Container orchestration, CI/CD pipelines, cloud architecture, monitoring, and infrastructure as code.
+**Includes:**
+- ✅ Custom hooks with retry logic and deduplication
+- ✅ React Server Components vs Client Components
+- ✅ Zustand vs Redux complete implementations
+- ✅ Virtual scrolling for 100,000+ items
+- ✅ Advanced TypeScript generic components
+- ✅ Code splitting and lazy loading strategies
 
-### [AI, LLM & Serverless](interview-bank/ai-llm-serverless/)
-Large Language Model integration, serverless architectures, AI-powered features, and event-driven systems.
+### [DevOps, Cloud & Kubernetes](interview-bank/devops-cloud-k8s/) - **NEW: 25+ Production Examples**
+Container orchestration, CI/CD pipelines, Infrastructure as Code (Terraform), Kubernetes deployments, monitoring with Prometheus/Grafana, and container security best practices.
+
+**Includes:**
+- ✅ Production-ready Kubernetes manifests with HPA, PDB
+- ✅ Complete GitHub Actions CI/CD pipeline
+- ✅ Terraform AWS infrastructure (VPC, EKS, RDS, ElastiCache)
+- ✅ Prometheus & Grafana monitoring setup
+- ✅ Container security scanning and hardening
+- ✅ Blue-green deployment strategies
+
+### [AI, LLM & Serverless](interview-bank/ai-llm-serverless/) - **NEW: 30+ Advanced Implementations**
+Large Language Model integration (OpenAI, Anthropic), vector databases (Pinecone), RAG systems, serverless architectures (AWS Lambda), prompt engineering, and cost optimization.
+
+**Includes:**
+- ✅ Production LLM service with retry logic and streaming
+- ✅ Vector search with Pinecone and semantic search
+- ✅ Complete RAG system with citation tracking
+- ✅ AWS Lambda best practices and optimization
+- ✅ Token counting and cost tracking
+- ✅ Hybrid search (vector + keyword)
 
 ## 🎯 How to Use This Repository
 
@@ -107,13 +131,32 @@ public function razorpay(Request $request): JsonResponse
 }
 ```
 
-## 📋 Templates
+## 📋 Templates & Resources
 
-The `/templates` directory contains reusable markdown templates:
-- **Question Format Template**: Standardized structure for interview questions
-- **Code Snippet Template**: Consistent code block formatting
-- **Architecture Diagram Template**: Placeholders for system design diagrams
-- **Answer Flow Template**: Structured approach to answer complex questions
+The `/templates` directory contains reusable markdown templates for creating consistent, high-quality interview content:
+
+### Question Format Template
+- Standardized structure with difficulty levels (⭐ Basic → ⭐⭐⭐⭐ Expert)
+- Expected discussion points and key concepts
+- Sample solutions and follow-up questions
+- Evaluation criteria by seniority level
+
+### Code Snippet Template
+- Syntax highlighting for multiple languages (TypeScript, Python, Go, PHP)
+- Before/after comparisons and annotated examples
+- Test examples and configuration patterns
+- Performance benchmarks
+
+### Architecture Diagram Template
+- **Mermaid Diagrams**: Flowcharts, sequence diagrams, system architecture, class diagrams, state diagrams, ER diagrams
+- **ASCII Diagrams**: Component interactions, data flows, deployment architectures
+- Real-world architecture patterns
+
+### Answer Flow Template
+- STAR method adaptation for technical questions
+- Structured 10-step approach from clarification to summary
+- Time allocation guide (45-minute question breakdown)
+- Trade-off discussion framework
 
 ## 💡 What Makes This Resource Unique
 
@@ -171,14 +214,112 @@ cat OWASP_Top10_Mitigations.md
 - [PCI Security Standards](https://www.pcisecuritystandards.org/)
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 
+## 🗂️ Repository Structure
+
+```
+interview-bank/
+├── php-laravel-api-security/       # 1000+ questions, payment integration
+│   ├── questions.md
+│   ├── INDEX.md
+│   └── code-examples/              # Production Laravel code
+├── realtime-communication/         # 1000+ questions, WebSockets, Redis
+│   ├── questions_realtime_communication_1000.md
+│   └── README.md
+├── database-optimization/          # 500+ questions, indexing, caching
+│   ├── questions.md
+│   ├── INDEX.md
+│   └── code-examples/
+├── frontend-react-nextjs/          # 20+ advanced React/Next.js questions
+│   ├── questions.md
+│   └── README.md
+├── devops-cloud-k8s/              # 25+ K8s, CI/CD, Terraform examples
+│   ├── questions.md
+│   └── README.md
+├── ai-llm-serverless/             # 30+ LLM, RAG, serverless implementations
+│   ├── questions.md
+│   └── README.md
+├── templates/                      # Reusable templates
+│   ├── question-format-template.md
+│   ├── code-snippet-template.md
+│   ├── architecture-diagram-template.md
+│   └── answer-flow-template.md
+└── INDEX.md                        # Complete question index
+```
+
+## 📊 Quick Stats
+
+- **Total Questions**: 2,500+
+- **Code Examples**: 500+
+- **Languages Covered**: PHP, TypeScript, JavaScript, Python, Go, SQL, YAML, HCL
+- **Frameworks**: Laravel, React, Next.js, Express, Serverless
+- **Infrastructure**: Kubernetes, Docker, Terraform, AWS, GitHub Actions
+- **Databases**: PostgreSQL, MySQL, Redis, Vector DBs (Pinecone)
+- **AI/ML**: OpenAI, Anthropic, LangChain, RAG Systems
+
+## 🎓 Difficulty Distribution
+
+| Level | Questions | Percentage | Time Required |
+|-------|-----------|------------|---------------|
+| ⭐ Basic | 615 | 25% | 15-30 min |
+| ⭐⭐ Intermediate | 875 | 35% | 30-45 min |
+| ⭐⭐⭐ Advanced | 792 | 32% | 45-60 min |
+| ⭐⭐⭐⭐ Expert | 218 | 8% | 60-90 min |
+
+## 🔥 Featured New Content
+
+### React & Next.js
+- ✨ Server Components vs Client Components with complete examples
+- ✨ Custom `useAsyncData` hook with retry, deduplication, and optimistic updates
+- ✨ Virtual scrolling implementation for 100K+ items
+- ✨ Advanced TypeScript patterns with generics
+
+### DevOps & Cloud
+- ✨ Production Kubernetes deployment with HPA, PDB, and network policies
+- ✨ Complete GitHub Actions pipeline with security scanning and blue-green deployment
+- ✨ Terraform modules for AWS (VPC, EKS, RDS, ElastiCache, CloudFront)
+- ✨ Prometheus & Grafana monitoring with custom alerts
+
+### AI & Serverless
+- ✨ Production LLM service supporting OpenAI, Anthropic, and local models
+- ✨ Vector database implementation with Pinecone and hybrid search
+- ✨ Complete RAG system with multi-stage retrieval and citation tracking
+- ✨ AWS Lambda best practices with cold start optimization
+
 ## 🤝 Contributing
 
-When adding new questions or code examples:
-1. Use the templates provided in `/templates`
-2. Follow PSR-12 coding standards
-3. Include comprehensive documentation
-4. Add security considerations
-5. Provide real-world context
+We welcome contributions! When adding new questions or code examples:
+
+### Guidelines
+1. **Use Templates**: Follow templates from `/templates/` directory
+2. **Difficulty Levels**: Clearly mark with ⭐ symbols (Basic to Expert)
+3. **Code Quality**: 
+   - Follow language-specific standards (PSR-12 for PHP, ESLint for JS/TS)
+   - Include type hints and documentation
+   - Add error handling and edge cases
+4. **Security First**: 
+   - Include security considerations
+   - Follow OWASP guidelines
+   - Add PCI DSS compliance notes where applicable
+5. **Real-World Context**: 
+   - Base questions on production scenarios
+   - Include architecture diagrams
+   - Explain trade-offs
+
+### Submission Process
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-questions`)
+3. Add your questions/code following the templates
+4. Update relevant INDEX.md files
+5. Test all code examples
+6. Submit a pull request with detailed description
+
+### What to Contribute
+- New interview questions in existing domains
+- Code examples and implementations
+- Architecture diagrams (Mermaid preferred)
+- Security best practices and guides
+- Performance optimization techniques
+- Real-world case studies
 
 ## 📖 License
 
