@@ -154,3 +154,11 @@ secrets/
 # NOTES.md
 # TODO.md
 # PERSONAL.md
+
+# Automation output (generated files)
+automation/output/
+automation/*.html
+automation/*.json
+automation/*.md
+!automation/README.md
+!automation/IMPLEMENTATION.md
