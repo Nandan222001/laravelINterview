@@ -1,286 +1,345 @@
 # Database Engineering & Optimization - Index
 
+## 📚 Structured Question Files
+
+This folder contains **1,000 interview questions** organized across **10 structured markdown files**, each focusing on specific database optimization topics for high-traffic banking applications.
+
+### File Structure
+
+1. **[01-indexing-strategies.md](01-indexing-strategies.md)** - Questions 1-150
+   - B-tree, Hash, GiST, GIN, Composite, Covering, and Partial Indexes
+   - EXPLAIN ANALYZE examples with before/after metrics
+   - 50-99% query performance improvements
+
+2. **[02-cardinality-analysis.md](02-cardinality-analysis.md)** - Questions 151-250
+   - Cardinality fundamentals and selectivity calculations
+   - Statistics and histograms
+   - Query optimizer tuning
+   - HyperLogLog and probabilistic counting
+
+3. **[03-query-execution-plans.md](03-query-execution-plans.md)** - Questions 251-350
+   - EXPLAIN ANALYZE interpretation
+   - Execution plan node types
+   - Join strategies (Nested Loop, Hash, Merge)
+   - Parallel query execution
+
+4. **[04-n-plus-one-elimination.md](04-n-plus-one-elimination.md)** - Questions 351-450
+   - N+1 problem identification and prevention
+   - Eager loading strategies with Laravel Eloquent
+   - DataLoader pattern for GraphQL
+   - Query batching techniques
+   - 80-95% response time improvements
+
+5. **[05-normalization-denormalization.md](05-normalization-denormalization.md)** - Questions 451-550
+   - Normalization forms (1NF through 5NF, BCNF)
+   - Strategic denormalization patterns
+   - Materialized views
+   - Star vs Snowflake schema
+   - OLTP vs OLAP trade-offs
+
+6. **[06-partitioning-strategies.md](06-partitioning-strategies.md)** - Questions 551-650
+   - Range, List, Hash, and Composite partitioning
+   - Partition pruning optimization
+   - Automated partition management
+   - 50-80% scan reduction through partitioning
+
+7. **[07-redis-caching.md](07-redis-caching.md)** - Questions 651-750
+   - Cache-Aside, Write-Through, Write-Behind patterns
+   - Redis data structures (strings, hashes, sets, sorted sets, HyperLogLog)
+   - TTL configurations and cache invalidation
+   - 90-99% latency reduction for cached reads
+
+8. **[08-laravel-query-builder.md](08-laravel-query-builder.md)** - Questions 751-825
+   - Query Builder vs Eloquent performance
+   - Advanced techniques (CTEs, window functions, lateral joins)
+   - Raw query optimization
+   - Bulk operations and chunking
+
+9. **[09-eloquent-eager-loading.md](09-eloquent-eager-loading.md)** - Questions 826-900
+   - Eager loading fundamentals with with() and load()
+   - Polymorphic relationships (morphTo, morphMany)
+   - withCount(), withSum(), withAvg() aggregations
+   - Model::preventLazyLoading() in production
+   - 98.5% query reduction examples
+
+10. **[10-connection-pooling-replication.md](10-connection-pooling-replication.md)** - Questions 901-1000
+    - Connection pooling with PgBouncer/ProxySQL
+    - Master-Slave replication with read-write splitting
+    - Multi-Master replication and conflict resolution
+    - **Comprehensive 15%+ response time reduction strategy**
+    - Banking application failover procedures
+
+---
+
 ## Quick Navigation
 
 ### By Topic
 
 #### Indexing Strategies (Questions 1-150)
-- [B-tree Indexes](#b-tree-indexes-questions-1-30) - Questions 1-30
-- [Hash Indexes](#hash-indexes-questions-31-50) - Questions 31-50
-- [GiST Indexes](#gist-indexes-questions-51-70) - Questions 51-70
-- [GIN Indexes](#gin-indexes-questions-71-90) - Questions 71-90
-- [Composite Indexes](#composite-indexes-questions-91-110) - Questions 91-110
-- [Covering Indexes](#covering-indexes-questions-111-130) - Questions 111-130
-- [Partial and Filtered Indexes](#partial-and-filtered-indexes-questions-131-150) - Questions 131-150
+- [B-tree Indexes](01-indexing-strategies.md#b-tree-indexes-questions-1-30) - Questions 1-30
+- [Hash Indexes](01-indexing-strategies.md#hash-indexes-questions-31-50) - Questions 31-50
+- [GiST Indexes](01-indexing-strategies.md#gist-indexes-questions-51-70) - Questions 51-70
+- [GIN Indexes](01-indexing-strategies.md#gin-indexes-questions-71-90) - Questions 71-90
+- [Composite Indexes](01-indexing-strategies.md#composite-indexes-questions-91-110) - Questions 91-110
+- [Covering Indexes](01-indexing-strategies.md#covering-indexes-questions-111-130) - Questions 111-130
+- [Partial Indexes](01-indexing-strategies.md#partial-and-filtered-indexes-questions-131-150) - Questions 131-150
 
 #### Cardinality & Selectivity (Questions 151-250)
-- [Cardinality Fundamentals](#cardinality-fundamentals-questions-151-170) - Questions 151-170
-- [Selectivity Calculations](#selectivity-calculations-questions-171-190) - Questions 171-190
-- [Statistics and Histograms](#statistics-and-histograms-questions-191-210) - Questions 191-210
-- [Query Optimizer Statistics](#query-optimizer-statistics-questions-211-230) - Questions 211-230
-- [Cardinality Estimation Techniques](#cardinality-estimation-techniques-questions-231-250) - Questions 231-250
+- [Cardinality Fundamentals](02-cardinality-analysis.md#cardinality-fundamentals-questions-151-170) - Questions 151-170
+- [Selectivity Calculations](02-cardinality-analysis.md#selectivity-calculations-questions-171-190) - Questions 171-190
+- [Statistics and Histograms](02-cardinality-analysis.md#statistics-and-histograms-questions-191-210) - Questions 191-210
+- [Query Optimizer Statistics](02-cardinality-analysis.md#query-optimizer-statistics-questions-211-230) - Questions 211-230
+- [Cardinality Estimation](02-cardinality-analysis.md#cardinality-estimation-techniques-questions-231-250) - Questions 231-250
 
 #### Query Execution Plans (Questions 251-350)
-- [EXPLAIN ANALYZE Basics](#explain-analyze-basics-questions-251-280) - Questions 251-280
-- [Execution Plan Node Types](#execution-plan-node-types-questions-281-310) - Questions 281-310
-- [Join Strategies and Optimization](#join-strategies-and-optimization-questions-311-330) - Questions 311-330
-- [Parallel Query Execution](#parallel-query-execution-questions-331-350) - Questions 331-350
+- [EXPLAIN ANALYZE Basics](03-query-execution-plans.md#explain-analyze-basics-questions-251-280) - Questions 251-280
+- [Execution Plan Nodes](03-query-execution-plans.md#execution-plan-node-types-questions-281-310) - Questions 281-310
+- [Join Strategies](03-query-execution-plans.md#join-strategies-and-optimization-questions-311-330) - Questions 311-330
+- [Parallel Execution](03-query-execution-plans.md#parallel-query-execution-questions-331-350) - Questions 331-350
 
 #### N+1 Query Elimination (Questions 351-450)
-- [N+1 Problem Understanding](#n1-problem-understanding-questions-351-370) - Questions 351-370
-- [Eager Loading Strategies](#eager-loading-strategies-questions-371-400) - Questions 371-400
-- [DataLoader Pattern](#dataloader-pattern-questions-401-420) - Questions 401-420
-- [Query Batching Techniques](#query-batching-techniques-questions-421-450) - Questions 421-450
+- [N+1 Problem](04-n-plus-one-elimination.md#n1-problem-understanding-questions-351-370) - Questions 351-370
+- [Eager Loading](04-n-plus-one-elimination.md#eager-loading-strategies-questions-371-400) - Questions 371-400
+- [DataLoader Pattern](04-n-plus-one-elimination.md#dataloader-pattern-questions-401-420) - Questions 401-420
+- [Query Batching](04-n-plus-one-elimination.md#query-batching-techniques-questions-421-450) - Questions 421-450
 
 #### Normalization & Denormalization (Questions 451-550)
-- [Normalization Forms](#normalization-forms-questions-451-480) - Questions 451-480
-- [Denormalization Strategies](#denormalization-strategies-questions-481-510) - Questions 481-510
-- [Materialized Views](#materialized-views-questions-511-530) - Questions 511-530
-- [Schema Design Trade-offs](#schema-design-trade-offs-questions-531-550) - Questions 531-550
+- [Normalization Forms](05-normalization-denormalization.md#normalization-forms-questions-451-480) - Questions 451-480
+- [Denormalization](05-normalization-denormalization.md#denormalization-strategies-questions-481-510) - Questions 481-510
+- [Materialized Views](05-normalization-denormalization.md#materialized-views-questions-511-530) - Questions 511-530
+- [Schema Trade-offs](05-normalization-denormalization.md#schema-design-trade-offs-questions-531-550) - Questions 531-550
 
 #### Partitioning Strategies (Questions 551-650)
-- [Range Partitioning](#range-partitioning-questions-551-580) - Questions 551-580
-- [List Partitioning](#list-partitioning-questions-581-600) - Questions 581-600
-- [Hash Partitioning](#hash-partitioning-questions-601-620) - Questions 601-620
-- [Composite Partitioning](#composite-partitioning-questions-621-640) - Questions 621-640
-- [Partition Management](#partition-management-questions-641-650) - Questions 641-650
+- [Range Partitioning](06-partitioning-strategies.md#range-partitioning-questions-551-580) - Questions 551-580
+- [List Partitioning](06-partitioning-strategies.md#list-partitioning-questions-581-600) - Questions 581-600
+- [Hash Partitioning](06-partitioning-strategies.md#hash-partitioning-questions-601-620) - Questions 601-620
+- [Composite Partitioning](06-partitioning-strategies.md#composite-partitioning-questions-621-640) - Questions 621-640
+- [Partition Management](06-partitioning-strategies.md#partition-management-questions-641-650) - Questions 641-650
 
 #### Redis Caching Layers (Questions 651-750)
-- [Cache-Aside Pattern](#cache-aside-pattern-questions-651-680) - Questions 651-680
-- [Write-Through Pattern](#write-through-pattern-questions-681-700) - Questions 681-700
-- [Write-Behind Pattern](#write-behind-pattern-questions-701-720) - Questions 701-720
-- [Redis Data Structures](#redis-data-structures-questions-721-740) - Questions 721-740
-- [Cache Invalidation](#cache-invalidation-questions-741-750) - Questions 741-750
+- [Cache-Aside Pattern](07-redis-caching.md#cache-aside-pattern-questions-651-680) - Questions 651-680
+- [Write-Through Pattern](07-redis-caching.md#write-through-pattern-questions-681-700) - Questions 681-700
+- [Write-Behind Pattern](07-redis-caching.md#write-behind-pattern-questions-701-720) - Questions 701-720
+- [Redis Data Structures](07-redis-caching.md#redis-data-structures-questions-721-740) - Questions 721-740
+- [Cache Invalidation](07-redis-caching.md#cache-invalidation-questions-741-750) - Questions 741-750
 
 #### Laravel Query Builder (Questions 751-825)
-- [Query Builder Basics](#query-builder-basics-questions-751-770) - Questions 751-770
-- [Advanced Query Builder Techniques](#advanced-query-builder-techniques-questions-771-795) - Questions 771-795
-- [Raw Queries and Performance](#raw-queries-and-performance-questions-796-810) - Questions 796-810
-- [Query Optimization Techniques](#query-optimization-techniques-questions-811-825) - Questions 811-825
+- [Query Builder Basics](08-laravel-query-builder.md#query-builder-basics-questions-751-770) - Questions 751-770
+- [Advanced Techniques](08-laravel-query-builder.md#advanced-query-builder-techniques-questions-771-795) - Questions 771-795
+- [Raw Queries](08-laravel-query-builder.md#raw-queries-and-performance-questions-796-810) - Questions 796-810
+- [Optimization](08-laravel-query-builder.md#query-optimization-techniques-questions-811-825) - Questions 811-825
 
 #### Eloquent Eager Loading (Questions 826-900)
-- [Eager Loading Fundamentals](#eager-loading-fundamentals-questions-826-850) - Questions 826-850
-- [Advanced Eager Loading](#advanced-eager-loading-questions-851-875) - Questions 851-875
-- [Preventing Lazy Loading](#preventing-lazy-loading-questions-876-900) - Questions 876-900
+- [Fundamentals](09-eloquent-eager-loading.md#eager-loading-fundamentals-questions-826-850) - Questions 826-850
+- [Advanced Loading](09-eloquent-eager-loading.md#advanced-eager-loading-questions-851-875) - Questions 851-875
+- [Preventing Lazy Loading](09-eloquent-eager-loading.md#preventing-lazy-loading-questions-876-900) - Questions 876-900
 
 #### Connection Pooling & Replication (Questions 901-1000)
-- [Connection Pooling](#connection-pooling-questions-901-930) - Questions 901-930
-- [Master-Slave Replication](#master-slave-replication-questions-931-960) - Questions 931-960
-- [Multi-Master Replication](#multi-master-replication-questions-961-980) - Questions 961-980
-- [15% Response Time Reduction Strategy](#15-response-time-reduction-strategy-questions-981-1000) - Questions 981-1000
+- [Connection Pooling](10-connection-pooling-replication.md#connection-pooling-questions-901-930) - Questions 901-930
+- [Master-Slave Replication](10-connection-pooling-replication.md#master-slave-replication-questions-931-960) - Questions 931-960
+- [Multi-Master Replication](10-connection-pooling-replication.md#multi-master-replication-questions-961-980) - Questions 961-980
+- [15% Response Time Reduction](10-connection-pooling-replication.md#15-response-time-reduction-strategy-questions-981-1000) - Questions 981-1000
 
-### By Difficulty Level
+---
 
-#### Beginner (Foundation Concepts)
-- Questions 1-30: B-tree Index Fundamentals
-- Questions 151-170: Cardinality Basics
-- Questions 251-280: EXPLAIN ANALYZE Introduction
-- Questions 351-370: N+1 Problem Recognition
-- Questions 451-480: Normalization Forms
-- Questions 651-680: Cache-Aside Pattern Basics
-- Questions 751-770: Query Builder Fundamentals
-- Questions 826-850: Basic Eager Loading
+## By Difficulty Level
 
-#### Intermediate (Practical Application)
-- Questions 31-150: Advanced Indexing Strategies
-- Questions 171-250: Selectivity and Statistics
-- Questions 281-350: Execution Plan Analysis
-- Questions 371-450: N+1 Elimination Techniques
-- Questions 481-550: Denormalization Strategies
-- Questions 551-650: Partitioning Implementation
-- Questions 681-750: Advanced Caching Patterns
-- Questions 771-825: Query Optimization
-- Questions 851-900: Advanced Eloquent Techniques
+### Beginner (Foundation Concepts)
+- [B-tree Index Fundamentals](01-indexing-strategies.md#b-tree-indexes-questions-1-30) - Q1-30
+- [Cardinality Basics](02-cardinality-analysis.md#cardinality-fundamentals-questions-151-170) - Q151-170
+- [EXPLAIN ANALYZE Introduction](03-query-execution-plans.md#explain-analyze-basics-questions-251-280) - Q251-280
+- [N+1 Problem Recognition](04-n-plus-one-elimination.md#n1-problem-understanding-questions-351-370) - Q351-370
+- [Normalization Forms](05-normalization-denormalization.md#normalization-forms-questions-451-480) - Q451-480
+- [Cache-Aside Pattern](07-redis-caching.md#cache-aside-pattern-questions-651-680) - Q651-680
+- [Query Builder Fundamentals](08-laravel-query-builder.md#query-builder-basics-questions-751-770) - Q751-770
+- [Basic Eager Loading](09-eloquent-eager-loading.md#eager-loading-fundamentals-questions-826-850) - Q826-850
 
-#### Advanced (Expert Level)
-- Questions 901-960: Connection Pooling & Replication
-- Questions 961-980: Multi-Master Replication
-- Questions 981-1000: Performance Optimization Strategy
+### Intermediate (Practical Application)
+- [Advanced Indexing](01-indexing-strategies.md) - Q31-150
+- [Selectivity & Statistics](02-cardinality-analysis.md) - Q171-250
+- [Execution Plan Analysis](03-query-execution-plans.md) - Q281-350
+- [N+1 Elimination Techniques](04-n-plus-one-elimination.md) - Q371-450
+- [Denormalization Strategies](05-normalization-denormalization.md) - Q481-550
+- [Partitioning](06-partitioning-strategies.md) - Q551-650
+- [Advanced Caching](07-redis-caching.md) - Q681-750
+- [Query Optimization](08-laravel-query-builder.md) - Q771-825
+- [Advanced Eloquent](09-eloquent-eager-loading.md) - Q851-900
 
-### By Use Case
+### Advanced (Expert Level)
+- [Connection Pooling & Replication](10-connection-pooling-replication.md) - Q901-960
+- [Multi-Master Replication](10-connection-pooling-replication.md#multi-master-replication-questions-961-980) - Q961-980
+- [Performance Optimization Strategy](10-connection-pooling-replication.md#15-response-time-reduction-strategy-questions-981-1000) - Q981-1000
 
-#### Banking Transaction Processing
-- Questions 9, 17, 26, 96, 102, 121, 554, 559, 985, 990
+---
 
-#### High-Traffic API Optimization
-- Questions 115, 336, 365, 638, 680, 831, 999
+## By Performance Impact
 
-#### Multi-Tenant Applications
-- Questions 26, 104, 134, 560, 904, 915
+### High Impact (10%+ Improvement)
+- ✅ [B-tree Indexing](01-indexing-strategies.md#b-tree-indexes-questions-1-30) - 50-99% query improvement
+- ✅ [N+1 Elimination](04-n-plus-one-elimination.md) - 80-95% response time reduction
+- ✅ [Cache-Aside Pattern](07-redis-caching.md#cache-aside-pattern-questions-651-680) - 90-99% latency reduction
+- ✅ [Eager Loading](09-eloquent-eager-loading.md) - 98.5% query reduction
 
-#### Real-Time Systems
-- Questions 345, 449, 655, 727, 884
+### Medium Impact (5-10% Improvement)
+- ⚡ [Covering Indexes](01-indexing-strategies.md#covering-indexes-questions-111-130) - 85-95% improvement
+- ⚡ [Partitioning](06-partitioning-strategies.md) - 50-80% scan reduction
+- ⚡ [Connection Pooling](10-connection-pooling-replication.md#connection-pooling-questions-901-930) - 10-20% under load
+- ⚡ [Read Replicas](10-connection-pooling-replication.md#master-slave-replication-questions-931-960) - 40-60% primary offload
 
-#### Compliance & Audit
-- Questions 64, 88, 477, 640, 708
+### Specialized Optimizations (2-5% Improvement)
+- 🔧 [GiST/GIN Indexes](01-indexing-strategies.md#gist-indexes-questions-51-70) - For JSONB/arrays
+- 🔧 [Parallel Queries](03-query-execution-plans.md#parallel-query-execution-questions-331-350) - 60-75% for large scans
+- 🔧 [Denormalization](05-normalization-denormalization.md#denormalization-strategies-questions-481-510) - For read-heavy workloads
 
-#### Dashboard & Analytics
-- Questions 121, 487, 520, 865
+---
 
-### By Database System
+## Learning Paths
 
-#### PostgreSQL-Specific
-- Questions 51-90 (GiST/GIN Indexes)
-- Questions 131-150 (Partial Indexes)
-- Questions 331-350 (Parallel Query Execution)
-- Questions 556, 586, 601-620 (Partitioning)
+### Path 1: Junior Developer → Mid-Level (4-6 weeks)
+1. [B-tree Indexes](01-indexing-strategies.md#b-tree-indexes-questions-1-30) - Week 1
+2. [EXPLAIN ANALYZE](03-query-execution-plans.md#explain-analyze-basics-questions-251-280) - Week 2
+3. [N+1 Elimination](04-n-plus-one-elimination.md) - Week 3
+4. [Eager Loading](09-eloquent-eager-loading.md) - Week 4
+5. [Query Builder](08-laravel-query-builder.md) - Week 5
+6. [Caching Basics](07-redis-caching.md#cache-aside-pattern-questions-651-680) - Week 6
 
-#### MySQL-Specific
-- Questions 4, 153, 200, 814, 846
+### Path 2: Mid-Level → Senior (6-8 weeks)
+1. [Advanced Indexing](01-indexing-strategies.md) - Weeks 1-2
+2. [Cardinality & Statistics](02-cardinality-analysis.md) - Week 3
+3. [Execution Plans](03-query-execution-plans.md) - Week 4
+4. [Schema Design](05-normalization-denormalization.md) - Week 5
+5. [Partitioning](06-partitioning-strategies.md) - Week 6
+6. [Advanced Caching](07-redis-caching.md) - Week 7
+7. [Replication](10-connection-pooling-replication.md) - Week 8
 
-#### Both PostgreSQL & MySQL
-- Questions 1-30 (B-tree Indexes)
-- Questions 151-250 (Cardinality & Selectivity)
-- Questions 251-330 (Execution Plans)
-- Questions 901-930 (Connection Pooling)
+### Path 3: Senior → Performance Expert (8-10 weeks)
+Complete all 1,000 questions with emphasis on:
+1. [All Indexing Strategies](01-indexing-strategies.md) - Weeks 1-2
+2. [Query Optimization](03-query-execution-plans.md) - Weeks 3-4
+3. [Schema Architecture](05-normalization-denormalization.md) - Week 5
+4. [Scaling Strategies](06-partitioning-strategies.md) - Week 6
+5. [Caching Architecture](07-redis-caching.md) - Week 7
+6. [Replication & HA](10-connection-pooling-replication.md) - Week 8
+7. [15% Optimization Strategy](10-connection-pooling-replication.md#15-response-time-reduction-strategy-questions-981-1000) - Weeks 9-10
 
-#### Redis
-- Questions 651-750 (All Redis topics)
+---
 
-#### Laravel-Specific
-- Questions 351-450 (N+1 with Eloquent)
-- Questions 751-825 (Query Builder)
-- Questions 826-900 (Eloquent Eager Loading)
+## By Use Case
 
-### By Performance Impact
+### Banking Transaction Processing
+- [Transaction Table Indexing](01-indexing-strategies.md#b-tree-indexes-questions-1-30) - Q9, 17, 26
+- [Composite Indexes](01-indexing-strategies.md#composite-indexes-questions-91-110) - Q96, 102
+- [Transaction Partitioning](06-partitioning-strategies.md#range-partitioning-questions-551-580) - Q554, 559
+- [15% Improvement](10-connection-pooling-replication.md#15-response-time-reduction-strategy-questions-981-1000) - Q985, 990
 
-#### High Impact Optimizations
-- Questions 1-30: B-tree Indexing
-- Questions 91-110: Composite Indexes
-- Questions 351-400: N+1 Elimination
-- Questions 651-680: Cache-Aside Pattern
-- Questions 826-875: Eager Loading
-- Questions 901-930: Connection Pooling
-- Questions 981-1000: Response Time Reduction
+### High-Traffic API Optimization
+- [Covering Indexes](01-indexing-strategies.md#covering-indexes-questions-111-130) - Q115
+- [Eager Loading](09-eloquent-eager-loading.md#eager-loading-fundamentals-questions-826-850) - Q831
+- [Caching Strategy](07-redis-caching.md#cache-aside-pattern-questions-651-680) - Q680
+- [Final Strategy](10-connection-pooling-replication.md#15-response-time-reduction-strategy-questions-981-1000) - Q999
 
-#### Medium Impact Optimizations
-- Questions 111-130: Covering Indexes
-- Questions 131-150: Partial Indexes
-- Questions 551-650: Partitioning
-- Questions 681-720: Write-Through/Behind Patterns
-- Questions 931-960: Replication
+### Multi-Tenant Applications
+- [Multi-Tenant Indexing](01-indexing-strategies.md#b-tree-indexes-questions-1-30) - Q26
+- [Composite Indexes](01-indexing-strategies.md#composite-indexes-questions-91-110) - Q104
+- [Partial Indexes](01-indexing-strategies.md#partial-and-filtered-indexes-questions-131-150) - Q134
+- [Connection Pooling](10-connection-pooling-replication.md#connection-pooling-questions-901-930) - Q904, 915
 
-#### Specialized Optimizations
-- Questions 31-90: Hash/GiST/GIN Indexes
-- Questions 331-350: Parallel Queries
-- Questions 481-550: Denormalization
-- Questions 721-750: Redis Data Structures
-- Questions 961-980: Multi-Master Replication
+---
 
-### Learning Paths
+## Performance Metrics Summary
 
-#### Path 1: Database Fundamentals → Production Optimization
-1. B-tree Indexes (Q1-30)
-2. Cardinality & Selectivity (Q151-190)
-3. EXPLAIN ANALYZE (Q251-280)
-4. Query Optimization (Q811-825)
-5. Response Time Reduction (Q981-1000)
+### Expected Improvements by File:
 
-#### Path 2: Laravel Developer → Performance Expert
-1. N+1 Problem (Q351-370)
-2. Eager Loading (Q371-400, Q826-875)
-3. Query Builder Optimization (Q751-795)
-4. Preventing Lazy Loading (Q876-900)
-5. Comprehensive Strategy (Q981-1000)
+| File | Topic | Typical Improvement |
+|------|-------|-------------------|
+| [01-indexing-strategies.md](01-indexing-strategies.md) | Indexing | 50-99% query speedup |
+| [02-cardinality-analysis.md](02-cardinality-analysis.md) | Statistics | 5-15% better plans |
+| [03-query-execution-plans.md](03-query-execution-plans.md) | EXPLAIN | 8-12% optimization |
+| [04-n-plus-one-elimination.md](04-n-plus-one-elimination.md) | N+1 Fixes | 80-95% faster APIs |
+| [05-normalization-denormalization.md](05-normalization-denormalization.md) | Schema | 2-5% either direction |
+| [06-partitioning-strategies.md](06-partitioning-strategies.md) | Partitioning | 50-80% scan reduction |
+| [07-redis-caching.md](07-redis-caching.md) | Caching | 90-99% cached reads |
+| [08-laravel-query-builder.md](08-laravel-query-builder.md) | Query Builder | 68% vs Eloquent |
+| [09-eloquent-eager-loading.md](09-eloquent-eager-loading.md) | Eager Loading | 98.5% query reduction |
+| [10-connection-pooling-replication.md](10-connection-pooling-replication.md) | **Complete Strategy** | **15-25% total** |
 
-#### Path 3: Caching Specialist
-1. Cache-Aside Pattern (Q651-680)
-2. Write-Through Pattern (Q681-700)
-3. Write-Behind Pattern (Q701-720)
-4. Redis Data Structures (Q721-740)
-5. Cache Invalidation (Q741-750)
+### Cumulative Response Time Reduction:
+```
+Baseline: 100ms
 
-#### Path 4: Database Architect
-1. Normalization Forms (Q451-480)
-2. Denormalization Strategies (Q481-510)
-3. Partitioning (Q551-650)
-4. Replication (Q931-980)
-5. Comprehensive Design (Q531-550)
+After Indexing (50%):     50ms   ← 50% improvement
+After N+1 Fix (80%):      10ms   ← 90% cumulative
+After Caching (90%):       1ms   ← 99% cumulative
+After Pooling (10%):     0.9ms   ← 99.1% cumulative
 
-#### Path 5: Query Performance Specialist
-1. Execution Plans (Q251-350)
-2. Join Optimization (Q311-330)
-3. Indexing Strategy (Q1-150)
-4. Statistics Tuning (Q191-230)
-5. Cardinality Estimation (Q231-250)
+Total Improvement: 99.1% reduction (100ms → 0.9ms)
+Target Achieved: 15%+ ✅✅✅
+```
 
-### Code Example References
+---
 
-See `/interview-bank/database-optimization/code-examples/` for:
-- Index creation examples
+## Study Recommendations
+
+### Week-by-Week Study Plan
+
+- **Week 1**: [Indexing Strategies](01-indexing-strategies.md) - Q1-150
+- **Week 2**: [Query Analysis](02-cardinality-analysis.md) & [Execution Plans](03-query-execution-plans.md) - Q151-350
+- **Week 3**: [N+1 Elimination](04-n-plus-one-elimination.md) - Q351-450
+- **Week 4**: [Schema Design](05-normalization-denormalization.md) - Q451-550
+- **Week 5**: [Partitioning](06-partitioning-strategies.md) - Q551-650
+- **Week 6**: [Redis Caching](07-redis-caching.md) - Q651-750
+- **Week 7**: [Laravel Optimization](08-laravel-query-builder.md) & [Eager Loading](09-eloquent-eager-loading.md) - Q751-900
+- **Week 8**: [Scaling & Replication](10-connection-pooling-replication.md) - Q901-1000
+
+---
+
+## Code Examples
+
+See `/code-examples/` directory for:
+- Index creation scripts
 - EXPLAIN ANALYZE samples
-- Laravel eager loading code
-- Caching implementations
-- Partitioning scripts
+- Laravel eager loading implementations
+- Redis caching patterns
+- Partitioning automation
 - Replication configurations
 - Performance benchmarks
-- Monitoring queries
 
-### Related Resources
+---
 
-- **Official Documentation**
-  - PostgreSQL Performance Tips
-  - MySQL Optimization Guide
-  - Redis Best Practices
-  - Laravel Eloquent Performance
+## Interview Preparation
 
-- **Tools**
-  - pg_stat_statements
-  - MySQL Performance Schema
-  - Laravel Debugbar
-  - Laravel Telescope
-  - Redis CLI
-  - pgAdmin
-  - phpMyAdmin
+### By Role Level:
 
-- **Performance Testing**
-  - Apache Bench (ab)
-  - wrk
-  - k6
-  - JMeter
-  - Gatling
+**Junior Developer** (0-2 years):
+- Focus on files: 01, 04, 07, 08, 09
+- Master: 200 questions minimum
 
-### Interview Preparation Tips
+**Mid-Level Developer** (2-5 years):
+- Focus on files: 01-04, 06-09
+- Master: 500 questions minimum
 
-1. **For Junior Roles**: Focus on Q1-30, Q151-170, Q251-280, Q351-370, Q451-480, Q651-680, Q751-770, Q826-850
+**Senior Developer** (5-8 years):
+- Focus on all files, emphasis on: 02, 03, 05, 10
+- Master: 750 questions minimum
 
-2. **For Mid-Level Roles**: Study Q31-150, Q171-250, Q281-350, Q371-450, Q481-550, Q681-750, Q771-825, Q851-900
+**Lead/Principal Engineer** (8+ years):
+- Master all 1,000 questions
+- Focus on strategic optimization (file 10)
+- Demonstrate 15%+ improvement methodology
 
-3. **For Senior/Lead Roles**: Master Q1-1000, with emphasis on Q901-1000
+---
 
-4. **For Architecture Roles**: Deep dive into Q451-550, Q551-650, Q901-1000
+## Contributing
 
-5. **For Performance Engineer Roles**: Focus on Q1-350, Q751-825, Q981-1000
+To extend this question bank:
+1. Follow the established format in each file
+2. Include practical banking examples
+3. Provide before/after performance metrics
+4. Update this INDEX.md with new sections
+5. Add code examples to `/code-examples/`
 
-### Study Recommendations
+---
 
-- **Week 1**: Indexing (Q1-150)
-- **Week 2**: Query Analysis (Q151-350)
-- **Week 3**: N+1 & Laravel (Q351-450, Q751-900)
-- **Week 4**: Schema Design (Q451-550)
-- **Week 5**: Partitioning (Q551-650)
-- **Week 6**: Caching (Q651-750)
-- **Week 7**: Scaling (Q901-1000)
-- **Week 8**: Review and Practice
-
-### Practice Projects
-
-Build a high-performance banking application demonstrating:
-1. Proper indexing strategy (Q1-150)
-2. Optimized queries with EXPLAIN ANALYZE (Q251-350)
-3. N+1 query elimination (Q351-450)
-4. Normalized schema with strategic denormalization (Q451-550)
-5. Table partitioning for historical data (Q551-650)
-6. Multi-layer caching with Redis (Q651-750)
-7. Optimized Laravel queries (Q751-900)
-8. Connection pooling and replication (Q901-1000)
-9. Measured 15%+ response time improvement (Q981-1000)
-
-### Contributing
-
-To add more questions or improve existing ones:
-1. Follow the established format
-2. Include practical examples
-3. Focus on banking/financial contexts
-4. Ensure questions build on previous knowledge
-5. Add code examples where applicable
+**Total Questions: 1,000 across 10 files**  
+**Focus: High-traffic banking applications**  
+**Goal: 15%+ measurable response time reduction**
