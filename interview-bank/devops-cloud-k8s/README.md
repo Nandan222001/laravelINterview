@@ -1,359 +1,173 @@
-# DevOps, Cloud & Kubernetes Interview Questions
+# DevOps, Cloud AWS & K8s Orchestration - Interview Questions
 
-A comprehensive collection of 1,000 interview questions covering DevOps practices, cloud infrastructure, Kubernetes orchestration, and modern deployment strategies.
+This folder contains **1,000 comprehensive questions** across 10 specialized topics covering DevOps, AWS Cloud Infrastructure, and Kubernetes orchestration with production-grade configurations and CMMI Level 5 compliance automation.
 
-## 📌 Overview
+## 📚 Contents (1,000 Questions Total)
 
-This collection provides in-depth interview questions for DevOps, Cloud (AWS), and Kubernetes roles from Junior to Staff levels. Each question includes practical scenarios, code examples, and detailed solutions.
+### [01. Terraform IaC Modules for AWS Banking Infrastructure](./01-terraform-aws-banking-infrastructure.md) - 100 Questions
+Comprehensive coverage of Terraform Infrastructure as Code modules including:
+- **VPC Architecture**: Multi-AZ VPCs with private subnets, NAT gateways, VPC endpoints, flow logs
+- **Network Security**: Network ACLs, security groups, Transit Gateway, VPC peering, PrivateLink
+- **RDS with Encryption**: Aurora clusters, KMS encryption, RDS Proxy, automated backups, Performance Insights
+- **S3 Configuration**: Versioning, lifecycle policies, encryption, replication, access logging
+- **Advanced Terraform Patterns**: Modules, workspaces, remote state, data sources, dynamic blocks
 
-## 📚 Question Categories
+### [02. Kubernetes Production Configurations](./02-kubernetes-production-configurations.md) - 100 Questions
+Production Kubernetes deployments covering:
+- **HPA with Custom Metrics**: CPU/memory autoscaling, Prometheus metrics, KEDA, behavior policies
+- **Ingress Controllers with TLS**: NGINX Ingress, cert-manager, Let's Encrypt, path/host routing, authentication
+- **Service Mesh with Istio**: mTLS, traffic management, observability, security policies
+- **Advanced K8s Patterns**: StatefulSets, pod affinity, resource quotas, admission controllers, operators
 
-### Questions 1-100: Terraform & AWS Basics
-**File**: `001-100-terraform-aws-basics.md`
+### [03. Service Mesh Implementation with Istio](./03-service-mesh-istio-mtls.md) - 100 Questions
+Deep dive into Istio service mesh:
+- **mTLS Configuration**: Strict/permissive modes, certificate management, custom CA integration
+- **Traffic Management**: VirtualServices, DestinationRules, fault injection, timeouts, retries
+- **Authorization Policies**: RBAC, JWT validation, path-based authorization, custom authorizers
+- **Observability**: Distributed tracing, metrics, access logs, Kiali, monitoring
 
-Topics covered:
-- VPC architecture and design
-- EC2 Auto Scaling with Terraform
-- RDS Multi-AZ deployments
-- S3 bucket configuration
-- IAM policies and roles
-- CloudFront distributions
-- Security groups and NACLs
-- Terraform state management
-- Remote state backends
-- Terraform modules
+### [04. CI/CD Pipelines with Jenkins Declarative](./04-cicd-jenkins-declarative-pipelines.md) - 100 Questions
+Complete Jenkins pipeline examples:
+- **Pipeline Fundamentals**: Declarative syntax, agents, stages, post actions, parameters
+- **Laravel-Specific Pipelines**: Composer, migrations, queue workers, Horizon, Octane, Nova
+- **Docker Integration**: Multi-stage builds, image scanning, registry management, layer optimization
+- **Advanced Patterns**: Blue-green deployments, canary releases, approval workflows, monitoring
 
-### Questions 101-200: Kubernetes Fundamentals
-**File**: `101-200-kubernetes-fundamentals.md`
+### [05. Docker Multi-Stage Builds for Laravel](./05-docker-multi-stage-builds.md) - 100 Questions
+Docker optimization for Laravel applications:
+- **Multi-Stage Builds**: Composer stage, Node stage, production stage, layer optimization
+- **Security Best Practices**: Non-root users, image scanning, secrets management, minimal base images
+- **Laravel Optimization**: Octane containers, queue workers, caching strategies, asset compilation
+- **Production Deployment**: Health checks, resource limits, logging, monitoring
 
-Topics covered:
-- Pod design and best practices
-- Deployments and rolling updates
-- Services and networking
-- StatefulSets for databases
-- DaemonSets and Jobs
-- ConfigMaps and Secrets
-- Persistent Volumes
-- Init containers and sidecars
-- Resource quotas and limits
-- RBAC configuration
+### [06. AWS EKS Cluster Management](./06-aws-eks-cluster-management.md) - 100 Questions
+AWS EKS production operations:
+- **Cluster Setup**: EKS with Terraform, node groups, managed nodes, spot instances
+- **Networking**: VPC CNI, security groups for pods, network policies, load balancers
+- **IAM Integration**: IRSA (IAM Roles for Service Accounts), pod identity, fine-grained permissions
+- **Operations**: Autoscaling, logging, monitoring, backup/recovery, cost optimization
 
-### Questions 201-300: Kubernetes Advanced
-**File**: `201-300-kubernetes-advanced.md`
+### [07. Helm Charts and Package Management](./07-helm-charts-package-management.md) - 100 Questions
+Kubernetes application packaging:
+- **Chart Development**: Templates, values, conditionals, loops, functions
+- **Dependency Management**: Subcharts, requirements, version control
+- **Testing & Validation**: Helm test, linting, schema validation, CI/CD integration
+- **Advanced Patterns**: Library charts, hooks, secrets management, GitOps integration
 
-Topics covered:
-- Horizontal Pod Autoscaler (HPA) with custom metrics
-- Ingress controllers (NGINX, Kong, Ambassador)
-- API Gateway configuration
-- Rate limiting and authentication
-- Canary deployments
-- Traffic splitting strategies
-- Network policies
-- Pod Security Standards
-- Admission controllers
-- Custom Resource Definitions (CRDs)
+### [08. Monitoring and Observability Stack](./08-monitoring-observability-stack.md) - 100 Questions
+Complete observability solutions:
+- **Prometheus Stack**: Metrics collection, ServiceMonitors, alerting rules, federation
+- **Grafana Dashboards**: Application metrics, infrastructure monitoring, custom visualizations
+- **ELK/EFK Stack**: Log aggregation, parsing, indexing, search optimization
+- **Distributed Tracing**: Jaeger, OpenTelemetry, span correlation, performance analysis
+- **APM Tools**: New Relic, Datadog integration, custom metrics, SLO tracking
 
-### Questions 301-400: CI/CD with Jenkins
-**File**: `301-400-cicd-jenkins.md`
+### [09. GitOps with ArgoCD and Flux](./09-gitops-argocd-flux.md) - 100 Questions
+GitOps implementation and best practices:
+- **ArgoCD**: Multi-cluster management, ApplicationSets, sync policies, SSO integration
+- **Flux v2**: GitOps Toolkit, Kustomize controller, Helm controller, image automation
+- **Progressive Delivery**: Argo Rollouts, canary deployments, blue-green strategies, automated rollbacks
+- **Security**: Secrets management, policy enforcement, audit trails, compliance
 
-Topics covered:
-- Jenkins declarative pipelines
-- Kubernetes agents for Jenkins
-- Multi-branch pipelines
-- Jenkins Configuration as Code (JCasC)
-- Jira integration for CMMI Level 5
-- Security scanning in pipelines
-- Artifact management
-- Pipeline optimization
-- Shared libraries
-- Deployment strategies in CI/CD
+### [10. CMMI Level 5 Compliance Automation](./10-cmmi-level5-compliance-automation.md) - 100 Questions
+Enterprise process maturity and compliance:
+- **Quantitative Management**: Process performance baselines, statistical analysis, metrics collection
+- **Causal Analysis**: Root cause analysis automation, defect prevention, trend analysis
+- **Process Optimization**: Continuous improvement, innovation deployment, ROI tracking
+- **Jira Integration**: Complete Python scripts for automated tracking, compliance dashboards, traceability
+- **Organizational Learning**: Knowledge management, lessons learned, best practices sharing
 
-### Questions 401-500: Docker & Containers
-**File**: `401-500-docker-containers.md`
+## 🎯 Key Features
 
-Topics covered:
-- Docker multi-stage builds
-- Container security scanning
-- Image optimization techniques
-- Distroless images
-- Container vulnerability management
-- Trivy, Anchore, Snyk integration
-- SBOM generation
-- Image signing with Cosign
-- Container registry management
-- Docker BuildKit features
+### Production-Ready Code Examples
+- **Complete Terraform Modules**: VPC, RDS, S3 with encryption and compliance
+- **Full Jenkinsfile Examples**: Declarative pipelines for Laravel applications
+- **Docker Multi-Stage Builds**: Optimized for Laravel with Composer and NPM
+- **Kubernetes Manifests**: HPA, Ingress, Service Mesh configurations
+- **Helm Charts**: Production-grade charts with all components
 
-### Questions 501-600: Service Mesh & Istio
-**File**: `501-600-service-mesh-istio.md`
+### CMMI Level 5 Focus
+- Quantitative project management
+- Organizational process performance
+- Causal analysis and resolution
+- Requirements traceability automation
+- Continuous improvement frameworks
+- Complete Jira integration scripts
 
-Topics covered:
-- Istio architecture and components
-- mTLS configuration
-- Traffic management with VirtualService
-- DestinationRule and circuit breaking
-- Service entry for external services
-- Authorization policies
-- JWT authentication
-- Observability with Jaeger and Kiali
-- Envoy proxy configuration
-- Multi-cluster mesh
-
-### Questions 601-700: Monitoring & Observability
-**File**: `601-700-monitoring-observability.md`
-
-Topics covered:
-- Prometheus setup and configuration
-- Grafana dashboards
-- Loki for log aggregation
-- Tempo for distributed tracing
-- Alert rules and recording rules
-- SLI/SLO tracking
-- Thanos for long-term storage
-- Custom metrics with Prometheus
-- OpenTelemetry integration
-- CloudWatch Container Insights
-
-### Questions 701-800: Helm & GitOps
-**File**: `701-800-helm-gitops.md`
-
-Topics covered:
-- Production-ready Helm charts
-- Template functions and helpers
-- Helm hooks and tests
-- Values management for multi-environment
-- Chart dependencies
-- ArgoCD for GitOps
-- ApplicationSets
-- Sync waves and progressive sync
-- Flux CD architecture
-- GitOps best practices
-
-### Questions 801-900: AWS EKS Deployment
-**File**: `801-900-aws-eks-deployment.md`
-
-Topics covered:
-- EKS cluster setup with Terraform
-- IRSA (IAM Roles for Service Accounts)
-- Managed node groups
-- VPC CNI configuration
-- AWS Load Balancer Controller
-- EBS CSI Driver
-- Cluster autoscaling
-- EKS Fargate
-- ECR integration
-- Multi-AZ deployments
-
-### Questions 901-1000: Advanced Topics
-**File**: `901-1000-advanced-topics.md`
-
-Topics covered:
-- Blue-green deployment strategies
-- CMMI Level 5 traceability
-- Chaos engineering practices
-- SRE principles
-- Error budgets and SLOs
-- Incident management
+### Banking/Enterprise Grade
+- PCI-DSS compliance considerations
+- Encryption at rest and in transit
+- Audit logging and compliance
+- High availability configurations
 - Disaster recovery strategies
-- Multi-region architectures
-- Platform engineering
-- FinOps and cost optimization
+- Multi-region deployments
 
-## 🎯 Question Format
+## 📖 How to Use
 
-Each question follows a consistent structure:
+1. **Interview Preparation**: Review questions by topic area based on job requirements
+2. **Architecture Design**: Use as reference for designing cloud-native systems
+3. **Implementation Guide**: Follow code examples for actual deployments
+4. **Compliance**: Use CMMI scripts for enterprise process maturity
+5. **Best Practices**: Learn industry-standard patterns and anti-patterns
 
-```markdown
-## Question X: [Title]
+## 🔧 Technologies Covered
 
-**Difficulty**: [Junior | Mid | Senior | Staff]
-**Topic**: [Main Topic]
-**Tags**: `tag1`, `tag2`, `tag3`
+**Infrastructure & Cloud**:
+- AWS (VPC, EC2, RDS, S3, EKS, IAM, KMS, CloudWatch)
+- Terraform (IaC, modules, workspaces, remote state)
+- Kubernetes (EKS, pods, services, ingress, operators)
 
-### 📋 Question
-[Clear question statement with real-world scenario]
+**Container & Orchestration**:
+- Docker (multi-stage builds, optimization, security)
+- Kubernetes (deployments, services, ingress, autoscaling)
+- Helm (charts, templates, repositories, hooks)
+- Istio (service mesh, mTLS, traffic management)
 
-#### Scenario
-[Practical business context]
+**CI/CD & Automation**:
+- Jenkins (declarative pipelines, shared libraries, plugins)
+- GitOps (ArgoCD, Flux, ApplicationSets, progressive delivery)
+- Docker Registry (image management, scanning, signing)
 
-#### Requirements
-- Specific technical requirements
-- Constraints and considerations
+**Monitoring & Observability**:
+- Prometheus (metrics, alerts, federation)
+- Grafana (dashboards, visualization, alerts)
+- ELK/EFK (logging, analysis, visualization)
+- Jaeger (distributed tracing, OpenTelemetry)
+- APM Tools (New Relic, Datadog, Dynatrace)
 
-### ✅ Sample Solution
-[Comprehensive code examples and explanations]
+**Security & Compliance**:
+- KMS encryption, mTLS, network policies
+- RBAC, IAM, pod security policies
+- Image scanning, vulnerability management
+- Audit logging, compliance automation
+- CMMI Level 5 practices
 
-### 🎯 Key Concepts to Assess
-- [ ] Key technical concepts to evaluate
-- [ ] Understanding of best practices
-- [ ] Security considerations
+## 🎓 Skill Levels
 
-### 🔄 Follow-up Questions
-1. **[Question]**
-   - Expected answer
-```
+- **Junior DevOps**: Questions 1-30 in each section (fundamentals)
+- **Mid-Level**: Questions 31-70 (implementation and optimization)
+- **Senior/Lead**: Questions 71-100 (architecture and advanced patterns)
+- **Enterprise/Principal**: CMMI Level 5 section (process maturity)
 
-## 💡 How to Use This Collection
+## 📝 Additional Resources
 
-### For Interviewers
+- Complete code examples in each answer
+- Terraform module structures
+- Jenkinsfile templates for various scenarios
+- Dockerfile best practices
+- Kubernetes YAML manifests
+- Helm chart examples
+- Python scripts for Jira integration
+- Compliance tracking automation
 
-1. **Select by Difficulty**: Filter questions based on candidate level
-2. **Topic Focus**: Choose questions aligned with role requirements
-3. **Scenario-Based**: Present real-world scenarios for practical assessment
-4. **Follow-ups**: Use follow-up questions to probe deeper understanding
-5. **Code Review**: Ask candidates to review and improve sample solutions
+## 🚀 Related Topics
 
-### For Interview Preparation
-
-1. **Systematic Study**: Work through questions by category
-2. **Hands-On Practice**: Implement solutions in your own environment
-3. **Understand Concepts**: Don't memorize - understand the underlying principles
-4. **Real-World Context**: Relate questions to your experience
-5. **Build Portfolio**: Create a GitHub repository with your implementations
-
-## 🏆 Difficulty Levels
-
-### Junior (0-2 years)
-- Basic Kubernetes concepts
-- Simple Terraform resources
-- Docker fundamentals
-- CI/CD basics
-- Monitoring fundamentals
-
-### Mid (2-5 years)
-- Complex Kubernetes configurations
-- Advanced Terraform patterns
-- Container security
-- Pipeline optimization
-- Service mesh basics
-
-### Senior (5-10 years)
-- Architecture decisions
-- Multi-cluster management
-- Security best practices
-- Performance optimization
-- Advanced deployment strategies
-
-### Staff (10+ years)
-- System design
-- Platform engineering
-- Cost optimization strategies
-- CMMI compliance
-- Organization-wide standards
-
-## 🔧 Practical Labs
-
-Each section includes hands-on code examples that can be executed in:
-- Local Kubernetes cluster (minikube, kind, k3s)
-- Cloud environments (EKS, GKE, AKS)
-- CI/CD platforms (Jenkins, GitLab CI, GitHub Actions)
-- IaC tools (Terraform, CloudFormation)
-
-## 📖 Additional Resources
-
-### Official Documentation
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
-- [Terraform Documentation](https://www.terraform.io/docs)
-- [AWS Documentation](https://docs.aws.amazon.com/)
-- [Istio Documentation](https://istio.io/latest/docs/)
-- [Helm Documentation](https://helm.sh/docs/)
-
-### Best Practices
-- [Kubernetes Best Practices](https://kubernetes.io/docs/concepts/configuration/overview/)
-- [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/)
-- [12-Factor App](https://12factor.net/)
-- [CNCF Cloud Native Trail Map](https://github.com/cncf/trailmap)
-
-### Certifications
-- Certified Kubernetes Administrator (CKA)
-- Certified Kubernetes Application Developer (CKAD)
-- AWS Solutions Architect
-- Certified Kubernetes Security Specialist (CKS)
-- HashiCorp Terraform Associate
-
-## 🤝 Contributing
-
-This is a living collection that grows with the DevOps ecosystem. Contributions are welcome for:
-- New questions and scenarios
-- Updated solutions for newer versions
-- Additional follow-up questions
-- Real-world case studies
-- Best practice updates
-
-## 📝 Topics Summary
-
-### Infrastructure as Code
-- Terraform advanced patterns
-- State management
-- Module development
-- Provider configuration
-- Resource dependencies
-
-### Container Orchestration
-- Pod scheduling
-- Resource management
-- Storage orchestration
-- Service discovery
-- Load balancing
-
-### CI/CD
-- Pipeline as Code
-- Automated testing
-- Security scanning
-- Artifact management
-- Deployment automation
-
-### Security
-- Network policies
-- Secret management
-- RBAC configuration
-- Container scanning
-- Compliance automation
-
-### Observability
-- Metrics collection
-- Log aggregation
-- Distributed tracing
-- Alerting strategies
-- SLO tracking
-
-### Cloud Services
-- Compute services
-- Storage solutions
-- Database services
-- Networking
-- Security services
-
-## 🌟 Key Technologies Covered
-
-| Category | Technologies |
-|----------|-------------|
-| **Orchestration** | Kubernetes, Docker Swarm, ECS |
-| **IaC** | Terraform, CloudFormation, Pulumi |
-| **CI/CD** | Jenkins, GitLab CI, GitHub Actions, ArgoCD, Flux |
-| **Containers** | Docker, Podman, containerd |
-| **Service Mesh** | Istio, Linkerd, Consul |
-| **Monitoring** | Prometheus, Grafana, Loki, Jaeger, Tempo |
-| **Cloud** | AWS (EKS, EC2, RDS, S3, CloudFront) |
-| **Security** | Trivy, Falco, OPA, Vault |
-| **Package Management** | Helm, Kustomize |
-
-## 📊 Question Distribution
-
-- **Terraform & AWS**: 100 questions
-- **Kubernetes Core**: 100 questions
-- **Advanced K8s**: 100 questions
-- **CI/CD**: 100 questions
-- **Containers**: 100 questions
-- **Service Mesh**: 100 questions
-- **Monitoring**: 100 questions
-- **Helm & GitOps**: 100 questions
-- **Cloud Deployment**: 100 questions
-- **Advanced Topics**: 100 questions
-
-**Total**: 1,000 comprehensive interview questions
+- [PHP Laravel API Security](../php-laravel-api-security/) - Application security
+- [Database Optimization](../database-optimization/) - Database performance
+- [Frontend React/Next.js](../frontend-react-nextjs/) - Frontend deployment
+- [AI/LLM Serverless](../ai-llm-serverless/) - Serverless on AWS
+- [Real-time Communication](../realtime-communication/) - WebSocket deployments
 
 ---
 
-**Last Updated**: 2024
-**Version**: 1.0.0
-**Maintainer**: DevOps Team
+**Total Questions**: 1,000 comprehensive DevOps, Cloud AWS, and Kubernetes orchestration questions with production-ready examples and CMMI Level 5 compliance automation.
