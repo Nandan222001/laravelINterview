@@ -110,53 +110,6 @@
             padding: 2rem;
         }
 
-        aside {
-            width: 280px;
-            background-color: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            height: fit-content;
-            position: sticky;
-            top: 140px;
-        }
-
-        .filter-section {
-            margin-bottom: 2rem;
-        }
-
-        .filter-section h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: #e3342f;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .filter-section ul {
-            list-style: none;
-        }
-
-        .filter-section li {
-            margin-bottom: 0.5rem;
-        }
-
-        .filter-section label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .filter-section label:hover {
-            color: #e3342f;
-        }
-
-        .filter-section input[type="checkbox"] {
-            cursor: pointer;
-        }
-
         main {
             flex: 1;
             background-color: #fff;
@@ -180,11 +133,11 @@
             line-height: 1.8;
         }
 
-        .stats {
-            display: flex;
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            margin-bottom: 3rem;
         }
 
         .stat-card {
@@ -192,124 +145,182 @@
             color: white;
             padding: 1.5rem;
             border-radius: 8px;
-            flex: 1;
-            min-width: 200px;
             text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .stat-card h3 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .stat-card p {
             opacity: 0.9;
+            font-size: 0.95rem;
         }
 
-        .accordion {
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
         }
 
-        .accordion-item {
-            margin-bottom: 1rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+        .topic-card {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        .accordion-header {
-            background-color: #f9f9f9;
+        .topic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border-color: #e3342f;
+        }
+
+        .topic-card-header {
             padding: 1.5rem;
-            cursor: pointer;
+            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+            border-bottom: 2px solid #e0e0e0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            transition: background-color 0.3s;
+            gap: 1rem;
         }
 
-        .accordion-header:hover {
-            background-color: #f0f0f0;
+        .topic-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
         }
 
-        .accordion-header h3 {
+        .topic-card-header h3 {
             font-size: 1.25rem;
             color: #333;
+            font-weight: 600;
         }
 
-        .accordion-icon {
-            font-size: 1.5rem;
-            color: #e3342f;
-            transition: transform 0.3s;
-        }
-
-        .accordion-item.active .accordion-icon {
-            transform: rotate(180deg);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .accordion-item.active .accordion-content {
-            max-height: 100000px;
-        }
-
-        .accordion-body {
+        .topic-card-body {
             padding: 1.5rem;
-            background-color: #fff;
         }
 
         .topic-description {
             color: #666;
-            margin-bottom: 1rem;
-            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
 
-        .topic-features {
-            list-style: none;
-            margin-bottom: 1rem;
+        .topic-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        .topic-features li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
+        .topic-stat {
+            text-align: center;
         }
 
-        .topic-features li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #28a745;
-            font-weight: bold;
+        .topic-stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #e3342f;
+        }
+
+        .topic-stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty-chart {
+            margin-bottom: 1.5rem;
+        }
+
+        .difficulty-chart-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.75rem;
+        }
+
+        .difficulty-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .difficulty-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .difficulty-label {
+            font-size: 0.8rem;
+            color: #666;
+            width: 90px;
+            flex-shrink: 0;
+        }
+
+        .difficulty-progress {
+            flex: 1;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .difficulty-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .difficulty-fill.beginner {
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+        }
+
+        .difficulty-fill.intermediate {
+            background: linear-gradient(90deg, #ed8936 0%, #dd6b20 100%);
+        }
+
+        .difficulty-fill.advanced {
+            background: linear-gradient(90deg, #f56565 0%, #e53e3e 100%);
+        }
+
+        .difficulty-fill.expert {
+            background: linear-gradient(90deg, #9f7aea 0%, #805ad5 100%);
+        }
+
+        .difficulty-percent {
+            font-size: 0.8rem;
+            color: #666;
+            width: 40px;
+            text-align: right;
         }
 
         .topic-link {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.75rem 1.5rem;
-            background-color: #e3342f;
+            display: block;
+            text-align: center;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #e3342f 0%, #cc1f1a 100%);
             color: white;
             text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
         }
 
         .topic-link:hover {
-            background-color: #cc1f1a;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background-color: #28a745;
-            color: white;
-            font-size: 0.75rem;
-            border-radius: 12px;
-            margin-left: 0.5rem;
-            font-weight: 600;
+            background: linear-gradient(135deg, #cc1f1a 0%, #b81813 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(227, 52, 47, 0.3);
         }
 
         footer {
@@ -357,14 +368,22 @@
             color: #333;
         }
 
+        .section-title {
+            font-size: 1.75rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #e3342f;
+        }
+
         @media (max-width: 1024px) {
             .main-wrapper {
                 flex-direction: column;
             }
 
-            aside {
-                width: 100%;
-                position: static;
+            .topics-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -397,12 +416,8 @@
                 gap: 1rem;
             }
 
-            .stats {
-                flex-direction: column;
-            }
-
-            .stat-card {
-                min-width: 100%;
+            .stats-overview {
+                grid-template-columns: 1fr;
             }
 
             main {
@@ -412,104 +427,10 @@
             .intro h2 {
                 font-size: 1.5rem;
             }
-        }
 
-        /* Question and Answer Styles */
-        .questions-container {
-            margin-top: 1rem;
-        }
-
-        .questions-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .question-item {
-            border-top: 1px solid #eee;
-            padding: 0.75rem 0;
-            background-color: #fff;
-        }
-
-        .question-item:last-child {
-            border-bottom: 1px solid #eee;
-        }
-
-        .question-title {
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            padding: 0.75rem 0;
-            cursor: pointer;
-            font-size: 1rem;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.2s, background-color 0.2s;
-        }
-
-        .question-title:hover {
-            color: #e3342f;
-            background-color: #f9f9f9;
-        }
-
-        .question-title:focus {
-            outline: 2px solid #e3342f;
-            outline-offset: -2px;
-        }
-
-        .answer {
-            margin-top: 0.5rem;
-            padding-left: 1rem;
-            padding-bottom: 0.5rem;
-            color: #555;
-            background-color: #f9f9f9;
-            border-left: 3px solid #e3342f;
-            line-height: 1.7;
-            display: none;
-        }
-
-        .answer.show {
-            display: block;
-        }
-
-        .answer code {
-            background-color: #f0f0f0;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
-
-        .answer pre {
-            background-color: #f0f0f0;
-            padding: 1rem;
-            border-radius: 4px;
-            overflow-x: auto;
-            margin: 0.5rem 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-        }
-
-        .answer pre code {
-            background-color: transparent;
-            padding: 0;
-            border-radius: 0;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #666;
-            font-style: italic;
-        }
-
-        .error {
-            padding: 1rem;
-            background-color: #ffebee;
-            color: #c62828;
-            border-radius: 4px;
-            border-left: 4px solid #c62828;
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -526,7 +447,6 @@
                         <a href="#home">Home</a>
                         <a href="#topics">Topics</a>
                         <a href="code-examples.html">Code Examples</a>
-                        <a href="#templates">Templates</a>
                         <a href="#about">About</a>
                     </nav>
                 </div>
@@ -538,105 +458,19 @@
         </header>
 
         <div class="main-wrapper">
-            <aside>
-                <section class="filter-section">
-                    <h3>Topic Filters</h3>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="topic" value="php-laravel">
-                                PHP & Laravel
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="topic" value="api-security">
-                                API Security
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="topic" value="payment">
-                                Payment Integration
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="topic" value="realtime">
-                                Realtime Communication
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="topic" value="database">
-                                Database Optimization
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="topic" value="frontend">
-                                Frontend React & Next.js
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="topic" value="devops">
-                                DevOps & Cloud
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="topic" value="ai">
-                                AI & LLM
-                            </label>
-                        </li>
-                    </ul>
-                </section>
-
-                <section class="filter-section">
-                    <h3>Difficulty Levels</h3>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="difficulty" value="beginner">
-                                Beginner
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="difficulty" value="intermediate">
-                                Intermediate
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="difficulty" value="advanced">
-                                Advanced
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="difficulty" value="expert">
-                                Expert
-                            </label>
-                        </li>
-                    </ul>
-                </section>
-            </aside>
-
             <main id="main-content">
                 <section class="intro">
                     <h2>Comprehensive Interview Question Bank</h2>
                     <p>A comprehensive collection of advanced interview questions and production-ready code for senior-level software engineering positions, covering full-stack development, cloud infrastructure, payment systems, and modern AI integration.</p>
                 </section>
 
-                <div class="stats">
+                <div class="stats-overview">
                     <div class="stat-card">
-                        <h3>1000+</h3>
+                        <h3>6,000+</h3>
                         <p>Interview Questions</p>
                     </div>
                     <div class="stat-card">
-                        <h3>8</h3>
+                        <h3>6</h3>
                         <p>Major Topics</p>
                     </div>
                     <div class="stat-card">
@@ -645,254 +479,369 @@
                     </div>
                 </div>
 
-                <section class="accordion" id="topics">
-                    <article class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>
-                                ⭐ PHP, Laravel & Advanced API Security
-                                <span class="badge">NEW</span>
-                            </h3>
-                            <span class="accordion-icon">▼</span>
+                <h2 class="section-title" id="topics">📚 Interview Topics</h2>
+
+                <div class="topics-grid">
+                    <!-- PHP & Laravel Topic Card -->
+                    <article class="topic-card">
+                        <div class="topic-card-header">
+                            <div class="topic-icon">🐘</div>
+                            <h3>PHP, Laravel & API Security</h3>
                         </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    Advanced PHP 8.x features (attributes, enums, JIT, fibers), Laravel request lifecycle, middleware pipelines, service container deep-dive, payment gateway integration (Razorpay/Stripe), webhook security, idempotency implementation, PCI DSS compliance, OWASP Top 10 mitigations, and advanced rate limiting strategies.
-                                </p>
-                                <ul class="topic-features">
-                                    <li>1000 interview questions across 8 major sections</li>
-                                    <li>Production-ready Laravel code with Sanctum auth</li>
-                                    <li>Complete Razorpay & Stripe integration</li>
-                                    <li>Webhook signature verification (HMAC-SHA256)</li>
-                                    <li>Idempotency key implementation</li>
-                                    <li>Queue workers for async payment processing</li>
-                                    <li>PCI DSS compliance checklist</li>
-                                    <li>OWASP Top 10 mitigation guide</li>
-                                    <li>Advanced rate limiting with Redis</li>
-                                    <li>Comprehensive error handling</li>
-                                </ul>
-                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/php-laravel-api-security/questions.md" data-answers="interview-bank/php-laravel-api-security/answers.md">Explore Questions →</a>
+                        <div class="topic-card-body">
+                            <p class="topic-description">
+                                Advanced PHP 8.x features, Laravel best practices, payment gateway integration (Razorpay/Stripe), advanced API security, PCI DSS compliance, and OWASP Top 10 mitigations.
+                            </p>
+                            
+                            <div class="topic-stats">
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">1,000</div>
+                                    <div class="topic-stat-label">Questions</div>
+                                </div>
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">8</div>
+                                    <div class="topic-stat-label">Sections</div>
+                                </div>
                             </div>
+
+                            <div class="difficulty-chart">
+                                <div class="difficulty-chart-title">Difficulty Distribution</div>
+                                <div class="difficulty-bars">
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Beginner</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill beginner" style="width: 15%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">15%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Intermediate</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill intermediate" style="width: 30%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">30%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Advanced</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill advanced" style="width: 35%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">35%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Expert</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill expert" style="width: 20%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">20%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="pages/php-laravel.html" class="topic-link">Explore Questions →</a>
                         </div>
                     </article>
 
-                    <article class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>Realtime Communication</h3>
-                            <span class="accordion-icon">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    WebSockets, Server-Sent Events, Laravel Broadcasting, Redis pub/sub, and real-time data synchronization.
-                                </p>
-                                <ul class="topic-features">
-                                    <li>WebSocket implementation patterns</li>
-                                    <li>Server-Sent Events (SSE) architecture</li>
-                                    <li>Laravel Broadcasting with Pusher/Socket.io</li>
-                                    <li>Redis pub/sub for horizontal scaling</li>
-                                    <li>Real-time data synchronization strategies</li>
-                                    <li>Connection management and reconnection logic</li>
-                                </ul>
-                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/realtime-communication/questions.md" data-answers="interview-bank/realtime-communication/answers.md">Explore Questions →</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="accordion-item">
-                        <div class="accordion-header">
+                    <!-- Database Optimization Topic Card -->
+                    <article class="topic-card">
+                        <div class="topic-card-header">
+                            <div class="topic-icon">🗄️</div>
                             <h3>Database Optimization</h3>
-                            <span class="accordion-icon">▼</span>
                         </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    Query optimization, indexing strategies, N+1 problem solutions, caching patterns, and database scaling.
-                                </p>
-                                <ul class="topic-features">
-                                    <li>Query optimization techniques</li>
-                                    <li>Index design and implementation</li>
-                                    <li>N+1 query problem solutions</li>
-                                    <li>Caching strategies (Redis, Memcached)</li>
-                                    <li>Database replication and sharding</li>
-                                    <li>Connection pooling and optimization</li>
-                                </ul>
-                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/database-optimization/questions.md" data-answers="interview-bank/database-optimization/answers.md">Explore Questions →</a>
+                        <div class="topic-card-body">
+                            <p class="topic-description">
+                                MySQL/PostgreSQL indexing strategies, query optimization, N+1 problem elimination, Redis caching layers, connection pooling, and achieving 15%+ response time reduction.
+                            </p>
+                            
+                            <div class="topic-stats">
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">1,000</div>
+                                    <div class="topic-stat-label">Questions</div>
+                                </div>
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">10</div>
+                                    <div class="topic-stat-label">Sections</div>
+                                </div>
                             </div>
+
+                            <div class="difficulty-chart">
+                                <div class="difficulty-chart-title">Difficulty Distribution</div>
+                                <div class="difficulty-bars">
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Beginner</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill beginner" style="width: 20%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">20%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Intermediate</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill intermediate" style="width: 35%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">35%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Advanced</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill advanced" style="width: 30%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">30%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Expert</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill expert" style="width: 15%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">15%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="pages/database-optimization.html" class="topic-link">Explore Questions →</a>
                         </div>
                     </article>
 
-                    <article class="accordion-item">
-                        <div class="accordion-header">
+                    <!-- Realtime Communication Topic Card -->
+                    <article class="topic-card">
+                        <div class="topic-card-header">
+                            <div class="topic-icon">⚡</div>
+                            <h3>Realtime Communication</h3>
+                        </div>
+                        <div class="topic-card-body">
+                            <p class="topic-description">
+                                WebSockets, Socket.IO, Laravel Echo with Pusher, event-driven architecture with RabbitMQ/Kafka, CQRS patterns, and async PHP with ReactPHP/Swoole.
+                            </p>
+                            
+                            <div class="topic-stats">
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">1,000</div>
+                                    <div class="topic-stat-label">Questions</div>
+                                </div>
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">10</div>
+                                    <div class="topic-stat-label">Sections</div>
+                                </div>
+                            </div>
+
+                            <div class="difficulty-chart">
+                                <div class="difficulty-chart-title">Difficulty Distribution</div>
+                                <div class="difficulty-bars">
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Beginner</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill beginner" style="width: 18%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">18%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Intermediate</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill intermediate" style="width: 32%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">32%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Advanced</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill advanced" style="width: 35%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">35%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Expert</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill expert" style="width: 15%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">15%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="pages/realtime-communication.html" class="topic-link">Explore Questions →</a>
+                        </div>
+                    </article>
+
+                    <!-- Frontend React & Next.js Topic Card -->
+                    <article class="topic-card">
+                        <div class="topic-card-header">
+                            <div class="topic-icon">⚛️</div>
                             <h3>Frontend React & Next.js</h3>
-                            <span class="accordion-icon">▼</span>
                         </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    Modern React patterns, Next.js architecture, state management, SSR/SSG, and performance optimization.
-                                </p>
-                                <ul class="topic-features">
-                                    <li>React hooks and custom hooks</li>
-                                    <li>Next.js App Router and Pages Router</li>
-                                    <li>State management (Redux, Zustand, Context)</li>
-                                    <li>Server-Side Rendering (SSR) and Static Site Generation (SSG)</li>
-                                    <li>Performance optimization techniques</li>
-                                    <li>Code splitting and lazy loading</li>
-                                </ul>
-                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/frontend-react-nextjs/questions.md" data-answers="interview-bank/frontend-react-nextjs/answers.md">Explore Questions →</a>
+                        <div class="topic-card-body">
+                            <p class="topic-description">
+                                Modern React patterns, Next.js architecture (App Router & Pages Router), state management (Redux, Zustand), SSR/SSG, and performance optimization techniques.
+                            </p>
+                            
+                            <div class="topic-stats">
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">1,000</div>
+                                    <div class="topic-stat-label">Questions</div>
+                                </div>
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">10</div>
+                                    <div class="topic-stat-label">Sections</div>
+                                </div>
                             </div>
+
+                            <div class="difficulty-chart">
+                                <div class="difficulty-chart-title">Difficulty Distribution</div>
+                                <div class="difficulty-bars">
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Beginner</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill beginner" style="width: 22%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">22%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Intermediate</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill intermediate" style="width: 38%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">38%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Advanced</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill advanced" style="width: 28%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">28%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Expert</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill expert" style="width: 12%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">12%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="pages/frontend-react-nextjs.html" class="topic-link">Explore Questions →</a>
                         </div>
                     </article>
 
-                    <article class="accordion-item">
-                        <div class="accordion-header">
+                    <!-- DevOps, Cloud & Kubernetes Topic Card -->
+                    <article class="topic-card">
+                        <div class="topic-card-header">
+                            <div class="topic-icon">☁️</div>
                             <h3>DevOps, Cloud & Kubernetes</h3>
-                            <span class="accordion-icon">▼</span>
                         </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    Container orchestration, CI/CD pipelines, cloud architecture, monitoring, and infrastructure as code.
-                                </p>
-                                <ul class="topic-features">
-                                    <li>Kubernetes deployment and orchestration</li>
-                                    <li>Docker containerization best practices</li>
-                                    <li>CI/CD with GitHub Actions, Jenkins, GitLab CI</li>
-                                    <li>AWS/GCP/Azure cloud services</li>
-                                    <li>Infrastructure as Code (Terraform, CloudFormation)</li>
-                                    <li>Monitoring and logging (Prometheus, ELK stack)</li>
-                                </ul>
-                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/devops-cloud-k8s/questions.md" data-answers="interview-bank/devops-cloud-k8s/answers.md">Explore Questions →</a>
+                        <div class="topic-card-body">
+                            <p class="topic-description">
+                                Terraform IaC, Kubernetes production configs, Istio service mesh, Jenkins CI/CD pipelines, Docker multi-stage builds, AWS EKS, Helm charts, and CMMI Level 5 compliance.
+                            </p>
+                            
+                            <div class="topic-stats">
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">1,000</div>
+                                    <div class="topic-stat-label">Questions</div>
+                                </div>
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">10</div>
+                                    <div class="topic-stat-label">Sections</div>
+                                </div>
                             </div>
+
+                            <div class="difficulty-chart">
+                                <div class="difficulty-chart-title">Difficulty Distribution</div>
+                                <div class="difficulty-bars">
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Beginner</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill beginner" style="width: 12%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">12%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Intermediate</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill intermediate" style="width: 28%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">28%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Advanced</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill advanced" style="width: 38%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">38%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Expert</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill expert" style="width: 22%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">22%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="pages/devops-cloud-k8s.html" class="topic-link">Explore Questions →</a>
                         </div>
                     </article>
 
-                    <article class="accordion-item">
-                        <div class="accordion-header">
+                    <!-- AI, LLM & Serverless Topic Card -->
+                    <article class="topic-card">
+                        <div class="topic-card-header">
+                            <div class="topic-icon">🤖</div>
                             <h3>AI, LLM & Serverless</h3>
-                            <span class="accordion-icon">▼</span>
                         </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    Large Language Model integration, serverless architectures, AI-powered features, and event-driven systems.
-                                </p>
-                                <ul class="topic-features">
-                                    <li>LLM integration (OpenAI, Claude, Gemini)</li>
-                                    <li>Prompt engineering and optimization</li>
-                                    <li>Serverless architecture (AWS Lambda, Cloud Functions)</li>
-                                    <li>Event-driven design patterns</li>
-                                    <li>AI-powered feature implementation</li>
-                                    <li>Vector databases and embeddings</li>
-                                </ul>
-                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/ai-llm-serverless/questions.md" data-answers="interview-bank/ai-llm-serverless/answers.md">Explore Questions →</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Code Examples Section -->
-                    <article class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>💻 Code Examples & Implementation</h3>
-                            <span class="accordion-icon">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    Production-ready code examples covering payment processing, API security, database optimization, real-time communication, and modern frameworks.
-                                </p>
-                                <ul class="topic-features">
-                                    <li><strong>Payment Integration:</strong> Razorpay & Stripe with webhook handling</li>
-                                    <li><strong>API Security:</strong> PCI DSS compliance, OWASP Top 10 mitigation</li>
-                                    <li><strong>Database:</strong> Query optimization, indexing, caching patterns</li>
-                                    <li><strong>Real-time:</strong> WebSockets, Server-Sent Events, Broadcasting</li>
-                                    <li><strong>Frontend:</strong> React hooks, Next.js patterns, state management</li>
-                                    <li><strong>DevOps:</strong> Docker, Kubernetes, CI/CD pipelines</li>
-                                </ul>
-                                <div id="code-examples-container" style="margin-top: 1.5rem;">
-                                    <h4>Available Code Examples:</h4>
-                                    <ul id="examples-list" style="list-style: none; padding: 0;">
-                                        <li><a href="interview-bank/php-laravel-api-security/code-examples/" style="color: #e3342f; text-decoration: none;">✓ PHP & Laravel Examples</a></li>
-                                        <li><a href="interview-bank/database-optimization/code-examples/" style="color: #e3342f; text-decoration: none;">✓ Database Optimization Examples</a></li>
-                                        <li><a href="interview-bank/devops-cloud-k8s/code-examples/" style="color: #e3342f; text-decoration: none;">✓ DevOps & Kubernetes Examples</a></li>
-                                        <li><a href="interview-bank/frontend-react-nextjs/code-examples/" style="color: #e3342f; text-decoration: none;">✓ React & Next.js Examples</a></li>
-                                        <li><a href="interview-bank/realtime-communication/code-examples/" style="color: #e3342f; text-decoration: none;">✓ Real-time Communication Examples</a></li>
-                                        <li><a href="interview-bank/ai-llm-serverless/code-examples/" style="color: #e3342f; text-decoration: none;">✓ AI & LLM Examples</a></li>
-                                    </ul>
+                        <div class="topic-card-body">
+                            <p class="topic-description">
+                                AWS Lambda serverless architecture, Transformer deep learning, LLM integration (OpenAI, Claude, Gemini), RAG implementations, prompt engineering, and vector databases.
+                            </p>
+                            
+                            <div class="topic-stats">
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">1,000</div>
+                                    <div class="topic-stat-label">Questions</div>
+                                </div>
+                                <div class="topic-stat">
+                                    <div class="topic-stat-value">7</div>
+                                    <div class="topic-stat-label">Sections</div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
 
-                    <!-- Templates Section -->
-                    <article class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>📋 Interview Templates & Guides</h3>
-                            <span class="accordion-icon">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    Ready-to-use templates for answer preparation, system design, code implementation, and interview strategies.
-                                </p>
-                                <ul class="topic-features">
-                                    <li><strong>Answer Flow Template:</strong> Structure for comprehensive technical answers</li>
-                                    <li><strong>Question Format:</strong> Template for creating interview questions</li>
-                                    <li><strong>Architecture Diagrams:</strong> Mermaid diagram templates for system design</li>
-                                    <li><strong>Code Snippet Template:</strong> Proper formatting for code examples</li>
-                                    <li><strong>Security Checklists:</strong> PCI DSS and OWASP compliance guides</li>
-                                    <li><strong>Performance Benchmarks:</strong> Optimization testing templates</li>
-                                </ul>
-                                <div id="templates-container" style="margin-top: 1.5rem;">
-                                    <h4>Available Templates:</h4>
-                                    <ul id="templates-list" style="list-style: none; padding: 0;">
-                                        <li><a href="templates/answer-flow-template.md" style="color: #e3342f; text-decoration: none;">✓ Answer Flow Template</a></li>
-                                        <li><a href="templates/question-format-template.md" style="color: #e3342f; text-decoration: none;">✓ Question Format Template</a></li>
-                                        <li><a href="templates/architecture-diagram-template.md" style="color: #e3342f; text-decoration: none;">✓ Architecture Diagram Template</a></li>
-                                        <li><a href="templates/code-snippet-template.md" style="color: #e3342f; text-decoration: none;">✓ Code Snippet Template</a></li>
-                                        <li><a href="interview-bank/php-laravel-api-security/README.md" style="color: #e3342f; text-decoration: none;">✓ PHP & Laravel Guide</a></li>
-                                        <li><a href="interview-bank/database-optimization/README.md" style="color: #e3342f; text-decoration: none;">✓ Database Optimization Guide</a></li>
-                                    </ul>
+                            <div class="difficulty-chart">
+                                <div class="difficulty-chart-title">Difficulty Distribution</div>
+                                <div class="difficulty-bars">
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Beginner</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill beginner" style="width: 10%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">10%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Intermediate</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill intermediate" style="width: 25%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">25%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Advanced</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill advanced" style="width: 40%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">40%</span>
+                                    </div>
+                                    <div class="difficulty-bar">
+                                        <span class="difficulty-label">Expert</span>
+                                        <div class="difficulty-progress">
+                                            <div class="difficulty-fill expert" style="width: 25%"></div>
+                                        </div>
+                                        <span class="difficulty-percent">25%</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
 
-                    <!-- Documentation Section -->
-                    <article class="accordion-item">
-                        <div class="accordion-header">
-                            <h3>📚 Documentation & Resources</h3>
-                            <span class="accordion-icon">▼</span>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-body">
-                                <p class="topic-description">
-                                    Comprehensive documentation, security guides, and reference materials for interview preparation.
-                                </p>
-                                <ul class="topic-features">
-                                    <li><strong>CONTRIBUTING.md:</strong> Guidelines for contributing to the question bank</li>
-                                    <li><strong>Completion Report:</strong> Full coverage summary of all 6000+ questions</li>
-                                    <li><strong>Security Guides:</strong> PCI DSS compliance and OWASP implementations</li>
-                                    <li><strong>Framework Documentation:</strong> Laravel, React, Next.js references</li>
-                                    <li><strong>Progressive Enhancements:</strong> PWA features and offline support</li>
-                                    <li><strong>Automation Summary:</strong> Quality validation and cross-referencing tools</li>
-                                </ul>
-                                <div id="docs-container" style="margin-top: 1.5rem;">
-                                    <h4>Essential Documentation:</h4>
-                                    <ul id="docs-list" style="list-style: none; padding: 0;">
-                                        <li><a href="README.md" style="color: #e3342f; text-decoration: none;">✓ Main README</a></li>
-                                        <li><a href="CONTRIBUTING.md" style="color: #e3342f; text-decoration: none;">✓ Contributing Guidelines</a></li>
-                                        <li><a href="COMPLETION_REPORT.md" style="color: #e3342f; text-decoration: none;">✓ Completion Report</a></li>
-                                        <li><a href="PROGRESSIVE_ENHANCEMENTS.md" style="color: #e3342f; text-decoration: none;">✓ Progressive Enhancements</a></li>
-                                        <li><a href="AUTOMATION_SUMMARY.md" style="color: #e3342f; text-decoration: none;">✓ Automation Summary</a></li>
-                                        <li><a href="EXPLORE_QUESTIONS_FIX.md" style="color: #e3342f; text-decoration: none;">✓ Explore Questions Fix</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <a href="pages/ai-llm-serverless.html" class="topic-link">Explore Questions →</a>
                         </div>
                     </article>
-                </section>
+                </div>
             </main>
         </div>
 
@@ -923,26 +872,6 @@
             mainNav.classList.toggle('hidden');
         });
 
-        // Accordion functionality
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const item = header.parentElement;
-                const isActive = item.classList.contains('active');
-
-                // Close all accordion items
-                document.querySelectorAll('.accordion-item').forEach(i => {
-                    i.classList.remove('active');
-                });
-
-                // Open clicked item if it wasn't active
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
-        });
-
         // Search functionality (basic placeholder)
         const searchInput = document.querySelector('.search-bar input');
         const searchButton = document.querySelector('.search-bar button');
@@ -960,180 +889,6 @@
                 searchButton.click();
             }
         });
-
-        // Filter functionality (basic placeholder)
-        const checkboxes = document.querySelectorAll('aside input[type="checkbox"]');
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                const selectedTopics = Array.from(document.querySelectorAll('input[name="topic"]:checked'))
-                    .map(cb => cb.value);
-                const selectedDifficulties = Array.from(document.querySelectorAll('input[name="difficulty"]:checked'))
-                    .map(cb => cb.value);
-
-                console.log('Selected topics:', selectedTopics);
-                console.log('Selected difficulties:', selectedDifficulties);
-                // Implement filter logic here
-            });
-        });
-
-        // Explore Questions - load questions.md and answers.md (if present) and render inline
-        const exploreLinks = document.querySelectorAll('.explore-link');
-
-        async function fetchText(path) {
-            try {
-                const res = await fetch(path);
-                if (!res.ok) return null;
-                return await res.text();
-            } catch (e) {
-                return null;
-            }
-        }
-
-        function parseNumberedBlocks(markdownText) {
-            if (!markdownText) return [];
-            // Find all blocks that start with a number followed by dot and space
-            const blocks = [];
-            const lines = markdownText.split('\n');
-            let currentNum = null;
-            let currentText = '';
-
-            for (let i = 0; i < lines.length; i++) {
-                const line = lines[i];
-                const numMatch = line.match(/^\s*(\d+)\.\s+(.*)/);
-
-                if (numMatch) {
-                    // Save previous block if exists
-                    if (currentNum !== null && currentText) {
-                        blocks.push({ num: currentNum, text: currentText.trim() });
-                    }
-                    // Start new block
-                    currentNum = numMatch[1];
-                    currentText = numMatch[2];
-                } else if (currentNum !== null) {
-                    // Continue previous block (multi-line answer/question)
-                    if (line.trim()) {
-                        currentText += '\n' + line;
-                    }
-                }
-            }
-
-            // Save last block
-            if (currentNum !== null && currentText) {
-                blocks.push({ num: currentNum, text: currentText.trim() });
-            }
-
-            return blocks;
-        }
-
-        exploreLinks.forEach(link => {
-            link.addEventListener('click', async (e) => {
-                e.preventDefault();
-                const questionsPath = link.dataset.questions;
-                const answersPath = link.dataset.answers;
-
-                // Ensure the accordion item is expanded
-                const accordionItem = link.closest('.accordion-item');
-                if (accordionItem && !accordionItem.classList.contains('active')) {
-                    // close others and open this one (reuse existing logic)
-                    document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
-                    accordionItem.classList.add('active');
-                }
-
-                const body = link.closest('.accordion-body');
-                if (!body) return;
-
-                let container = body.querySelector('.questions-container');
-                if (!container) {
-                    container = document.createElement('div');
-                    container.className = 'questions-container';
-                    container.style.marginTop = '1rem';
-                    container.innerHTML = '<p class="loading">Loading questions…</p>';
-                    body.appendChild(container);
-                }
-
-                // Fetch questions.md
-                const md = await fetchText(questionsPath);
-                if (!md) {
-                    container.innerHTML = `<p class="error">Could not load questions from <code>${questionsPath}</code>.</p>`;
-                    return;
-                }
-
-                const questions = parseNumberedBlocks(md);
-                console.log(`✓ Parsed ${questions.length} questions from ${questionsPath}`);
-
-                // Try to fetch answers.md (may not exist)
-                const answersMd = await fetchText(answersPath);
-                const answers = answersMd ? parseNumberedBlocks(answersMd).reduce((acc, a) => { acc[a.num] = a.text; return acc; }, {}) : {};
-                console.log(`✓ Parsed ${Object.keys(answers).length} answers from ${answersPath}`);
-
-                // Render list
-                if (questions.length === 0) {
-                    container.innerHTML = '<p>No questions found in this topic.</p>';
-                    return;
-                }
-
-                const list = document.createElement('div');
-                list.className = 'questions-list';
-
-                questions.forEach(q => {
-                    const qWrap = document.createElement('div');
-                    qWrap.className = 'question-item';
-                    qWrap.style.borderTop = '1px solid #eee';
-                    qWrap.style.padding = '0.75rem 0';
-
-                    const qButton = document.createElement('button');
-                    qButton.type = 'button';
-                    qButton.className = 'question-title';
-                    qButton.textContent = `${q.num}. ${q.text}`;
-                    qButton.style.width = '100%';
-                    qButton.style.textAlign = 'left';
-                    qButton.style.background = 'none';
-                    qButton.style.border = 'none';
-                    qButton.style.padding = '0';
-                    qButton.style.cursor = 'pointer';
-                    qButton.style.fontSize = '1rem';
-
-                    const answerDiv = document.createElement('div');
-                    answerDiv.className = 'answer';
-                    answerDiv.style.marginTop = '0.5rem';
-                    answerDiv.style.paddingLeft = '1rem';
-                    answerDiv.style.display = 'none';
-                    answerDiv.style.color = '#444';
-
-                    const answerText = answers[q.num] || null;
-                    if (answerText) {
-                        // Convert simple markdown code blocks and inline code to <pre>/<code> and <code>
-                        answerDiv.innerHTML = answerText
-                            .replace(/```([\s\S]*?)```/g, (m, code) => `<pre><code>${escapeHtml(code)}</code></pre>`)
-                            .replace(/`([^`]+)`/g, (m, c) => `<code>${escapeHtml(c)}</code>`)
-                            .replace(/\n/g, '<br>');
-                    } else {
-                        answerDiv.innerHTML = `<em>Answer not available.</em> <small style="color:#666; display:block; margin-top:0.25rem;">You can add answers in <code>${answersPath}</code> (or create one) using the format: <code>1. Answer text</code>.</small>`;
-                    }
-
-                    qButton.addEventListener('click', () => {
-                        const visible = answerDiv.style.display !== 'none';
-                        answerDiv.style.display = visible ? 'none' : 'block';
-                        // smooth scroll into view when opening
-                        if (!visible) qButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    });
-
-                    qWrap.appendChild(qButton);
-                    qWrap.appendChild(answerDiv);
-                    list.appendChild(qWrap);
-                });
-
-                container.innerHTML = '';
-                container.appendChild(list);
-                console.log(`✓ Rendered ${questions.length} question elements to DOM`);
-            });
-        });
-
-        // small helper
-        function escapeHtml(str) {
-            return str.replace(/[&<>"']/g, function (m) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]; });
-        }
     </script>
 </body>
 </html>
