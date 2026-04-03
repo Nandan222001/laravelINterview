@@ -162,3 +162,5 @@ automation/*.json
 automation/*.md
 !automation/README.md
 !automation/IMPLEMENTATION.md
+!automation/HTML_GENERATOR_GUIDE.md
+!automation/EXAMPLE_OUTPUT.md

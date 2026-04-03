@@ -1,0 +1,4 @@
+# Python dependencies for Interview Bank Automation
+
+# Syntax highlighting for code blocks
+pygments>=2.10.0

@@ -46,10 +46,28 @@ Complete automation system for validating, analyzing, and indexing interview que
 - 🖥️ Interactive search web interface
 - ⚡ Optimized for fast client-side search
 
+### 6. **HTML Answer Generator** (`generate-html-answers.py`) ⭐ NEW!
+- 📖 Reads questions.md and answers.md from all topic directories
+- 🎨 Converts markdown to fully-formatted HTML with syntax highlighting
+- 💡 Uses Pygments for professional code highlighting (Monokai theme)
+- 📊 Generates inline SVG architecture flow diagrams automatically:
+  - Laravel Request Lifecycle (middleware, routing, controllers)
+  - Payment Processing Flow (validation, gateway, webhooks)
+  - Database Query Execution Plans (parser, optimizer, execution)
+  - React Component Lifecycle (mounting, updating, hooks)
+  - Kubernetes Deployment Flow (API server, scheduler, pods)
+  - WebSocket Real-time Architecture (pub/sub, load balancing)
+- 📝 Augments short answers with additional context
+- 🏗️ Outputs structured HTML with semantic `<article>` elements
+- 📱 Responsive design with modern CSS styling
+- 🎯 Automatic diagram detection based on question/answer content
+
 ## 🚀 Quick Start
 
 ### Requirements
-- PHP 8.0 or higher
+- PHP 8.0 or higher (for PHP automation scripts)
+- Python 3.7+ (for HTML answer generation)
+- Pygments library (`pip install pygments`)
 - Command line access
 
 ### Running the Complete Suite
@@ -64,6 +82,32 @@ This will:
 3. Generate statistics dashboard
 4. Map cross-references
 5. Create search indices
+
+### Running HTML Answer Generation
+
+**Generate comprehensive HTML answers with syntax highlighting and diagrams:**
+```bash
+python automation/generate-html-answers.py
+```
+
+Or on Windows:
+```bash
+python3 automation/generate-html-answers.py
+```
+
+This will:
+- Read questions.md and answers.md from all 6 topic directories
+- Augment existing answers with detailed explanations
+- Convert markdown code blocks to syntax-highlighted HTML using Pygments
+- Generate architecture flow diagrams as inline SVG for:
+  - Laravel request lifecycle
+  - Payment processing flow
+  - Database query execution plans
+  - React component lifecycle
+  - Kubernetes deployment flow
+  - WebSocket real-time architecture
+- Output fully-formatted HTML with `<article>` elements
+- Save to `automation/output/comprehensive-answers.html`
 
 ### Running Individual Components
 
@@ -111,6 +155,14 @@ All output files are saved to `automation/output/`:
 - `lunr-index.json` - Lunr.js compatible
 - `elasticsearch-mapping.json` - ES configuration
 - `search.html` - **Interactive search interface** 🔍
+
+### HTML Answers (NEW!)
+- `comprehensive-answers.html` - **Fully-formatted HTML answers** 🎨
+  - Syntax-highlighted code blocks (Pygments with Monokai theme)
+  - Inline SVG architecture diagrams
+  - Responsive design with modern CSS
+  - Organized by topic sections
+  - Article-based layout with question/answer pairs
 
 ## 📊 Example: Statistics Dashboard
 
