@@ -146,25 +146,72 @@
             color: #2c5282;
         }
 
-        .badge-topic[data-topic="caching"] {
+        .badge-topic[data-topic="cardinality"] {
             background: #c6f6d5;
             color: #22543d;
         }
 
-        .badge-topic[data-topic="query-optimization"] {
+        .badge-topic[data-topic="query-plans"] {
             background: #feebc8;
             color: #7c2d12;
         }
 
-        .badge-topic[data-topic="replication"] {
+        .badge-topic[data-topic="n-plus-one"] {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .badge-topic[data-topic="normalization"] {
+            background: #e9d8fd;
+            color: #44337a;
+        }
+
+        .badge-topic[data-topic="partitioning"] {
             background: #fbd5d5;
             color: #742a2a;
+        }
+
+        .badge-topic[data-topic="caching"] {
+            background: #b2f5ea;
+            color: #234e52;
+        }
+
+        .badge-topic[data-topic="query-builder"] {
+            background: #fef5e7;
+            color: #744210;
+        }
+
+        .badge-topic[data-topic="eager-loading"] {
+            background: #fed7e2;
+            color: #702459;
+        }
+
+        .badge-topic[data-topic="replication"] {
+            background: #bee3f8;
+            color: #2a4365;
         }
 
         .answer {
             color: #4a5568;
             line-height: 1.8;
             font-size: 1rem;
+        }
+
+        .answer p {
+            margin-bottom: 12px;
+        }
+
+        .answer ul, .answer ol {
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .answer li {
+            margin-bottom: 8px;
+        }
+
+        .answer strong {
+            color: #2d3748;
         }
 
         pre {
@@ -183,12 +230,15 @@
             line-height: 1.5;
         }
 
-        code.sql {
-            color: #8be9fd;
-        }
-
-        code.php {
-            color: #fc6;
+        .diagram {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
         }
 
         aside.metric-box {
@@ -261,6 +311,31 @@
             border-top: 2px solid #e9ecef;
         }
 
+        .flowchart {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .flowchart .step {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 10px auto;
+            max-width: 300px;
+            font-weight: 600;
+        }
+
+        .flowchart .arrow {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin: 5px 0;
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.8rem;
@@ -328,551 +403,6 @@
         </div>
     </div>
 
-    <script>
-        const questions = [
-            // Section 1: Indexing Strategies (1-150)
-            {
-                id: 1,
-                topic: 'indexing',
-                question: 'Explain how B-tree indexes work in MySQL/PostgreSQL and why they\'re the default index type.',
-                answer: `<p>B-tree (Balanced Tree) indexes are self-balancing tree data structures that maintain sorted data and allow searches, sequential access, insertions, and deletions in logarithmic time. They are the default because:</p>
-                <ul>
-                    <li><strong>Balanced structure:</strong> All leaf nodes are at the same depth, ensuring consistent O(log n) lookup time</li>
-                    <li><strong>Range query support:</strong> Sequential leaf nodes enable efficient range scans</li>
-                    <li><strong>Disk-friendly:</strong> Node size matches disk page size, minimizing I/O operations</li>
-                    <li><strong>Versatility:</strong> Supports equality, range, sorting, and prefix matching</li>
-                </ul>
-                <aside class="metric-box">
-                    <h4>Performance Metric</h4>
-                    <div class="metric">O(log n)</div>
-                    <div class="description">Typical lookup time for 10M rows: ~4-5 disk reads</div>
-                </aside>
-                <p>In InnoDB, B+ trees are used where data is stored in leaf nodes only, making range scans more efficient.</p>`
-            },
-            {
-                id: 4,
-                topic: 'indexing',
-                question: 'Write a query to create a B-tree index on a user\'s email column and explain when it would be used.',
-                answer: `<pre><code class="sql">-- Create B-tree index on email column
-CREATE INDEX idx_users_email ON users(email);
-
--- Used automatically for:
--- 1. Equality searches
-SELECT * FROM users WHERE email = 'user@example.com';
-
--- 2. Prefix searches (if email uses proper collation)
-SELECT * FROM users WHERE email LIKE 'user@%';
-
--- 3. Sorting
-SELECT * FROM users ORDER BY email;
-
--- 4. Uniqueness checks (with UNIQUE constraint)
-CREATE UNIQUE INDEX idx_users_email_unique ON users(email);</code></pre>
-                <aside class="metric-box">
-                    <h4>Performance Impact</h4>
-                    <div class="metric">99.9%</div>
-                    <div class="description">Reduction in lookup time: 14,568ms → 1.5ms for 100M rows</div>
-                </aside>`
-            },
-            {
-                id: 9,
-                topic: 'indexing',
-                question: 'Create an index strategy for a banking transactions table with 100M+ records.',
-                answer: `<pre><code class="sql">-- Primary key (clustered index)
-CREATE TABLE transactions (
-    id BIGSERIAL PRIMARY KEY,
-    account_id BIGINT NOT NULL,
-    transaction_date TIMESTAMP NOT NULL,
-    amount DECIMAL(15,2) NOT NULL,
-    status VARCHAR(20) NOT NULL,
-    description TEXT
-);
-
--- Composite index for account + date queries
-CREATE INDEX idx_transactions_account_date 
-ON transactions(account_id, transaction_date DESC);
-
--- Partial index for pending transactions only
-CREATE INDEX idx_transactions_pending 
-ON transactions(status) 
-WHERE status = 'pending';
-
--- Covering index for common dashboard query
-CREATE INDEX idx_transactions_covering 
-ON transactions(account_id, transaction_date DESC) 
-INCLUDE (amount, status);
-</code></pre>
-                <aside class="metric-box">
-                    <h4>Query Performance</h4>
-                    <div class="metric">15,234ms → 45ms</div>
-                    <div class="description">99.7% improvement for account transaction queries</div>
-                </aside>`
-            },
-            {
-                id: 73,
-                topic: 'indexing',
-                question: 'Write a query to create a GIN index on a JSONB column.',
-                answer: `<pre><code class="sql">-- Create audit logs table with JSONB metadata
-CREATE TABLE audit_logs (
-    id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    action VARCHAR(50) NOT NULL,
-    metadata JSONB,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create GIN index on JSONB column
-CREATE INDEX idx_audit_logs_metadata 
-ON audit_logs USING GIN (metadata);
-
--- Query using the index
-EXPLAIN ANALYZE
-SELECT * FROM audit_logs
-WHERE metadata @> '{"action": "transfer"}';
-</code></pre>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Operation</th>
-                            <th>Without Index</th>
-                            <th>With GIN Index</th>
-                            <th>Improvement</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>JSONB containment (@>)</td>
-                            <td>8,935ms</td>
-                            <td>46ms</td>
-                            <td>99.48%</td>
-                        </tr>
-                        <tr>
-                            <td>Array containment</td>
-                            <td>12,456ms</td>
-                            <td>89ms</td>
-                            <td>99.29%</td>
-                        </tr>
-                    </tbody>
-                </table>`
-            },
-            {
-                id: 112,
-                topic: 'indexing',
-                question: 'Write a covering index for a query that selects user_id, email, and created_at.',
-                answer: `<pre><code class="sql">-- Covering index with INCLUDE columns (PostgreSQL 11+)
-CREATE INDEX idx_users_covering 
-ON users(user_id) 
-INCLUDE (email, created_at);
-
--- Query that uses index-only scan
-EXPLAIN ANALYZE
-SELECT user_id, email, created_at 
-FROM users
-WHERE user_id = 12345;
-</code></pre>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Metric</th>
-                            <th>Before (Index + Table)</th>
-                            <th>After (Index Only)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Execution Time</td>
-                            <td>12.678ms</td>
-                            <td>0.567ms</td>
-                        </tr>
-                        <tr>
-                            <td>Heap Fetches</td>
-                            <td>1</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Performance</td>
-                            <td>Baseline</td>
-                            <td>95.5% faster</td>
-                        </tr>
-                    </tbody>
-                </table>`
-            },
-            {
-                id: 132,
-                topic: 'indexing',
-                question: 'Write a partial index for active accounts only (status = \'active\').',
-                answer: `<pre><code class="sql">-- Partial index for active accounts
-CREATE INDEX idx_accounts_active 
-ON accounts(status, account_number) 
-WHERE status = 'active';
-
--- Query optimization
-EXPLAIN ANALYZE
-SELECT * FROM accounts
-WHERE status = 'active' 
-  AND account_number = 'ACC123456';
-</code></pre>
-                <aside class="metric-box">
-                    <h4>Storage Savings</h4>
-                    <div class="metric">93.5%</div>
-                    <div class="description">Index size: 2.4GB → 156MB (only active records)</div>
-                </aside>
-                <aside class="metric-box">
-                    <h4>Query Performance</h4>
-                    <div class="metric">89.8%</div>
-                    <div class="description">Execution time: 235ms → 24ms</div>
-                </aside>`
-            },
-            {
-                id: 153,
-                topic: 'cardinality',
-                question: 'Write a query to calculate the cardinality of a column in MySQL.',
-                answer: `<pre><code class="sql">-- Calculate cardinality (distinct values)
-SELECT 
-    COUNT(DISTINCT account_type) as cardinality,
-    COUNT(*) as total_rows,
-    COUNT(DISTINCT account_type) / COUNT(*) * 100 as cardinality_percentage
-FROM accounts;
-
--- Detailed cardinality analysis
-SELECT 
-    account_type,
-    COUNT(*) as row_count,
-    COUNT(*) / (SELECT COUNT(*) FROM accounts) * 100 as percentage
-FROM accounts
-GROUP BY account_type
-ORDER BY row_count DESC;
-</code></pre>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Column</th>
-                            <th>Distinct Values</th>
-                            <th>Total Rows</th>
-                            <th>Cardinality Ratio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>transaction_id</td>
-                            <td>100,000,000</td>
-                            <td>100,000,000</td>
-                            <td>1.0 (High)</td>
-                        </tr>
-                        <tr>
-                            <td>account_id</td>
-                            <td>1,250,000</td>
-                            <td>100,000,000</td>
-                            <td>0.0125 (High)</td>
-                        </tr>
-                        <tr>
-                            <td>status</td>
-                            <td>5</td>
-                            <td>100,000,000</td>
-                            <td>0.00000005 (Low)</td>
-                        </tr>
-                    </tbody>
-                </table>`
-            },
-            {
-                id: 252,
-                topic: 'query-plans',
-                question: 'Write a query to analyze the execution plan of a complex JOIN.',
-                answer: `<pre><code class="sql">-- Complex JOIN query for banking report
-EXPLAIN (ANALYZE, BUFFERS, VERBOSE)
-SELECT 
-    a.account_number,
-    c.customer_name,
-    COUNT(*) as transaction_count,
-    SUM(t.amount) as total_amount
-FROM transactions t
-JOIN accounts a ON t.account_id = a.id
-JOIN customers c ON a.customer_id = c.id
-WHERE t.transaction_date >= CURRENT_DATE - INTERVAL '30 days'
-GROUP BY a.account_number, c.customer_name
-HAVING COUNT(*) > 10
-ORDER BY total_amount DESC
-LIMIT 100;
-</code></pre>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Node Type</th>
-                            <th>Cost</th>
-                            <th>Actual Time (ms)</th>
-                            <th>Rows</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Limit</td>
-                            <td>125789.45</td>
-                            <td>567.890</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>→ Sort</td>
-                            <td>125567.89</td>
-                            <td>389.012</td>
-                            <td>1,334</td>
-                        </tr>
-                        <tr>
-                            <td>→ GroupAggregate</td>
-                            <td>125678.90</td>
-                            <td>456.789</td>
-                            <td>1,334</td>
-                        </tr>
-                        <tr>
-                            <td>→ Hash Join</td>
-                            <td>12345.67</td>
-                            <td>123.456</td>
-                            <td>45,679</td>
-                        </tr>
-                    </tbody>
-                </table>`
-            },
-            {
-                id: 352,
-                topic: 'n-plus-one',
-                question: 'Write code demonstrating an N+1 problem in Laravel Eloquent.',
-                answer: `<pre><code class="php">// ❌ N+1 PROBLEM - BAD PRACTICE
-class AccountController extends Controller
-{
-    public function index()
-    {
-        // Query 1: Fetch all accounts
-        $accounts = Account::where('status', 'active')->get();
-        
-        foreach ($accounts as $account) {
-            // Query N+1: One query PER account
-            echo $account->customer->name;
-            echo $account->transactions->count();
-        }
-        // Total: 1 + (N × 2) queries!
-    }
-}
-
-// ✅ SOLUTION - BEST PRACTICE
-class AccountController extends Controller
-{
-    public function index()
-    {
-        // Only 3 queries total
-        $accounts = Account::where('status', 'active')
-            ->with(['customer', 'transactions'])
-            ->withCount('transactions')
-            ->get();
-        
-        foreach ($accounts as $account) {
-            echo $account->customer->name;  // No additional query
-            echo $account->transactions_count;  // No additional query
-        }
-    }
-}
-</code></pre>
-                <aside class="metric-box">
-                    <h4>Performance Impact</h4>
-                    <div class="metric">97.3%</div>
-                    <div class="description">Response time: 16,890ms → 456ms (1,001 queries → 3 queries)</div>
-                </aside>`
-            },
-            {
-                id: 551,
-                topic: 'partitioning',
-                question: 'Explain range partitioning and its use cases.',
-                answer: `<p>Range partitioning divides a table into partitions based on ranges of values in a partition key column. Common use cases include:</p>
-                <ul>
-                    <li><strong>Time-series data:</strong> Partitioning by date/timestamp (monthly, yearly)</li>
-                    <li><strong>Banking transactions:</strong> Separate current vs historical data</li>
-                    <li><strong>Data archival:</strong> Easy removal of old partitions</li>
-                    <li><strong>Query performance:</strong> Partition pruning eliminates irrelevant partitions</li>
-                </ul>
-                <pre><code class="sql">-- Create range-partitioned table
-CREATE TABLE transactions (
-    id BIGSERIAL,
-    transaction_date DATE NOT NULL,
-    amount DECIMAL(15,2)
-) PARTITION BY RANGE (transaction_date);
-
--- Create monthly partitions
-CREATE TABLE transactions_2024_01 PARTITION OF transactions
-    FOR VALUES FROM ('2024-01-01') TO ('2024-02-01');
-
-CREATE TABLE transactions_2024_02 PARTITION OF transactions
-    FOR VALUES FROM ('2024-02-01') TO ('2024-03-01');
-</code></pre>
-                <aside class="metric-box">
-                    <h4>Partition Pruning Benefit</h4>
-                    <div class="metric">92%</div>
-                    <div class="description">Scans 1 partition instead of 12 for date-filtered queries</div>
-                </aside>`
-            },
-            {
-                id: 651,
-                topic: 'caching',
-                question: 'Explain the cache-aside (lazy loading) pattern.',
-                answer: `<p>Cache-aside is a caching strategy where the application code manages the cache:</p>
-                <ol>
-                    <li>Check cache for data</li>
-                    <li>If cache hit: return cached data</li>
-                    <li>If cache miss: query database, store in cache, return data</li>
-                </ol>
-                <pre><code class="php">public function getAccount(int $accountId): ?array
-{
-    $cacheKey = "account:{$accountId}";
-    
-    // 1. Check cache first
-    $cached = Redis::get($cacheKey);
-    if ($cached !== null) {
-        return json_decode($cached, true);
-    }
-    
-    // 2. Cache miss - query database
-    $account = DB::table('accounts')->find($accountId);
-    
-    // 3. Store in cache for future requests
-    Redis::setex($cacheKey, 3600, json_encode($account));
-    
-    return (array) $account;
-}
-</code></pre>
-                <aside class="metric-box">
-                    <h4>Database Load Reduction</h4>
-                    <div class="metric">87%</div>
-                    <div class="description">90% hit rate: 15,000ms DB time → 1,950ms total (cache + DB)</div>
-                </aside>`
-            },
-            {
-                id: 826,
-                topic: 'eager-loading',
-                question: 'Explain how Eloquent eager loading prevents N+1 queries.',
-                answer: `<p>Eager loading loads all related data upfront with a minimal number of queries instead of loading relationships on-demand:</p>
-                <pre><code class="php">// ❌ Without eager loading (N+1 problem)
-$accounts = Account::all();  // 1 query
-foreach ($accounts as $account) {
-    echo $account->customer->name;  // +N queries
-}
-
-// ✅ With eager loading (2 queries total)
-$accounts = Account::with('customer')->get();  // 2 queries
-foreach ($accounts as $account) {
-    echo $account->customer->name;  // No additional query
-}
-</code></pre>
-                <p>Generated SQL:</p>
-                <pre><code class="sql">-- Query 1: Load accounts
-SELECT * FROM accounts;
-
--- Query 2: Load all related customers in one query
-SELECT * FROM customers 
-WHERE id IN (1, 2, 3, ..., 100);
-</code></pre>
-                <aside class="metric-box">
-                    <h4>Query Reduction</h4>
-                    <div class="metric">98.5%</div>
-                    <div class="description">100 accounts: 201 queries → 3 queries</div>
-                </aside>`
-            },
-            {
-                id: 901,
-                topic: 'replication',
-                question: 'Explain database connection pooling and its benefits.',
-                answer: `<p>Connection pooling maintains a pool of reusable database connections to avoid the overhead of creating new connections for each request.</p>
-                <p><strong>Benefits:</strong></p>
-                <ul>
-                    <li><strong>Reduced latency:</strong> No connection establishment time (typically 50-100ms saved per request)</li>
-                    <li><strong>Resource efficiency:</strong> Reuse connections instead of creating thousands</li>
-                    <li><strong>Better scalability:</strong> Handle more concurrent requests with fewer DB connections</li>
-                    <li><strong>Controlled resource usage:</strong> Limit max connections to prevent database overload</li>
-                </ul>
-                <aside class="metric-box">
-                    <h4>Optimal Pool Size Formula</h4>
-                    <div class="metric">(CPU cores × 2) + 1</div>
-                    <div class="description">8 cores = 17 connections recommended</div>
-                </aside>
-                <p>Tools: PgBouncer (PostgreSQL), ProxySQL (MySQL)</p>`
-            }
-        ];
-
-        // Generate all 1000 questions programmatically
-        const allQuestions = generateAllQuestions();
-
-        function generateAllQuestions() {
-            const generated = [...questions];
-            const topics = {
-                'indexing': { start: 1, end: 150, description: 'Indexing Strategies' },
-                'cardinality': { start: 151, end: 250, description: 'Cardinality Analysis' },
-                'query-plans': { start: 251, end: 350, description: 'Query Execution Plans' },
-                'n-plus-one': { start: 351, end: 450, description: 'N+1 Query Elimination' },
-                'normalization': { start: 451, end: 550, description: 'Normalization/Denormalization' },
-                'partitioning': { start: 551, end: 650, description: 'Partitioning Strategies' },
-                'caching': { start: 651, end: 750, description: 'Redis Caching' },
-                'query-builder': { start: 751, end: 825, description: 'Laravel Query Builder' },
-                'eager-loading': { start: 826, end: 900, description: 'Eloquent Eager Loading' },
-                'replication': { start: 901, end: 1000, description: 'Connection Pooling & Replication' }
-            };
-
-            // Generate remaining questions for each section
-            for (const [topic, range] of Object.entries(topics)) {
-                for (let i = range.start; i <= range.end; i++) {
-                    if (!generated.find(q => q.id === i)) {
-                        generated.push({
-                            id: i,
-                            topic: topic,
-                            question: `${range.description} - Question ${i}`,
-                            answer: `<p>This is a comprehensive answer for question ${i} about ${range.description}.</p>
-                            <p>Key concepts covered include best practices, performance optimization, and real-world banking application examples.</p>`
-                        });
-                    }
-                }
-            }
-
-            return generated.sort((a, b) => a.id - b.id);
-        }
-
-        function renderQuestions(questionsToRender) {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = questionsToRender.map(q => `
-                <article data-topic="${q.topic}" data-id="${q.id}">
-                    <div class="question-header">
-                        <div class="question">${q.id}. ${q.question}</div>
-                        <div class="badges">
-                            <span class="badge badge-topic" data-topic="${q.topic}">${q.topic}</span>
-                        </div>
-                    </div>
-                    <div class="answer">${q.answer}</div>
-                </article>
-            `).join('');
-
-            updateStats(questionsToRender.length);
-        }
-
-        function updateStats(visibleCount) {
-            document.getElementById('visibleCount').textContent = visibleCount;
-            document.getElementById('totalCount').textContent = allQuestions.length;
-        }
-
-        function filterQuestions() {
-            const topicFilter = document.getElementById('topicFilter').value;
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-
-            const filtered = allQuestions.filter(q => {
-                const matchesTopic = topicFilter === 'all' || q.topic === topicFilter;
-                const matchesSearch = searchTerm === '' || 
-                    q.question.toLowerCase().includes(searchTerm) ||
-                    q.answer.toLowerCase().includes(searchTerm);
-                return matchesTopic && matchesSearch;
-            });
-
-            renderQuestions(filtered);
-        }
-
-        // Event listeners
-        document.getElementById('topicFilter').addEventListener('change', filterQuestions);
-        document.getElementById('searchInput').addEventListener('input', filterQuestions);
-
-        // Initial render
-        renderQuestions(allQuestions);
-    </script>
+    <script src="../assets/js/database-questions.js"></script>
 </body>
 </html>
