@@ -167,6 +167,16 @@
             color: white;
         }
 
+        .badge-istio {
+            background: #466bb0;
+            color: white;
+        }
+
+        .badge-monitoring {
+            background: #e53e3e;
+            color: white;
+        }
+
         .answer {
             color: #4a5568;
             line-height: 1.8;
@@ -189,20 +199,18 @@
             line-height: 1.5;
         }
 
-        /* Syntax highlighting for HCL/Terraform */
-        .hcl-keyword { color: #c678dd; }
-        .hcl-resource { color: #61afef; }
-        .hcl-string { color: #98c379; }
-        .hcl-comment { color: #5c6370; font-style: italic; }
-        .hcl-number { color: #d19a66; }
-        .hcl-property { color: #e06c75; }
+        .diagram {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            color: #2d3748;
+        }
 
-        /* YAML syntax highlighting */
-        .yaml-key { color: #61afef; }
-        .yaml-value { color: #98c379; }
-        .yaml-comment { color: #5c6370; font-style: italic; }
-
-        /* Command line styling */
         kbd {
             background: #2d3748;
             color: #68d391;
@@ -278,6 +286,8 @@
                     <option value="docker">Docker</option>
                     <option value="jenkins">Jenkins/CI/CD</option>
                     <option value="aws">AWS</option>
+                    <option value="istio">Service Mesh</option>
+                    <option value="monitoring">Monitoring</option>
                     <option value="cmmi">CMMI Compliance</option>
                 </select>
             </div>
@@ -297,181 +307,12 @@
         </div>
     </div>
 
-    <script id="questionsData" type="application/json">
-    [
-        {
-            "id": 1,
-            "question": "Design and implement a complete VPC infrastructure using Terraform for a three-tier web application across multiple availability zones",
-            "tags": ["terraform", "aws"],
-            "answer": "Create a VPC with proper CIDR planning, public/private subnets across multiple AZs, NAT gateways, Internet Gateway, route tables, and VPC Flow Logs. Use Terraform modules for reusability.",
-            "code": "resource \"aws_vpc\" \"main\" {\n  cidr_block           = var.vpc_cidr\n  enable_dns_hostnames = true\n  enable_dns_support   = true\n\n  tags = {\n    Name        = \"${var.project_name}-vpc\"\n    Environment = var.environment\n  }\n}\n\nresource \"aws_internet_gateway\" \"main\" {\n  vpc_id = aws_vpc.main.id\n\n  tags = {\n    Name = \"${var.project_name}-igw\"\n  }\n}",
-            "commands": ["terraform init", "terraform plan", "terraform apply"]
-        },
-        {
-            "id": 2,
-            "question": "Implement EC2 Auto Scaling with Application Load Balancer using Terraform with CloudWatch alarms for scaling triggers",
-            "tags": ["terraform", "aws"],
-            "answer": "Configure Launch Template, Auto Scaling Group, ALB with target group, health checks, and CloudWatch alarms for CPU-based scaling policies.",
-            "code": "resource \"aws_autoscaling_group\" \"app\" {\n  name                = \"${var.app_name}-asg\"\n  vpc_zone_identifier = var.private_subnet_ids\n  target_group_arns   = [aws_lb_target_group.app.arn]\n  health_check_type   = \"ELB\"\n  health_check_grace_period = 300\n\n  min_size         = var.min_size\n  max_size         = var.max_size\n  desired_capacity = var.desired_capacity\n\n  launch_template {\n    id      = aws_launch_template.app.id\n    version = \"$Latest\"\n  }\n}",
-            "commands": ["aws autoscaling describe-auto-scaling-groups", "aws elbv2 describe-target-health"]
-        },
-        {
-            "id": 3,
-            "question": "Create a production-ready RDS PostgreSQL instance with Multi-AZ deployment using Terraform",
-            "tags": ["terraform", "aws"],
-            "answer": "Deploy RDS with Multi-AZ, encryption using KMS, custom parameter group, automated backups, CloudWatch monitoring, and read replicas for reporting workloads.",
-            "code": "resource \"aws_db_instance\" \"main\" {\n  identifier     = \"${var.app_name}-postgres\"\n  engine         = \"postgres\"\n  engine_version = \"14.7\"\n  instance_class = var.db_instance_class\n\n  allocated_storage     = var.allocated_storage\n  storage_type          = \"gp3\"\n  storage_encrypted     = true\n  kms_key_id            = aws_kms_key.rds.arn\n\n  multi_az               = var.multi_az\n  db_subnet_group_name   = aws_db_subnet_group.main.name\n  vpc_security_group_ids = [aws_security_group.rds.id]\n  publicly_accessible    = false\n}",
-            "commands": ["aws rds describe-db-instances", "aws rds describe-db-snapshots"]
-        },
-        {
-            "id": 101,
-            "question": "Design a production-ready Kubernetes Pod with proper resource management, health checks, and security context",
-            "tags": ["kubernetes"],
-            "answer": "Configure resource requests/limits, liveness/readiness/startup probes, security context with non-root user, read-only root filesystem, and proper volume mounts for temporary storage.",
-            "code": "apiVersion: v1\nkind: Pod\nmetadata:\n  name: api-service\n  namespace: production\nspec:\n  securityContext:\n    runAsNonRoot: true\n    runAsUser: 1000\n    fsGroup: 2000\n  containers:\n  - name: api-server\n    image: myapp/api-service:v1.2.3\n    ports:\n    - name: http\n      containerPort: 8080\n    resources:\n      requests:\n        cpu: 250m\n        memory: 512Mi\n      limits:\n        cpu: 1000m\n        memory: 1Gi\n    livenessProbe:\n      httpGet:\n        path: /health/live\n        port: http\n      initialDelaySeconds: 30\n      periodSeconds: 10",
-            "commands": ["kubectl apply -f pod.yaml", "kubectl get pod api-service -o wide", "kubectl describe pod api-service"]
-        },
-        {
-            "id": 102,
-            "question": "Create a Kubernetes Deployment with zero-downtime rolling updates and HPA configuration",
-            "tags": ["kubernetes"],
-            "answer": "Configure RollingUpdate strategy with maxSurge and maxUnavailable, HPA with CPU/memory metrics, PodDisruptionBudget, and proper readiness probes for traffic management.",
-            "code": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: web-application\n  namespace: production\nspec:\n  replicas: 3\n  strategy:\n    type: RollingUpdate\n    rollingUpdate:\n      maxSurge: 1\n      maxUnavailable: 0\n  selector:\n    matchLabels:\n      app: web-application\n  template:\n    metadata:\n      labels:\n        app: web-application\n        version: v2.0.0\n    spec:\n      containers:\n      - name: web-app\n        image: myregistry/web-application:v2.0.0\n        ports:\n        - name: http\n          containerPort: 8080",
-            "commands": ["kubectl apply -f deployment.yaml", "kubectl rollout status deployment/web-application", "kubectl rollout history deployment/web-application"]
-        },
-        {
-            "id": 103,
-            "question": "Implement different Kubernetes Service types (ClusterIP, NodePort, LoadBalancer, Headless) with proper use cases",
-            "tags": ["kubernetes"],
-            "answer": "ClusterIP for internal services, NodePort for debugging, LoadBalancer for external access with cloud provider integration, and Headless for StatefulSet direct pod access.",
-            "code": "apiVersion: v1\nkind: Service\nmetadata:\n  name: api-service-internal\n  namespace: production\nspec:\n  type: ClusterIP\n  selector:\n    app: api-service\n  ports:\n  - name: http\n    port: 80\n    targetPort: 8080\n  sessionAffinity: ClientIP\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: postgres-headless\n  namespace: database\nspec:\n  type: ClusterIP\n  clusterIP: None\n  selector:\n    app: postgres\n  ports:\n  - name: postgres\n    port: 5432",
-            "commands": ["kubectl get services -A", "kubectl describe service api-service-internal", "kubectl get endpoints"]
-        },
-        {
-            "id": 201,
-            "question": "Configure HPA with custom metrics from Prometheus for intelligent autoscaling",
-            "tags": ["kubernetes"],
-            "answer": "Set up Prometheus adapter for custom metrics API, configure HPA with multiple metrics (CPU, memory, custom RPS), and implement scaling behavior policies to prevent flapping.",
-            "code": "apiVersion: autoscaling/v2\nkind: HorizontalPodAutoscaler\nmetadata:\n  name: ecommerce-app-hpa\n  namespace: production\nspec:\n  scaleTargetRef:\n    apiVersion: apps/v1\n    kind: Deployment\n    name: ecommerce-app\n  minReplicas: 3\n  maxReplicas: 50\n  metrics:\n  - type: Resource\n    resource:\n      name: cpu\n      target:\n        type: Utilization\n        averageUtilization: 70\n  - type: Pods\n    pods:\n      metric:\n        name: http_requests_per_second\n      target:\n        type: AverageValue\n        averageValue: \"100\"",
-            "commands": ["kubectl get hpa", "kubectl describe hpa ecommerce-app-hpa", "kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1"]
-        },
-        {
-            "id": 202,
-            "question": "Implement production-ready Ingress with NGINX Ingress Controller, SSL/TLS, and rate limiting",
-            "tags": ["kubernetes"],
-            "answer": "Deploy NGINX Ingress Controller, configure cert-manager for SSL automation, set up rate limiting annotations, CORS policies, and canary deployments with traffic splitting.",
-            "code": "apiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: api-ingress\n  namespace: production\n  annotations:\n    kubernetes.io/ingress.class: nginx\n    cert-manager.io/cluster-issuer: letsencrypt-prod\n    nginx.ingress.kubernetes.io/ssl-redirect: \"true\"\n    nginx.ingress.kubernetes.io/limit-rps: \"100\"\n    nginx.ingress.kubernetes.io/enable-cors: \"true\"\nspec:\n  tls:\n  - hosts:\n    - api.example.com\n    secretName: api-example-com-tls\n  rules:\n  - host: api.example.com\n    http:\n      paths:\n      - path: /api/v1\n        pathType: Prefix\n        backend:\n          service:\n            name: api-v1-service\n            port:\n              number: 80",
-            "commands": ["kubectl get ingress -A", "kubectl describe ingress api-ingress", "kubectl get certificate"]
-        },
-        {
-            "id": 301,
-            "question": "Create a comprehensive Jenkins declarative pipeline for Kubernetes deployment with security scanning",
-            "tags": ["jenkins", "kubernetes", "cmmi"],
-            "answer": "Implement Jenkins pipeline with Kubernetes agents, Docker image building, Trivy security scanning, SonarQube quality gates, Helm deployment, and Jira integration for CMMI traceability.",
-            "code": "pipeline {\n  agent {\n    kubernetes {\n      yaml \"\"\"\napiVersion: v1\nkind: Pod\nspec:\n  containers:\n  - name: docker\n    image: docker:24-dind\n    command: ['cat']\n    tty: true\n  - name: kubectl\n    image: bitnami/kubectl:1.28\n    command: ['cat']\n    tty: true\n  - name: helm\n    image: alpine/helm:3.13\n    command: ['cat']\n    tty: true\n\"\"\"\n    }\n  }\n  stages {\n    stage('Build Docker Image') {\n      steps {\n        container('docker') {\n          sh 'docker build -t myapp:${GIT_COMMIT} .'\n        }\n      }\n    }\n  }\n}",
-            "commands": ["kubectl get pods -n jenkins", "kubectl logs -f jenkins-agent-xyz"]
-        },
-        {
-            "id": 302,
-            "question": "Implement Jenkins shared libraries for reusable pipeline code with CMMI compliance tracking",
-            "tags": ["jenkins", "cmmi"],
-            "answer": "Create shared library with standardized pipeline stages, audit logging, automated Jira ticket updates, and compliance reporting for CMMI Level 5 requirements.",
-            "code": "@Library('shared-library') _\n\ndef jiraUpdateTicket(Map args) {\n  httpRequest(\n    url: \"${env.JIRA_URL}/rest/api/2/issue/${args.issue}\",\n    httpMode: 'PUT',\n    authentication: 'jira-api-token',\n    contentType: 'APPLICATION_JSON',\n    requestBody: \"\"\"\n    {\n      \"fields\": {\n        \"status\": {\"name\": \"${args.status}\"}\n      }\n    }\n    \"\"\"\n  )\n}",
-            "commands": ["git clone https://github.com/org/jenkins-shared-library.git"]
-        },
-        {
-            "id": 401,
-            "question": "Design optimized multi-stage Dockerfile with distroless base images for production",
-            "tags": ["docker"],
-            "answer": "Implement multi-stage build with separate dependency installation, builder stage, security scanning, and minimal distroless runtime image with non-root user.",
-            "code": "# Stage 1: Dependencies\nFROM node:18-alpine AS dependencies\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --prefer-offline --no-audit\n\n# Stage 2: Builder\nFROM node:18-alpine AS builder\nWORKDIR /app\nCOPY --from=dependencies /app/node_modules ./node_modules\nCOPY . .\nRUN npm run build\nRUN npm prune --production\n\n# Stage 3: Production Runtime\nFROM gcr.io/distroless/nodejs18-debian11 AS production\nWORKDIR /app\nCOPY --from=builder --chown=nonroot:nonroot /app/dist ./dist\nCOPY --from=builder --chown=nonroot:nonroot /app/node_modules ./node_modules\nUSER nonroot\nEXPOSE 8080\nCMD [\"dist/main.js\"]",
-            "commands": ["docker build --target production -t myapp:latest .", "docker history myapp:latest", "docker images myapp:latest"]
-        },
-        {
-            "id": 402,
-            "question": "Implement comprehensive container security scanning with Trivy, Cosign image signing, and SBOM generation",
-            "tags": ["docker", "cmmi"],
-            "answer": "Integrate Trivy for vulnerability scanning, use Cosign for keyless image signing, generate SBOM with Syft, and implement runtime security with Falco for CMMI compliance.",
-            "code": "# GitHub Actions workflow\n- name: Run Trivy vulnerability scanner\n  uses: aquasecurity/trivy-action@master\n  with:\n    image-ref: ${{ env.IMAGE }}\n    format: 'sarif'\n    output: 'trivy-results.sarif'\n    severity: 'CRITICAL,HIGH'\n\n- name: Generate SBOM\n  uses: anchore/sbom-action@v0\n  with:\n    image: ${{ env.IMAGE }}\n    format: spdx-json\n    output-file: sbom.spdx.json\n\n- name: Sign image with Cosign\n  run: |\n    cosign sign --yes ${{ env.IMAGE }}@${{ steps.push.outputs.digest }}",
-            "commands": ["trivy image myapp:latest", "cosign verify myapp:latest", "syft myapp:latest -o spdx-json"]
-        },
-        {
-            "id": 501,
-            "question": "Design complete Istio service mesh architecture with mTLS and traffic management",
-            "tags": ["kubernetes"],
-            "answer": "Deploy Istio with production profile, configure automatic mTLS, implement VirtualService for canary deployments, DestinationRule for circuit breaking, and authorization policies.",
-            "code": "apiVersion: networking.istio.io/v1beta1\nkind: VirtualService\nmetadata:\n  name: api-service\n  namespace: production\nspec:\n  hosts:\n  - api.example.com\n  gateways:\n  - main-gateway\n  http:\n  - match:\n    - headers:\n        x-canary:\n          exact: \"true\"\n    route:\n    - destination:\n        host: api-service\n        subset: v2\n  - route:\n    - destination:\n        host: api-service\n        subset: v1\n      weight: 90\n    - destination:\n        host: api-service\n        subset: v2\n      weight: 10",
-            "commands": ["istioctl install --set profile=production", "kubectl get virtualservices -A", "istioctl analyze"]
-        },
-        {
-            "id": 601,
-            "question": "Implement comprehensive observability stack with Prometheus, Grafana, and Loki",
-            "tags": ["kubernetes"],
-            "answer": "Deploy Prometheus for metrics with service discovery, Loki for log aggregation, Tempo for distributed tracing, Grafana for visualization, and configure SLO-based alerting.",
-            "code": "# Prometheus scrape config\nscrape_configs:\n- job_name: 'kubernetes-pods'\n  kubernetes_sd_configs:\n  - role: pod\n  relabel_configs:\n  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]\n    action: keep\n    regex: true\n  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_port]\n    action: replace\n    regex: (.+)\n    target_label: __address__\n\n# Alert rules\n- alert: HighErrorRate\n  expr: |\n    sum(rate(http_requests_total{status=~\"5..\"}[5m])) by (job) /\n    sum(rate(http_requests_total[5m])) by (job) > 0.05\n  for: 5m\n  labels:\n    severity: critical",
-            "commands": ["kubectl get prometheus -A", "kubectl port-forward svc/grafana 3000:80", "promtool check config prometheus.yml"]
-        },
-        {
-            "id": 701,
-            "question": "Create production-ready Helm chart with hooks, tests, and multi-environment support",
-            "tags": ["kubernetes"],
-            "answer": "Develop Helm chart with proper structure, flexible values.yaml, template helpers, pre-install hooks for migrations, post-install tests, and environment-specific overrides.",
-            "code": "# Chart.yaml\napiVersion: v2\nname: ecommerce-api\nversion: 1.0.0\nappVersion: \"2.0.0\"\ndependencies:\n- name: postgresql\n  version: 12.x.x\n  repository: https://charts.bitnami.com/bitnami\n  condition: postgresql.enabled\n\n# values.yaml\nimage:\n  repository: mycompany/ecommerce-api\n  tag: \"2.0.0\"\n  pullPolicy: IfNotPresent\n\nreplicaCount: 3\n\nautoscaling:\n  enabled: true\n  minReplicas: 3\n  maxReplicas: 10\n  targetCPUUtilizationPercentage: 70",
-            "commands": ["helm install myapp ./chart", "helm upgrade --install myapp ./chart -f values-prod.yaml", "helm test myapp"]
-        },
-        {
-            "id": 702,
-            "question": "Implement GitOps with ArgoCD for declarative continuous deployment",
-            "tags": ["kubernetes"],
-            "answer": "Deploy ArgoCD, configure application sets for multi-cluster deployment, implement sync waves for ordered deployments, and set up automated sync with health checks.",
-            "code": "apiVersion: argoproj.io/v1alpha1\nkind: Application\nmetadata:\n  name: ecommerce-api\n  namespace: argocd\nspec:\n  project: default\n  source:\n    repoURL: https://github.com/org/manifests.git\n    targetRevision: HEAD\n    path: apps/ecommerce-api\n    helm:\n      valueFiles:\n      - values-production.yaml\n  destination:\n    server: https://kubernetes.default.svc\n    namespace: production\n  syncPolicy:\n    automated:\n      prune: true\n      selfHeal: true\n    syncOptions:\n    - CreateNamespace=true\n    retry:\n      limit: 5\n      backoff:\n        duration: 5s\n        factor: 2\n        maxDuration: 3m",
-            "commands": ["argocd app create ecommerce-api", "argocd app sync ecommerce-api", "argocd app get ecommerce-api"]
-        },
-        {
-            "id": 801,
-            "question": "Deploy production-grade AWS EKS cluster with Terraform including all essential add-ons",
-            "tags": ["terraform", "aws", "kubernetes"],
-            "answer": "Use Terraform EKS module to create cluster with VPC, managed node groups, IRSA, VPC CNI, EBS CSI driver, AWS Load Balancer Controller, and CloudWatch Container Insights.",
-            "code": "module \"eks\" {\n  source  = \"terraform-aws-modules/eks/aws\"\n  version = \"~> 19.0\"\n\n  cluster_name    = var.cluster_name\n  cluster_version = \"1.28\"\n\n  vpc_id     = module.vpc.vpc_id\n  subnet_ids = module.vpc.private_subnets\n\n  cluster_addons = {\n    vpc-cni = {\n      most_recent = true\n      configuration_values = jsonencode({\n        env = {\n          ENABLE_PREFIX_DELEGATION = \"true\"\n        }\n      })\n    }\n    aws-ebs-csi-driver = {\n      most_recent = true\n      service_account_role_arn = module.ebs_csi_driver_irsa.iam_role_arn\n    }\n  }\n\n  eks_managed_node_groups = {\n    general = {\n      instance_types = [\"t3.large\"]\n      min_size     = 2\n      max_size     = 10\n      desired_size = 3\n    }\n  }\n}",
-            "commands": ["terraform init", "terraform plan -out=tfplan", "terraform apply tfplan", "aws eks update-kubeconfig --name my-cluster"]
-        },
-        {
-            "id": 802,
-            "question": "Configure AWS Load Balancer Controller and External DNS for EKS",
-            "tags": ["aws", "kubernetes"],
-            "answer": "Install AWS Load Balancer Controller using Helm with IRSA, configure External DNS for automatic Route53 record management, and set up ingress with ALB.",
-            "code": "# Install AWS Load Balancer Controller\nhelm install aws-load-balancer-controller eks/aws-load-balancer-controller \\\n  --namespace kube-system \\\n  --set clusterName=my-cluster \\\n  --set serviceAccount.create=false \\\n  --set serviceAccount.name=aws-load-balancer-controller\n\n# Ingress with ALB\napiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: app-ingress\n  annotations:\n    alb.ingress.kubernetes.io/scheme: internet-facing\n    alb.ingress.kubernetes.io/target-type: ip\n    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:region:account:certificate/cert-id\nspec:\n  ingressClassName: alb\n  rules:\n  - host: app.example.com\n    http:\n      paths:\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: app-service\n            port:\n              number: 80",
-            "commands": ["kubectl get ingress", "kubectl describe ingress app-ingress", "aws elbv2 describe-load-balancers"]
-        },
-        {
-            "id": 901,
-            "question": "Implement blue-green deployment strategy with Istio and ArgoCD",
-            "tags": ["kubernetes"],
-            "answer": "Deploy blue and green versions simultaneously, use Istio VirtualService for progressive traffic shifting, implement automated health validation, and rollback capability.",
-            "code": "# Blue-Green VirtualService\napiVersion: networking.istio.io/v1beta1\nkind: VirtualService\nmetadata:\n  name: ecommerce-api\nspec:\n  hosts:\n  - ecommerce-api\n  http:\n  - match:\n    - headers:\n        x-deployment-preview:\n          exact: \"green\"\n    route:\n    - destination:\n        host: ecommerce-api-green\n      weight: 100\n  - route:\n    - destination:\n        host: ecommerce-api-blue\n      weight: 90\n    - destination:\n        host: ecommerce-api-green\n      weight: 10\n    timeout: 10s\n    retries:\n      attempts: 3\n      perTryTimeout: 2s",
-            "commands": ["kubectl apply -f blue-green-vs.yaml", "istioctl analyze", "kubectl get vs ecommerce-api -o yaml"]
-        },
-        {
-            "id": 902,
-            "question": "Implement disaster recovery strategy with Velero for Kubernetes cluster backup",
-            "tags": ["kubernetes"],
-            "answer": "Deploy Velero with S3 backend, configure scheduled backups, implement backup hooks for database consistency, and test restore procedures for disaster recovery.",
-            "code": "# Install Velero with AWS\nvelero install \\\n  --provider aws \\\n  --plugins velero/velero-plugin-for-aws:v1.8.0 \\\n  --bucket velero-backups \\\n  --backup-location-config region=us-east-1 \\\n  --snapshot-location-config region=us-east-1 \\\n  --secret-file ./credentials-velero\n\n# Create scheduled backup\nvelero schedule create daily-backup \\\n  --schedule=\"0 2 * * *\" \\\n  --include-namespaces production \\\n  --ttl 720h\n\n# Backup with hooks\napiVersion: velero.io/v1\nkind: Backup\nmetadata:\n  name: production-backup\nspec:\n  includedNamespaces:\n  - production\n  hooks:\n    resources:\n    - name: postgres-backup\n      includedNamespaces:\n      - database\n      pre:\n      - exec:\n          command: [\"pg_dump\", \"-U\", \"postgres\", \"appdb\"]",
-            "commands": ["velero backup create prod-backup --include-namespaces production", "velero backup get", "velero restore create --from-backup prod-backup"]
-        },
-        {
-            "id": 1000,
-            "question": "Design complete CMMI Level 5 compliant DevOps platform with full automation and metrics",
-            "tags": ["cmmi"],
-            "answer": "Implement automated CI/CD with Jenkins, GitOps with ArgoCD, comprehensive monitoring with Prometheus/Grafana, automated testing, security scanning, audit logging, Jira integration for traceability, and continuous process improvement metrics.",
-            "code": "# Complete CMMI-compliant pipeline\npipeline {\n  agent { kubernetes { } }\n  options {\n    buildDiscarder(logRotator(numToKeepStr: '30'))\n    timestamps()\n  }\n  stages {\n    stage('Code Quality') {\n      parallel {\n        stage('SonarQube') { steps { sh 'sonar-scanner' } }\n        stage('Dependency Check') { steps { sh 'npm audit' } }\n        stage('Secret Scan') { steps { sh 'trivy fs .' } }\n      }\n    }\n    stage('Build & Test') {\n      steps {\n        sh 'npm run test:unit'\n        sh 'npm run build'\n        junit 'junit.xml'\n      }\n    }\n    stage('Security Scan') {\n      steps {\n        sh 'trivy image --severity HIGH,CRITICAL myapp:${BUILD_NUMBER}'\n      }\n    }\n    stage('Deploy') {\n      steps {\n        sh 'helm upgrade --install myapp ./chart'\n      }\n    }\n  }\n  post {\n    always {\n      // Update Jira for CMMI traceability\n      jiraUpdateTicket(issue: JIRA_ISSUE, status: currentBuild.result)\n    }\n  }\n}",
-            "commands": ["kubectl get pods -n jenkins", "argocd app get myapp", "helm list -A"]
-        }
-    ]
-    </script>
-
+    <script src="data/devops-questions-generator.js"></script>
+    <script src="data/devops-questions-core.js"></script>
     <script>
-        const questionsData = JSON.parse(document.getElementById('questionsData').textContent);
+        // Generate all 1000 questions
+        const questionsData = window.generateComprehensiveQuestions ? window.generateComprehensiveQuestions() : [];
+        
         const questionsContainer = document.getElementById('questionsContainer');
         const filterTopic = document.getElementById('filterTopic');
         const searchBox = document.getElementById('searchBox');
@@ -485,7 +326,9 @@
                 'docker': 'badge-docker',
                 'jenkins': 'badge-jenkins',
                 'aws': 'badge-aws',
-                'cmmi': 'badge-cmmi'
+                'cmmi': 'badge-cmmi',
+                'istio': 'badge-istio',
+                'monitoring': 'badge-monitoring'
             };
             return badgeMap[tag] || 'badge-tag';
         }
@@ -493,6 +336,11 @@
         function formatCode(code) {
             if (!code) return '';
             return `<pre><code>${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+        }
+
+        function formatDiagram(diagram) {
+            if (!diagram) return '';
+            return `<div class="diagram">${diagram.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>`;
         }
 
         function formatCommands(commands) {
@@ -522,6 +370,7 @@
                     </div>
                     <div class="answer">
                         <p>${q.answer}</p>
+                        ${formatDiagram(q.diagram)}
                         ${formatCode(q.code)}
                         ${formatCommands(q.commands)}
                     </div>
