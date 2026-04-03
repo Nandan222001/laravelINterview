@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Questions Display</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .topic-test {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .topic-test h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        .stats {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 5px;
+            color: #c62828;
+            margin: 10px 0;
+        }
+        .success {
+            background: #c8e6c9;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #1976D2;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Interview Questions Display Test</h1>
+    <p>Testing question parsing and display for all topics</p>
+
+    <div id="tests-container"></div>
+
+    <script>
+        const topics = [
+            { name: 'PHP & Laravel API Security', dir: 'interview-bank/php-laravel-api-security' },
+            { name: 'Database Optimization', dir: 'interview-bank/database-optimization' },
+            { name: 'AI, LLM & Serverless', dir: 'interview-bank/ai-llm-serverless' },
+            { name: 'Frontend React & Next.js', dir: 'interview-bank/frontend-react-nextjs' },
+            { name: 'Real-time Communication', dir: 'interview-bank/realtime-communication' },
+            { name: 'DevOps, Cloud & Kubernetes', dir: 'interview-bank/devops-cloud-k8s' }
+        ];
+
+        function parseNumberedBlocks(markdownText) {
+            if (!markdownText) return [];
+            const blocks = [];
+            const lines = markdownText.split('\n');
+            let currentNum = null;
+            let currentText = '';
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                const numMatch = line.match(/^\s*(\d+)\.\s+(.*)/);
+
+                if (numMatch) {
+                    if (currentNum !== null && currentText) {
+                        blocks.push({ num: currentNum, text: currentText.trim() });
+                    }
+                    currentNum = numMatch[1];
+                    currentText = numMatch[2];
+                } else if (currentNum !== null) {
+                    if (line.trim()) {
+                        currentText += '\n' + line;
+                    }
+                }
+            }
+
+            if (currentNum !== null && currentText) {
+                blocks.push({ num: currentNum, text: currentText.trim() });
+            }
+
+            return blocks;
+        }
+
+        async function testTopic(topic) {
+            const container = document.getElementById('tests-container');
+            const testDiv = document.createElement('div');
+            testDiv.className = 'topic-test';
+            
+            testDiv.innerHTML = `
+                <h2>${topic.name}</h2>
+                <p class="loading">Loading questions...</p>
+            `;
+            container.appendChild(testDiv);
+
+            try {
+                const response = await fetch(`${topic.dir}/questions.md`);
+                
+                if (!response.ok) {
+                    testDiv.innerHTML = `
+                        <h2>${topic.name}</h2>
+                        <div class="error">❌ Failed to load: HTTP ${response.status}</div>
+                    `;
+                    return;
+                }
+
+                const text = await response.text();
+                const questions = parseNumberedBlocks(text);
+
+                if (questions.length === 0) {
+                    testDiv.innerHTML = `
+                        <h2>${topic.name}</h2>
+                        <div class="error">❌ No questions parsed from file</div>
+                        <p><strong>File size:</strong> ${(text.length / 1024).toFixed(2)} KB</p>
+                    `;
+                    return;
+                }
+
+                const firstThree = questions.slice(0, 3);
+                const html = `
+                    <h2>${topic.name}</h2>
+                    <div class="stats">
+                        <strong>✅ Success!</strong><br>
+                        <strong>Total Questions:</strong> ${questions.length}<br>
+                        <strong>File Size:</strong> ${(text.length / 1024).toFixed(2)} KB<br>
+                        <strong>First Question ID:</strong> ${questions[0].num}<br>
+                        <strong>Last Question ID:</strong> ${questions[questions.length - 1].num}
+                    </div>
+                    <h3>Sample Questions (First 3):</h3>
+                    ${firstThree.map((q, i) => `
+                        <div style="margin: 10px 0; padding: 10px; background: #f9f9f9; border-left: 3px solid #2196F3;">
+                            <strong>Q${q.num}:</strong> ${q.text.split('\n')[0]}
+                        </div>
+                    `).join('')}
+                `;
+                testDiv.innerHTML = html;
+            } catch (error) {
+                testDiv.innerHTML = `
+                    <h2>${topic.name}</h2>
+                    <div class="error">❌ Error: ${error.message}</div>
+                `;
+            }
+        }
+
+        // Test all topics
+        async function runAllTests() {
+            for (const topic of topics) {
+                await testTopic(topic);
+            }
+        }
+
+        // Run tests when page loads
+        window.addEventListener('load', runAllTests);
+    </script>
+</body>
+</html>

@@ -253,7 +253,7 @@
         }
 
         .accordion-item.active .accordion-content {
-            max-height: 1000px;
+            max-height: 100000px;
         }
 
         .accordion-body {
@@ -413,6 +413,104 @@
                 font-size: 1.5rem;
             }
         }
+
+        /* Question and Answer Styles */
+        .questions-container {
+            margin-top: 1rem;
+        }
+
+        .questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .question-item {
+            border-top: 1px solid #eee;
+            padding: 0.75rem 0;
+            background-color: #fff;
+        }
+
+        .question-item:last-child {
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-title {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 0.75rem 0;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s, background-color 0.2s;
+        }
+
+        .question-title:hover {
+            color: #e3342f;
+            background-color: #f9f9f9;
+        }
+
+        .question-title:focus {
+            outline: 2px solid #e3342f;
+            outline-offset: -2px;
+        }
+
+        .answer {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            padding-bottom: 0.5rem;
+            color: #555;
+            background-color: #f9f9f9;
+            border-left: 3px solid #e3342f;
+            line-height: 1.7;
+            display: none;
+        }
+
+        .answer.show {
+            display: block;
+        }
+
+        .answer code {
+            background-color: #f0f0f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .answer pre {
+            background-color: #f0f0f0;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 0.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .answer pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .error {
+            padding: 1rem;
+            background-color: #ffebee;
+            color: #c62828;
+            border-radius: 4px;
+            border-left: 4px solid #c62828;
+        }
     </style>
 </head>
 <body>
@@ -427,7 +525,7 @@
                     <nav id="main-nav">
                         <a href="#home">Home</a>
                         <a href="#topics">Topics</a>
-                        <a href="#code-examples">Code Examples</a>
+                        <a href="code-examples.html">Code Examples</a>
                         <a href="#templates">Templates</a>
                         <a href="#about">About</a>
                     </nav>
@@ -573,7 +671,7 @@
                                     <li>Advanced rate limiting with Redis</li>
                                     <li>Comprehensive error handling</li>
                                 </ul>
-                                <a href="interview-bank/php-laravel-api-security/" class="topic-link">Explore Questions →</a>
+                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/php-laravel-api-security/questions.md" data-answers="interview-bank/php-laravel-api-security/answers.md">Explore Questions →</a>
                             </div>
                         </div>
                     </article>
@@ -596,7 +694,7 @@
                                     <li>Real-time data synchronization strategies</li>
                                     <li>Connection management and reconnection logic</li>
                                 </ul>
-                                <a href="interview-bank/realtime-communication/" class="topic-link">Explore Questions →</a>
+                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/realtime-communication/questions.md" data-answers="interview-bank/realtime-communication/answers.md">Explore Questions →</a>
                             </div>
                         </div>
                     </article>
@@ -619,7 +717,7 @@
                                     <li>Database replication and sharding</li>
                                     <li>Connection pooling and optimization</li>
                                 </ul>
-                                <a href="interview-bank/database-optimization/" class="topic-link">Explore Questions →</a>
+                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/database-optimization/questions.md" data-answers="interview-bank/database-optimization/answers.md">Explore Questions →</a>
                             </div>
                         </div>
                     </article>
@@ -642,7 +740,7 @@
                                     <li>Performance optimization techniques</li>
                                     <li>Code splitting and lazy loading</li>
                                 </ul>
-                                <a href="interview-bank/frontend-react-nextjs/" class="topic-link">Explore Questions →</a>
+                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/frontend-react-nextjs/questions.md" data-answers="interview-bank/frontend-react-nextjs/answers.md">Explore Questions →</a>
                             </div>
                         </div>
                     </article>
@@ -665,7 +763,7 @@
                                     <li>Infrastructure as Code (Terraform, CloudFormation)</li>
                                     <li>Monitoring and logging (Prometheus, ELK stack)</li>
                                 </ul>
-                                <a href="interview-bank/devops-cloud-k8s/" class="topic-link">Explore Questions →</a>
+                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/devops-cloud-k8s/questions.md" data-answers="interview-bank/devops-cloud-k8s/answers.md">Explore Questions →</a>
                             </div>
                         </div>
                     </article>
@@ -688,7 +786,109 @@
                                     <li>AI-powered feature implementation</li>
                                     <li>Vector databases and embeddings</li>
                                 </ul>
-                                <a href="interview-bank/ai-llm-serverless/" class="topic-link">Explore Questions →</a>
+                                <a href="#" class="topic-link explore-link" data-questions="interview-bank/ai-llm-serverless/questions.md" data-answers="interview-bank/ai-llm-serverless/answers.md">Explore Questions →</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Code Examples Section -->
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>💻 Code Examples & Implementation</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    Production-ready code examples covering payment processing, API security, database optimization, real-time communication, and modern frameworks.
+                                </p>
+                                <ul class="topic-features">
+                                    <li><strong>Payment Integration:</strong> Razorpay & Stripe with webhook handling</li>
+                                    <li><strong>API Security:</strong> PCI DSS compliance, OWASP Top 10 mitigation</li>
+                                    <li><strong>Database:</strong> Query optimization, indexing, caching patterns</li>
+                                    <li><strong>Real-time:</strong> WebSockets, Server-Sent Events, Broadcasting</li>
+                                    <li><strong>Frontend:</strong> React hooks, Next.js patterns, state management</li>
+                                    <li><strong>DevOps:</strong> Docker, Kubernetes, CI/CD pipelines</li>
+                                </ul>
+                                <div id="code-examples-container" style="margin-top: 1.5rem;">
+                                    <h4>Available Code Examples:</h4>
+                                    <ul id="examples-list" style="list-style: none; padding: 0;">
+                                        <li><a href="interview-bank/php-laravel-api-security/code-examples/" style="color: #e3342f; text-decoration: none;">✓ PHP & Laravel Examples</a></li>
+                                        <li><a href="interview-bank/database-optimization/code-examples/" style="color: #e3342f; text-decoration: none;">✓ Database Optimization Examples</a></li>
+                                        <li><a href="interview-bank/devops-cloud-k8s/code-examples/" style="color: #e3342f; text-decoration: none;">✓ DevOps & Kubernetes Examples</a></li>
+                                        <li><a href="interview-bank/frontend-react-nextjs/code-examples/" style="color: #e3342f; text-decoration: none;">✓ React & Next.js Examples</a></li>
+                                        <li><a href="interview-bank/realtime-communication/code-examples/" style="color: #e3342f; text-decoration: none;">✓ Real-time Communication Examples</a></li>
+                                        <li><a href="interview-bank/ai-llm-serverless/code-examples/" style="color: #e3342f; text-decoration: none;">✓ AI & LLM Examples</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Templates Section -->
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>📋 Interview Templates & Guides</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    Ready-to-use templates for answer preparation, system design, code implementation, and interview strategies.
+                                </p>
+                                <ul class="topic-features">
+                                    <li><strong>Answer Flow Template:</strong> Structure for comprehensive technical answers</li>
+                                    <li><strong>Question Format:</strong> Template for creating interview questions</li>
+                                    <li><strong>Architecture Diagrams:</strong> Mermaid diagram templates for system design</li>
+                                    <li><strong>Code Snippet Template:</strong> Proper formatting for code examples</li>
+                                    <li><strong>Security Checklists:</strong> PCI DSS and OWASP compliance guides</li>
+                                    <li><strong>Performance Benchmarks:</strong> Optimization testing templates</li>
+                                </ul>
+                                <div id="templates-container" style="margin-top: 1.5rem;">
+                                    <h4>Available Templates:</h4>
+                                    <ul id="templates-list" style="list-style: none; padding: 0;">
+                                        <li><a href="templates/answer-flow-template.md" style="color: #e3342f; text-decoration: none;">✓ Answer Flow Template</a></li>
+                                        <li><a href="templates/question-format-template.md" style="color: #e3342f; text-decoration: none;">✓ Question Format Template</a></li>
+                                        <li><a href="templates/architecture-diagram-template.md" style="color: #e3342f; text-decoration: none;">✓ Architecture Diagram Template</a></li>
+                                        <li><a href="templates/code-snippet-template.md" style="color: #e3342f; text-decoration: none;">✓ Code Snippet Template</a></li>
+                                        <li><a href="interview-bank/php-laravel-api-security/README.md" style="color: #e3342f; text-decoration: none;">✓ PHP & Laravel Guide</a></li>
+                                        <li><a href="interview-bank/database-optimization/README.md" style="color: #e3342f; text-decoration: none;">✓ Database Optimization Guide</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Documentation Section -->
+                    <article class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>📚 Documentation & Resources</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <p class="topic-description">
+                                    Comprehensive documentation, security guides, and reference materials for interview preparation.
+                                </p>
+                                <ul class="topic-features">
+                                    <li><strong>CONTRIBUTING.md:</strong> Guidelines for contributing to the question bank</li>
+                                    <li><strong>Completion Report:</strong> Full coverage summary of all 6000+ questions</li>
+                                    <li><strong>Security Guides:</strong> PCI DSS compliance and OWASP implementations</li>
+                                    <li><strong>Framework Documentation:</strong> Laravel, React, Next.js references</li>
+                                    <li><strong>Progressive Enhancements:</strong> PWA features and offline support</li>
+                                    <li><strong>Automation Summary:</strong> Quality validation and cross-referencing tools</li>
+                                </ul>
+                                <div id="docs-container" style="margin-top: 1.5rem;">
+                                    <h4>Essential Documentation:</h4>
+                                    <ul id="docs-list" style="list-style: none; padding: 0;">
+                                        <li><a href="README.md" style="color: #e3342f; text-decoration: none;">✓ Main README</a></li>
+                                        <li><a href="CONTRIBUTING.md" style="color: #e3342f; text-decoration: none;">✓ Contributing Guidelines</a></li>
+                                        <li><a href="COMPLETION_REPORT.md" style="color: #e3342f; text-decoration: none;">✓ Completion Report</a></li>
+                                        <li><a href="PROGRESSIVE_ENHANCEMENTS.md" style="color: #e3342f; text-decoration: none;">✓ Progressive Enhancements</a></li>
+                                        <li><a href="AUTOMATION_SUMMARY.md" style="color: #e3342f; text-decoration: none;">✓ Automation Summary</a></li>
+                                        <li><a href="EXPLORE_QUESTIONS_FIX.md" style="color: #e3342f; text-decoration: none;">✓ Explore Questions Fix</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </article>
@@ -776,6 +976,164 @@
                 // Implement filter logic here
             });
         });
+
+        // Explore Questions - load questions.md and answers.md (if present) and render inline
+        const exploreLinks = document.querySelectorAll('.explore-link');
+
+        async function fetchText(path) {
+            try {
+                const res = await fetch(path);
+                if (!res.ok) return null;
+                return await res.text();
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function parseNumberedBlocks(markdownText) {
+            if (!markdownText) return [];
+            // Find all blocks that start with a number followed by dot and space
+            const blocks = [];
+            const lines = markdownText.split('\n');
+            let currentNum = null;
+            let currentText = '';
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                const numMatch = line.match(/^\s*(\d+)\.\s+(.*)/);
+
+                if (numMatch) {
+                    // Save previous block if exists
+                    if (currentNum !== null && currentText) {
+                        blocks.push({ num: currentNum, text: currentText.trim() });
+                    }
+                    // Start new block
+                    currentNum = numMatch[1];
+                    currentText = numMatch[2];
+                } else if (currentNum !== null) {
+                    // Continue previous block (multi-line answer/question)
+                    if (line.trim()) {
+                        currentText += '\n' + line;
+                    }
+                }
+            }
+
+            // Save last block
+            if (currentNum !== null && currentText) {
+                blocks.push({ num: currentNum, text: currentText.trim() });
+            }
+
+            return blocks;
+        }
+
+        exploreLinks.forEach(link => {
+            link.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const questionsPath = link.dataset.questions;
+                const answersPath = link.dataset.answers;
+
+                // Ensure the accordion item is expanded
+                const accordionItem = link.closest('.accordion-item');
+                if (accordionItem && !accordionItem.classList.contains('active')) {
+                    // close others and open this one (reuse existing logic)
+                    document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+                    accordionItem.classList.add('active');
+                }
+
+                const body = link.closest('.accordion-body');
+                if (!body) return;
+
+                let container = body.querySelector('.questions-container');
+                if (!container) {
+                    container = document.createElement('div');
+                    container.className = 'questions-container';
+                    container.style.marginTop = '1rem';
+                    container.innerHTML = '<p class="loading">Loading questions…</p>';
+                    body.appendChild(container);
+                }
+
+                // Fetch questions.md
+                const md = await fetchText(questionsPath);
+                if (!md) {
+                    container.innerHTML = `<p class="error">Could not load questions from <code>${questionsPath}</code>.</p>`;
+                    return;
+                }
+
+                const questions = parseNumberedBlocks(md);
+                console.log(`✓ Parsed ${questions.length} questions from ${questionsPath}`);
+
+                // Try to fetch answers.md (may not exist)
+                const answersMd = await fetchText(answersPath);
+                const answers = answersMd ? parseNumberedBlocks(answersMd).reduce((acc, a) => { acc[a.num] = a.text; return acc; }, {}) : {};
+                console.log(`✓ Parsed ${Object.keys(answers).length} answers from ${answersPath}`);
+
+                // Render list
+                if (questions.length === 0) {
+                    container.innerHTML = '<p>No questions found in this topic.</p>';
+                    return;
+                }
+
+                const list = document.createElement('div');
+                list.className = 'questions-list';
+
+                questions.forEach(q => {
+                    const qWrap = document.createElement('div');
+                    qWrap.className = 'question-item';
+                    qWrap.style.borderTop = '1px solid #eee';
+                    qWrap.style.padding = '0.75rem 0';
+
+                    const qButton = document.createElement('button');
+                    qButton.type = 'button';
+                    qButton.className = 'question-title';
+                    qButton.textContent = `${q.num}. ${q.text}`;
+                    qButton.style.width = '100%';
+                    qButton.style.textAlign = 'left';
+                    qButton.style.background = 'none';
+                    qButton.style.border = 'none';
+                    qButton.style.padding = '0';
+                    qButton.style.cursor = 'pointer';
+                    qButton.style.fontSize = '1rem';
+
+                    const answerDiv = document.createElement('div');
+                    answerDiv.className = 'answer';
+                    answerDiv.style.marginTop = '0.5rem';
+                    answerDiv.style.paddingLeft = '1rem';
+                    answerDiv.style.display = 'none';
+                    answerDiv.style.color = '#444';
+
+                    const answerText = answers[q.num] || null;
+                    if (answerText) {
+                        // Convert simple markdown code blocks and inline code to <pre>/<code> and <code>
+                        answerDiv.innerHTML = answerText
+                            .replace(/```([\s\S]*?)```/g, (m, code) => `<pre><code>${escapeHtml(code)}</code></pre>`)
+                            .replace(/`([^`]+)`/g, (m, c) => `<code>${escapeHtml(c)}</code>`)
+                            .replace(/\n/g, '<br>');
+                    } else {
+                        answerDiv.innerHTML = `<em>Answer not available.</em> <small style="color:#666; display:block; margin-top:0.25rem;">You can add answers in <code>${answersPath}</code> (or create one) using the format: <code>1. Answer text</code>.</small>`;
+                    }
+
+                    qButton.addEventListener('click', () => {
+                        const visible = answerDiv.style.display !== 'none';
+                        answerDiv.style.display = visible ? 'none' : 'block';
+                        // smooth scroll into view when opening
+                        if (!visible) qButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    });
+
+                    qWrap.appendChild(qButton);
+                    qWrap.appendChild(answerDiv);
+                    list.appendChild(qWrap);
+                });
+
+                container.innerHTML = '';
+                container.appendChild(list);
+                console.log(`✓ Rendered ${questions.length} question elements to DOM`);
+            });
+        });
+
+        // small helper
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function (m) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]; });
+        }
     </script>
 </body>
 </html>

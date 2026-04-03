@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Question Loading Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #e3342f;
+        }
+        .test-section h2 {
+            color: #e3342f;
+            margin-top: 0;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error {
+            color: #c62828;
+            font-weight: bold;
+        }
+        .info {
+            color: #1976d2;
+        }
+        button {
+            padding: 10px 20px;
+            background: #e3342f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #cc1f1a;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Question Loading Debug Test</h1>
+
+    <div class="test-section">
+        <h2>1. Test Fetch & Parse</h2>
+        <button onclick="testFetch()">Run Test</button>
+        <pre id="test1-output">Click button to start...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test parseNumberedBlocks Function</h2>
+        <button onclick="testParseFunction()">Run Test</button>
+        <pre id="test2-output">Click button to start...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test File Sizes</h2>
+        <button onclick="testFileSizes()">Run Test</button>
+        <pre id="test3-output">Click button to start...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Load PHP/Laravel Questions (Live)</h2>
+        <button onclick="loadPhpQuestions()">Load Now</button>
+        <div id="test4-output" style="margin-top: 10px; border: 1px solid #ddd; padding: 10px; max-height: 500px; overflow-y: auto;">
+            Click button to load questions...
+        </div>
+    </div>
+
+    <script>
+        function log(element, text, type = 'info') {
+            const el = document.getElementById(element);
+            el.innerHTML += `<span class="${type}">${text}</span>\n`;
+        }
+
+        function clear(element) {
+            document.getElementById(element).innerHTML = '';
+        }
+
+        async function testFetch() {
+            clear('test1-output');
+            log('test1-output', '⏳ Fetching PHP/Laravel questions.md...\n', 'info');
+
+            try {
+                const response = await fetch('interview-bank/php-laravel-api-security/questions.md');
+                log('test1-output', `✓ Response status: ${response.status}\n`, 'success');
+                
+                const text = await response.text();
+                log('test1-output', `✓ File size: ${(text.length / 1024).toFixed(2)} KB\n`, 'success');
+                log('test1-output', `✓ Lines: ${text.split('\n').length}\n`, 'success');
+
+                const lines = text.split('\n').filter(l => /^\s*(\d+)\./.test(l));
+                log('test1-output', `✓ Question lines found: ${lines.length}\n`, 'success');
+                log('test1-output', `\nFirst 3 question lines:\n`, 'info');
+                lines.slice(0, 3).forEach(l => {
+                    log('test1-output', `  → ${l.substring(0, 80)}...\n`, 'info');
+                });
+
+            } catch (error) {
+                log('test1-output', `✗ Error: ${error.message}\n`, 'error');
+            }
+        }
+
+        function parseNumberedBlocks(markdownText) {
+            if (!markdownText) return [];
+            const blocks = [];
+            const lines = markdownText.split('\n');
+            let currentNum = null;
+            let currentText = '';
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                const numMatch = line.match(/^\s*(\d+)\.\s+(.*)/);
+
+                if (numMatch) {
+                    if (currentNum !== null && currentText) {
+                        blocks.push({ num: currentNum, text: currentText.trim() });
+                    }
+                    currentNum = numMatch[1];
+                    currentText = numMatch[2];
+                } else if (currentNum !== null) {
+                    if (line.trim()) {
+                        currentText += '\n' + line;
+                    }
+                }
+            }
+
+            if (currentNum !== null && currentText) {
+                blocks.push({ num: currentNum, text: currentText.trim() });
+            }
+
+            return blocks;
+        }
+
+        async function testParseFunction() {
+            clear('test2-output');
+            log('test2-output', '⏳ Fetching and parsing...\n', 'info');
+
+            try {
+                const response = await fetch('interview-bank/php-laravel-api-security/questions.md');
+                const text = await response.text();
+                
+                const start = Date.now();
+                const questions = parseNumberedBlocks(text);
+                const time = Date.now() - start;
+
+                log('test2-output', `✓ Parsed in ${time}ms\n`, 'success');
+                log('test2-output', `✓ Total questions: ${questions.length}\n`, 'success');
+                log('test2-output', `\nFirst 3 questions:\n`, 'info');
+                questions.slice(0, 3).forEach(q => {
+                    log('test2-output', `  Q${q.num}: ${q.text.substring(0, 70)}...\n`, 'info');
+                });
+                log('test2-output', `\nLast 3 questions:\n`, 'info');
+                questions.slice(-3).forEach(q => {
+                    log('test2-output', `  Q${q.num}: ${q.text.substring(0, 70)}...\n`, 'info');
+                });
+
+            } catch (error) {
+                log('test2-output', `✗ Error: ${error.message}\n`, 'error');
+            }
+        }
+
+        async function testFileSizes() {
+            clear('test3-output');
+            
+            const files = [
+                'interview-bank/php-laravel-api-security/questions.md',
+                'interview-bank/php-laravel-api-security/answers.md',
+                'interview-bank/database-optimization/questions.md',
+                'interview-bank/database-optimization/answers.md',
+                'interview-bank/frontend-react-nextjs/questions.md',
+            ];
+
+            log('test3-output', 'Testing file sizes...\n', 'info');
+
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        const text = await response.text();
+                        log('test3-output', `✓ ${file}: ${(text.length / 1024).toFixed(2)} KB\n`, 'success');
+                    } else {
+                        log('test3-output', `✗ ${file}: HTTP ${response.status}\n`, 'error');
+                    }
+                } catch (error) {
+                    log('test3-output', `✗ ${file}: ${error.message}\n`, 'error');
+                }
+            }
+        }
+
+        async function loadPhpQuestions() {
+            const output = document.getElementById('test4-output');
+            output.innerHTML = '<p style="color: #1976d2;">⏳ Loading questions...</p>';
+
+            try {
+                const response = await fetch('interview-bank/php-laravel-api-security/questions.md');
+                const text = await response.text();
+                
+                const questions = parseNumberedBlocks(text);
+                
+                let html = `<h3>✓ Loaded ${questions.length} questions</h3>`;
+                html += '<div style="max-height: 400px; overflow-y: auto;">';
+                
+                // Show first 20 questions
+                questions.slice(0, 20).forEach(q => {
+                    html += `<div style="border-bottom: 1px solid #eee; padding: 8px 0;">`;
+                    html += `<strong>${q.num}.</strong> ${q.text.substring(0, 100)}...`;
+                    html += `</div>`;
+                });
+
+                html += `<p style="color: #1976d2; margin-top: 20px;">... and ${questions.length - 20} more questions</p></div>`;
+                
+                output.innerHTML = html;
+
+            } catch (error) {
+                output.innerHTML = `<p style="color: #c62828;">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        // Log to show page is loaded
+        console.log('Debug page loaded. Run tests to see what\'s happening with question loading.');
+    </script>
+</body>
+</html>
