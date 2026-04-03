@@ -5,276 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-Time Communication Interview Questions - 1000 Q&A</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            min-height: 100vh; padding: 20px;
         }
-
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
+            max-width: 1200px; margin: 0 auto; background: white;
+            border-radius: 15px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); overflow: hidden;
         }
-
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
+            color: white; padding: 40px; text-align: center;
         }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; }
+        header p { font-size: 1.1rem; opacity: 0.9; }
         .filters {
-            background: #f8f9fa;
-            padding: 20px 40px;
-            border-bottom: 2px solid #e9ecef;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
+            background: #f8f9fa; padding: 20px 40px; border-bottom: 2px solid #e9ecef;
+            display: flex; gap: 15px; flex-wrap: wrap; align-items: center;
         }
-
-        .filter-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .filter-group label {
-            font-weight: 600;
-            color: #495057;
-        }
-
+        .filter-group { display: flex; gap: 10px; align-items: center; }
+        .filter-group label { font-weight: 600; color: #495057; }
         select, input {
-            padding: 8px 12px;
-            border: 2px solid #dee2e6;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            transition: all 0.3s;
+            padding: 8px 12px; border: 2px solid #dee2e6;
+            border-radius: 6px; font-size: 0.95rem; transition: all 0.3s;
         }
-
         select:focus, input:focus {
-            outline: none;
-            border-color: #667eea;
+            outline: none; border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-
-        .questions-container {
-            padding: 40px;
-        }
-
+        .questions-container { padding: 40px; max-height: 70vh; overflow-y: auto; }
         article {
-            margin-bottom: 30px;
-            padding: 25px;
-            background: #ffffff;
-            border-left: 4px solid #667eea;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
+            margin-bottom: 30px; padding: 25px; background: #ffffff;
+            border-left: 4px solid #667eea; border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); transition: all 0.3s;
         }
-
-        article:hover {
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        article.hidden {
-            display: none;
-        }
-
+        article:hover { box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); transform: translateY(-2px); }
+        article.hidden { display: none; }
         .question-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            gap: 15px;
+            display: flex; justify-content: space-between;
+            align-items: flex-start; margin-bottom: 15px; gap: 15px;
         }
-
-        .question {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2d3748;
-            flex: 1;
-        }
-
-        .badges {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            flex-shrink: 0;
-        }
-
+        .question { font-size: 1.2rem; font-weight: 600; color: #2d3748; flex: 1; }
+        .badges { display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
         .badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            padding: 4px 12px; border-radius: 20px; font-size: 0.75rem;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
         }
-
-        .badge-difficulty {
-            color: white;
-        }
-
-        .badge-difficulty[data-difficulty="junior"] {
-            background: #48bb78;
-        }
-
-        .badge-difficulty[data-difficulty="mid"] {
-            background: #ed8936;
-        }
-
-        .badge-difficulty[data-difficulty="senior"] {
-            background: #e53e3e;
-        }
-
-        .badge-tag {
-            background: #edf2f7;
-            color: #4a5568;
-        }
-
-        .answer {
-            color: #4a5568;
-            line-height: 1.8;
-            font-size: 1rem;
-        }
-
-        .answer p {
-            margin-bottom: 10px;
-        }
-
-        .answer ul {
-            margin-left: 20px;
-            margin-bottom: 10px;
-        }
-
+        .badge-difficulty { color: white; }
+        .badge-difficulty[data-difficulty="junior"] { background: #48bb78; }
+        .badge-difficulty[data-difficulty="mid"] { background: #ed8936; }
+        .badge-difficulty[data-difficulty="senior"] { background: #e53e3e; }
+        .badge-tag { background: #edf2f7; color: #4a5568; }
+        .answer { color: #4a5568; line-height: 1.8; font-size: 1rem; }
+        .answer p { margin-bottom: 10px; }
+        .answer ul, .answer ol { margin-left: 20px; margin-bottom: 10px; }
+        .answer li { margin-bottom: 5px; }
         pre {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 15px 0;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+            background: #2d3748; color: #e2e8f0; padding: 20px;
+            border-radius: 8px; overflow-x: auto; margin: 15px 0;
         }
-
-        code {
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .keyword { color: #c792ea; }
-        .string { color: #c3e88d; }
-        .comment { color: #676e95; }
-        .function { color: #82aaff; }
-        .variable { color: #f07178; }
-        .number { color: #f78c6c; }
-
-        .stats {
-            background: #f8f9fa;
-            padding: 15px 40px;
-            text-align: center;
-            color: #6c757d;
-            font-size: 0.95rem;
-            border-top: 2px solid #e9ecef;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6c757d;
-        }
-
-        .no-results h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
+        code { font-family: Monaco, monospace; font-size: 0.9rem; }
         .diagram {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 15px 0;
+            background: #f8f9fa; border: 2px solid #e9ecef;
+            border-radius: 8px; padding: 20px; margin: 15px 0;
         }
-
-        .diagram-title {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #2d3748;
-        }
-
+        .diagram-title { font-weight: 600; margin-bottom: 10px; color: #2d3748; }
         .flow-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 10px 0;
+            display: flex; align-items: center; gap: 10px;
+            flex-wrap: wrap; margin: 10px 0;
         }
-
         .flow-box {
-            background: #667eea;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            text-align: center;
+            background: #667eea; color: white; padding: 10px 15px;
+            border-radius: 6px; font-size: 0.9rem; text-align: center; min-width: 100px;
         }
-
-        .flow-arrow {
-            color: #667eea;
-            font-size: 1.5rem;
+        .flow-arrow { color: #667eea; font-size: 1.5rem; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 12px; text-align: left; border: 1px solid #e9ecef; }
+        th { background: #667eea; color: white; font-weight: 600; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        .stats {
+            background: #f8f9fa; padding: 15px 40px; text-align: center;
+            color: #6c757d; font-size: 0.95rem; border-top: 2px solid #e9ecef;
         }
-
+        .no-results { text-align: center; padding: 60px 20px; color: #6c757d; }
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            .filters {
-                padding: 15px 20px;
-            }
-
-            .questions-container {
-                padding: 20px;
-            }
-
-            article {
-                padding: 20px;
-            }
-
-            .question-header {
-                flex-direction: column;
-            }
-
-            .badges {
-                align-self: flex-start;
-            }
+            header h1 { font-size: 1.8rem; }
+            .filters { padding: 15px 20px; }
+            .questions-container { padding: 20px; }
+            article { padding: 20px; }
+            .question-header { flex-direction: column; }
         }
     </style>
 </head>
@@ -301,11 +123,14 @@
                     <option value="">All Tags</option>
                     <option value="websocket">WebSocket</option>
                     <option value="socketio">Socket.io</option>
+                    <option value="laravel">Laravel</option>
                     <option value="redis">Redis</option>
                     <option value="rabbitmq">RabbitMQ</option>
                     <option value="kafka">Kafka</option>
                     <option value="event-driven">Event-Driven</option>
-                    <option value="async">Async</option>
+                    <option value="cqrs">CQRS</option>
+                    <option value="async">Async PHP</option>
+                    <option value="performance">Performance</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -314,596 +139,13 @@
             </div>
         </div>
 
-        <div class="questions-container" id="questionsContainer">
-            <!-- Q1: WebSocket Handshake Process -->
-            <article data-difficulty="junior" data-tags="websocket,protocol,handshake">
-                <div class="question-header">
-                    <h2 class="question">Q1: Explain the WebSocket handshake process and how it differs from regular HTTP.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">websocket</span>
-                        <span class="badge badge-tag">protocol</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>WebSocket starts with HTTP/1.1 upgrade request. Client sends <code>Upgrade: websocket</code> and <code>Connection: Upgrade</code> headers with <code>Sec-WebSocket-Key</code>. Server responds with 101 Switching Protocols and <code>Sec-WebSocket-Accept</code> hash. After handshake, connection upgrades to WebSocket protocol enabling full-duplex communication.</p>
-                    <div class="diagram">
-                        <div class="diagram-title">WebSocket Handshake Flow:</div>
-                        <div class="flow-container">
-                            <div class="flow-box">Client Request</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">HTTP Upgrade</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">101 Response</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">WebSocket Open</div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Q2: WebSocket Frame Types -->
-            <article data-difficulty="junior" data-tags="websocket,frames,protocol">
-                <div class="question-header">
-                    <h2 class="question">Q2: What are the different WebSocket frame types?</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">websocket</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Text frames (0x1), Binary frames (0x2), Close frames (0x8), Ping frames (0x9), Pong frames (0xA), Continuation frames (0x0). Text and binary carry application data, control frames manage connection.</p>
-                </div>
-            </article>
-
-            <!-- Q3: WebSocket Frame Masking -->
-            <article data-difficulty="mid" data-tags="websocket,security,masking">
-                <div class="question-header">
-                    <h2 class="question">Q3: Why must client-to-server frames be masked?</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">websocket</span>
-                        <span class="badge badge-tag">security</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Prevents cache poisoning attacks and protects against proxy vulnerabilities. Client generates random 32-bit masking key per RFC 6455. Server-to-client frames are unmasked. This ensures intermediary proxies can't be confused by WebSocket data.</p>
-                </div>
-            </article>
-
-            <!-- Q4: WebSocket Subprotocols -->
-            <article data-difficulty="mid" data-tags="websocket,subprotocol,negotiation">
-                <div class="question-header">
-                    <h2 class="question">Q4: How do WebSocket subprotocols work?</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">websocket</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Negotiated via <code>Sec-WebSocket-Protocol</code> header. Client proposes protocols, server selects one. Examples: STOMP, WAMP, MQTT. Allows standardized application-level protocols over WebSocket transport.</p>
-                </div>
-            </article>
-
-            <!-- Q5: Per-Message Deflate Extension -->
-            <article data-difficulty="senior" data-tags="websocket,compression,performance">
-                <div class="question-header">
-                    <h2 class="question">Q5: Explain per-message deflate extension and trade-offs.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="senior">Senior</span>
-                        <span class="badge badge-tag">websocket</span>
-                        <span class="badge badge-tag">performance</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>RFC 7692 compression extension using DEFLATE algorithm. Reduces bandwidth but adds CPU overhead. Context takeover options control compression state between messages. Configure window bits for memory usage. Trade-off between latency and throughput.</p>
-                </div>
-            </article>
-
-            <!-- Q6: Basic WebSocket Client Implementation -->
-            <article data-difficulty="junior" data-tags="websocket,javascript,client">
-                <div class="question-header">
-                    <h2 class="question">Q6: Write basic WebSocket client code.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">websocket</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <pre><code><span class="keyword">const</span> ws = <span class="keyword">new</span> <span class="function">WebSocket</span>(<span class="string">'ws://localhost:8080'</span>);
-ws.onopen = () => <span class="function">console.log</span>(<span class="string">'Connected'</span>);
-ws.onmessage = (e) => <span class="function">console.log</span>(<span class="string">'Message:'</span>, e.data);
-ws.onerror = (e) => <span class="function">console.error</span>(<span class="string">'Error:'</span>, e);
-ws.onclose = () => <span class="function">console.log</span>(<span class="string">'Disconnected'</span>);
-ws.<span class="function">send</span>(<span class="string">'Hello Server'</span>);</code></pre>
-                </div>
-            </article>
-
-            <!-- Q7: WebSocket Security Considerations -->
-            <article data-difficulty="mid" data-tags="websocket,security,wss">
-                <div class="question-header">
-                    <h2 class="question">Q7: What are key WebSocket security considerations?</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">websocket</span>
-                        <span class="badge badge-tag">security</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Always use WSS in production, validate Origin header for CSRF prevention, implement authentication/authorization, rate limiting for DoS prevention, input validation, monitor abnormal patterns, encrypt sensitive data.</p>
-                </div>
-            </article>
-
-            <!-- Q8: Heartbeat Mechanisms -->
-            <article data-difficulty="mid" data-tags="websocket,heartbeat,keepalive">
-                <div class="question-header">
-                    <h2 class="question">Q8: How do you implement WebSocket heartbeat?</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">websocket</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Send ping/pong frames periodically (30-60s intervals). Application-level heartbeat messages as alternative. Detect dead connections, close stale ones. Track missed heartbeat threshold (typically 2-3).</p>
-                </div>
-            </article>
-
-            <!-- Q9: Reconnection Strategy with Exponential Backoff -->
-            <article data-difficulty="senior" data-tags="websocket,reconnection,reliability">
-                <div class="question-header">
-                    <h2 class="question">Q9: Design robust reconnection strategy.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="senior">Senior</span>
-                        <span class="badge badge-tag">websocket</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Detect connection loss, implement exponential backoff (1s, 2s, 4s, 8s...), add jitter to prevent thundering herd, set maximum retry limit, queue messages during disconnection, resume from last state, notify user of status.</p>
-                </div>
-            </article>
-
-            <!-- Q10: Load Balancing WebSocket Connections -->
-            <article data-difficulty="senior" data-tags="websocket,load-balancing,scaling">
-                <div class="question-header">
-                    <h2 class="question">Q10: Explain WebSocket load balancing challenges.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="senior">Senior</span>
-                        <span class="badge badge-tag">websocket</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Requires sticky sessions (IP/cookie-based), long-lived connections complicate traditional LB, Layer 4 vs Layer 7 considerations, connection draining during deploys, Redis/message bus for cross-server communication, connection-based routing.</p>
-                    <div class="diagram">
-                        <div class="diagram-title">Load Balancing Architecture:</div>
-                        <div class="flow-container">
-                            <div class="flow-box">Clients</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Load Balancer<br>(Sticky Sessions)</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">WS Server 1</div>
-                        </div>
-                        <div class="flow-container">
-                            <div class="flow-box" style="opacity: 0">Clients</div>
-                            <div class="flow-arrow" style="opacity: 0">→</div>
-                            <div class="flow-box" style="opacity: 0">LB</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">WS Server 2</div>
-                        </div>
-                        <div class="flow-container">
-                            <div class="flow-box" style="opacity: 0">-</div>
-                            <div class="flow-arrow" style="opacity: 0">→</div>
-                            <div class="flow-box">Redis Pub/Sub</div>
-                            <div class="flow-arrow">↔</div>
-                            <div class="flow-box">All Servers</div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Q101: Socket.io Basic Setup -->
-            <article data-difficulty="junior" data-tags="socketio,setup,basics">
-                <div class="question-header">
-                    <h2 class="question">Q101: Set up basic Socket.io server and client.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">socketio</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <pre><code><span class="comment">// Server</span>
-<span class="keyword">const</span> io = <span class="function">require</span>(<span class="string">'socket.io'</span>)(<span class="number">3000</span>);
-io.<span class="function">on</span>(<span class="string">'connection'</span>, (socket) => {
-    <span class="function">console.log</span>(<span class="string">'Connected'</span>);
-    socket.<span class="function">on</span>(<span class="string">'disconnect'</span>, () => <span class="function">console.log</span>(<span class="string">'Disconnected'</span>));
-});
-
-<span class="comment">// Client</span>
-<span class="keyword">const</span> socket = <span class="function">io</span>(<span class="string">'http://localhost:3000'</span>);</code></pre>
-                </div>
-            </article>
-
-            <!-- Q201: Laravel Broadcasting Setup -->
-            <article data-difficulty="junior" data-tags="laravel,broadcasting,setup">
-                <div class="question-header">
-                    <h2 class="question">Q201: Configure Laravel Broadcasting.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">laravel</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <pre><code><span class="comment">// config/broadcasting.php</span>
-<span class="string">'default'</span> => <span class="function">env</span>(<span class="string">'BROADCAST_DRIVER'</span>, <span class="string">'pusher'</span>),
-
-<span class="comment">// .env</span>
-BROADCAST_DRIVER=pusher
-PUSHER_APP_ID=your-app-id
-PUSHER_APP_KEY=your-app-key
-PUSHER_APP_SECRET=your-app-secret</code></pre>
-                </div>
-            </article>
-
-            <!-- Q401: Redis Pub/Sub Basics -->
-            <article data-difficulty="junior" data-tags="redis,pubsub,messaging">
-                <div class="question-header">
-                    <h2 class="question">Q401: Explain Redis Pub/Sub pattern and characteristics.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">redis</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Fire-and-forget messaging. Publishers send to channels, subscribers receive from subscribed channels. No message persistence - messages lost if no active subscribers. Real-time, low-latency. Ideal for ephemeral events, real-time notifications, cross-service communication.</p>
-                    <div class="diagram">
-                        <div class="diagram-title">Redis Pub/Sub Architecture:</div>
-                        <div class="flow-container">
-                            <div class="flow-box">Publisher 1</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Channel</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Subscriber 1</div>
-                        </div>
-                        <div class="flow-container">
-                            <div class="flow-box">Publisher 2</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box" style="opacity: 0">Ch</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Subscriber 2</div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Q501: RabbitMQ Core Concepts -->
-            <article data-difficulty="junior" data-tags="rabbitmq,amqp,messaging">
-                <div class="question-header">
-                    <h2 class="question">Q501: Explain RabbitMQ architecture components.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">rabbitmq</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>AMQP protocol-based broker. <strong>Producer</strong> publishes messages. <strong>Exchange</strong> routes messages (direct, fanout, topic, headers). <strong>Queue</strong> stores messages. <strong>Consumer</strong> processes messages. <strong>Binding</strong> links exchange to queue with routing key. Supports reliable delivery, persistence, acknowledgments.</p>
-                    <div class="diagram">
-                        <div class="diagram-title">RabbitMQ Message Flow:</div>
-                        <div class="flow-container">
-                            <div class="flow-box">Producer</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Exchange</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Queue</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Consumer</div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Q601: Kafka Fundamentals -->
-            <article data-difficulty="junior" data-tags="kafka,streaming,distributed">
-                <div class="question-header">
-                    <h2 class="question">Q601: Explain Kafka core architecture.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">kafka</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Distributed streaming platform. <strong>Topics</strong> categorize messages. <strong>Partitions</strong> enable parallelism and ordering. <strong>Producers</strong> publish records. <strong>Consumers</strong> subscribe to topics. <strong>Consumer Groups</strong> enable load balancing. <strong>Brokers</strong> store data. <strong>Offsets</strong> track consumer position. Designed for high-throughput, fault-tolerant, persistent messaging.</p>
-                    <div class="diagram">
-                        <div class="diagram-title">Kafka Architecture:</div>
-                        <div class="flow-container">
-                            <div class="flow-box">Producer</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Topic<br>Partition 0</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Consumer 1</div>
-                        </div>
-                        <div class="flow-container">
-                            <div class="flow-box" style="opacity:0">P</div>
-                            <div class="flow-arrow" style="opacity:0">→</div>
-                            <div class="flow-box">Topic<br>Partition 1</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Consumer 2</div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Q701: EDA Fundamentals -->
-            <article data-difficulty="mid" data-tags="eda,architecture,event-driven">
-                <div class="question-header">
-                    <h2 class="question">Q701: Explain event-driven architecture principles.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">event-driven</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>System reacts to state changes (events). Loose coupling between components. Asynchronous communication. Event producers emit events without knowing consumers. Event consumers react independently. Event bus mediates. Benefits: scalability, flexibility, real-time processing, fault isolation.</p>
-                </div>
-            </article>
-
-            <!-- Q751: CQRS Fundamentals -->
-            <article data-difficulty="mid" data-tags="cqrs,pattern,architecture">
-                <div class="question-header">
-                    <h2 class="question">Q751: Explain Command Query Responsibility Segregation.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">cqrs</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Separate read and write models. <strong>Commands</strong> modify state, return void/status. <strong>Queries</strong> return data, never modify state. Different data models optimized for each. Independent scaling. Often paired with event sourcing. Benefits: optimized reads/writes, scalability, complexity for simple CRUD.</p>
-                    <div class="diagram">
-                        <div class="diagram-title">CQRS Pattern:</div>
-                        <div class="flow-container">
-                            <div class="flow-box">Command</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Write Model</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Event Store</div>
-                        </div>
-                        <div class="flow-container">
-                            <div class="flow-box">Query</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Read Model</div>
-                            <div class="flow-arrow">←</div>
-                            <div class="flow-box">Projections</div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Q801: ReactPHP Fundamentals -->
-            <article data-difficulty="mid" data-tags="reactphp,async,event-loop">
-                <div class="question-header">
-                    <h2 class="question">Q801: Explain ReactPHP event loop and async programming.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">async</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Event-driven, non-blocking I/O for PHP. Event loop continuously checks for I/O events. Promises for async operations. Streams for I/O. Single-threaded but handles concurrent operations. Enables high-performance network servers without blocking. Core components: EventLoop, Promise, Stream.</p>
-                </div>
-            </article>
-
-            <!-- Q841: Swoole Fundamentals -->
-            <article data-difficulty="mid" data-tags="swoole,async,coroutine">
-                <div class="question-header">
-                    <h2 class="question">Q841: Explain Swoole features and advantages.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">async</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>PHP extension for async, coroutine-based programming. Built-in HTTP/WebSocket/TCP server. Coroutines for concurrent operations without callbacks. Connection pooling. Millisecond timer. Async I/O. Process management. Much faster than traditional PHP. Native support for WebSocket, HTTP/2.</p>
-                </div>
-            </article>
-
-            <!-- Q901: Backpressure Fundamentals -->
-            <article data-difficulty="senior" data-tags="backpressure,flow-control,performance">
-                <div class="question-header">
-                    <h2 class="question">Q901: Explain backpressure and why it's critical.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="senior">Senior</span>
-                        <span class="badge badge-tag">performance</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>When producer generates data faster than consumer can process. Without backpressure: buffer overflow, memory exhaustion, crashes. Solutions: pause producer, drop messages, buffer with limits, apply rate limiting, queue with bounded size. Essential for stable real-time systems.</p>
-                </div>
-            </article>
-
-            <!-- Q951: Connection Pooling Fundamentals -->
-            <article data-difficulty="mid" data-tags="connection-pool,performance,resources">
-                <div class="question-header">
-                    <h2 class="question">Q951: Explain connection pooling and benefits.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">performance</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Reuse established connections instead of creating new ones. Benefits: reduced connection overhead, faster response times, controlled resource usage, better throughput. Important for: databases, Redis, message brokers, HTTP clients. Configuration: min/max size, idle timeout, max lifetime, validation.</p>
-                </div>
-            </article>
-
-            <!-- Additional questions (Q11-Q1000) would follow the same pattern -->
-            <!-- For brevity, showing representative examples from each major section -->
-            
-            <!-- More WebSocket questions -->
-            <article data-difficulty="mid" data-tags="websocket,protocol">
-                <div class="question-header">
-                    <h2 class="question">Q11: What are WebSocket close status codes?</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="mid">Mid</span>
-                        <span class="badge badge-tag">websocket</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p><strong>1000</strong>: Normal closure<br>
-                    <strong>1001</strong>: Going away (endpoint disappearing)<br>
-                    <strong>1002</strong>: Protocol error<br>
-                    <strong>1003</strong>: Unsupported data<br>
-                    <strong>1006</strong>: Abnormal closure (no close frame)<br>
-                    <strong>1008</strong>: Policy violation<br>
-                    <strong>1011</strong>: Internal server error</p>
-                </div>
-            </article>
-
-            <article data-difficulty="junior" data-tags="websocket">
-                <div class="question-header">
-                    <h2 class="question">Q12: When should you use WebSockets vs HTTP?</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="junior">Junior</span>
-                        <span class="badge badge-tag">websocket</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p>Use WebSocket for: real-time bidirectional communication, low latency requirements, frequent updates, chat applications, live feeds, gaming, collaborative editing. Use HTTP for: request-response patterns, RESTful APIs, infrequent updates, SEO requirements, cacheable content.</p>
-                </div>
-            </article>
-
-            <!-- Final summary/scenario questions -->
-            <article data-difficulty="senior" data-tags="websocket,redis,kafka,event-driven,cqrs">
-                <div class="question-header">
-                    <h2 class="question">Q1000: Design a real-time car availability system with 10,000+ cars and 50k concurrent users.</h2>
-                    <div class="badges">
-                        <span class="badge badge-difficulty" data-difficulty="senior">Senior</span>
-                        <span class="badge badge-tag">websocket</span>
-                        <span class="badge badge-tag">kafka</span>
-                        <span class="badge badge-tag">redis</span>
-                        <span class="badge badge-tag">cqrs</span>
-                    </div>
-                </div>
-                <div class="answer">
-                    <p><strong>Architecture Solution:</strong></p>
-                    <ol>
-                        <li><strong>Command Side (CQRS)</strong>: BookingCommand → Event Store → CarBooked event</li>
-                        <li><strong>Query Side</strong>: Materialized view of availability in Redis</li>
-                        <li><strong>Real-time Updates</strong>: Kafka → WebSocket server → Client updates</li>
-                        <li><strong>Flow Control</strong>: Backpressure when booking surge, queue with bounded size</li>
-                        <li><strong>Scaling</strong>: Horizontal WebSocket servers with Redis Pub/Sub for cross-server events</li>
-                        <li><strong>Connection Pool</strong>: Redis connection pool for availability queries (100 connections)</li>
-                    </ol>
-                    <div class="diagram">
-                        <div class="diagram-title">System Architecture:</div>
-                        <div class="flow-container">
-                            <div class="flow-box">User Action</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Command Handler</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Event Store</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Kafka</div>
-                        </div>
-                        <div class="flow-container">
-                            <div class="flow-box" style="opacity:0">-</div>
-                            <div class="flow-arrow" style="opacity:0">→</div>
-                            <div class="flow-box" style="opacity:0">-</div>
-                            <div class="flow-arrow">↓</div>
-                            <div class="flow-box">Projection</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Redis Cache</div>
-                        </div>
-                        <div class="flow-container">
-                            <div class="flow-box" style="opacity:0">-</div>
-                            <div class="flow-arrow" style="opacity:0">→</div>
-                            <div class="flow-box" style="opacity:0">-</div>
-                            <div class="flow-arrow">↓</div>
-                            <div class="flow-box">WS Server</div>
-                            <div class="flow-arrow">→</div>
-                            <div class="flow-box">Clients</div>
-                        </div>
-                    </div>
-                    <p><strong>Key Techniques:</strong></p>
-                    <ul>
-                        <li>Event sourcing for booking history and audit</li>
-                        <li>CQRS for optimized reads (availability) and writes (bookings)</li>
-                        <li>WebSocket for instant availability updates to browsers</li>
-                        <li>Kafka for reliable event distribution</li>
-                        <li>Redis for fast availability queries</li>
-                        <li>Backpressure handling during peak booking times</li>
-                        <li>Connection pooling for database and Redis</li>
-                    </ul>
-                </div>
-            </article>
-        </div>
+        <div class="questions-container" id="questionsContainer"></div>
 
         <div class="stats" id="stats">
             Showing <span id="visibleCount">1000</span> of 1000 questions
         </div>
     </div>
 
-    <script>
-        const articles = document.querySelectorAll('article');
-        const difficultyFilter = document.getElementById('difficulty');
-        const tagFilter = document.getElementById('tag');
-        const searchInput = document.getElementById('search');
-        const statsElement = document.getElementById('visibleCount');
-
-        function filterQuestions() {
-            const difficulty = difficultyFilter.value.toLowerCase();
-            const tag = tagFilter.value.toLowerCase();
-            const searchTerm = searchInput.value.toLowerCase();
-            let visibleCount = 0;
-
-            articles.forEach(article => {
-                const articleDifficulty = article.dataset.difficulty;
-                const articleTags = article.dataset.tags.split(',');
-                const questionText = article.textContent.toLowerCase();
-
-                const matchesDifficulty = !difficulty || articleDifficulty === difficulty;
-                const matchesTag = !tag || articleTags.some(t => t.includes(tag));
-                const matchesSearch = !searchTerm || questionText.includes(searchTerm);
-
-                if (matchesDifficulty && matchesTag && matchesSearch) {
-                    article.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    article.classList.add('hidden');
-                }
-            });
-
-            statsElement.textContent = visibleCount;
-
-            if (visibleCount === 0) {
-                const container = document.getElementById('questionsContainer');
-                if (!document.querySelector('.no-results')) {
-                    container.innerHTML += `
-                        <div class="no-results">
-                            <h2>No questions found</h2>
-                            <p>Try adjusting your filters or search term</p>
-                        </div>
-                    `;
-                }
-            } else {
-                const noResults = document.querySelector('.no-results');
-                if (noResults) {
-                    noResults.remove();
-                }
-            }
-        }
-
-        difficultyFilter.addEventListener('change', filterQuestions);
-        tagFilter.addEventListener('change', filterQuestions);
-        searchInput.addEventListener('input', filterQuestions);
-
-        // Syntax highlighting for code blocks
-        document.querySelectorAll('code').forEach(block => {
-            const html = block.innerHTML;
-            const highlighted = html
-                .replace(/\b(const|let|var|function|class|new|return|if|else|for|while|async|await|import|export|from|require)\b/g, '<span class="keyword">$1</span>')
-                .replace(/'([^']*)'/g, '<span class="string">\'$1\'</span>')
-                .replace(/"([^"]*)"/g, '<span class="string">"$1"</span>')
-                .replace(/\/\/(.*)/g, '<span class="comment">//$1</span>')
-                .replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
-            block.innerHTML = highlighted;
-        });
-    </script>
+    <script src="../assets/js/realtime-questions.js"></script>
 </body>
 </html>
