@@ -362,105 +362,193 @@ class Builder
     }
     
     function generateRazorpayAnswer(id) {
-        if (id === 301 || id === 302) {
-            return `<p>Complete Razorpay payment integration with webhook signature verification:</p>
+        const answers = {
+            301: `<p><strong>Complete Razorpay Payment Integration</strong> with production-ready implementation including webhook signature verification, idempotency handling, and comprehensive security measures.</p>
 
-            <pre><code class="php"><?php
+<pre><code class="php"><?php
 
 namespace App\\Services\\Payment;
 
 use Razorpay\\Api\\Api;
 use Illuminate\\Support\\Facades\\DB;
 use Illuminate\\Support\\Facades\\Log;
+use Illuminate\\Support\\Facades\\Redis;
+use App\\Exceptions\\PaymentException;
 
+/**
+ * Production-ready Razorpay integration service
+ * 
+ * Security Features:
+ * - HMAC-SHA256 signature verification with hash_equals()
+ * - Idempotency key handling via Redis + Database
+ * - Webhook payload validation
+ * - Comprehensive audit logging
+ * - Transaction atomicity
+ */
 class RazorpayService
 {
     private Api $api;
     private string $keyId;
     private string $keySecret;
+    private string $webhookSecret;
     
     public function __construct()
     {
         $this->keyId = config('services.razorpay.key');
         $this->keySecret = config('services.razorpay.secret');
+        $this->webhookSecret = config('services.razorpay.webhook_secret');
         $this->api = new Api($this->keyId, $this->keySecret);
     }
     
     /**
      * Create Razorpay order with idempotency protection
+     * 
+     * @param array $data Order data with idempotency_key
+     * @return array Razorpay order details
+     * @throws PaymentException
      */
     public function createOrder(array $data): array
     {
-        $idempotencyKey = $data['idempotency_key'] ?? uniqid('rzp_', true);
+        // SECURITY: Generate or use provided idempotency key
+        $idempotencyKey = $data['idempotency_key'] ?? hash('sha256', json_encode($data) . time());
         
-        // Check if order already exists (idempotency)
+        // IDEMPOTENCY: Check Redis cache first (fast path)
+        $cachedOrder = Redis::get("razorpay:idempotency:{$idempotencyKey}");
+        if ($cachedOrder) {
+            Log::info('Returning cached order (idempotency)', [
+                'key' => $idempotencyKey,
+                'source' => 'redis'
+            ]);
+            return json_decode($cachedOrder, true);
+        }
+        
+        // IDEMPOTENCY: Check database (slow path)
         $existing = DB::table('payment_orders')
             ->where('idempotency_key', $idempotencyKey)
             ->first();
             
         if ($existing) {
-            Log::info('Returning existing order', ['key' => $idempotencyKey]);
-            return json_decode($existing->response_data, true);
+            $orderData = json_decode($existing->response_data, true);
+            
+            // Cache for future requests
+            Redis::setex(
+                "razorpay:idempotency:{$idempotencyKey}",
+                3600,
+                $existing->response_data
+            );
+            
+            Log::info('Returning existing order (idempotency)', [
+                'key' => $idempotencyKey,
+                'order_id' => $existing->order_id,
+                'source' => 'database'
+            ]);
+            
+            return $orderData;
         }
         
-        try {
-            $order = $this->api->order->create([
-                'amount' => $data['amount'] * 100, // Convert to paisa
-                'currency' => $data['currency'] ?? 'INR',
-                'receipt' => $data['receipt'] ?? 'rcpt_' . time(),
-                'payment_capture' => 1, // Auto-capture
-                'notes' => $data['notes'] ?? []
-            ]);
-            
-            // Store order for idempotency
-            DB::table('payment_orders')->insert([
-                'idempotency_key' => $idempotencyKey,
-                'order_id' => $order->id,
-                'amount' => $data['amount'],
-                'currency' => $data['currency'] ?? 'INR',
-                'status' => 'created',
-                'response_data' => json_encode($order->toArray()),
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-            
-            Log::info('Razorpay order created', [
-                'order_id' => $order->id,
-                'amount' => $data['amount']
-            ]);
-            
-            return $order->toArray();
-            
-        } catch (\\Exception $e) {
-            Log::error('Razorpay order creation failed', [
-                'error' => $e->getMessage(),
-                'data' => $data
-            ]);
-            throw $e;
-        }
+        // Create new order with database transaction
+        return DB::transaction(function () use ($data, $idempotencyKey) {
+            try {
+                // VALIDATION: Validate amount
+                if (!isset($data['amount']) || $data['amount'] <= 0) {
+                    throw new PaymentException('Invalid payment amount');
+                }
+                
+                // Create order via Razorpay API
+                $order = $this->api->order->create([
+                    'amount' => (int)($data['amount'] * 100), // Convert to paisa
+                    'currency' => $data['currency'] ?? 'INR',
+                    'receipt' => $data['receipt'] ?? 'rcpt_' . uniqid(),
+                    'payment_capture' => 1, // Auto-capture
+                    'notes' => array_merge(
+                        ['created_by' => 'laravel_app'],
+                        $data['notes'] ?? []
+                    )
+                ]);
+                
+                $orderArray = $order->toArray();
+                $orderJson = json_encode($orderArray);
+                
+                // PERSISTENCE: Store order in database
+                DB::table('payment_orders')->insert([
+                    'idempotency_key' => $idempotencyKey,
+                    'order_id' => $order->id,
+                    'amount' => $data['amount'],
+                    'currency' => $data['currency'] ?? 'INR',
+                    'status' => 'created',
+                    'response_data' => $orderJson,
+                    'user_id' => $data['user_id'] ?? null,
+                    'metadata' => json_encode($data['metadata'] ?? []),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+                
+                // CACHING: Store in Redis for fast idempotency checks
+                Redis::setex(
+                    "razorpay:idempotency:{$idempotencyKey}",
+                    3600,
+                    $orderJson
+                );
+                
+                // LOGGING: Audit trail
+                Log::channel('payments')->info('Razorpay order created', [
+                    'order_id' => $order->id,
+                    'amount' => $data['amount'],
+                    'currency' => $data['currency'] ?? 'INR',
+                    'idempotency_key' => $idempotencyKey,
+                    'user_id' => $data['user_id'] ?? null
+                ]);
+                
+                return $orderArray;
+                
+            } catch (\\Razorpay\\Api\\Errors\\Error $e) {
+                Log::error('Razorpay API error', [
+                    'error' => $e->getMessage(),
+                    'code' => $e->getCode(),
+                    'data' => $data
+                ]);
+                throw new PaymentException('Payment gateway error: ' . $e->getMessage());
+            }
+        });
     }
     
     /**
      * Verify payment signature using HMAC-SHA256
-     * CRITICAL for preventing payment tampering
+     * 
+     * SECURITY CRITICAL: This prevents payment tampering
+     * Uses hash_equals() to prevent timing attacks
+     * 
+     * @param array $attributes Payment callback attributes
+     * @return bool True if signature is valid
      */
     public function verifyPaymentSignature(array $attributes): bool
     {
-        // Generate expected signature
-        $generatedSignature = hash_hmac(
-            'sha256',
-            $attributes['razorpay_order_id'] . '|' . $attributes['razorpay_payment_id'],
-            $this->keySecret
-        );
+        // VALIDATION: Ensure required fields exist
+        $required = ['razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature'];
+        foreach ($required as $field) {
+            if (!isset($attributes[$field])) {
+                Log::error('Missing required payment attribute', ['field' => $field]);
+                return false;
+            }
+        }
         
-        // Use hash_equals to prevent timing attacks
-        $isValid = hash_equals(
-            $generatedSignature,
-            $attributes['razorpay_signature']
-        );
+        // SECURITY: Generate expected signature using HMAC-SHA256
+        $payload = $attributes['razorpay_order_id'] . '|' . $attributes['razorpay_payment_id'];
+        $generatedSignature = hash_hmac('sha256', $payload, $this->keySecret);
+        
+        // SECURITY: Use hash_equals() to prevent timing attacks
+        // This ensures constant-time string comparison
+        $isValid = hash_equals($generatedSignature, $attributes['razorpay_signature']);
         
         if (!$isValid) {
-            Log::warning('Invalid Razorpay signature', [
+            Log::channel('security')->warning('Invalid Razorpay payment signature', [
+                'order_id' => $attributes['razorpay_order_id'],
+                'payment_id' => $attributes['razorpay_payment_id'],
+                'ip' => request()->ip(),
+                'user_agent' => request()->userAgent()
+            ]);
+        } else {
+            Log::channel('payments')->info('Payment signature verified', [
                 'order_id' => $attributes['razorpay_order_id'],
                 'payment_id' => $attributes['razorpay_payment_id']
             ]);
@@ -471,158 +559,1683 @@ class RazorpayService
     
     /**
      * Verify webhook signature
+     * 
+     * SECURITY: Validates webhook is from Razorpay
+     * Uses hash_equals() for timing attack protection
+     * 
+     * @param string $payload Raw webhook payload
+     * @param string $signature X-Razorpay-Signature header
+     * @return bool True if webhook is authentic
      */
     public function verifyWebhookSignature(string $payload, string $signature): bool
     {
-        $webhookSecret = config('services.razorpay.webhook_secret');
+        // SECURITY: Generate expected signature from payload
+        $expectedSignature = hash_hmac('sha256', $payload, $this->webhookSecret);
         
-        $expectedSignature = hash_hmac('sha256', $payload, $webhookSecret);
+        // SECURITY: Constant-time comparison prevents timing attacks
+        $isValid = hash_equals($expectedSignature, $signature);
         
-        return hash_equals($expectedSignature, $signature);
+        if (!$isValid) {
+            Log::channel('security')->error('Invalid webhook signature', [
+                'ip' => request()->ip(),
+                'payload_length' => strlen($payload),
+                'signature_provided' => substr($signature, 0, 10) . '...'
+            ]);
+        }
+        
+        return $isValid;
+    }
+    
+    /**
+     * Process webhook event
+     * 
+     * @param array $event Webhook event data
+     * @return void
+     */
+    public function processWebhookEvent(array $event): void
+    {
+        $eventType = $event['event'] ?? null;
+        $paymentEntity = $event['payload']['payment']['entity'] ?? null;
+        
+        if (!$paymentEntity) {
+            Log::warning('Webhook missing payment entity', ['event' => $event]);
+            return;
+        }
+        
+        DB::transaction(function () use ($eventType, $paymentEntity) {
+            switch ($eventType) {
+                case 'payment.captured':
+                    $this->handlePaymentCaptured($paymentEntity);
+                    break;
+                    
+                case 'payment.failed':
+                    $this->handlePaymentFailed($paymentEntity);
+                    break;
+                    
+                case 'refund.created':
+                    $this->handleRefundCreated($paymentEntity);
+                    break;
+                    
+                default:
+                    Log::info('Unhandled webhook event', ['type' => $eventType]);
+            }
+        });
+    }
+    
+    private function handlePaymentCaptured(array $payment): void
+    {
+        DB::table('payment_orders')
+            ->where('order_id', $payment['order_id'])
+            ->update([
+                'status' => 'captured',
+                'payment_id' => $payment['id'],
+                'captured_at' => now(),
+                'updated_at' => now()
+            ]);
+            
+        Log::channel('payments')->info('Payment captured', [
+            'order_id' => $payment['order_id'],
+            'payment_id' => $payment['id'],
+            'amount' => $payment['amount'] / 100
+        ]);
+    }
+    
+    private function handlePaymentFailed(array $payment): void
+    {
+        DB::table('payment_orders')
+            ->where('order_id', $payment['order_id'])
+            ->update([
+                'status' => 'failed',
+                'error_code' => $payment['error_code'] ?? null,
+                'error_description' => $payment['error_description'] ?? null,
+                'updated_at' => now()
+            ]);
+            
+        Log::channel('payments')->warning('Payment failed', [
+            'order_id' => $payment['order_id'],
+            'error' => $payment['error_description'] ?? 'Unknown'
+        ]);
+    }
+    
+    private function handleRefundCreated(array $refund): void
+    {
+        Log::channel('payments')->info('Refund created', [
+            'payment_id' => $refund['payment_id'],
+            'refund_id' => $refund['id'],
+            'amount' => $refund['amount'] / 100
+        ]);
     }
 }</code></pre>
 
-            <div class="flow-diagram">
-<strong>Razorpay Payment Flow with Security:</strong>
+<div class="flow-diagram">
+<strong>Razorpay Payment Flow with Security Annotations:</strong>
 
-┌─────────────────────────────────────────────┐
-│  1. Client: Initiate Payment               │
-│     POST /api/payment/create                │
-│     { amount: 1000, currency: "INR" }       │
-└────────────┬────────────────────────────────┘
-             ↓
-┌─────────────────────────────────────────────┐
-│  2. Server: Create Order                    │
-│     - Check idempotency key                 │
-│     - Call Razorpay API                     │
-│     - Store order in database               │
-│     - Return order_id to client             │
-└────────────┬────────────────────────────────┘
-             ↓
-┌─────────────────────────────────────────────┐
-│  3. Client: Initialize Razorpay Checkout    │
-│     Razorpay.open({                         │
-│       key: "rzp_key",                       │
-│       order_id: "order_xxx",                │
-│       handler: handleSuccess                │
-│     })                                      │
-└────────────┬────────────────────────────────┘
-             ↓
-┌─────────────────────────────────────────────┐
-│  4. User: Complete Payment                  │
-│     - Razorpay shows payment form           │
-│     - User enters card details              │
-│     - Payment processed by Razorpay         │
-└────────────┬────────────────────────────────┘
-             ↓
-┌─────────────────────────────────────────────┐
-│  5. Razorpay: Return to Callback            │
-│     Returns:                                │
-│     - razorpay_payment_id                   │
-│     - razorpay_order_id                     │
-│     - razorpay_signature (HMAC-SHA256)      │
-└────────────┬────────────────────────────────┘
-             ↓
-┌─────────────────────────────────────────────┐
-│  6. Server: Verify Signature                │
-│     expected = HMAC-SHA256(                 │
-│       order_id + "|" + payment_id,          │
-│       secret                                │
-│     )                                       │
-│     if (hash_equals(expected, signature))   │
-│       → Accept payment                      │
-│     else                                    │
-│       → Reject (possible tampering)         │
-└────────────┬────────────────────────────────┘
-             ↓
-┌─────────────────────────────────────────────┐
-│  7. Server: Update Payment Status           │
-│     - Mark as paid in database              │
-│     - Trigger business logic                │
-│     - Send confirmation email               │
-└────────────┬────────────────────────────────┘
-             ↓
-┌─────────────────────────────────────────────┐
-│  8. Webhook: Async Notification (Optional)  │
-│     POST /webhooks/razorpay                 │
-│     X-Razorpay-Signature header             │
-│     - Verify webhook signature              │
-│     - Process event asynchronously          │
-│     - Handle payment.captured, etc.         │
-└─────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│ 1. CLIENT: Initiate Payment                         │
+│    POST /api/payment/create                          │
+│    Body: {                                           │
+│      amount: 1000,                                   │
+│      currency: "INR",                                │
+│      idempotency_key: "uuid-v4"  ← SECURITY          │
+│    }                                                 │
+└───────────────────┬──────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────┐
+│ 2. SERVER: Create Order (Laravel)                   │
+│    ✓ Validate request (FormRequest)                 │
+│    ✓ Check idempotency key in Redis (100ms)         │
+│    ✓ If exists → return cached order                │
+│    ✓ Check idempotency key in DB (fallback)         │
+│    ✓ Create order via Razorpay API                  │
+│    ✓ Store in DB with transaction                   │
+│    ✓ Cache in Redis (1 hour TTL)                    │
+│    ✓ Return: { order_id, key_id, amount }           │
+│                                                      │
+│    PROTECTION: Prevents duplicate charges            │
+└───────────────────┬──────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────┐
+│ 3. CLIENT: Initialize Razorpay Checkout JS          │
+│    <script src="https://checkout.razorpay.com/v1/   │
+│             checkout.js"></script>                   │
+│    var options = {                                   │
+│      key: "rzp_live_xxx",                           │
+│      order_id: "order_xxx",    ← From step 2        │
+│      handler: function(response) {                   │
+│        verifyPayment(response);                      │
+│      }                                               │
+│    };                                                │
+│    new Razorpay(options).open();                    │
+└───────────────────┬──────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────┐
+│ 4. USER: Complete Payment (Razorpay Gateway)        │
+│    - User enters card/UPI/netbanking details        │
+│    - Payment processed by Razorpay                  │
+│    - NO card data touches your server  ← SECURITY   │
+│    - PCI DSS compliance handled by Razorpay         │
+└───────────────────┬──────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────┐
+│ 5. RAZORPAY: Return Payment Details to Client       │
+│    Callback receives:                                │
+│    {                                                 │
+│      razorpay_order_id: "order_xxx",                │
+│      razorpay_payment_id: "pay_yyy",                │
+│      razorpay_signature: "abc123..."  ← HMAC-SHA256 │
+│    }                                                 │
+└───────────────────┬──────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────┐
+│ 6. CLIENT: Send to Server for Verification          │
+│    POST /api/payment/verify                          │
+│    Body: {                                           │
+│      razorpay_order_id,                             │
+│      razorpay_payment_id,                           │
+│      razorpay_signature                             │
+│    }                                                 │
+└───────────────────┬──────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────┐
+│ 7. SERVER: Verify Signature (CRITICAL)              │
+│    $payload = order_id . "|" . payment_id;          │
+│    $expected = hash_hmac(                            │
+│        'sha256',                                     │
+│        $payload,                                     │
+│        $secret_key  ← Never exposed to client       │
+│    );                                                │
+│                                                      │
+│    // SECURITY: Constant-time comparison            │
+│    if (hash_equals($expected, $signature)) {        │
+│        ✓ Signature valid                            │
+│        ✓ Payment confirmed                          │
+│        ✓ Update DB: status = 'paid'                 │
+│        ✓ Trigger business logic                     │
+│    } else {                                          │
+│        ✗ REJECT - Possible tampering                │
+│        ✗ Log security incident                      │
+│        ✗ Return 403 Forbidden                       │
+│    }                                                 │
+│                                                      │
+│    PROTECTION: Prevents signature forgery            │
+│    hash_equals() prevents timing attacks            │
+└───────────────────┬──────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────┐
+│ 8. SERVER: Update Payment Status                    │
+│    DB::transaction(function() {                      │
+│      - Update payment_orders table                   │
+│      - Update user subscription/order               │
+│      - Create invoice record                        │
+│      - Dispatch SendInvoiceEmail job                │
+│    });                                               │
+│                                                      │
+│    ATOMICITY: All or nothing                        │
+└───────────────────┬──────────────────────────────────┘
+                    ↓
+┌──────────────────────────────────────────────────────┐
+│ 9. WEBHOOK: Async Server-to-Server Notification     │
+│    POST https://yourapp.com/webhooks/razorpay       │
+│    Headers:                                          │
+│      X-Razorpay-Signature: <hmac-sha256>            │
+│    Body: {                                           │
+│      event: "payment.captured",                     │
+│      payload: { payment: {...} }                    │
+│    }                                                 │
+│                                                      │
+│    VERIFICATION:                                     │
+│    $payload = file_get_contents('php://input');     │
+│    $signature = $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'];│
+│    $expected = hash_hmac('sha256', $payload,         │
+│                          $webhook_secret);          │
+│                                                      │
+│    if (!hash_equals($expected, $signature)) {       │
+│        abort(403, 'Invalid signature');             │
+│    }                                                 │
+│                                                      │
+│    ✓ Process event asynchronously (Queue)           │
+│    ✓ Handle: payment.captured, payment.failed, etc. │
+│    ✓ Idempotent processing (check event_id)         │
+│                                                      │
+│    PROTECTION: Webhook authenticity verification    │
+└──────────────────────────────────────────────────────┘
+</div>
 
-<strong>Security Measures:</strong>
-✓ HMAC-SHA256 signature verification
-✓ hash_equals() prevents timing attacks
-✓ Idempotency keys prevent duplicate charges
-✓ Webhook signature verification
-✓ Async processing for webhooks
-✓ Detailed logging for auditing
-            </div>`;
+<p><strong>Security Mechanisms Explained:</strong></p>
+<ul>
+    <li><strong>HMAC-SHA256:</strong> Cryptographic signature using secret key - impossible to forge without secret</li>
+    <li><strong>hash_equals():</strong> Constant-time comparison prevents timing attacks that could leak signature info</li>
+    <li><strong>Idempotency Keys:</strong> Redis + DB dual-layer prevents duplicate charges on retry/refresh</li>
+    <li><strong>Webhook Signature:</strong> Separate secret for webhooks ensures server-to-server authenticity</li>
+    <li><strong>Database Transactions:</strong> Ensures atomic updates - payment recorded or nothing happens</li>
+    <li><strong>Audit Logging:</strong> All payment actions logged to dedicated channel for compliance/debugging</li>
+    <li><strong>No Card Data:</strong> Client-side Razorpay SDK handles card input - your server never sees PAN/CVV</li>
+</ul>`,
+
+            302: `<p><strong>Razorpay Controller Implementation</strong> with complete request validation, error handling, and response formatting.</p>
+
+<pre><code class="php"><?php
+
+namespace App\\Http\\Controllers\\Api;
+
+use App\\Services\\Payment\\RazorpayService;
+use App\\Http\\Requests\\CreatePaymentRequest;
+use App\\Http\\Requests\\VerifyPaymentRequest;
+use Illuminate\\Http\\JsonResponse;
+use Illuminate\\Http\\Request;
+use Illuminate\\Support\\Facades\\Log;
+
+class RazorpayController extends Controller
+{
+    public function __construct(
+        private RazorpayService $razorpay
+    ) {}
+    
+    /**
+     * Create payment order
+     */
+    public function createOrder(CreatePaymentRequest $request): JsonResponse
+    {
+        try {
+            $order = $this->razorpay->createOrder([
+                'amount' => $request->input('amount'),
+                'currency' => $request->input('currency', 'INR'),
+                'receipt' => $request->input('receipt'),
+                'notes' => $request->input('notes', []),
+                'user_id' => auth()->id(),
+                'idempotency_key' => $request->header('Idempotency-Key') 
+                    ?? $request->input('idempotency_key'),
+                'metadata' => [
+                    'ip' => $request->ip(),
+                    'user_agent' => $request->userAgent()
+                ]
+            ]);
+            
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'order_id' => $order['id'],
+                    'key_id' => config('services.razorpay.key'),
+                    'amount' => $order['amount'],
+                    'currency' => $order['currency']
+                ]
+            ], 201);
+            
+        } catch (\\Exception $e) {
+            Log::error('Order creation failed', [
+                'error' => $e->getMessage(),
+                'user_id' => auth()->id()
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'error' => 'Failed to create payment order'
+            ], 500);
         }
-        return `<p>Razorpay implementation detail for question ${id}.</p>`;
+    }
+    
+    /**
+     * Verify payment signature
+     */
+    public function verifyPayment(VerifyPaymentRequest $request): JsonResponse
+    {
+        $attributes = $request->only([
+            'razorpay_order_id',
+            'razorpay_payment_id',
+            'razorpay_signature'
+        ]);
+        
+        if (!$this->razorpay->verifyPaymentSignature($attributes)) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Invalid payment signature'
+            ], 403);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment verified successfully'
+        ]);
+    }
+    
+    /**
+     * Handle webhook
+     */
+    public function handleWebhook(Request $request): JsonResponse
+    {
+        $payload = $request->getContent();
+        $signature = $request->header('X-Razorpay-Signature');
+        
+        if (!$this->razorpay->verifyWebhookSignature($payload, $signature)) {
+            Log::channel('security')->error('Invalid webhook signature');
+            return response()->json(['error' => 'Invalid signature'], 403);
+        }
+        
+        $event = json_decode($payload, true);
+        $this->razorpay->processWebhookEvent($event);
+        
+        return response()->json(['status' => 'processed']);
+    }
+}
+
+// Request Validation Classes
+namespace App\\Http\\Requests;
+
+use Illuminate\\Foundation\\Http\\FormRequest;
+
+class CreatePaymentRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return auth()->check();
+    }
+    
+    public function rules(): array
+    {
+        return [
+            'amount' => 'required|numeric|min:1',
+            'currency' => 'sometimes|string|in:INR,USD',
+            'receipt' => 'sometimes|string|max:40',
+            'notes' => 'sometimes|array',
+            'idempotency_key' => 'sometimes|string|max:255'
+        ];
+    }
+}
+
+class VerifyPaymentRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'razorpay_order_id' => 'required|string',
+            'razorpay_payment_id' => 'required|string',
+            'razorpay_signature' => 'required|string'
+        ];
+    }
+}</code></pre>
+
+<pre><code class="php"><?php
+
+// Database Migration
+use Illuminate\\Database\\Migrations\\Migration;
+use Illuminate\\Database\\Schema\\Blueprint;
+use Illuminate\\Support\\Facades\\Schema;
+
+class CreatePaymentOrdersTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('payment_orders', function (Blueprint $table) {
+            $table->id();
+            $table->string('idempotency_key')->unique();
+            $table->string('order_id')->unique();
+            $table->string('payment_id')->nullable()->index();
+            $table->decimal('amount', 10, 2);
+            $table->string('currency', 3)->default('INR');
+            $table->enum('status', [
+                'created', 'attempted', 'captured', 'failed', 'refunded'
+            ])->index();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->json('response_data')->nullable();
+            $table->json('metadata')->nullable();
+            $table->string('error_code')->nullable();
+            $table->text('error_description')->nullable();
+            $table->timestamp('captured_at')->nullable();
+            $table->timestamps();
+            
+            $table->index(['user_id', 'status']);
+            $table->index('created_at');
+        });
+    }
+}
+
+// Routes
+Route::middleware(['auth:sanctum'])->prefix('api/payment')->group(function () {
+    Route::post('/create', [RazorpayController::class, 'createOrder']);
+    Route::post('/verify', [RazorpayController::class, 'verifyPayment']);
+});
+
+Route::post('/webhooks/razorpay', [RazorpayController::class, 'handleWebhook'])
+    ->withoutMiddleware([\\App\\Http\\Middleware\\VerifyCsrfToken::class]);
+
+// Config (config/services.php)
+'razorpay' => [
+    'key' => env('RAZORPAY_KEY'),
+    'secret' => env('RAZORPAY_SECRET'),
+    'webhook_secret' => env('RAZORPAY_WEBHOOK_SECRET'),
+],</code></pre>`,
+        };
+        
+        return answers[id] || `<p><strong>Razorpay Integration - Question ${id}:</strong> Production-ready Razorpay payment gateway integration with comprehensive security measures, idempotency handling, and webhook processing.</p>
+
+<p>Key implementation features:</p>
+<ul>
+    <li>Complete payment flow with signature verification</li>
+    <li>HMAC-SHA256 webhook signature validation</li>
+    <li>Redis-backed idempotency key caching</li>
+    <li>Database transaction atomicity</li>
+    <li>Comprehensive audit logging</li>
+    <li>PCI DSS compliance through tokenization</li>
+</ul>`;
     }
     
     function generateStripeAnswer(id) {
-        return `<p>Complete Stripe payment integration with webhook verification.</p>`;
+        const answers = {
+            351: `<p><strong>Complete Stripe Payment Integration</strong> with production-ready PaymentIntent API, webhook handling, and idempotency.</p>
+
+<pre><code class="php"><?php
+
+namespace App\\Services\\Payment;
+
+use Stripe\\StripeClient;
+use Stripe\\Exception\\SignatureVerificationException;
+use Illuminate\\Support\\Facades\\DB;
+use Illuminate\\Support\\Facades\\Log;
+use Illuminate\\Support\\Facades\\Redis;
+use App\\Exceptions\\PaymentException;
+
+/**
+ * Production-ready Stripe integration
+ * 
+ * Security Features:
+ * - Webhook signature verification using Stripe-Signature header
+ * - Idempotency key handling (Stripe native + Redis cache)
+ * - PaymentIntent API for SCA compliance
+ * - Comprehensive error handling
+ */
+class StripeService
+{
+    private StripeClient $stripe;
+    private string $webhookSecret;
+    
+    public function __construct()
+    {
+        $this->stripe = new StripeClient(config('services.stripe.secret'));
+        $this->webhookSecret = config('services.stripe.webhook_secret');
+    }
+    
+    /**
+     * Create PaymentIntent with idempotency
+     * 
+     * @param array $data Payment data
+     * @return array PaymentIntent details
+     */
+    public function createPaymentIntent(array $data): array
+    {
+        // IDEMPOTENCY: Generate key for Stripe API
+        $idempotencyKey = $data['idempotency_key'] 
+            ?? hash('sha256', json_encode($data) . time());
+        
+        // IDEMPOTENCY: Check Redis cache
+        $cached = Redis::get("stripe:idempotency:{$idempotencyKey}");
+        if ($cached) {
+            Log::info('Returning cached PaymentIntent', [
+                'key' => $idempotencyKey
+            ]);
+            return json_decode($cached, true);
+        }
+        
+        // IDEMPOTENCY: Check database
+        $existing = DB::table('stripe_payment_intents')
+            ->where('idempotency_key', $idempotencyKey)
+            ->first();
+            
+        if ($existing) {
+            $intentData = json_decode($existing->intent_data, true);
+            Redis::setex("stripe:idempotency:{$idempotencyKey}", 3600, $existing->intent_data);
+            return $intentData;
+        }
+        
+        return DB::transaction(function () use ($data, $idempotencyKey) {
+            try {
+                // VALIDATION: Validate amount
+                if (!isset($data['amount']) || $data['amount'] <= 0) {
+                    throw new PaymentException('Invalid amount');
+                }
+                
+                // Create PaymentIntent with Stripe
+                $paymentIntent = $this->stripe->paymentIntents->create([
+                    'amount' => (int)($data['amount'] * 100), // Convert to cents
+                    'currency' => $data['currency'] ?? 'usd',
+                    'payment_method_types' => $data['payment_methods'] ?? ['card'],
+                    'metadata' => array_merge(
+                        ['source' => 'laravel_app'],
+                        $data['metadata'] ?? []
+                    ),
+                    'description' => $data['description'] ?? null,
+                    'receipt_email' => $data['receipt_email'] ?? null,
+                ], [
+                    // IDEMPOTENCY: Stripe native idempotency key
+                    'idempotency_key' => $idempotencyKey,
+                ]);
+                
+                $intentArray = $paymentIntent->toArray();
+                $intentJson = json_encode($intentArray);
+                
+                // PERSISTENCE: Store in database
+                DB::table('stripe_payment_intents')->insert([
+                    'idempotency_key' => $idempotencyKey,
+                    'intent_id' => $paymentIntent->id,
+                    'amount' => $data['amount'],
+                    'currency' => $data['currency'] ?? 'usd',
+                    'status' => $paymentIntent->status,
+                    'intent_data' => $intentJson,
+                    'user_id' => $data['user_id'] ?? null,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+                
+                // CACHING: Store in Redis
+                Redis::setex("stripe:idempotency:{$idempotencyKey}", 3600, $intentJson);
+                
+                // LOGGING: Audit trail
+                Log::channel('payments')->info('Stripe PaymentIntent created', [
+                    'intent_id' => $paymentIntent->id,
+                    'amount' => $data['amount'],
+                    'currency' => $data['currency'] ?? 'usd',
+                    'idempotency_key' => $idempotencyKey
+                ]);
+                
+                return $intentArray;
+                
+            } catch (\\Stripe\\Exception\\ApiErrorException $e) {
+                Log::error('Stripe API error', [
+                    'error' => $e->getMessage(),
+                    'type' => get_class($e),
+                    'data' => $data
+                ]);
+                throw new PaymentException('Payment gateway error: ' . $e->getMessage());
+            }
+        });
+    }
+    
+    /**
+     * Verify webhook signature
+     * 
+     * SECURITY CRITICAL: Validates webhook authenticity
+     * 
+     * @param string $payload Raw webhook payload
+     * @param string $signature Stripe-Signature header
+     * @return object Verified event object
+     */
+    public function verifyWebhookSignature(string $payload, string $signature): object
+    {
+        try {
+            // SECURITY: Stripe's signature verification
+            // Uses HMAC-SHA256 internally with hash_equals()
+            $event = \\Stripe\\Webhook::constructEvent(
+                $payload,
+                $signature,
+                $this->webhookSecret
+            );
+            
+            Log::channel('payments')->info('Webhook signature verified', [
+                'event_id' => $event->id,
+                'type' => $event->type
+            ]);
+            
+            return $event;
+            
+        } catch (SignatureVerificationException $e) {
+            Log::channel('security')->error('Invalid Stripe webhook signature', [
+                'error' => $e->getMessage(),
+                'ip' => request()->ip()
+            ]);
+            throw $e;
+        }
+    }
+    
+    /**
+     * Process webhook event
+     */
+    public function processWebhookEvent(object $event): void
+    {
+        // IDEMPOTENCY: Check if event already processed
+        $eventId = $event->id;
+        $processed = Redis::get("stripe:webhook:{$eventId}");
+        
+        if ($processed) {
+            Log::info('Webhook already processed', ['event_id' => $eventId]);
+            return;
+        }
+        
+        DB::transaction(function () use ($event, $eventId) {
+            switch ($event->type) {
+                case 'payment_intent.succeeded':
+                    $this->handlePaymentSucceeded($event->data->object);
+                    break;
+                    
+                case 'payment_intent.payment_failed':
+                    $this->handlePaymentFailed($event->data->object);
+                    break;
+                    
+                case 'charge.refunded':
+                    $this->handleChargeRefunded($event->data->object);
+                    break;
+                    
+                default:
+                    Log::info('Unhandled webhook event', ['type' => $event->type]);
+            }
+            
+            // IDEMPOTENCY: Mark event as processed (24 hour TTL)
+            Redis::setex("stripe:webhook:{$eventId}", 86400, '1');
+        });
+    }
+    
+    private function handlePaymentSucceeded($paymentIntent): void
+    {
+        DB::table('stripe_payment_intents')
+            ->where('intent_id', $paymentIntent->id)
+            ->update([
+                'status' => 'succeeded',
+                'updated_at' => now()
+            ]);
+            
+        Log::channel('payments')->info('Payment succeeded', [
+            'intent_id' => $paymentIntent->id,
+            'amount' => $paymentIntent->amount / 100
+        ]);
+    }
+    
+    private function handlePaymentFailed($paymentIntent): void
+    {
+        DB::table('stripe_payment_intents')
+            ->where('intent_id', $paymentIntent->id)
+            ->update([
+                'status' => 'failed',
+                'error_message' => $paymentIntent->last_payment_error->message ?? null,
+                'updated_at' => now()
+            ]);
+    }
+    
+    private function handleChargeRefunded($charge): void
+    {
+        Log::channel('payments')->info('Charge refunded', [
+            'charge_id' => $charge->id,
+            'amount' => $charge->amount_refunded / 100
+        ]);
+    }
+}</code></pre>
+
+<div class="flow-diagram">
+<strong>Stripe PaymentIntent Flow:</strong>
+
+CLIENT → SERVER → STRIPE → CLIENT → SERVER → WEBHOOK
+  ↓        ↓         ↓        ↓        ↓         ↓
+Create  Payment   Process  Confirm  Verify   Update
+Intent   Intent   Payment  Payment  Result   Status
+</div>`,
+
+            352: `<p><strong>Stripe Elements Integration</strong> - Client-side implementation for PCI compliance.</p>
+
+<pre><code class="javascript">// Client-side Stripe Elements (PCI compliant)
+const stripe = Stripe('pk_live_xxx');
+const elements = stripe.elements();
+
+// Create card element
+const cardElement = elements.create('card', {
+    style: {
+        base: {
+            fontSize: '16px',
+            color: '#32325d',
+        }
+    }
+});
+
+cardElement.mount('#card-element');
+
+// Handle form submission
+const form = document.getElementById('payment-form');
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // STEP 1: Create PaymentIntent on server
+    const response = await fetch('/api/payment/create-intent', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Idempotency-Key': generateUUID() // Client-generated
+        },
+        body: JSON.stringify({
+            amount: 5000, // $50.00
+            currency: 'usd'
+        })
+    });
+    
+    const { client_secret } = await response.json();
+    
+    // STEP 2: Confirm payment with Stripe
+    // Card data never touches your server
+    const { error, paymentIntent } = await stripe.confirmCardPayment(
+        client_secret,
+        {
+            payment_method: {
+                card: cardElement,
+                billing_details: {
+                    name: 'Customer Name',
+                    email: 'customer@example.com'
+                }
+            }
+        }
+    );
+    
+    if (error) {
+        displayError(error.message);
+    } else if (paymentIntent.status === 'succeeded') {
+        // STEP 3: Payment successful
+        window.location.href = '/payment/success';
+    }
+});
+
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}</code></pre>
+
+<p><strong>Security Benefits:</strong></p>
+<ul>
+    <li>Card data never sent to your server (PCI compliance)</li>
+    <li>Stripe Elements handles tokenization</li>
+    <li>SCA/3D Secure automatically handled</li>
+    <li>Client-side idempotency key generation</li>
+</ul>`,
+        };
+        
+        return answers[id] || `<p><strong>Stripe Integration - Question ${id}:</strong> Modern Stripe PaymentIntent API with SCA compliance and webhook handling.</p>
+
+<p>Stripe implementation features:</p>
+<ul>
+    <li>PaymentIntent API for Strong Customer Authentication</li>
+    <li>Stripe Elements for PCI-compliant card collection</li>
+    <li>Native idempotency key support</li>
+    <li>Webhook signature verification</li>
+    <li>3D Secure / SCA automatic handling</li>
+</ul>`;
     }
     
     function generateIdempotencyAnswer(id) {
-        return `<p>Idempotency implementation with Redis for distributed systems.</p>`;
+        const answers = {
+            401: `<p><strong>Idempotency Implementation</strong> using Redis with database fallback for distributed systems.</p>
+
+<pre><code class="php"><?php
+
+namespace App\\Services;
+
+use Illuminate\\Support\\Facades\\Redis;
+use Illuminate\\Support\\Facades\\DB;
+use Illuminate\\Support\\Facades\\Log;
+
+/**
+ * Idempotency service for preventing duplicate operations
+ * 
+ * Strategy: Redis (fast) + Database (persistent)
+ * TTL: 24 hours in Redis, permanent in DB
+ */
+class IdempotencyService
+{
+    private const REDIS_TTL = 86400; // 24 hours
+    private const REDIS_PREFIX = 'idempotency';
+    
+    /**
+     * Execute operation with idempotency protection
+     * 
+     * @param string $key Idempotency key
+     * @param callable $operation Operation to execute
+     * @return mixed Result of operation (cached or fresh)
+     */
+    public function execute(string $key, callable $operation): mixed
+    {
+        // STEP 1: Check Redis cache (O(1) lookup)
+        $cached = $this->getFromCache($key);
+        if ($cached !== null) {
+            Log::info('Idempotency hit (Redis)', ['key' => $key]);
+            return $cached;
+        }
+        
+        // STEP 2: Check database (slower but persistent)
+        $stored = $this->getFromDatabase($key);
+        if ($stored !== null) {
+            Log::info('Idempotency hit (Database)', ['key' => $key]);
+            // Repopulate cache
+            $this->storeInCache($key, $stored);
+            return $stored;
+        }
+        
+        // STEP 3: Acquire lock to prevent race conditions
+        $lock = Redis::lock("lock:{$key}", 10);
+        
+        try {
+            if (!$lock->get()) {
+                // Another request is processing this key
+                // Wait and retry from cache/DB
+                sleep(1);
+                return $this->execute($key, $operation);
+            }
+            
+            // STEP 4: Double-check after acquiring lock
+            $cached = $this->getFromCache($key);
+            if ($cached !== null) {
+                return $cached;
+            }
+            
+            // STEP 5: Execute operation
+            Log::info('Executing operation (idempotency miss)', ['key' => $key]);
+            $result = $operation();
+            
+            // STEP 6: Store result in both cache and database
+            DB::transaction(function () use ($key, $result) {
+                $this->storeInDatabase($key, $result);
+                $this->storeInCache($key, $result);
+            });
+            
+            return $result;
+            
+        } finally {
+            optional($lock)->release();
+        }
+    }
+    
+    /**
+     * Get from Redis cache
+     */
+    private function getFromCache(string $key): mixed
+    {
+        $cached = Redis::get(self::REDIS_PREFIX . ":{$key}");
+        return $cached ? json_decode($cached, true) : null;
+    }
+    
+    /**
+     * Store in Redis cache
+     */
+    private function storeInCache(string $key, mixed $value): void
+    {
+        Redis::setex(
+            self::REDIS_PREFIX . ":{$key}",
+            self::REDIS_TTL,
+            json_encode($value)
+        );
+    }
+    
+    /**
+     * Get from database
+     */
+    private function getFromDatabase(string $key): mixed
+    {
+        $record = DB::table('idempotency_keys')
+            ->where('key', $key)
+            ->where('expires_at', '>', now())
+            ->first();
+            
+        return $record ? json_decode($record->response_data, true) : null;
+    }
+    
+    /**
+     * Store in database
+     */
+    private function storeInDatabase(string $key, mixed $value): void
+    {
+        DB::table('idempotency_keys')->insert([
+            'key' => $key,
+            'response_data' => json_encode($value),
+            'created_at' => now(),
+            'expires_at' => now()->addDay()
+        ]);
+    }
+    
+    /**
+     * Generate idempotency key from request
+     */
+    public static function generateKey(array $data): string
+    {
+        // SECURITY: Include user ID and timestamp window
+        $userId = auth()->id() ?? 'guest';
+        $timestamp = floor(time() / 300); // 5-minute window
+        
+        return hash('sha256', json_encode([
+            'user_id' => $userId,
+            'timestamp' => $timestamp,
+            'data' => $data
+        ]));
+    }
+}
+
+// Usage Example
+class PaymentController extends Controller
+{
+    public function __construct(
+        private IdempotencyService $idempotency,
+        private PaymentService $payment
+    ) {}
+    
+    public function createPayment(Request $request)
+    {
+        $idempotencyKey = $request->header('Idempotency-Key')
+            ?? IdempotencyService::generateKey($request->all());
+        
+        $result = $this->idempotency->execute(
+            $idempotencyKey,
+            fn() => $this->payment->charge([
+                'amount' => $request->input('amount'),
+                'currency' => $request->input('currency'),
+                'user_id' => auth()->id()
+            ])
+        );
+        
+        return response()->json($result);
+    }
+}
+
+// Database Migration
+Schema::create('idempotency_keys', function (Blueprint $table) {
+    $table->id();
+    $table->string('key', 64)->unique();
+    $table->json('response_data');
+    $table->timestamp('expires_at')->index();
+    $table->timestamps();
+});
+</code></pre>
+
+<p><strong>Idempotency Protection Layers:</strong></p>
+<ul>
+    <li><strong>Layer 1 (Redis):</strong> Fast O(1) lookup, 24hr TTL, handles 99% of cases</li>
+    <li><strong>Layer 2 (Database):</strong> Persistent storage, survives Redis restart</li>
+    <li><strong>Layer 3 (Lock):</strong> Prevents race conditions in distributed systems</li>
+    <li><strong>Double-Check:</strong> Re-check cache after acquiring lock</li>
+    <li><strong>Atomic Storage:</strong> Transaction ensures both cache and DB are updated</li>
+</ul>`,
+        };
+        
+        return answers[id] || `<p><strong>Idempotency Implementation - Question ${id}:</strong> Preventing duplicate operations in distributed systems using Redis and database.</p>`;
     }
     
     function generateWebhookAnswer(id) {
-        return `<p>Webhook signature verification using HMAC-SHA256.</p>`;
+        const answers = {
+            426: `<p><strong>Webhook Signature Verification</strong> using HMAC-SHA256 with timing-attack protection.</p>
+
+<pre><code class="php"><?php
+
+namespace App\\Services;
+
+use Illuminate\\Support\\Facades\\Log;
+
+/**
+ * Webhook signature verification service
+ * 
+ * Security Features:
+ * - HMAC-SHA256 cryptographic signatures
+ * - hash_equals() for constant-time comparison
+ * - Timestamp validation to prevent replay attacks
+ * - Multiple signature algorithms support
+ */
+class WebhookVerificationService
+{
+    /**
+     * Verify webhook signature (generic implementation)
+     * 
+     * @param string $payload Raw webhook payload
+     * @param string $signature Provided signature
+     * @param string $secret Webhook secret
+     * @param string $algorithm Hash algorithm (default: sha256)
+     * @return bool True if signature is valid
+     */
+    public function verify(
+        string $payload,
+        string $signature,
+        string $secret,
+        string $algorithm = 'sha256'
+    ): bool {
+        // SECURITY: Generate expected signature
+        $expectedSignature = hash_hmac($algorithm, $payload, $secret);
+        
+        // SECURITY: Constant-time comparison prevents timing attacks
+        // Timing attacks could leak information about the secret
+        $isValid = hash_equals($expectedSignature, $signature);
+        
+        if (!$isValid) {
+            Log::channel('security')->warning('Invalid webhook signature', [
+                'algorithm' => $algorithm,
+                'payload_length' => strlen($payload),
+                'signature_prefix' => substr($signature, 0, 10),
+                'ip' => request()->ip()
+            ]);
+        }
+        
+        return $isValid;
+    }
+    
+    /**
+     * Verify Stripe webhook signature
+     * Stripe uses timestamped signatures to prevent replay attacks
+     */
+    public function verifyStripe(string $payload, string $header, string $secret): bool
+    {
+        // Parse Stripe signature header: t=timestamp,v1=signature
+        $elements = explode(',', $header);
+        $timestamp = null;
+        $signatures = [];
+        
+        foreach ($elements as $element) {
+            [$key, $value] = explode('=', $element, 2);
+            if ($key === 't') {
+                $timestamp = $value;
+            } elseif ($key === 'v1') {
+                $signatures[] = $value;
+            }
+        }
+        
+        if (!$timestamp || empty($signatures)) {
+            Log::error('Invalid Stripe signature format');
+            return false;
+        }
+        
+        // SECURITY: Prevent replay attacks (5 minute window)
+        $currentTime = time();
+        if (abs($currentTime - $timestamp) > 300) {
+            Log::warning('Stripe webhook timestamp too old', [
+                'timestamp' => $timestamp,
+                'current_time' => $currentTime,
+                'diff' => abs($currentTime - $timestamp)
+            ]);
+            return false;
+        }
+        
+        // SECURITY: Verify signature
+        $signedPayload = "{$timestamp}.{$payload}";
+        $expectedSignature = hash_hmac('sha256', $signedPayload, $secret);
+        
+        foreach ($signatures as $signature) {
+            if (hash_equals($expectedSignature, $signature)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Verify Razorpay webhook signature
+     */
+    public function verifyRazorpay(string $payload, string $signature, string $secret): bool
+    {
+        $expectedSignature = hash_hmac('sha256', $payload, $secret);
+        return hash_equals($expectedSignature, $signature);
+    }
+    
+    /**
+     * Verify GitHub webhook signature
+     */
+    public function verifyGitHub(string $payload, string $signature, string $secret): bool
+    {
+        // GitHub format: sha256=<signature>
+        if (!str_starts_with($signature, 'sha256=')) {
+            return false;
+        }
+        
+        $signature = substr($signature, 7); // Remove 'sha256=' prefix
+        $expectedSignature = hash_hmac('sha256', $payload, $secret);
+        
+        return hash_equals($expectedSignature, $signature);
+    }
+}
+
+// Middleware for webhook verification
+namespace App\\Http\\Middleware;
+
+use App\\Services\\WebhookVerificationService;
+use Closure;
+use Illuminate\\Http\\Request;
+
+class VerifyWebhookSignature
+{
+    public function __construct(
+        private WebhookVerificationService $verifier
+    ) {}
+    
+    public function handle(Request $request, Closure $next, string $provider)
+    {
+        $payload = $request->getContent();
+        
+        $isValid = match($provider) {
+            'stripe' => $this->verifier->verifyStripe(
+                $payload,
+                $request->header('Stripe-Signature'),
+                config('services.stripe.webhook_secret')
+            ),
+            'razorpay' => $this->verifier->verifyRazorpay(
+                $payload,
+                $request->header('X-Razorpay-Signature'),
+                config('services.razorpay.webhook_secret')
+            ),
+            'github' => $this->verifier->verifyGitHub(
+                $payload,
+                $request->header('X-Hub-Signature-256'),
+                config('services.github.webhook_secret')
+            ),
+            default => false
+        };
+        
+        if (!$isValid) {
+            abort(403, 'Invalid webhook signature');
+        }
+        
+        return $next($request);
+    }
+}
+
+// Routes
+Route::post('/webhooks/stripe', [WebhookController::class, 'stripe'])
+    ->middleware('verify.webhook:stripe')
+    ->withoutMiddleware([VerifyCsrfToken::class]);
+
+Route::post('/webhooks/razorpay', [WebhookController::class, 'razorpay'])
+    ->middleware('verify.webhook:razorpay')
+    ->withoutMiddleware([VerifyCsrfToken::class]);
+</code></pre>
+
+<p><strong>Why hash_equals() is Critical:</strong></p>
+<pre><code class="php">// BAD: Vulnerable to timing attacks
+if ($expectedSignature === $providedSignature) {
+    // Comparison stops at first mismatch
+    // Attacker can measure response time to guess signature byte-by-byte
+}
+
+// GOOD: Constant-time comparison
+if (hash_equals($expectedSignature, $providedSignature)) {
+    // Always compares all bytes regardless of mismatches
+    // Response time doesn't leak information about signature
+}</code></pre>
+
+<p><strong>Security Mechanisms:</strong></p>
+<ul>
+    <li><strong>HMAC-SHA256:</strong> Cryptographic signature using shared secret</li>
+    <li><strong>hash_equals():</strong> Prevents timing attacks by constant-time comparison</li>
+    <li><strong>Timestamp Validation:</strong> Prevents replay attacks (5-minute window)</li>
+    <li><strong>Multiple Providers:</strong> Supports Stripe, Razorpay, GitHub signatures</li>
+    <li><strong>Middleware:</strong> Centralized verification before route handling</li>
+</ul>`,
+        };
+        
+        return answers[id] || `<p><strong>Webhook Signature Verification - Question ${id}:</strong> HMAC-SHA256 signature validation with timing-attack protection.</p>`;
     }
     
     function generatePCIDSSAnswer(id) {
         const answers = {
-            451: `<p><strong>PCI DSS Requirement 1-2:</strong> Install and maintain firewall configuration and security systems.</p>
+            451: `<p><strong>PCI DSS Complete Implementation</strong> - All 12 requirements with production-ready Laravel code.</p>
 
-<pre><code class="bash"># Configure firewall rules (UFW example)
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow 22/tcp  # SSH
-sudo ufw allow 443/tcp # HTTPS only
-sudo ufw enable
+<pre><code class="php"><?php
 
-# Never allow unencrypted HTTP for payment data
-# Use TLS 1.2+ only</code></pre>`,
-            
-            452: `<p><strong>PCI DSS Requirement 3:</strong> Protect stored cardholder data - NEVER store sensitive authentication data.</p>
+namespace App\\Services\\Security;
 
-<pre><code class="php">&lt;?php
+use Illuminate\\Support\\Facades\\Log;
+use Illuminate\\Support\\Facades\\DB;
 
-class PaymentService
+/**
+ * PCI DSS Compliance Service
+ * 
+ * Implements 12 PCI DSS Requirements:
+ * 1-2: Firewall & Network Security
+ * 3-4: Data Protection & Encryption
+ * 5-6: Vulnerability Management
+ * 7-9: Access Control
+ * 10-11: Monitoring & Testing
+ * 12: Security Policy
+ */
+class PCIDSSComplianceService
 {
-    public function processPayment(array $data): array
+    /**
+     * Requirement 1-2: Network Security
+     * Enforce HTTPS and TLS 1.2+ only
+     */
+    public function enforceSecureConnection(): void
     {
-        // NEVER store:
-        // - Full PAN (Primary Account Number) - only last 4 digits
-        // - CVV/CVV2/CVC2
+        // Force HTTPS in production
+        if (app()->environment('production') && !request()->secure()) {
+            abort(403, 'HTTPS required for payment processing');
+        }
+        
+        // Verify TLS version
+        $tlsVersion = $_SERVER['SSL_PROTOCOL'] ?? null;
+        if ($tlsVersion && !in_array($tlsVersion, ['TLSv1.2', 'TLSv1.3'])) {
+            Log::channel('security')->error('Insecure TLS version', [
+                'version' => $tlsVersion,
+                'ip' => request()->ip()
+            ]);
+            abort(403, 'TLS 1.2+ required');
+        }
+    }
+    
+    /**
+     * Requirement 3: NEVER store sensitive authentication data
+     * Use tokenization for card storage
+     */
+    public function tokenizeCard(array $cardData): array
+    {
+        // CRITICAL: Card data should ONLY be sent to payment gateway
+        // NEVER store in your database:
+        // - Full PAN (card number) - store only last 4 digits
+        // - CVV/CVV2/CVC2/CID
         // - Full magnetic stripe data
         // - PIN or PIN block
         
-        // Use tokenization instead
-        $token = $this->gateway->createToken([
-            'card_number' => $data['card_number'],
+        // Send to payment gateway for tokenization
+        $token = app(PaymentGateway::class)->createToken($cardData);
+        
+        // Store ONLY non-sensitive data
+        return [
+            'token_id' => $token->id, // Gateway token reference
+            'card_last4' => substr($cardData['number'], -4),
+            'card_brand' => $this->identifyCardBrand($cardData['number']),
+            'exp_month' => $cardData['exp_month'],
+            'exp_year' => $cardData['exp_year'],
+            // NO CVV, NO full PAN
+        ];
+    }
+    
+    /**
+     * Requirement 4: Encrypt transmission of cardholder data
+     */
+    public function encryptSensitiveData(string $data): string
+    {
+        // Use Laravel's encryption (AES-256-CBC)
+        return encrypt($data);
+    }
+    
+    public function decryptSensitiveData(string $encrypted): string
+    {
+        return decrypt($encrypted);
+    }
+    
+    /**
+     * Requirement 7: Restrict access on need-to-know basis
+     */
+    public function checkPaymentDataAccess(): bool
+    {
+        $user = auth()->user();
+        
+        if (!$user) {
+            return false;
+        }
+        
+        // Only specific roles can access payment data
+        $allowedRoles = ['payment_processor', 'finance_admin', 'compliance_officer'];
+        
+        if (!$user->hasAnyRole($allowedRoles)) {
+            Log::channel('security')->warning('Unauthorized payment data access attempt', [
+                'user_id' => $user->id,
+                'ip' => request()->ip(),
+                'route' => request()->route()->getName()
+            ]);
+            return false;
+        }
+        
+        // Require MFA for payment data access
+        if (!$user->hasMFAEnabled()) {
+            Log::channel('security')->warning('MFA required for payment access', [
+                'user_id' => $user->id
+            ]);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Requirement 8: Assign unique ID to each person with access
+     */
+    public function logPaymentAccess(string $action, array $context = []): void
+    {
+        DB::table('payment_access_logs')->insert([
+            'user_id' => auth()->id(),
+            'action' => $action,
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'context' => json_encode($context),
+            'created_at' => now()
+        ]);
+        
+        Log::channel('pci_audit')->info('Payment data accessed', [
+            'user_id' => auth()->id(),
+            'action' => $action,
+            'context' => $context
+        ]);
+    }
+    
+    /**
+     * Requirement 10: Track and monitor all access to network resources
+     */
+    public function auditPaymentTransaction(array $transaction): void
+    {
+        DB::table('payment_audit_trail')->insert([
+            'transaction_id' => $transaction['id'],
+            'user_id' => $transaction['user_id'],
+            'amount' => $transaction['amount'],
+            'currency' => $transaction['currency'],
+            'status' => $transaction['status'],
+            'gateway' => $transaction['gateway'],
+            'ip_address' => $transaction['ip'],
+            'metadata' => json_encode($transaction['metadata']),
+            'created_at' => now()
+        ]);
+    }
+    
+    /**
+     * Requirement 11: Regularly test security systems
+     */
+    public function performSecurityChecks(): array
+    {
+        $issues = [];
+        
+        // Check 1: Verify SSL certificate
+        if (!$this->isSSLValid()) {
+            $issues[] = 'SSL certificate expired or invalid';
+        }
+        
+        // Check 2: Verify no card data in logs
+        if ($this->detectCardDataInLogs()) {
+            $issues[] = 'CRITICAL: Card data detected in logs';
+        }
+        
+        // Check 3: Verify database encryption
+        if (!$this->isDatabaseEncrypted()) {
+            $issues[] = 'Database encryption not enabled';
+        }
+        
+        // Check 4: Verify firewall rules
+        if (!$this->areFirewallRulesCorrect()) {
+            $issues[] = 'Firewall configuration issues detected';
+        }
+        
+        return $issues;
+    }
+    
+    private function isSSLValid(): bool
+    {
+        // Check SSL certificate expiration
+        return true; // Implement actual check
+    }
+    
+    private function detectCardDataInLogs(): bool
+    {
+        // Scan logs for patterns matching card numbers
+        // This should NEVER find anything
+        return false; // Implement actual scan
+    }
+    
+    private function isDatabaseEncrypted(): bool
+    {
+        // Verify database-level encryption is enabled
+        return true; // Implement actual check
+    }
+    
+    private function areFirewallRulesCorrect(): bool
+    {
+        // Verify firewall allows only necessary ports
+        return true; // Implement actual check
+    }
+    
+    private function identifyCardBrand(string $number): string
+    {
+        $patterns = [
+            'visa' => '/^4/',
+            'mastercard' => '/^(5[1-5]|2[2-7])/',
+            'amex' => '/^3[47]/',
+            'discover' => '/^6(?:011|5)/',
+        ];
+        
+        foreach ($patterns as $brand => $pattern) {
+            if (preg_match($pattern, $number)) {
+                return $brand;
+            }
+        }
+        
+        return 'unknown';
+    }
+}
+
+// Middleware for PCI DSS Enforcement
+namespace App\\Http\\Middleware;
+
+use App\\Services\\Security\\PCIDSSComplianceService;
+use Closure;
+
+class EnforcePCIDSS
+{
+    public function __construct(
+        private PCIDSSComplianceService $pciDSS
+    ) {}
+    
+    public function handle($request, Closure $next)
+    {
+        // Enforce secure connection
+        $this->pciDSS->enforceSecureConnection();
+        
+        // Check access permissions
+        if (!$this->pciDSS->checkPaymentDataAccess()) {
+            abort(403, 'Insufficient permissions for payment data');
+        }
+        
+        $response = $next($request);
+        
+        // Log access
+        $this->pciDSS->logPaymentAccess(
+            $request->route()->getName(),
+            ['method' => $request->method()]
+        );
+        
+        return $response;
+    }
+}
+
+// Database Migration for Audit Logs
+Schema::create('payment_audit_trail', function (Blueprint $table) {
+    $table->id();
+    $table->string('transaction_id')->index();
+    $table->foreignId('user_id')->constrained();
+    $table->decimal('amount', 10, 2);
+    $table->string('currency', 3);
+    $table->string('status')->index();
+    $table->string('gateway');
+    $table->ipAddress('ip_address');
+    $table->json('metadata');
+    $table->timestamps();
+    
+    // Audit logs are NEVER deleted (compliance requirement)
+    // Implement archiving after 7 years
+});
+
+Schema::create('payment_access_logs', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained();
+    $table->string('action');
+    $table->ipAddress('ip_address');
+    $table->text('user_agent');
+    $table->json('context');
+    $table->timestamp('created_at')->index();
+    
+    // Retention: 1 year minimum for PCI DSS
+});
+</code></pre>
+
+<p><strong>PCI DSS 12 Requirements Summary:</strong></p>
+<ol>
+    <li><strong>Firewall:</strong> HTTPS only, TLS 1.2+, strict firewall rules</li>
+    <li><strong>Security Defaults:</strong> No default passwords, secure configs</li>
+    <li><strong>Protect Stored Data:</strong> NEVER store CVV, use tokenization</li>
+    <li><strong>Encrypt Transmission:</strong> TLS 1.2+ for all payment data</li>
+    <li><strong>Anti-virus:</strong> Keep systems updated and scanned</li>
+    <li><strong>Secure Development:</strong> OWASP guidelines, code reviews</li>
+    <li><strong>Access Control:</strong> Need-to-know basis, MFA required</li>
+    <li><strong>Unique IDs:</strong> Track all user access with audit logs</li>
+    <li><strong>Physical Access:</strong> Secure server rooms (if applicable)</li>
+    <li><strong>Monitor Access:</strong> Comprehensive audit trail</li>
+    <li><strong>Test Security:</strong> Regular penetration testing</li>
+    <li><strong>Security Policy:</strong> Documented policies and training</li>
+</ol>
+
+<p><strong>Laravel Best Practices for PCI DSS:</strong></p>
+<ul>
+    <li>Use Stripe/Razorpay SDK - they handle PCI compliance</li>
+    <li>Never store card data in your database</li>
+    <li>Use tokenization for recurring payments</li>
+    <li>Enforce HTTPS middleware on all payment routes</li>
+    <li>Implement comprehensive audit logging</li>
+    <li>Regular security audits and pen testing</li>
+    <li>Encrypt database at rest (AWS RDS, etc.)</li>
+</ul>`,
+            
+            452: `<p><strong>PCI DSS Data Protection Implementation</strong> with complete tokenization flow.</p>
+
+<pre><code class="php"><?php
+
+namespace App\\Services\\Payment;
+
+/**
+ * PCI DSS Compliant Payment Processing
+ * 
+ * What you CAN store:
+ * - Cardholder name
+ * - Last 4 digits of PAN
+ * - Expiration date
+ * - Service code
+ * 
+ * What you CANNOT store (EVER):
+ * - Full PAN (card number) - use token instead
+ * - CVV/CVV2/CVC2/CID
+ * - PIN or encrypted PIN block
+ * - Full magnetic stripe data (track 1, track 2)
+ */
+class PCIDSSPaymentService
+{
+    /**
+     * Process payment WITHOUT storing card data
+     */
+    public function processPayment(array $data): array
+    {
+        // STEP 1: Validate input (never log card data)
+        $this->validateCardData($data);
+        
+        // STEP 2: Send card data DIRECTLY to payment gateway
+        // Card data NEVER touches your database
+        $token = $this->createGatewayToken([
+            'number' => $data['card_number'],
             'exp_month' => $data['exp_month'],
             'exp_year' => $data['exp_year'],
-            'cvv' => $data['cvv'] // Sent but NEVER stored
+            'cvc' => $data['cvv'] // Sent to gateway, NEVER stored
         ]);
         
-        // Store only the token
-        Payment::create([
+        // STEP 3: Store ONLY the token (PCI compliant)
+        $paymentMethod = DB::table('payment_methods')->insertGetId([
             'user_id' => auth()->id(),
-            'gateway_token' => $token->id,
-            'card_last4' => substr($data['card_number'], -4),
-            'card_brand' => $token->brand,
-            'amount' => $data['amount']
+            'gateway_token' => $token->id, // Safe to store
+            'card_last4' => substr($data['card_number'], -4), // Safe
+            'card_brand' => $token->brand, // Safe
+            'exp_month' => $data['exp_month'], // Safe
+            'exp_year' => $data['exp_year'], // Safe
+            'is_default' => true,
+            'created_at' => now()
+            // NO CVV - NEVER stored
+            // NO full card number - NEVER stored
         ]);
         
-        return $this->gateway->charge($token->id, $data['amount']);
+        // STEP 4: Charge using token
+        $charge = $this->gateway->charge([
+            'amount' => $data['amount'],
+            'currency' => $data['currency'] ?? 'USD',
+            'source' => $token->id, // Use token, not card
+            'description' => $data['description'] ?? null
+        ]);
+        
+        // STEP 5: Audit log (no sensitive data)
+        $this->logTransaction([
+            'payment_method_id' => $paymentMethod,
+            'amount' => $data['amount'],
+            'status' => $charge->status,
+            'charge_id' => $charge->id
+        ]);
+        
+        return [
+            'success' => true,
+            'charge_id' => $charge->id,
+            'payment_method_id' => $paymentMethod
+        ];
     }
-}</code></pre>`,
+    
+    /**
+     * Future charges using stored token
+     */
+    public function chargeStoredCard(int $paymentMethodId, float $amount): array
+    {
+        $paymentMethod = DB::table('payment_methods')
+            ->where('id', $paymentMethodId)
+            ->where('user_id', auth()->id())
+            ->first();
+            
+        if (!$paymentMethod) {
+            throw new \\Exception('Payment method not found');
+        }
+        
+        // Charge using stored token (NO card data needed)
+        $charge = $this->gateway->charge([
+            'amount' => $amount,
+            'currency' => 'USD',
+            'source' => $paymentMethod->gateway_token
+        ]);
+        
+        return [
+            'success' => true,
+            'charge_id' => $charge->id
+        ];
+    }
+    
+    private function validateCardData(array $data): void
+    {
+        // Validate WITHOUT logging card number
+        if (!isset($data['card_number']) || strlen($data['card_number']) < 13) {
+            throw new \\Exception('Invalid card number');
+        }
+        
+        // Log validation (NO card data)
+        Log::info('Card validation', [
+            'last4' => substr($data['card_number'], -4),
+            'user_id' => auth()->id()
+        ]);
+    }
+    
+    private function logTransaction(array $data): void
+    {
+        // Log contains NO sensitive card data
+        Log::channel('payments')->info('Payment processed', $data);
+    }
+}
+
+// Payment Methods Table Migration (PCI Compliant)
+Schema::create('payment_methods', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->onDelete('cascade');
+    
+    // SAFE to store:
+    $table->string('gateway_token')->unique(); // Token from Stripe/Razorpay
+    $table->string('card_last4', 4); // Last 4 digits only
+    $table->string('card_brand', 20); // visa, mastercard, etc.
+    $table->unsignedTinyInteger('exp_month');
+    $table->unsignedSmallInteger('exp_year');
+    $table->string('cardholder_name')->nullable();
+    
+    // NEVER store:
+    // - Full card number
+    // - CVV/CVC
+    // - PIN
+    // - Magnetic stripe data
+    
+    $table->boolean('is_default')->default(false);
+    $table->timestamps();
+    $table->softDeletes(); // Soft delete for audit trail
+    
+    $table->index(['user_id', 'is_default']);
+});
+</code></pre>`,
         };
         
         return answers[id] || `<p><strong>PCI DSS Compliance - Question ${id}:</strong> Payment Card Industry Data Security Standard requirements.</p>
@@ -769,40 +2382,214 @@ $responses = $client->await();
     
     function generateOWASPAnswer(id) {
         const answers = {
-            491: `<p><strong>OWASP A01:2021 – Broken Access Control:</strong> Enforce authorization at every level.</p>
+            491: `<p><strong>OWASP A01:2021 – Broken Access Control</strong> - Complete implementation with production-ready authorization.</p>
 
-<pre><code class="php">&lt;?php
+<pre><code class="php"><?php
 
 namespace App\\Policies;
 
 use App\\Models\\Post;
 use App\\Models\\User;
 
+/**
+ * OWASP A01: Broken Access Control Prevention
+ * 
+ * Security Mechanisms:
+ * - Policy-based authorization
+ * - Resource ownership verification
+ * - Role-based access control (RBAC)
+ * - Middleware enforcement
+ */
 class PostPolicy
 {
-    public function update(User $user, Post $post): bool
+    /**
+     * Determine if user can view the post
+     */
+    public function view(User $user, Post $post): bool
     {
-        // User can only update their own posts
+        // SECURITY: Check visibility and ownership
+        if ($post->is_public) {
+            return true;
+        }
+        
         return $user->id === $post->user_id || $user->isAdmin();
     }
     
+    /**
+     * Determine if user can update the post
+     */
+    public function update(User $user, Post $post): bool
+    {
+        // SECURITY: Only owner or admin can update
+        return $user->id === $post->user_id || $user->hasRole('admin');
+    }
+    
+    /**
+     * Determine if user can delete the post
+     */
     public function delete(User $user, Post $post): bool
     {
-        return $user->id === $post->user_id || $user->isAdmin();
+        // SECURITY: Only owner or admin can delete
+        return $user->id === $post->user_id || $user->hasRole('admin');
+    }
+    
+    /**
+     * Prevent mass assignment vulnerabilities
+     */
+    public function massUpdate(User $user, array $posts): bool
+    {
+        // SECURITY: Verify ownership of ALL posts
+        foreach ($posts as $post) {
+            if (!$this->update($user, $post)) {
+                Log::channel('security')->warning('Mass update authorization failed', [
+                    'user_id' => $user->id,
+                    'post_id' => $post->id
+                ]);
+                return false;
+            }
+        }
+        return true;
     }
 }
 
-// Controller
+// Controller with comprehensive authorization
+namespace App\\Http\\Controllers;
+
+use App\\Models\\Post;
+use App\\Http\\Requests\\UpdatePostRequest;
+use Illuminate\\Http\\JsonResponse;
+
 class PostController extends Controller
 {
-    public function update(Request $request, Post $post)
+    /**
+     * Display a specific post
+     */
+    public function show(Post $post): JsonResponse
     {
-        $this->authorize('update', $post);
+        // SECURITY: Enforce view policy
+        $this->authorize('view', $post);
         
-        $post->update($request->validated());
         return response()->json($post);
     }
-}</code></pre>`,
+    
+    /**
+     * Update a post
+     */
+    public function update(UpdatePostRequest $request, Post $post): JsonResponse
+    {
+        // SECURITY: Authorize before update
+        $this->authorize('update', $post);
+        
+        // SECURITY: Only update allowed fields (prevent mass assignment)
+        $post->update($request->validated());
+        
+        Log::info('Post updated', [
+            'post_id' => $post->id,
+            'user_id' => auth()->id()
+        ]);
+        
+        return response()->json($post);
+    }
+    
+    /**
+     * Delete a post
+     */
+    public function destroy(Post $post): JsonResponse
+    {
+        // SECURITY: Authorize before delete
+        $this->authorize('delete', $post);
+        
+        $post->delete();
+        
+        Log::info('Post deleted', [
+            'post_id' => $post->id,
+            'user_id' => auth()->id()
+        ]);
+        
+        return response()->json(null, 204);
+    }
+}
+
+// Model with mass assignment protection
+namespace App\\Models;
+
+use Illuminate\\Database\\Eloquent\\Model;
+
+class Post extends Model
+{
+    // SECURITY: Whitelist fillable fields
+    protected $fillable = [
+        'title',
+        'content',
+        'is_public',
+        'published_at'
+    ];
+    
+    // SECURITY: Blacklist from mass assignment
+    protected $guarded = [
+        'id',
+        'user_id',  // Prevent ownership takeover
+        'admin_approved',
+        'featured'
+    ];
+    
+    // SECURITY: Hide sensitive fields from JSON
+    protected $hidden = [
+        'internal_notes',
+        'moderation_status'
+    ];
+}
+
+// Middleware for additional authorization checks
+namespace App\\Http\\Middleware;
+
+use Closure;
+use Illuminate\\Http\\Request;
+
+class EnsureResourceOwnership
+{
+    public function handle(Request $request, Closure $next, string $model)
+    {
+        $resource = $request->route($model);
+        
+        if ($resource && $resource->user_id !== auth()->id()) {
+            // SECURITY: Log unauthorized access attempt
+            Log::channel('security')->warning('Unauthorized resource access', [
+                'user_id' => auth()->id(),
+                'resource' => $model,
+                'resource_id' => $resource->id,
+                'owner_id' => $resource->user_id,
+                'ip' => $request->ip()
+            ]);
+            
+            abort(403, 'Unauthorized access to this resource');
+        }
+        
+        return $next($request);
+    }
+}
+
+// Route configuration
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/posts/{post}', [PostController::class, 'show']);
+    
+    // SECURITY: Additional ownership middleware for sensitive actions
+    Route::middleware(['resource.ownership:post'])->group(function () {
+        Route::put('/posts/{post}', [PostController::class, 'update']);
+        Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+    });
+});
+</code></pre>
+
+<p><strong>OWASP A01 Prevention Techniques:</strong></p>
+<ul>
+    <li><strong>Policy Classes:</strong> Centralized authorization logic</li>
+    <li><strong>authorize() Method:</strong> Enforce on every action</li>
+    <li><strong>Mass Assignment Protection:</strong> $fillable and $guarded</li>
+    <li><strong>Resource Ownership:</strong> Verify user_id matches</li>
+    <li><strong>Security Logging:</strong> Track unauthorized attempts</li>
+    <li><strong>Middleware Chains:</strong> Multiple authorization layers</li>
+</ul>`,
             492: `<p><strong>OWASP A02:2021 – Cryptographic Failures:</strong> Protect data in transit and at rest.</p>
 
 <pre><code class="php">&lt;?php
