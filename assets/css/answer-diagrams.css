@@ -1,0 +1,595 @@
+/* ============================================
+   SVG Flow Diagram Styling
+   Comprehensive styles for inline SVG diagrams
+   ============================================ */
+
+/* Base SVG Container Styling */
+svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5rem auto;
+}
+
+/* Preserve aspect ratio for responsive sizing */
+svg[viewBox] {
+    width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   Connector Lines
+   ============================================ */
+.svg-line {
+    stroke: #333;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.svg-line-dashed {
+    stroke-dasharray: 5, 5;
+}
+
+.svg-line-dotted {
+    stroke-dasharray: 2, 3;
+}
+
+.svg-line-thick {
+    stroke-width: 3;
+}
+
+.svg-line-thin {
+    stroke-width: 1;
+}
+
+/* ============================================
+   Process Boxes
+   ============================================ */
+.svg-box-process {
+    fill: #f0f0f0;
+    stroke: #333;
+    stroke-width: 2;
+    rx: 5;
+    ry: 5;
+}
+
+.svg-box-process:hover {
+    fill: #e0e0e0;
+}
+
+/* ============================================
+   Decision Diamonds
+   ============================================ */
+.svg-box-decision {
+    fill: #fff3cd;
+    stroke: #ffc107;
+    stroke-width: 2;
+}
+
+.svg-box-decision:hover {
+    fill: #ffe69c;
+}
+
+/* ============================================
+   Data Stores
+   ============================================ */
+.svg-box-data {
+    fill: #d1ecf1;
+    stroke: #0c5460;
+    stroke-width: 2;
+}
+
+.svg-box-data:hover {
+    fill: #b8daff;
+}
+
+/* ============================================
+   Arrows and Labels
+   ============================================ */
+.svg-arrow {
+    stroke: #333;
+    stroke-width: 2;
+    fill: #333;
+    marker-end: url(#arrowhead);
+}
+
+.svg-arrow-label {
+    fill: #555;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-size: 12px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+/* Arrow marker definitions */
+marker#arrowhead {
+    fill: #333;
+}
+
+/* ============================================
+   Text Styling
+   ============================================ */
+.svg-text {
+    fill: #333;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-size: 14px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+}
+
+.svg-text-small {
+    font-size: 11px;
+}
+
+.svg-text-large {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.svg-text-title {
+    font-size: 18px;
+    font-weight: 700;
+    fill: #222;
+}
+
+/* ============================================
+   Color Schemes for Different Diagram Types
+   ============================================ */
+
+/* Sequence Diagrams - Blue Theme */
+.diagram-sequence .svg-box-process {
+    fill: #cfe2ff;
+    stroke: #0d6efd;
+}
+
+.diagram-sequence .svg-line,
+.diagram-sequence .svg-arrow {
+    stroke: #0d6efd;
+}
+
+.diagram-sequence .svg-arrow-label {
+    fill: #084298;
+}
+
+.diagram-sequence .svg-box-process:hover {
+    fill: #9ec5fe;
+}
+
+.diagram-sequence marker#arrowhead {
+    fill: #0d6efd;
+}
+
+/* Architecture Diagrams - Purple Theme */
+.diagram-architecture .svg-box-process {
+    fill: #e0cffc;
+    stroke: #6f42c1;
+}
+
+.diagram-architecture .svg-line,
+.diagram-architecture .svg-arrow {
+    stroke: #6f42c1;
+}
+
+.diagram-architecture .svg-arrow-label {
+    fill: #432874;
+}
+
+.diagram-architecture .svg-box-process:hover {
+    fill: #d3b4fc;
+}
+
+.diagram-architecture .svg-box-data {
+    fill: #f3e8ff;
+    stroke: #6f42c1;
+}
+
+.diagram-architecture marker#arrowhead {
+    fill: #6f42c1;
+}
+
+/* Flow Diagrams - Green Theme */
+.diagram-flow .svg-box-process {
+    fill: #d1e7dd;
+    stroke: #198754;
+}
+
+.diagram-flow .svg-line,
+.diagram-flow .svg-arrow {
+    stroke: #198754;
+}
+
+.diagram-flow .svg-arrow-label {
+    fill: #0f5132;
+}
+
+.diagram-flow .svg-box-process:hover {
+    fill: #a3cfbb;
+}
+
+.diagram-flow .svg-box-decision {
+    fill: #fff3cd;
+    stroke: #198754;
+}
+
+.diagram-flow marker#arrowhead {
+    fill: #198754;
+}
+
+/* ============================================
+   Animation Classes
+   ============================================ */
+
+/* Data flow animation along paths */
+@keyframes flow-animation {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 20;
+    }
+}
+
+.svg-animate-flow {
+    stroke-dasharray: 10, 10;
+    animation: flow-animation 1s linear infinite;
+}
+
+/* Reverse flow direction */
+.svg-animate-flow-reverse {
+    stroke-dasharray: 10, 10;
+    animation: flow-animation 1s linear infinite reverse;
+}
+
+/* Pulse animation for highlighting */
+@keyframes pulse-highlight {
+    0%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 0 transparent);
+    }
+    50% {
+        opacity: 0.8;
+        filter: drop-shadow(0 0 8px rgba(13, 110, 253, 0.6));
+    }
+}
+
+.svg-animate-pulse {
+    animation: pulse-highlight 2s ease-in-out infinite;
+}
+
+/* Fade in animation for diagram elements */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.svg-animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+}
+
+/* Staggered fade-in for sequential elements */
+.svg-animate-fade-in:nth-child(1) { animation-delay: 0.1s; }
+.svg-animate-fade-in:nth-child(2) { animation-delay: 0.2s; }
+.svg-animate-fade-in:nth-child(3) { animation-delay: 0.3s; }
+.svg-animate-fade-in:nth-child(4) { animation-delay: 0.4s; }
+.svg-animate-fade-in:nth-child(5) { animation-delay: 0.5s; }
+
+/* ============================================
+   Interactive Hover States
+   ============================================ */
+.svg-highlight {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.svg-highlight:hover {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+    transform: translateY(-2px);
+}
+
+.svg-highlight:active {
+    transform: translateY(0);
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* Highlight specific elements on hover */
+.svg-box-process.svg-highlight:hover,
+.svg-box-decision.svg-highlight:hover,
+.svg-box-data.svg-highlight:hover {
+    stroke-width: 3;
+}
+
+/* Text highlight */
+.svg-text.svg-highlight:hover {
+    fill: #0d6efd;
+    font-weight: 600;
+}
+
+/* ============================================
+   Responsive Sizing
+   ============================================ */
+@media (max-width: 768px) {
+    svg {
+        margin: 1rem auto;
+    }
+    
+    .svg-text {
+        font-size: 12px;
+    }
+    
+    .svg-text-small {
+        font-size: 10px;
+    }
+    
+    .svg-text-large {
+        font-size: 14px;
+    }
+    
+    .svg-text-title {
+        font-size: 16px;
+    }
+    
+    .svg-arrow-label {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    svg {
+        margin: 0.75rem auto;
+    }
+    
+    .svg-text {
+        font-size: 11px;
+    }
+    
+    .svg-text-small {
+        font-size: 9px;
+    }
+    
+    .svg-text-large {
+        font-size: 13px;
+    }
+    
+    .svg-text-title {
+        font-size: 14px;
+    }
+    
+    .svg-arrow-label {
+        font-size: 9px;
+    }
+    
+    .svg-line,
+    .svg-arrow {
+        stroke-width: 1.5;
+    }
+}
+
+/* ============================================
+   Print-Friendly Styles
+   ============================================ */
+@media print {
+    svg {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin: 1rem auto;
+        max-width: 100%;
+    }
+    
+    /* Ensure visibility in PDF exports */
+    .svg-line,
+    .svg-arrow {
+        stroke: #000;
+        stroke-width: 1.5;
+    }
+    
+    .svg-box-process {
+        fill: #f5f5f5;
+        stroke: #000;
+        stroke-width: 1.5;
+    }
+    
+    .svg-box-decision {
+        fill: #fff;
+        stroke: #000;
+        stroke-width: 1.5;
+    }
+    
+    .svg-box-data {
+        fill: #f0f0f0;
+        stroke: #000;
+        stroke-width: 1.5;
+    }
+    
+    .svg-text,
+    .svg-arrow-label {
+        fill: #000;
+    }
+    
+    /* Disable animations for print */
+    .svg-animate-flow,
+    .svg-animate-flow-reverse,
+    .svg-animate-pulse,
+    .svg-animate-fade-in {
+        animation: none;
+    }
+    
+    /* Remove hover effects for print */
+    .svg-highlight:hover {
+        filter: none;
+        transform: none;
+    }
+    
+    /* Simplify colors for better print clarity */
+    .diagram-sequence .svg-box-process,
+    .diagram-architecture .svg-box-process,
+    .diagram-flow .svg-box-process {
+        fill: #f0f0f0;
+        stroke: #000;
+    }
+    
+    .diagram-sequence .svg-line,
+    .diagram-sequence .svg-arrow,
+    .diagram-architecture .svg-line,
+    .diagram-architecture .svg-arrow,
+    .diagram-flow .svg-line,
+    .diagram-flow .svg-arrow {
+        stroke: #000;
+    }
+    
+    /* Ensure marker visibility */
+    marker#arrowhead {
+        fill: #000;
+    }
+    
+    /* High contrast text for readability */
+    .svg-text-title {
+        font-weight: 700;
+    }
+}
+
+/* ============================================
+   Additional Shapes and Elements
+   ============================================ */
+
+/* Circles for start/end nodes */
+.svg-circle-node {
+    fill: #fff;
+    stroke: #333;
+    stroke-width: 2;
+}
+
+.svg-circle-node:hover {
+    fill: #e0e0e0;
+}
+
+/* Ellipses for terminator nodes */
+.svg-ellipse-terminator {
+    fill: #ff6b6b;
+    stroke: #c92a2a;
+    stroke-width: 2;
+}
+
+.svg-ellipse-terminator:hover {
+    fill: #fa5252;
+}
+
+/* Parallelograms for input/output */
+.svg-box-io {
+    fill: #e7f5ff;
+    stroke: #1971c2;
+    stroke-width: 2;
+}
+
+.svg-box-io:hover {
+    fill: #d0ebff;
+}
+
+/* Document shape */
+.svg-box-document {
+    fill: #fff;
+    stroke: #333;
+    stroke-width: 2;
+}
+
+.svg-box-document:hover {
+    fill: #f8f9fa;
+}
+
+/* Database cylinder */
+.svg-database {
+    fill: #d1ecf1;
+    stroke: #0c5460;
+    stroke-width: 2;
+}
+
+.svg-database:hover {
+    fill: #b8daff;
+}
+
+/* ============================================
+   Grouping and Layout Helpers
+   ============================================ */
+.svg-group-container {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.svg-group-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Background rectangles for grouping */
+.svg-bg-group {
+    fill: #f8f9fa;
+    stroke: #dee2e6;
+    stroke-width: 1;
+    stroke-dasharray: 5, 5;
+    rx: 8;
+    ry: 8;
+    opacity: 0.5;
+}
+
+/* ============================================
+   Accessibility Enhancements
+   ============================================ */
+svg {
+    role: img;
+}
+
+.svg-accessible-title {
+    font-size: 0;
+    position: absolute;
+}
+
+/* Focus styles for keyboard navigation */
+.svg-highlight:focus,
+.svg-box-process:focus,
+.svg-box-decision:focus,
+.svg-box-data:focus {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Dark Mode Support (Optional)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+    .svg-line,
+    .svg-arrow {
+        stroke: #ccc;
+    }
+    
+    .svg-box-process {
+        fill: #2d3748;
+        stroke: #cbd5e0;
+    }
+    
+    .svg-text,
+    .svg-arrow-label {
+        fill: #e2e8f0;
+    }
+    
+    .svg-box-decision {
+        fill: #4a4520;
+        stroke: #ffc107;
+    }
+    
+    .svg-box-data {
+        fill: #1a3a40;
+        stroke: #17a2b8;
+    }
+    
+    marker#arrowhead {
+        fill: #ccc;
+    }
+}
