@@ -398,16 +398,642 @@ def is_already_processed(transaction_id):
 def process_transaction(transaction):
     print(f"Processing: {transaction['transaction_id']}")</code></pre>
                     </div>
+                    <p><strong>Questions 11-30:</strong> Lambda lifecycle phases (init→invoke→shutdown), event source mapping for Kinesis/DynamoDB, scatter-gather with Step Functions, 15min timeout max, event filtering for S3/SQS/DynamoDB, circuit breakers for fault tolerance, CloudWatch Events scheduling, handling large payloads >6MB via S3, execution context reuse patterns, webhook fan-out architecture, EventBridge complex routing, throttling limits (1000 concurrent default), idempotent processing strategies, failure handling differences (poll-based vs push-based sources), saga pattern implementation, Kinesis checkpointing, Lambda destinations for success/failure routing, Lambda@Edge for CloudFront (viewer/origin request/response), X-Ray distributed tracing setup, API Gateway WebSocket connection management.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Lambda Layers & Dependencies (31-50)</h3>
+            <div class="question" data-tags="lambda">
+                <div class="question-number">Questions 31-50</div>
+                <div class="question-text">Lambda Layers, Dependencies, and Package Management</div>
+                <div class="answer">
+                    <p><strong>Key Concepts:</strong></p>
+                    <ul>
+                        <li><strong>Lambda Layers:</strong> Shared code/dependencies across functions. Max 5 layers per function, 250MB unzipped total limit (50MB zipped)</li>
+                        <li><strong>Layer Structure:</strong> Python: <code>python/lib/python3.x/site-packages/</code>, Node.js: <code>nodejs/node_modules/</code></li>
+                        <li><strong>Extraction Order:</strong> Layers extracted in order specified, later layers can override earlier ones</li>
+                        <li><strong>Cold Start Impact:</strong> Each layer adds 10-50ms initialization time. Optimize by combining related dependencies</li>
+                        <li><strong>Versioning:</strong> Layers are immutable once published. Create new versions for updates</li>
+                        <li><strong>Cross-Account Sharing:</strong> Use resource-based policies to share layers across AWS accounts</li>
+                        <li><strong>Use Cases:</strong> Common utilities (logging, auth), heavy dependencies (pandas, numpy), custom runtimes</li>
+                        <li><strong>Best Practices:</strong> Keep layers focused, version carefully, test with SAM/LocalStack locally</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Cold Start Optimization (51-80)</h3>
+            <div class="question" data-tags="lambda">
+                <div class="question-number">Questions 51-80</div>
+                <div class="question-text">Cold Start Mitigation Strategies and Performance Optimization</div>
+                <div class="answer">
+                    <p><strong>Cold Start Times by Runtime:</strong></p>
+                    <ul>
+                        <li><strong>Node.js:</strong> 150-300ms (fastest for scripting)</li>
+                        <li><strong>Python:</strong> 200-400ms (good balance)</li>
+                        <li><strong>Go:</strong> 100-200ms (compiled, fast startup)</li>
+                        <li><strong>Java:</strong> 1-3 seconds (JVM initialization overhead)</li>
+                        <li><strong>.NET:</strong> 500-800ms (improved with .NET 6+)</li>
+                    </ul>
+                    <p><strong>Optimization Techniques:</strong></p>
+                    <ul>
+                        <li><strong>Provisioned Concurrency:</strong> Pre-warmed instances, eliminates cold starts. Cost: ~$15/month per instance. Use for latency-sensitive APIs</li>
+                        <li><strong>Package Size Reduction:</strong> Use webpack/esbuild for tree-shaking. Target <10MB zipped. Remove dev dependencies</li>
+                        <li><strong>ARM64 Graviton2:</strong> 20% better price-performance, 15-20% faster cold starts vs x86</li>
+                        <li><strong>VPC Configuration:</strong> VPC adds 1-10s for ENI attachment. Use Hyperplane ENI for <100ms. Avoid VPC if not needed</li>
+                        <li><strong>Lambda SnapStart (Java):</strong> 10x faster cold starts using CRaC snapshots. Reduces Java cold start from 3s to 300ms</li>
+                        <li><strong>Lazy Loading:</strong> Import heavy modules inside handler functions, not at global scope</li>
+                        <li><strong>Memory Allocation:</strong> More memory = more CPU. Test 512MB-3GB range. Sweet spot often 1024-2048MB</li>
+                        <li><strong>Connection Pooling:</strong> Create DB connections globally (outside handler). Reused across warm invocations</li>
+                        <li><strong>Initialization Code:</strong> Place expensive operations (DB connections, config loading) in global scope</li>
+                        <li><strong>Dependency Optimization:</strong> Use lightweight alternatives (axios→node-fetch, moment→dayjs)</li>
+                        <li><strong>Container Reuse:</strong> Lambda reuses containers for ~5-15 minutes of inactivity</li>
+                        <li><strong>Warm-up Strategies:</strong> CloudWatch Events to ping function every 5 minutes (costs ~$0.20/month)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">API Gateway Integration (81-110)</h3>
+            <div class="question" data-tags="lambda">
+                <div class="question-number">Questions 81-110</div>
+                <div class="question-text">API Gateway Integration Patterns and Configuration</div>
+                <div class="answer">
+                    <p><strong>API Gateway Types Comparison:</strong></p>
+                    <table style="width:100%; border-collapse: collapse; margin: 1rem 0;">
+                        <tr style="background: #667eea; color: white;">
+                            <th style="padding: 0.5rem; border: 1px solid #ddd;">Feature</th>
+                            <th style="padding: 0.5rem; border: 1px solid #ddd;">REST API</th>
+                            <th style="padding: 0.5rem; border: 1px solid #ddd;">HTTP API</th>
+                            <th style="padding: 0.5rem; border: 1px solid #ddd;">WebSocket API</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;"><strong>Cost</strong></td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">$3.50/M requests</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">$1.00/M requests</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">$1.00/M messages</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;"><strong>Latency</strong></td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Higher</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Lower (30%)</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Persistent</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;"><strong>Features</strong></td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Full (caching, models, WAF)</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Basic (JWT, CORS)</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Bidirectional</td>
+                        </tr>
+                    </table>
+                    <p><strong>Key Configuration Options:</strong></p>
+                    <ul>
+                        <li><strong>Throttling:</strong> Default 10,000 RPS burst, 5,000 RPS steady-state per region. Configurable per stage/method</li>
+                        <li><strong>Caching:</strong> 0.5GB-237GB cache sizes. TTL 0-3600s. Cache keys from path, query, headers. $0.02/hour per GB</li>
+                        <li><strong>Request Validation:</strong> JSON Schema validation before Lambda invocation. Reduces invalid request costs</li>
+                        <li><strong>Lambda Authorizers:</strong> Token-based or request-based. Cache TTL 0-3600s. Custom auth logic with JWT/OAuth</li>
+                        <li><strong>VTL Mapping Templates:</strong> Transform requests/responses using Velocity Template Language. Access $input, $context variables</li>
+                        <li><strong>Proxy vs Custom Integration:</strong> Proxy passes full event. Custom allows fine-grained control with mapping templates</li>
+                        <li><strong>Binary Media Types:</strong> image/*, application/pdf, application/octet-stream. Base64 encoded automatically</li>
+                        <li><strong>CORS Configuration:</strong> Access-Control-Allow-Origin, Methods, Headers. Enable for cross-domain requests</li>
+                        <li><strong>Usage Plans & API Keys:</strong> Rate limiting (requests/second), quota (requests/day), burst limits per API key</li>
+                        <li><strong>Stages & Deployment:</strong> dev, staging, prod environments. Stage variables for environment-specific config</li>
+                        <li><strong>Canary Deployments:</strong> Traffic splitting (e.g., 10% canary, 90% production). Test before full rollout</li>
+                        <li><strong>Integration Timeout:</strong> 29 seconds max (API Gateway limit). Lambda timeout should be less</li>
+                        <li><strong>Logging:</strong> Execution logs (detailed request/response). Access logs (who called what when)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Serverless Webhook Processing (111-150)</h3>
+            <div class="question" data-tags="lambda webhooks">
+                <div class="question-number">Question 112</div>
+                <div class="question-text">Write a Lambda function to verify Razorpay webhook signatures.</div>
+                <div class="answer">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Python - Razorpay Webhook Verification</span>
+                            <span>razorpay_webhook.py</span>
+                        </div>
+                        <pre><code class="language-python">import json
+import hmac
+import hashlib
+import os
+import boto3
+
+WEBHOOK_SECRET = os.environ['RAZORPAY_WEBHOOK_SECRET']
+sqs = boto3.client('sqs')
+QUEUE_URL = os.environ['PROCESSING_QUEUE_URL']
+
+def lambda_handler(event, context):
+    # Extract signature from headers
+    signature = event['headers'].get('x-razorpay-signature', '')
+    body = event['body']
+    
+    # Verify signature
+    if not verify_razorpay_signature(body, signature):
+        return {
+            'statusCode': 401,
+            'body': json.dumps({'error': 'Invalid signature'})
+        }
+    
+    # Parse payload
+    payload = json.loads(body)
+    event_type = payload['event']
+    
+    # Return 200 immediately (acknowledge receipt)
+    # Then process asynchronously via SQS
+    try:
+        sqs.send_message(
+            QueueUrl=QUEUE_URL,
+            MessageBody=body,
+            MessageAttributes={
+                'event_type': {'StringValue': event_type, 'DataType': 'String'}
+            }
+        )
+    except Exception as e:
+        print(f\"Error queuing message: {str(e)}\")
+        # Still return 200 to prevent retries
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps({'message': 'Received'})
+    }
+
+def verify_razorpay_signature(body: str, signature: str) -> bool:
+    \"\"\"Verify HMAC SHA256 signature\"\"\"
+    expected = hmac.new(
+        WEBHOOK_SECRET.encode('utf-8'),
+        body.encode('utf-8'),
+        hashlib.sha256
+    ).hexdigest()
+    
+    return hmac.compare_digest(expected, signature)
+
+# Async processor (separate Lambda triggered by SQS)
+def process_webhook(event, context):
+    for record in event['Records']:
+        payload = json.loads(record['body'])
+        event_type = payload['event']
+        
+        if event_type == 'payment.captured':
+            handle_payment_captured(payload)
+        elif event_type == 'payment.failed':
+            handle_payment_failed(payload)
+        elif event_type == 'subscription.charged':
+            handle_subscription_charged(payload)
+
+def handle_payment_captured(payload):
+    payment = payload['payload']['payment']['entity']
+    payment_id = payment['id']
+    amount = payment['amount'] / 100  # paise to rupees
+    order_id = payment['order_id']
+    
+    print(f\"Payment captured: {payment_id}, Amount: ₹{amount}\")
+    # Update order status in DynamoDB
+    # Send confirmation email via SES
+    # Trigger fulfillment workflow</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question" data-tags="lambda webhooks">
+                <div class="question-number">Question 114</div>
+                <div class="question-text">Create a Lambda function for processing Stripe webhook events with signature validation.</div>
+                <div class="answer">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Python - Stripe Webhook Handler</span>
+                            <span>stripe_webhook.py</span>
+                        </div>
+                        <pre><code class="language-python">import stripe
+import os
+import json
+import boto3
+
+stripe.api_key = os.environ['STRIPE_SECRET_KEY']
+WEBHOOK_SECRET = os.environ['STRIPE_WEBHOOK_SECRET']
+
+dynamodb = boto3.resource('dynamodb')
+idempotency_table = dynamodb.Table(os.environ['IDEMPOTENCY_TABLE'])
+
+def lambda_handler(event, context):
+    sig_header = event['headers'].get('stripe-signature', '')
+    body = event['body']
+    
+    try:
+        # Verify webhook signature
+        stripe_event = stripe.Webhook.construct_event(
+            body, sig_header, WEBHOOK_SECRET
+        )
+    except stripe.error.SignatureVerificationError as e:
+        return {
+            'statusCode': 400,
+            'body': json.dumps({'error': 'Invalid signature'})
+        }
+    except Exception as e:
+        return {
+            'statusCode': 400,
+            'body': json.dumps({'error': str(e)})
+        }
+    
+    # Idempotency check
+    event_id = stripe_event['id']
+    if is_already_processed(event_id):
+        return {
+            'statusCode': 200,
+            'body': json.dumps({'message': 'Already processed'})
+        }
+    
+    # Handle different event types
+    event_type = stripe_event['type']
+    
+    try:
+        if event_type == 'checkout.session.completed':
+            handle_checkout_completed(stripe_event)
+        elif event_type == 'payment_intent.succeeded':
+            handle_payment_succeeded(stripe_event)
+        elif event_type == 'customer.subscription.created':
+            handle_subscription_created(stripe_event)
+        elif event_type == 'invoice.payment_failed':
+            handle_payment_failed(stripe_event)
+        
+        # Mark as processed
+        mark_as_processed(event_id)
+        
+    except Exception as e:
+        print(f\"Error processing event {event_id}: {str(e)}\")
+        raise
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps({'received': True})
+    }
+
+def is_already_processed(event_id):
+    try:
+        response = idempotency_table.get_item(Key={'event_id': event_id})
+        return 'Item' in response
+    except:
+        return False
+
+def mark_as_processed(event_id):
+    idempotency_table.put_item(
+        Item={
+            'event_id': event_id,
+            'processed_at': int(time.time()),
+            'ttl': int(time.time()) + (30 * 24 * 60 * 60)  # 30 days
+        }
+    )
+
+def handle_checkout_completed(event):
+    session = event['data']['object']
+    customer_id = session.get('customer')
+    amount = session['amount_total'] / 100
+    print(f\"Checkout completed: ${amount} for customer {customer_id}\")</code></pre>
+                    </div>
+                    <p><strong>Questions 115-150:</strong> Webhook retry behavior (exponential backoff), replay attack prevention (nonce/timestamp validation), multi-event routing patterns, audit trail storage (DynamoDB with TTL), endpoint versioning strategies, failure handling with DLQ, webhook data transformation to SNS, security hardening (IP whitelisting, TLS), subscription lifecycle handling, HMAC signature algorithms, async processing benefits (return 200 fast), reconciliation patterns, rate limiting webhook endpoints, testing with webhook.site/ngrok, payment refund flows, secret rotation strategies, multi-service fanout, out-of-order delivery handling, failed event retry, validation using JSON schemas, compliance (PCI-DSS requirements), event sourcing patterns, sandbox vs production webhooks, dispute handling workflows, endpoint discovery/registration.</p>
                 </div>
             </div>
 
         </div>
 
-        <!-- Architecture Diagrams -->
+        <!-- SECTION 2: Transformers & Deep Learning (151-300) -->
         <div class="section" data-tags="transformers">
-            <h2 class="section-title">Transformer Architecture Diagrams</h2>
+            <h2 class="section-title">Section 2: Transformers & Deep Learning (151-300)</h2>
             
-            <div class="diagram">
+            <h3 class="subsection-title">Attention Mechanism (151-190)</h3>
+            <div class="question" data-tags="transformers">
+                <div class="question-number">Question 151</div>
+                <div class="question-text">Explain the core concept of attention mechanism in neural networks.</div>
+                <div class="answer">
+                    <p>Attention allows models to focus on relevant parts of input when processing each element. Instead of compressing all information into a fixed-size vector (bottleneck in RNNs), attention computes weighted sums where weights indicate relevance.</p>
+                    <p><strong>Key Benefits:</strong></p>
+                    <ul>
+                        <li><strong>Variable Focus:</strong> Different parts of input get different importance</li>
+                        <li><strong>Long-Range Dependencies:</strong> Can attend to distant tokens directly (no sequential processing)</li>
+                        <li><strong>Parallelization:</strong> All attention scores computed simultaneously</li>
+                        <li><strong>Interpretability:</strong> Attention weights show what model focuses on</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question" data-tags="transformers">
+                <div class="question-number">Question 152</div>
+                <div class="question-text">What is the mathematical formula for scaled dot-product attention?</div>
+                <div class="answer">
+                    <div class="diagram">
+                        <div class="flow-diagram">Attention(Q, K, V) = softmax(QK^T / √d_k) V
+
+Where:
+- Q (Query): What we're looking for  [n × d_k]
+- K (Key): What's available to match  [m × d_k]
+- V (Value): Actual information       [m × d_v]
+- d_k: Dimension of keys (scaling factor)
+- √d_k: Prevents dot products from growing too large
+
+Steps:
+1. Compute similarity: QK^T  (matrix multiply)
+2. Scale: divide by √d_k
+3. Normalize: softmax (sum to 1)
+4. Weighted sum: multiply by V</div>
+                    </div>
+                    <p><strong>Why Scale by √d_k?</strong> Large dot products push softmax into regions with small gradients (vanishing gradient). Scaling keeps dot products in reasonable range.</p>
+                </div>
+            </div>
+
+            <div class="question" data-tags="transformers">
+                <div class="question-number">Question 153</div>
+                <div class="question-text">Write Python code to implement basic attention mechanism from scratch using NumPy.</div>
+                <div class="answer">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Python - Attention from Scratch</span>
+                            <span>attention.py</span>
+                        </div>
+                        <pre><code class="language-python">import numpy as np
+
+def scaled_dot_product_attention(Q, K, V, mask=None):
+    \"\"\"
+    Scaled Dot-Product Attention
+    
+    Args:
+        Q: Queries (batch, seq_len_q, d_k)
+        K: Keys (batch, seq_len_k, d_k)
+        V: Values (batch, seq_len_v, d_v)
+        mask: Optional mask (batch, seq_len_q, seq_len_k)
+    \"\"\"
+    d_k = Q.shape[-1]
+    
+    # Step 1: Compute attention scores (Q * K^T)
+    scores = np.matmul(Q, K.transpose(0, 2, 1))
+    
+    # Step 2: Scale by sqrt(d_k)
+    scores = scores / np.sqrt(d_k)
+    
+    # Step 3: Apply mask if provided (for padding or causal)
+    if mask is not None:
+        scores = np.where(mask == 0, -1e9, scores)
+    
+    # Step 4: Apply softmax
+    # Subtract max for numerical stability
+    scores_max = np.max(scores, axis=-1, keepdims=True)
+    exp_scores = np.exp(scores - scores_max)
+    attention_weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
+    
+    # Step 5: Weighted sum of values
+    output = np.matmul(attention_weights, V)
+    
+    return output, attention_weights
+
+# Example usage
+batch_size, seq_len, d_k = 2, 4, 8
+Q = np.random.randn(batch_size, seq_len, d_k)
+K = np.random.randn(batch_size, seq_len, d_k)
+V = np.random.randn(batch_size, seq_len, d_k)
+
+output, weights = scaled_dot_product_attention(Q, K, V)
+print(f\"Output shape: {output.shape}\")  # (2, 4, 8)
+print(f\"Attention weights shape: {weights.shape}\")  # (2, 4, 4)
+print(f\"Weights sum (should be 1): {weights[0,0].sum()}\")  # ~1.0</code></pre>
+                    </div>
+                    <p><strong>Questions 154-190:</strong> Vanishing gradient solution (skip connections in attention), additive vs multiplicative attention (Bahdanau vs Luong), scaling purpose (gradient flow), single-head PyTorch implementation, variable-length handling (attention masks), Q/K/V concept (query what you want, key what's available, value what you get), O(n²) complexity (quadratic in sequence length), attention visualization (heatmaps), self vs cross attention (same vs different sequences), memory requirements (for 4096 tokens ~64MB), masked attention for autoregressive, causal masking (prevent future peeking), soft vs hard attention (differentiable vs discrete), local vs global attention (windowed vs full), multi-head implementation, variable batches (padding + masks), machine translation applications, linear/sparse attention alternatives (Linformer, Longformer), relative positional attention, parallel processing vs RNNs, Flash Attention (memory-efficient), encoder-decoder vs self-attention, attention pooling, weight initialization (Xavier/Kaiming), sliding window attention, dropout regularization, cross-attention for seq2seq, numerical stability (log-space softmax), sparse patterns (strided, fixed), gradient flow characteristics, efficient caching for inference, grouped query attention (GQA), vision transformers (ViT patches), single vs multi-query, rotary position embeddings (RoPE), zero-shot via attention.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Multi-Head Attention (191-220)</h3>
+            <div class="question" data-tags="transformers">
+                <div class="question-number">Question 169</div>
+                <div class="question-text">Write code to implement multi-head attention from scratch.</div>
+                <div class="answer">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>PyTorch - Multi-Head Attention</span>
+                            <span>multihead_attention.py</span>
+                        </div>
+                        <pre><code class="language-python">import torch
+import torch.nn as nn
+import math
+
+class MultiHeadAttention(nn.Module):
+    def __init__(self, d_model=512, num_heads=8, dropout=0.1):
+        super().__init__()
+        
+        assert d_model % num_heads == 0, \"d_model must be divisible by num_heads\"
+        
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads  # Dimension per head
+        
+        # Linear projections for Q, K, V
+        self.W_q = nn.Linear(d_model, d_model)
+        self.W_k = nn.Linear(d_model, d_model)
+        self.W_v = nn.Linear(d_model, d_model)
+        
+        # Output projection
+        self.W_o = nn.Linear(d_model, d_model)
+        
+        self.dropout = nn.Dropout(dropout)
+        
+    def split_heads(self, x, batch_size):
+        \"\"\"Split into multiple heads\"\"\"
+        x = x.view(batch_size, -1, self.num_heads, self.d_k)
+        return x.transpose(1, 2)  # (batch, heads, seq_len, d_k)
+    
+    def forward(self, query, key, value, mask=None):
+        batch_size = query.size(0)
+        
+        # 1. Linear projections
+        Q = self.W_q(query)  # (batch, seq_len, d_model)
+        K = self.W_k(key)
+        V = self.W_v(value)
+        
+        # 2. Split into multiple heads
+        Q = self.split_heads(Q, batch_size)  # (batch, heads, seq_len, d_k)
+        K = self.split_heads(K, batch_size)
+        V = self.split_heads(V, batch_size)
+        
+        # 3. Scaled dot-product attention
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
+        
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        attn_weights = torch.softmax(scores, dim=-1)
+        attn_weights = self.dropout(attn_weights)
+        
+        attn_output = torch.matmul(attn_weights, V)
+        
+        # 4. Concatenate heads
+        attn_output = attn_output.transpose(1, 2).contiguous()
+        attn_output = attn_output.view(batch_size, -1, self.d_model)
+        
+        # 5. Final linear projection
+        output = self.W_o(attn_output)
+        
+        return output, attn_weights
+
+# Example usage
+mha = MultiHeadAttention(d_model=512, num_heads=8)
+x = torch.randn(32, 10, 512)  # (batch=32, seq_len=10, d_model=512)
+output, weights = mha(x, x, x)
+print(f\"Output: {output.shape}\")  # torch.Size([32, 10, 512])</code></pre>
+                    </div>
+                    <p><strong>Questions 191-220:</strong> Why multi-head (learn different representation subspaces, e.g., syntax vs semantics), mathematical formulation (parallel attention + concat), 8-head implementation, representation subspaces (each head learns different patterns), WQ/WK/WV/WO linear projections, d_model/h relationship (512/8=64 dim per head), visualizing attention patterns across heads, number of heads vs performance (8 is common, 16-32 for large models), parameter count (4×d_model² for projections), FLOPs computation (dominated by projections), parallel computation benefits, head dimension impact on capacity, concatenation then linear output, head pruning for efficiency, different head dimensions (asymmetric heads), handling different dependencies (local vs global), attention specialization (syntax, semantics, discourse), weight initialization strategies, encoder-decoder cross-attention, batch/layer norm interaction, residual connections (add & norm pattern), encoder vs decoder differences, grouped attention for efficiency (reduce KV heads), scaling with model size (GPT-3 has 96 heads), head redundancy problem (many heads learn similar patterns), memory access optimization (fused kernels), ALiBi positional bias per head, compositional understanding via heads, linguistic phenomena correlation (certain heads track subjects, others track objects), quantization strategies (INT8/FP16 for inference).</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Positional Encoding (221-250)</h3>
+            <div class="question" data-tags="transformers">
+                <div class="question-number">Questions 221-250</div>
+                <div class="question-text">Positional Encoding Strategies</div>
+                <div class="answer">
+                    <p><strong>Why Needed:</strong> Transformers process all tokens in parallel (unlike RNNs). Without positional information, "cat sits on mat" = "mat on sits cat".</p>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Python - Sinusoidal Positional Encoding</span>
+                            <span>positional_encoding.py</span>
+                        </div>
+                        <pre><code class="language-python">import torch
+import torch.nn as nn
+import math
+
+class PositionalEncoding(nn.Module):
+    def __init__(self, d_model, max_len=5000, dropout=0.1):
+        super().__init__()
+        self.dropout = nn.Dropout(p=dropout)
+        
+        # Create positional encoding matrix
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len).unsqueeze(1).float()
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * 
+                            -(math.log(10000.0) / d_model))
+        
+        # Apply sin to even indices
+        pe[:, 0::2] = torch.sin(position * div_term)
+        # Apply cos to odd indices  
+        pe[:, 1::2] = torch.cos(position * div_term)
+        
+        pe = pe.unsqueeze(0)  # Add batch dimension
+        self.register_buffer('pe', pe)
+        
+    def forward(self, x):
+        x = x + self.pe[:, :x.size(1)]
+        return self.dropout(x)</code></pre>
+                    </div>
+                    <p><strong>Encoding Types:</strong></p>
+                    <ul>
+                        <li><strong>Sinusoidal (Original Transformer):</strong> PE(pos,2i)=sin(pos/10000^(2i/d)), PE(pos,2i+1)=cos(...). No training needed, generalizes to longer sequences</li>
+                        <li><strong>Learned Embeddings (BERT):</strong> nn.Embedding(max_len, d_model). Learned during training, fixed max length</li>
+                        <li><strong>Relative (T5):</strong> Encodes relative distances between tokens, not absolute positions</li>
+                        <li><strong>ALiBi:</strong> Adds bias to attention scores based on distance. Linear penalty for distance</li>
+                        <li><strong>RoPE (LLaMA):</strong> Rotary embeddings applied to Q and K. Excellent length extrapolation</li>
+                    </ul>
+                    <p><strong>Questions 221-250 Topics:</strong> Why Transformers need it (no sequential inductive bias), sinusoidal formula details, code generation for 512 tokens, order understanding mechanism, sinusoidal vs learned tradeoffs (generalization vs optimization), absolute vs relative positioning (T5 approach), learned embedding implementation, generalization to longer sequences (interpolation/extrapolation), max length limitations (512/1024/2048 common), ALiBi mechanism (attention bias based on distance), ALiBi code implementation, RoPE differences (rotation in complex plane), interpolation strategies for longer contexts (linear/NTK-aware), position interpolation examples, RoPE implementation with complex numbers, positional encoding dimension (same as d_model), impact of removing positions (bag-of-words behavior), T5 relative bias (learned bias buckets), relative encoding with clipping, attention weight distribution impact, learnable vs fixed benefits, xPos exponential decay, 2D positional encoding for images (row+col embeddings), variable-length batching (padding doesn't get position?), length extrapolation capabilities, frequency bands in sinusoidal (low freq=long range), visualization code (heatmaps), interaction with token embeddings (additive), long-context best practices, position-free architectures (emerging research).</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Feed-Forward Networks & Layer Norm (251-280)</h3>
+            <div class="question" data-tags="transformers">
+                <div class="question-number">Questions 251-280</div>
+                <div class="question-text">Position-wise Feed-Forward Networks and Normalization</div>
+                <div class="answer">
+                    <p><strong>Feed-Forward Network (FFN):</strong></p>
+                    <div class="flow-diagram">FFN(x) = max(0, xW₁ + b₁)W₂ + b₂
+
+Architecture:
+  Input (d_model=512)
+      ↓
+  Linear (512 → 2048)  [W₁, b₁]
+      ↓
+  Activation (ReLU/GELU/SwiGLU)
+      ↓
+  Dropout (0.1)
+      ↓
+  Linear (2048 → 512)  [W₂, b₂]
+      ↓
+  Output (d_model=512)
+
+Expansion ratio: typically 4x
+  GPT: 4x (512 → 2048)
+  BERT: 4x (768 → 3072)
+  LLaMA: ~2.7x with SwiGLU</div>
+                    <p><strong>Activation Functions:</strong></p>
+                    <ul>
+                        <li><strong>ReLU:</strong> max(0, x). Simple, fast. Used in original Transformer</li>
+                        <li><strong>GELU:</strong> x·Φ(x) where Φ is CDF of normal distribution. Smooth, better gradients. Used in BERT, GPT</li>
+                        <li><strong>SwiGLU:</strong> Swish(xW)⊗xV. Gated activation. Used in LLaMA, PaLM. Best performance but more parameters</li>
+                    </ul>
+                    <p><strong>Layer Normalization:</strong></p>
+                    <div class="flow-diagram">LayerNorm(x) = γ · (x - μ) / σ + β
+
+Where:
+  μ = mean across d_model dimension
+  σ = std across d_model dimension
+  γ, β = learned affine parameters
+
+Pre-LN (Modern):        Post-LN (Original):
+  x → LN → Attn → +     x → Attn → + → LN
+  x → LN → FFN → +      x → FFN → + → LN
+
+Pre-LN: Better training stability, no warm-up needed
+Post-LN: Slightly better final performance, needs warm-up</div>
+                    <p><strong>RMSNorm (T5, LLaMA):</strong></p>
+                    <div class="flow-diagram">RMSNorm(x) = x / RMS(x) · γ
+
+where RMS(x) = sqrt(mean(x²))
+
+Benefits vs LayerNorm:
+  ✓ 10-15% faster (no mean subtraction)
+  ✓ Similar performance
+  ✓ Simpler implementation
+  ✗ No centering (may affect some tasks)</div>
+                    <p><strong>Questions 251-280 Topics:</strong> FFN role (non-linearity, feature transformation), 4x expansion ratio rationale (capacity vs efficiency), FFN implementation code, non-linearity importance, activation function comparison (ReLU simple, GELU smooth, SwiGLU best), parameter count (FFN dominates: ~2/3 of Transformer parameters), GELU implementation and properties, SwiGLU performance benefits (+1-2% over GELU), dropout placement (after activation, before second linear), FLOPs analysis (FFN dominates compute), gated FFN variants, FFN dimension vs capacity (wider = more expressive but slower), pre-LN vs post-LN (stability vs performance), RMSNorm formula and benefits, LayerNorm from scratch, training stability improvements, learned affine γ/β parameters, numerical stability (epsilon term), RMSNorm implementation, normalization placement impact on gradients, Pre-LN benefits (stable training, no warm-up), Post-LN challenges (requires warm-up, can diverge), removing layer norm experiments, adaptive layer norm, batch norm unsuitability (sequence lengths vary), residual connections interaction (add & norm), quantization challenges (dynamic ranges), fused LayerNorm optimization (single kernel), effective learning rate modulation, normalization-free Transformers (NFNet-style), initialization strategies for γ/β.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Encoder-Decoder Architecture (281-300)</h3>
+            <div class="question" data-tags="transformers">
+                <div class="question-number">Questions 281-300</div>
+                <div class="question-text">Encoder-Decoder vs Decoder-Only Architectures</div>
+                <div class="answer">
+                    <p><strong>Architecture Types:</strong></p>
+                    <table style="width:100%; border-collapse: collapse; margin: 1rem 0;">
+                        <tr style="background: #667eea; color: white;">
+                            <th style="padding: 0.5rem; border: 1px solid #ddd;">Type</th>
+                            <th style="padding: 0.5rem; border: 1px solid #ddd;">Examples</th>
+                            <th style="padding: 0.5rem; border: 1px solid #ddd;">Use Cases</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;"><strong>Encoder-only</strong></td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">BERT, RoBERTa</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Classification, NER, embeddings</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;"><strong>Decoder-only</strong></td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">GPT, LLaMA, Claude</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Text generation, chat, completion</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;"><strong>Encoder-Decoder</strong></td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">T5, BART, mT5</td>
+                            <td style="padding: 0.5rem; border: 1px solid #ddd;">Translation, summarization, seq2seq</td>
+                        </tr>
+                    </table>
+                    <p><strong>Questions 281-300 Topics:</strong> Architecture comparison (bidirectional vs causal vs both), encoder-decoder use cases (translation, summarization), basic implementation, cross-attention mechanism (decoder attends to encoder output), masked self-attention in decoder (causal mask prevents future peeking), teacher forcing (use ground truth during training, not previous predictions), scheduled sampling (mix ground truth and predictions), beam search decoding (keep top-K hypotheses), greedy vs sampling strategies (argmax vs probabilistic), nucleus sampling top-p (cumulative probability threshold), beam search implementation with length normalization, variable-length output handling, special tokens (BOS/EOS/PAD usage), computational costs (encoder-decoder ~2x decoder-only), attention masking patterns (causal + padding), conditional generation setup, attention pattern differences, memory for KV caching (encoder output cached, decoder auto regressive), copy mechanism for seq2seq (pointer networks), modern preference for decoder-only (GPT-style, simpler, scales better).</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECTION 3: Training & Hyperparameters (301-450) -->
+        <div class="section" data-tags="training">
+            <h2 class="section-title">Section 3: Training & Hyperparameters (301-450)</h2>
+            
+            <h3 class="subsection-title">Learning Rate & Optimization (301-340)</h3>
+            <div class="question" data-tags="training">
+                <div class="question-number">Questions 301-340</div>
+                <div class="question-text">Learning Rate Strategies and Optimizers</div>
+                <div class="answer">
+                    <div class="diagram">
                 <div class="diagram-title">Attention Mechanism Architecture</div>
                 <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
                     <!-- Query, Key, Value inputs -->
@@ -1190,6 +1816,119 @@ def handle_subscription_created(event):
     subscription = event['data']['object']
     print(f"Subscription created: {subscription['id']}")</code></pre>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: RAG (Questions 451-600) -->
+        <div class="section" data-tags="rag">
+            <h2 class="section-title">Section 4: RAG - Retrieval-Augmented Generation (451-600)</h2>
+            
+            <h3 class="subsection-title">RAG Architecture (451-480)</h3>
+            <div class="question" data-tags="rag">
+                <div class="question-number">Questions 451-480</div>
+                <div class="question-text">RAG Fundamentals and Implementation</div>
+                <div class="answer">
+                    <p><strong>What is RAG:</strong> Combines retrieval from knowledge base with LLM generation. Reduces hallucinations, enables up-to-date info, domain knowledge without fine-tuning, provides citations.</p>
+                    <p><strong>Core Components:</strong> (1) Document ingestion & chunking, (2) Embedding generation, (3) Vector storage/indexing, (4) Query embedding, (5) Similarity search, (6) Context injection to LLM, (7) Answer generation</p>
+                    <p><strong>Topics 451-480:</strong> RAG definition and benefits, retriever+generator components, basic pipeline pseudocode, knowledge cutoff solution, parametric vs non-parametric knowledge, RAG vs fine-tuning tradeoffs (cost, flexibility, update speed), LangChain RAG implementation, hallucination reduction mechanism, semantic search process, production architecture patterns, document chunking strategies (chunk_size=1000, overlap=200), chunk size impact on quality, context completeness tradeoffs, metadata role in filtering, metadata filtering queries, multi-hop reasoning across documents, retrieval granularity (document/paragraph/sentence), latency considerations (embedding+search+LLM), caching strategies for retrieval, scaling to millions of documents, sparse vs dense retrieval (BM25 vs embeddings), hybrid search implementation (0.7×semantic + 0.3×keyword), reranking with cross-encoders, cross-encoder models, prompt construction best practices, context formatting for LLMs, handling conflicting information, evaluation metrics (relevance, faithfulness, answer quality), privacy and security (data access control, PII handling).</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Vector Databases (481-555)</h3>
+            <div class="question" data-tags="rag vector-db">
+                <div class="question-number">Questions 481-530</div>
+                <div class="question-text">Vector Database Implementations - Pinecone, Weaviate, pgvector</div>
+                <div class="answer">
+                    <p><strong>Pinecone (481-505):</strong> Managed vector DB optimized for similarity search. Architecture: pods (compute), indexes (data structure), namespaces (logical separation). Pod types: s1 (storage-optimized, cheaper), p1/p2 (performance-optimized, faster). Metrics: cosine (normalized), euclidean (L2 distance), dotproduct. HNSW algorithm for ANN search (O(log n), ~99% recall). Consistency model (eventually consistent), replication across zones. Upsert with metadata, query with filters. Namespaces for multi-tenancy. Pricing: pod-hours + storage. Batch upserts (100-1000 vectors). Horizontal scaling with replicas. Query latency <100ms p95. Sparse-dense hybrid index. Semantic search with OpenAI embeddings. Dimensionality support (384/768/1536/2048). Best practices: batch operations, use filters, monitor quotas. Backup via export. Comparison: faster than Milvus for <10M vectors, more expensive than Weaviate. Monitoring: dashboard for QPS, latency, pod utilization.</p>
+                    <p><strong>Weaviate (506-530):</strong> Open-source vector DB with GraphQL API. Schema design with classes & properties. Module system: text2vec (vectorization), qna (Q&A), generative (RAG). Vectorization strategies: built-in (transformers) or custom (OpenAI/Cohere). HNSW index config (efConstruction, maxConnections). Batch import for efficiency. Multi-tenancy support. GraphQL advantages: flexible queries, nested data. Filtering capabilities: where (metadata), near (vector), hybrid (BM25+vector). Semantic search queries. Generative module for RAG workflows. Replication & sharding for scale. Backup & restore mechanisms. Hybrid search: alpha parameter (0=BM25, 1=vector). Schema evolution & updates. Consistency: strong within shard, eventual across shards. Distance metrics: cosine, dot, l2, hamming. Custom embedding models integration. Conditional filtering (AND/OR/NOT). Performance optimization: batch size, HNSW tuning. Cross-references for graph relationships. QnA module for extractive answers. Cost comparison: self-hosted cheaper, managed easier. Deployment: Docker, Kubernetes, Weaviate Cloud Services.</p>
+                    <p><strong>pgvector (531-555):</strong> PostgreSQL extension for vector similarity search. Advantages: leverage existing PG infrastructure, ACID transactions, familiar SQL. Create table with vector column: `CREATE TABLE items (id int, embedding vector(1536));`. Similarity search operators: <-> (L2), <#> (inner product), <=> (cosine). Indexing: IVFFlat (inverted file with flat compression), HNSW (hierarchical navigable small world). IVFFlat index: `CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100);`. Lists parameter: sqrt(rows) recommended. IVFFlat vs HNSW tradeoffs: IVFFlat faster build/smaller, HNSW better recall/faster query. Vector dimension limit: 16,000 (plenty for embeddings). k-NN search: `SELECT * FROM items ORDER BY embedding <-> query_vector LIMIT 5;`. NULL vector handling: excluded from index. Indexing best practices: IVFFlat for static data, HNSW for frequent queries. Performance: dims×rows matter; 1536×1M = good perf. Hybrid search: `WHERE category='x' ORDER BY embedding <-> v LIMIT 5;`. Integration with PG features: transactions, replication (streaming), triggers. Memory requirements: HNSW index ~dims×rows×4 bytes. Probes parameter (IVFFlat search accuracy): higher=better recall, slower. Full-text + vector: `WHERE to_tsvector(text) @@ query AND ...`. Performance scaling: Linear up to 10M vectors, then consider sharding. Backup with pg_dump (includes vectors). Type casting: `embedding::vector`. Update strategies: DELETE+INSERT faster than UPDATE for large changes. Comparison to dedicated VectorDBs: PG better for <1M vectors or when you need SQL. Production best practices: separate index tablespace, tune work_mem, monitor query plans.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Embeddings & Semantic Search (556-600)</h3>
+            <div class="question" data-tags="rag vector-db">
+                <div class="question-number">Questions 556-600</div>
+                <div class="question-text">Embedding Generation and Banking Document Search</div>
+                <div class="answer">
+                    <p><strong>Embeddings (556-585):</strong> Vector representations capturing semantic meaning. Models: OpenAI (text-embedding-ada-002, 1536-dim, $0.0001/1K tokens; text-embedding-3-small, 512/1536-dim; text-embedding-3-large, 256-3072-dim), Sentence Transformers (all-MiniLM-L6-v2, 384-dim, free), Cohere (embed-english-v3.0, 1024-dim). Dimensionality choice: higher=more semantic info but slower/costlier. Size vs quality: 384 sufficient for most, 1536 for nuanced tasks. Cost structure: OpenAI $0.0001/1K tokens, Cohere $0.0001/1K. Batching: 100-2000 texts per request for efficiency. Model choice impact: domain-specific better for specialized tasks. Domain-specific vs general: general good baseline, domain fine-tuned better for niche. Fine-tuning: contrastive learning on domain pairs. Batch implementation: async requests, rate limiting. Cosine similarity: dot(a,b)/(norm(a)×norm(b)), range [-1,1], 1=identical. Normalization: L2 normalize before storage for faster dot product. Symmetric vs asymmetric: symmetric for doc-doc, asymmetric for query-doc. Multi-lingual: multilingual-e5, LaBSE, mUSE. Semantic deduplication: cluster by similarity >0.95. Quality evaluation: MTEB benchmarks (retrieval, classification, clustering). Embedding drift: retrain periodically, A/B test. Model versioning: track model version with vectors, migrate carefully. Caching: Redis/DynamoDB with embedding hash as key. Incremental updates: only embed new/changed docs. Chunk overlap impact: 10-20% overlap improves boundary cases. Metadata role: filter before vector search for precision. Dense Passage Retrieval (DPR): dual-encoder for query & passage. Query expansion: generate multiple phrasings, embed all. Embedding mismatch: query reformulation, hybrid search. Hard negative mining: train on challenging negatives. Latency: OpenAI ~100-500ms, local ~10-50ms. Document clustering: k-means on embeddings. Dimensionality reduction: PCA/UMAP to 128-256 dims (slight quality loss). Storage: separate table with doc_id foreign key or JSONB in same table. Emerging models: OpenAI v3 (customizable dimensions), Voyage AI, BGE-large.</p>
+                    <p><strong>Banking Document Search (586-600):</strong> Design for regulatory docs, loan policies, compliance. Ingestion pipeline: PDF/Word→parse (PyPDF2, python-docx, Unstructured)→chunk→embed→index. PDF/Word/Excel handling: Unstructured library, LlamaParse for complex layouts. Document parsing: extract text, preserve structure (headers, tables). Optimal chunk size: 500-1000 tokens for financial docs (balance context & precision). Smart chunking: sentence-aware (spaCy), paragraph-aware, section-aware (by headers). Tables & structured data: extract separately, create structured embeddings or use specialized models. Preprocessing: remove headers/footers, normalize whitespace, handle OCR errors. Metadata: document_type, date, version, department, compliance_category. Source attribution: store chunk_id→document mapping, return with answers. Access control: row-level security in pgvector, namespace per user in Pinecone, filter by user_id in queries. Knowledge base updates: versioned documents, tombstone old versions, reindex changed docs. Monitoring metrics: query latency (p50/p95/p99), retrieval precision@k, recall@k, user satisfaction (thumbs up/down). A/B testing: different chunk sizes, embedding models, retrieval params. Document versioning: effective_date + expiry_date columns, query with date filter.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 5-7: MCP, Fine-tuning, LangChain, APIs, Advanced Topics (601-1000) -->
+        <div class="section" data-tags="mcp fine-tuning langchain openai">
+            <h2 class="section-title">Sections 5-7: LLM Integration & Advanced Topics (601-1000)</h2>
+            
+            <div class="question" data-tags="mcp">
+                <div class="question-number">Questions 601-640 - MCP (Model Context Protocol)</div>
+                <div class="question-text">MCP for Secure LLM Data Interaction</div>
+                <div class="answer">
+                    <p><strong>MCP Overview:</strong> Protocol for secure context sharing between AI systems and data sources. Developed by Anthropic. Standardizes LLM access to external data.</p>
+                    <p><strong>Key Features:</strong> Authentication & authorization (OAuth 2.0, API keys, RBAC), context isolation (per-tenant, per-request), audit logging (who accessed what when), rate limiting (prevent abuse), PII protection (auto-redact, mask), encryption in transit (TLS 1.3), resource-based access control, sampling capabilities, tools for function calling, prompts as resources, error handling, retry mechanisms, session management, caching strategies, request validation, compression for large context, versioning, schema design, enterprise compliance (GDPR, HIPAA, SOC 2).</p>
+                </div>
+            </div>
+
+            <div class="question" data-tags="fine-tuning">
+                <div class="question-number">Questions 641-670 - Fine-tuning Strategies</div>
+                <div class="question-text">Fine-tuning vs Prompt Engineering vs RAG</div>
+                <div class="answer">
+                    <p><strong>Fine-tuning:</strong> Train model on custom data. Use cases: consistent behavior, style matching, domain terminology. Methods: Full fine-tuning (update all weights, expensive), LoRA (Low-Rank Adaptation, update small matrices, 0.1% parameters), QLoRA (4-bit quantized LoRA, fits on single GPU), Prefix-tuning, Adapter layers.</p>
+                    <p><strong>LoRA:</strong> Rank r=8-64, alpha=16-32. Formula: W' = W + BA where B,A are low-rank matrices. Benefits: 100x less memory, fast iteration, merge/unmerge easily. QLoRA: 4-bit quantization + LoRA, train 65B model on 48GB GPU.</p>
+                    <p><strong>When to use:</strong> Fine-tuning: <1000 examples, consistent style needed, lower latency required. Prompt Engineering: <100 examples, rapid iteration, flexibility. RAG: need current info, source attribution, no training data.</p>
+                    <p><strong>Best practices:</strong> Start with prompting, add RAG if need knowledge, fine-tune if need consistency. Dataset quality > quantity. 100-1000 high-quality examples sufficient for LoRA. Validation set essential. Learning rate: 1e-4 to 5e-5. Epochs: 3-5 typically. Monitor for overfitting.</p>
+                </div>
+            </div>
+
+            <div class="question" data-tags="langchain">
+                <div class="question-number">Questions 701-730 - LangChain Framework</div>
+                <div class="question-text">LangChain for LLM Application Development</div>
+                <div class="answer">
+                    <p><strong>Core Components:</strong> Models (LLMs, Chat Models, Embeddings), Prompts (PromptTemplate, FewShotPromptTemplate), Chains (LLMChain, SequentialChain, RouterChain), Agents (ReAct, self-ask, plan-and-execute), Memory (ConversationBufferMemory, ConversationSummaryMemory), Callbacks (logging, monitoring), Document Loaders (PDF, CSV, Web, APIs), Text Splitters (RecursiveCharacterTextSplitter, TokenTextSplitter), Retrievers (VectorStoreRetriever), Output Parsers (JSON, XML, PydanticOutputParser).</p>
+                    <p><strong>LCEL (LangChain Expression Language):</strong> Composable chains using | operator. `chain = prompt | model | output_parser`. Benefits: streaming, async, batching, retries built-in.</p>
+                    <p><strong>Agents:</strong> LLM decides which tools to use. Tools: Search (SerpAPI, DuckDuckGo), Calculators, APIs, Python REPL. Agent types: zero-shot-react (decides based on descriptions), conversational-react (maintains chat history), plan-and-execute (plans then executes).</p>
+                    <p><strong>Memory:</strong> ConversationBufferMemory (stores all messages), ConversationSummaryMemory (summarizes old messages), ConversationBufferWindowMemory (keeps last k messages). Integration with chains via memory parameter.</p>
+                    <p><strong>Production tips:</strong> Use LangSmith for debugging, caching to reduce costs, async for concurrency, custom callbacks for monitoring, error handling with retries, token counting before API calls, streaming for better UX.</p>
+                </div>
+            </div>
+
+            <div class="question" data-tags="openai">
+                <div class="question-number">Questions 731-750 - OpenAI API</div>
+                <div class="question-text">OpenAI API Integration</div>
+                <div class="answer">
+                    <p><strong>Models:</strong> GPT-4 (8K/32K/128K context, $0.03/1K input, $0.06/1K output), GPT-4 Turbo (128K, $0.01/$0.03), GPT-4o (128K, $0.005/$0.015, faster), GPT-3.5 Turbo (16K, $0.0005/$0.0015, cheapest).</p>
+                    <p><strong>Parameters:</strong> temperature (0-2, 0=deterministic, 1=balanced, 2=creative), top_p (nucleus sampling, 0.1=conservative, 1.0=all tokens), frequency_penalty (-2 to 2, reduce repetition), presence_penalty (-2 to 2, encourage new topics), max_tokens (limit output), n (number of completions), stop (stop sequences).</p>
+                    <p><strong>Function calling:</strong> Define functions in JSON schema, model decides when to call, parse arguments from response, execute function, send result back to model. Use for tool use, API calls, structured data extraction.</p>
+                    <p><strong>JSON mode:</strong> `response_format={"type": "json_object"}`. Guarantees valid JSON output. Useful for structured extraction.</p>
+                    <p><strong>Rate limiting:</strong> RPM (requests per minute), TPM (tokens per minute), RPD (requests per day). Tier-based: Free (3 RPM), Tier 1 (500 RPM), Tier 2 (5000 RPM). Handle 429 errors with exponential backoff.</p>
+                    <p><strong>Streaming:</strong> `stream=True`. Receive tokens as generated. Better UX for long responses. Parse SSE (Server-Sent Events).</p>
+                    <p><strong>Cost tracking:</strong> Log prompt_tokens + completion_tokens per request. Calculate cost = (input_tokens×input_price + output_tokens×output_price) / 1000. Monitor with callbacks.</p>
+                    <p><strong>Vision (GPT-4V, GPT-4o):</strong> Pass images as URLs or base64. Max resolution: 2048×2048. Pricing: ~$0.01 per image. Use for OCR, image analysis, visual Q&A.</p>
+                </div>
+            </div>
+
+            <div class="question" data-tags="training">
+                <div class="question-number">Questions 751-850 - Token Management & Advanced LLM Topics</div>
+                <div class="question-text">Claude API, Token Limits, Embeddings, Semantic Search, LLM System Design</div>
+                <div class="answer">
+                    <p><strong>Claude API:</strong> Models: Opus (best quality, 200K context, $15/$75 per 1M tokens), Sonnet (balanced, 200K, $3/$15), Haiku (fast, 200K, $0.25/$1.25). Features: longer context (200K vs GPT-4's 128K), extended thinking, constitutional AI (safer outputs), vision (PDFs, images), tool use. System prompts: placed outside conversation history, stronger influence.</p>
+                    <p><strong>Token Management:</strong> Context windows: GPT-4 (8K/128K), Claude (200K), Gemini 1.5 (1M tokens). Token counting: tiktoken library for OpenAI, anthropic tokenizer for Claude. Strategies: sliding window (keep recent + relevant), summarization (compress old messages), chunk documents (fit in context), prioritize by relevance. Cost optimization: shorter prompts, caching (Claude prompt caching saves 90%), smaller models where sufficient.</p>
+                    <p><strong>System Design:</strong> Components: API Gateway (rate limiting, auth), Cache (Redis for responses), Queue (SQS for async processing), Vector DB (Pinecone for RAG), Monitoring (CloudWatch, LangSmith). Patterns: Circuit breaker (fail fast when API down), fallback (GPT-4→GPT-3.5→error message), retry with backoff, request deduplication, cost budgeting per user. Scaling: horizontal scaling of workers, load balancing across providers, caching at multiple levels (response cache, embedding cache, context cache).</p>
+                    <p><strong>Security:</strong> Prompt injection prevention (input validation, separate user input from system prompts), PII detection & redaction (regex + NER models), content moderation (OpenAI Moderation API), rate limiting (per user/IP), audit logging (who, what, when, cost), encryption (TLS for transit, KMS for rest).</p>
+                    <p><strong>Performance:</strong> Model quantization (4-bit/8-bit, 2-4x faster, slight quality loss), batching (process multiple requests together), KV cache (cache attention keys/values for generation), speculative decoding (small model predicts, large model verifies), prompt compression (reduce tokens while preserving meaning), streaming (show tokens as generated).</p>
+                </div>
+            </div>
+
+            <div class="question" data-tags="rag">
+                <div class="question-number">Questions 941-1000 - Advanced RAG & Future Trends</div>
+                <div class="question-text">Advanced RAG Techniques, Multimodal LLMs, Production Best Practices</div>
+                <div class="answer">
+                    <p><strong>Advanced RAG:</strong> HyDE (Hypothetical Document Embeddings: generate hypothetical answer, embed it, retrieve similar docs), Self-RAG (model decides when to retrieve), Corrective RAG (critique retrieved docs, re-retrieve if needed), Query expansion (rephrase query multiple ways), Re-ranking (two-stage: fast retrieval + slow rerank with cross-encoder), Parent-document retrieval (retrieve small chunks, return larger parent context), Agentic RAG (agent decides retrieval strategy), Multi-hop (iterative retrieval across documents), Fusion retrieval (combine multiple retrieval methods with learned weights).</p>
+                    <p><strong>Evaluation:</strong> Retrieval metrics: precision@k, recall@k, MRR (mean reciprocal rank), NDCG (normalized discounted cumulative gain). Generation metrics: faithfulness (answer grounded in context), answer relevance (addresses question), context relevance (retrieved docs relevant). Human eval: thumbs up/down, side-by-side comparison.</p>
+                    <p><strong>Multimodal LLMs:</strong> GPT-4V (vision + text), Gemini (text + image + audio + video), Claude 3 (text + images + PDFs). Use cases: document analysis (scanned forms, invoices), chart/graph understanding, image-based Q&A, visual search. Best practices: high-quality images (2048×2048 max), clear prompts, provide context, handle multimodal tokens in cost calculation.</p>
+                    <p><strong>Production Best Practices:</strong> Monitoring: latency (p50/p95/p99), cost per request, error rates, user satisfaction. A/B testing: model versions, prompt variations, retrieval params. Versioning: prompt templates, models, embedding models. Gradual rollout: canary deployments (5%→25%→100%), feature flags. Cost control: budgets per user, circuit breakers, cheaper models for simple queries. Data flywheel: log queries, collect feedback, fine-tune, improve retrieval. Compliance: data retention policies, right to deletion, audit trails, SOC 2/HIPAA compliance. Disaster recovery: fallback providers, cached responses, graceful degradation.</p>
+                    <p><strong>Future Trends:</strong> Longer contexts (10M tokens+), cheaper inference ($/token decreasing 10x yearly), multimodal models (unified text/image/audio/video), on-device LLMs (Llama 3.2 1B/3B for mobile), agentic workflows (complex multi-step reasoning), RAG+fine-tuning hybrid, constitutional AI (safer, more aligned), specialized models (code, math, scientific reasoning).</p>
                 </div>
             </div>
         </div>
