@@ -72,6 +72,28 @@ class Question extends Model
         return $this->hasMany(CodeSnippet::class)->orderBy('order');
     }
 
+    public function userAttempts(): HasMany
+    {
+        return $this->hasMany(UserQuestionAttempt::class);
+    }
+
+    public function attemptedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_question_attempts')
+            ->withPivot([
+                'status',
+                'is_bookmarked',
+                'is_correct',
+                'attempts_count',
+                'time_spent',
+                'user_answer',
+                'first_attempted_at',
+                'last_attempted_at',
+                'completed_at',
+            ])
+            ->withTimestamps();
+    }
+
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('is_published', true);

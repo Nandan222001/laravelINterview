@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\UserProgressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +43,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{id}/breadcrumb', [TopicController::class, 'breadcrumb']);
         Route::get('/{id}/descendants', [TopicController::class, 'descendants']);
         Route::get('/{id}/ancestors', [TopicController::class, 'ancestors']);
+    });
+
+    Route::prefix('user')->group(function () {
+        Route::get('/stats', [UserProgressController::class, 'statistics']);
+        Route::get('/bookmarked', [UserProgressController::class, 'bookmarkedQuestions']);
+        Route::get('/completed', [UserProgressController::class, 'completedQuestions']);
+        Route::get('/attempted', [UserProgressController::class, 'attemptedQuestions']);
+        Route::get('/recommendations', [UserProgressController::class, 'recommendations']);
+        Route::get('/next-questions', [UserProgressController::class, 'nextQuestions']);
+        Route::get('/progression-recommendations', [UserProgressController::class, 'progressionRecommendations']);
+    });
+
+    Route::prefix('progress')->group(function () {
+        Route::post('/attempted', [UserProgressController::class, 'markAttempted']);
+        Route::post('/completed', [UserProgressController::class, 'markCompleted']);
+        Route::post('/bookmark/{questionId}', [UserProgressController::class, 'bookmark']);
+        Route::delete('/bookmark/{questionId}', [UserProgressController::class, 'unbookmark']);
+        Route::post('/toggle-bookmark/{questionId}', [UserProgressController::class, 'toggleBookmark']);
     });
 });
