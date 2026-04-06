@@ -6,6 +6,8 @@ use App\Models\Question;
 use App\Models\Topic;
 use App\Observers\QuestionObserver;
 use App\Observers\TopicObserver;
+use App\Policies\QuestionPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,5 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Topic::observe(TopicObserver::class);
         Question::observe(QuestionObserver::class);
+
+        Gate::policy(Question::class, QuestionPolicy::class);
     }
 }
