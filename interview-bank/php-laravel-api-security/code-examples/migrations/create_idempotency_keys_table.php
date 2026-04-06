@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignUuid('payment_id')->constrained()->onDelete('cascade');
             $table->timestamp('expires_at')->index();
             $table->timestamps();
-            
+
             // Index for cleanup queries
             $table->index(['expires_at', 'created_at']);
         });

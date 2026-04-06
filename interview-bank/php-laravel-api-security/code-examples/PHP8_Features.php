@@ -87,13 +87,15 @@ function findPayment(int|string $identifier): ?Payment
     if (is_int($identifier)) {
         return Payment::find($identifier);
     }
+
     return Payment::where('transaction_id', $identifier)->first();
 }
 
 class PaymentProcessor
 {
     private int|float $amount;
-    private string|null $description = null;
+
+    private ?string $description = null;
 }
 
 // 4. NULLSAFE OPERATOR
@@ -112,12 +114,12 @@ class Address
     public ?string $country = null;
 }
 
-$user = new User();
+$user = new User;
 
 // Old way
-$country = $user->profile !== null 
-    ? ($user->profile->address !== null 
-        ? $user->profile->address->country 
+$country = $user->profile !== null
+    ? ($user->profile->address !== null
+        ? $user->profile->address->country
         : null)
     : null;
 
@@ -135,7 +137,7 @@ enum PaymentStatus: string
 
 function getStatusMessage(PaymentStatus $status): string
 {
-    return match($status) {
+    return match ($status) {
         PaymentStatus::PENDING => 'Payment is being processed',
         PaymentStatus::COMPLETED => 'Payment successful',
         PaymentStatus::FAILED => 'Payment failed',
@@ -146,7 +148,7 @@ function getStatusMessage(PaymentStatus $status): string
 // Match with conditions
 function calculateFee(float $amount): float
 {
-    return match(true) {
+    return match (true) {
         $amount < 10 => 0.50,
         $amount < 100 => $amount * 0.05,
         $amount < 1000 => $amount * 0.03,
@@ -161,14 +163,14 @@ class Payment
     // private string $id;
     // private float $amount;
     // private string $currency;
-    
+
     // public function __construct(string $id, float $amount, string $currency)
     // {
     //     $this->id = $id;
     //     $this->amount = $amount;
     //     $this->currency = $currency;
     // }
-    
+
     // PHP 8.0+ Constructor Property Promotion
     public function __construct(
         private string $id,
@@ -176,7 +178,7 @@ class Payment
         private string $currency,
         private PaymentStatus $status = PaymentStatus::PENDING
     ) {}
-    
+
     public function getAmount(): float
     {
         return $this->amount;
@@ -186,7 +188,7 @@ class Payment
 // 7. MIXED TYPE
 function processData(mixed $data): mixed
 {
-    return match(true) {
+    return match (true) {
         is_array($data) => json_encode($data),
         is_string($data) => json_decode($data, true),
         is_object($data) => (array) $data,
@@ -227,20 +229,20 @@ enum PaymentMethod: string
     case DEBIT_CARD = 'debit_card';
     case PAYPAL = 'paypal';
     case STRIPE = 'stripe';
-    
+
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::CREDIT_CARD => 'Credit Card',
             self::DEBIT_CARD => 'Debit Card',
             self::PAYPAL => 'PayPal',
             self::STRIPE => 'Stripe',
         };
     }
-    
+
     public function processingFee(): float
     {
-        return match($this) {
+        return match ($this) {
             self::CREDIT_CARD => 2.9,
             self::DEBIT_CARD => 1.5,
             self::PAYPAL => 3.5,
@@ -266,10 +268,10 @@ enum Priority: int implements Colorable
     case LOW = 1;
     case MEDIUM = 2;
     case HIGH = 3;
-    
+
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::LOW => 'green',
             self::MEDIUM => 'yellow',
             self::HIGH => 'red',
@@ -285,7 +287,7 @@ class PaymentDto
         public readonly float $amount,
         public readonly string $currency,
     ) {}
-    
+
     // This would cause error:
     // $dto->amount = 100; // Error: Cannot modify readonly property
 }
@@ -299,7 +301,7 @@ class Calculator
     }
 }
 
-$calculator = new Calculator();
+$calculator = new Calculator;
 
 // Old way
 $callback = [$calculator, 'add'];
@@ -313,9 +315,9 @@ $result = $callback(1, 2);
 class Service
 {
     private Logger $logger;
-    
+
     public function __construct(
-        private LoggerInterface $customLogger = new NullLogger()
+        private LoggerInterface $customLogger = new NullLogger
     ) {
         $this->logger = $customLogger;
     }
@@ -332,13 +334,13 @@ interface Loggable
     public function log(): void;
 }
 
-class PaymentReport implements Renderable, Loggable
+class PaymentReport implements Loggable, Renderable
 {
     public function render(): string
     {
         return 'Payment Report';
     }
-    
+
     public function log(): void
     {
         // Log implementation
@@ -427,13 +429,14 @@ function failedCheck(): false
 trait PaymentTrait
 {
     public const STATUS_PENDING = 'pending';
+
     public const STATUS_COMPLETED = 'completed';
 }
 
 class Order
 {
     use PaymentTrait;
-    
+
     public function isPending(): bool
     {
         return $this->status === self::STATUS_PENDING;
@@ -444,7 +447,7 @@ class Order
 class StrictClass
 {
     public string $defined;
-    
+
     // PHP 8.2+ warns on dynamic properties
     // $obj->undefinedProperty = 'value'; // Deprecated warning
 }
@@ -478,18 +481,18 @@ enum TransactionStatus: string
     case COMPLETED = 'completed';
     case FAILED = 'failed';
     case CANCELLED = 'cancelled';
-    
+
     public function isTerminal(): bool
     {
-        return match($this) {
+        return match ($this) {
             self::COMPLETED, self::FAILED, self::CANCELLED => true,
             default => false,
         };
     }
-    
+
     public function canTransitionTo(self $newStatus): bool
     {
-        return match($this) {
+        return match ($this) {
             self::INITIATED => in_array($newStatus, [self::PROCESSING, self::CANCELLED]),
             self::PROCESSING => in_array($newStatus, [self::COMPLETED, self::FAILED]),
             default => false,
@@ -503,7 +506,7 @@ class ModernPaymentService
         private readonly PaymentGateway $gateway,
         private readonly Logger $logger,
     ) {}
-    
+
     #[RateLimit(maxAttempts: 5)]
     public function process(CreatePaymentCommand $command): Payment|PaymentError
     {
@@ -513,8 +516,8 @@ class ModernPaymentService
                 currency: $command->currency,
                 method: $command->method,
             );
-            
-            return match($result->status) {
+
+            return match ($result->status) {
                 TransactionStatus::COMPLETED => new Payment(
                     id: $result->id,
                     amount: $command->amount,
@@ -531,7 +534,7 @@ class ModernPaymentService
                 'order_id' => $command->orderId,
                 'error' => $e->getMessage(),
             ]);
-            
+
             return new PaymentError(
                 message: 'Payment processing failed',
                 code: 'PROCESSING_ERROR',
@@ -546,15 +549,15 @@ enum Environment: string
     case LOCAL = 'local';
     case STAGING = 'staging';
     case PRODUCTION = 'production';
-    
+
     public function isProduction(): bool
     {
         return $this === self::PRODUCTION;
     }
-    
+
     public function debug(): bool
     {
-        return !$this->isProduction();
+        return ! $this->isProduction();
     }
 }
 
@@ -566,7 +569,7 @@ readonly class ApplicationConfig
         public string $apiSecret,
         public int $timeout = 30,
     ) {}
-    
+
     public static function fromEnv(): self
     {
         return new self(
@@ -585,26 +588,26 @@ enum Currency: string
     case EUR = 'EUR';
     case GBP = 'GBP';
     case INR = 'INR';
-    
+
     public function symbol(): string
     {
-        return match($this) {
+        return match ($this) {
             self::USD => '$',
             self::EUR => '€',
             self::GBP => '£',
             self::INR => '₹',
         };
     }
-    
+
     public function format(float $amount): string
     {
-        return match($this) {
-            self::USD, self::GBP => $this->symbol() . number_format($amount, 2),
-            self::EUR => number_format($amount, 2) . ' ' . $this->symbol(),
-            self::INR => $this->symbol() . number_format($amount, 2),
+        return match ($this) {
+            self::USD, self::GBP => $this->symbol().number_format($amount, 2),
+            self::EUR => number_format($amount, 2).' '.$this->symbol(),
+            self::INR => $this->symbol().number_format($amount, 2),
         };
     }
-    
+
     public static function getPopular(): array
     {
         return [self::USD, self::EUR, self::GBP];

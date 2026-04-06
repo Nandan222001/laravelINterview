@@ -7,10 +7,12 @@
 
 namespace App\Examples\DatabaseOptimization;
 
-use App\Models\User;
 use App\Models\Account;
-use App\Models\Transaction;
 use App\Models\Card;
+use App\Models\Transaction;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\LazyLoadingViolationException;
 use Illuminate\Support\Facades\DB;
 
 class EagerLoadingExamples
@@ -23,12 +25,12 @@ class EagerLoadingExamples
     {
         // Query 1: Get all users
         $users = User::all(); // 1 query
-        
+
         // N queries: One for each user's accounts
         foreach ($users as $user) {
-            echo $user->name . ' has ' . $user->accounts->count() . ' accounts'; // N queries
+            echo $user->name.' has '.$user->accounts->count().' accounts'; // N queries
         }
-        
+
         // Total: 1 + N queries (if 100 users = 101 queries!)
     }
 
@@ -41,11 +43,11 @@ class EagerLoadingExamples
         // Query 1: Get all users
         // Query 2: Get all accounts for these users
         $users = User::with('accounts')->get(); // 2 queries total
-        
+
         foreach ($users as $user) {
-            echo $user->name . ' has ' . $user->accounts->count() . ' accounts';
+            echo $user->name.' has '.$user->accounts->count().' accounts';
         }
-        
+
         // Total: 2 queries (if 100 users = still just 2 queries!)
     }
 
@@ -56,13 +58,13 @@ class EagerLoadingExamples
     {
         // Load user with accounts, cards, and transactions
         $users = User::with(['accounts', 'cards', 'transactions'])->get();
-        
+
         // Only 4 queries total:
         // 1. SELECT * FROM users
         // 2. SELECT * FROM accounts WHERE user_id IN (...)
         // 3. SELECT * FROM cards WHERE user_id IN (...)
         // 4. SELECT * FROM transactions WHERE user_id IN (...)
-        
+
         foreach ($users as $user) {
             echo "User: {$user->name}\n";
             echo "Accounts: {$user->accounts->count()}\n";
@@ -78,12 +80,12 @@ class EagerLoadingExamples
     {
         // Load users -> accounts -> transactions
         $users = User::with('accounts.transactions')->get();
-        
+
         // Only 3 queries:
         // 1. SELECT * FROM users
         // 2. SELECT * FROM accounts WHERE user_id IN (...)
         // 3. SELECT * FROM transactions WHERE account_id IN (...)
-        
+
         foreach ($users as $user) {
             foreach ($user->accounts as $account) {
                 echo "Account {$account->account_number} has {$account->transactions->count()} transactions\n";
@@ -99,9 +101,9 @@ class EagerLoadingExamples
         // Load users -> accounts -> transactions -> merchant
         $users = User::with([
             'accounts.transactions.merchant',
-            'accounts.cards'
+            'accounts.cards',
         ])->get();
-        
+
         // Only 5 queries total regardless of data size:
         // 1. SELECT * FROM users
         // 2. SELECT * FROM accounts WHERE user_id IN (...)
@@ -122,9 +124,9 @@ class EagerLoadingExamples
             },
             'accounts.transactions' => function ($query) {
                 $query->where('created_at', '>=', now()->subDays(30));
-            }
+            },
         ])->get();
-        
+
         // Filters are applied in the eager load queries
     }
 
@@ -136,9 +138,9 @@ class EagerLoadingExamples
         // Only load specific columns to reduce memory usage
         $users = User::with([
             'accounts:id,user_id,account_number,balance',
-            'accounts.transactions:id,account_id,amount,created_at'
+            'accounts.transactions:id,account_id,amount,created_at',
         ])->get(['id', 'name', 'email']);
-        
+
         // Note: Always include the foreign key (id, user_id, account_id)
     }
 
@@ -149,11 +151,11 @@ class EagerLoadingExamples
     {
         // Load account count without loading actual accounts
         $users = User::withCount('accounts')->get();
-        
+
         foreach ($users as $user) {
             echo "{$user->name} has {$user->accounts_count} accounts\n";
         }
-        
+
         // Also works with conditions:
         $users = User::withCount([
             'accounts',
@@ -162,7 +164,7 @@ class EagerLoadingExamples
             },
             'transactions as recent_transactions_count' => function ($query) {
                 $query->where('created_at', '>=', now()->subDays(30));
-            }
+            },
         ])->get();
     }
 
@@ -177,7 +179,7 @@ class EagerLoadingExamples
             ->withMin('transactions', 'amount')
             ->withMax('transactions', 'amount')
             ->get();
-        
+
         foreach ($users as $user) {
             echo "User: {$user->name}\n";
             echo "Total Spent: {$user->transactions_sum_amount}\n";
@@ -185,7 +187,7 @@ class EagerLoadingExamples
             echo "Smallest: {$user->transactions_min_amount}\n";
             echo "Largest: {$user->transactions_max_amount}\n";
         }
-        
+
         // Can also use custom column names:
         $accounts = Account::withSum('transactions as total_credits', 'amount', function ($query) {
             $query->where('type', 'credit');
@@ -199,12 +201,12 @@ class EagerLoadingExamples
     {
         // Sometimes you need to eager load after initial query
         $users = User::all();
-        
+
         // Later, decide to load relationships
         if (someCondition()) {
             $users->load('accounts.transactions');
         }
-        
+
         // This prevents N+1 even when loading after the fact
     }
 
@@ -215,12 +217,12 @@ class EagerLoadingExamples
     {
         // In AppServiceProvider boot() method:
         // Model::preventLazyLoading(!app()->isProduction());
-        
+
         // This will throw an exception if you try to lazy load:
         try {
             $user = User::first();
             $accounts = $user->accounts; // LazyLoadingViolationException in dev
-        } catch (\Illuminate\Database\LazyLoadingViolationException $e) {
+        } catch (LazyLoadingViolationException $e) {
             // Should have used: User::with('accounts')->first()
         }
     }
@@ -237,11 +239,11 @@ class EagerLoadingExamples
                 $query->latest()->limit(10);
             },
             'transactions.merchant:id,name',
-            'cards:id,account_id,last_four,type,status'
+            'cards:id,account_id,last_four,type,status',
         ])->findOrFail($accountId);
-        
+
         return response()->json($account);
-        
+
         // Total queries: 4 (account, user, transactions, merchants, cards)
         // Without eager loading: 1 + 1 + 10 + 1 = 13 queries minimum
     }
@@ -253,7 +255,7 @@ class EagerLoadingExamples
     {
         // Load polymorphic relationships
         $activities = Activity::with('activityable')->get();
-        
+
         // For better performance, specify the types:
         $activities = Activity::with([
             'activityable' => function ($query) {
@@ -261,7 +263,7 @@ class EagerLoadingExamples
                     Transaction::class => ['account'],
                     Transfer::class => ['fromAccount', 'toAccount'],
                 ]);
-            }
+            },
         ])->get();
     }
 
@@ -274,9 +276,9 @@ class EagerLoadingExamples
         $user = User::with([
             'roles' => function ($query) {
                 $query->withPivot('assigned_at', 'assigned_by');
-            }
+            },
         ])->find($userId);
-        
+
         foreach ($user->roles as $role) {
             echo "Role: {$role->name}, Assigned: {$role->pivot->assigned_at}\n";
         }
@@ -291,18 +293,18 @@ class EagerLoadingExamples
         $users = User::whereHas('accounts', function ($query) {
             $query->where('balance', '>', 10000);
         })->get();
-        
+
         foreach ($users as $user) {
             $highBalanceAccounts = $user->accounts; // N+1 problem!
         }
-        
+
         // GOOD: Eager load the same relationship
         $users = User::whereHas('accounts', function ($query) {
             $query->where('balance', '>', 10000);
         })->with(['accounts' => function ($query) {
             $query->where('balance', '>', 10000);
         }])->get();
-        
+
         // Now no additional queries needed
     }
 
@@ -319,7 +321,7 @@ class EagerLoadingExamples
                     $this->processUserData($user);
                 }
             });
-        
+
         // Memory efficient and still avoids N+1
     }
 
@@ -345,7 +347,7 @@ class EagerLoadingExamples
         // If Account has a global scope for 'active' status:
         $users = User::with('accounts')->get();
         // Only active accounts are loaded
-        
+
         // To load without global scopes:
         $users = User::with(['accounts' => function ($query) {
             $query->withoutGlobalScopes();
@@ -361,7 +363,7 @@ class EagerLoadingExamples
         // Eager loading doesn't affect touch behavior
         $account = Account::with('user')->find($accountId);
         $account->touch(); // Updates account's updated_at
-        
+
         // If Account model has: protected $touches = ['user'];
         // It will also update user's updated_at
     }
@@ -372,47 +374,47 @@ class EagerLoadingExamples
     public function bankingDashboardOptimized()
     {
         $userId = auth()->id();
-        
+
         // Single optimized query for entire dashboard
         $user = User::with([
             // Load accounts with specific columns
             'accounts:id,user_id,account_number,balance,type,status',
-            
+
             // Recent transactions with merchant info
             'accounts.transactions' => function ($query) {
                 $query->latest()
                     ->limit(5)
                     ->with('merchant:id,name,category');
             },
-            
+
             // Active cards
             'accounts.cards' => function ($query) {
                 $query->where('status', 'active')
                     ->select('id', 'account_id', 'last_four', 'type', 'expiry_date');
             },
-            
+
             // Pending transfers
             'transfersFrom' => function ($query) {
                 $query->where('status', 'pending')
                     ->with('toAccount:id,account_number');
-            }
+            },
         ])
         // Add aggregate data
-        ->withCount([
-            'accounts as active_accounts_count' => function ($query) {
-                $query->where('status', 'active');
-            }
-        ])
-        ->withSum('accounts as total_balance', 'balance')
-        ->findOrFail($userId);
-        
+            ->withCount([
+                'accounts as active_accounts_count' => function ($query) {
+                    $query->where('status', 'active');
+                },
+            ])
+            ->withSum('accounts as total_balance', 'balance')
+            ->findOrFail($userId);
+
         return view('dashboard', [
             'user' => $user,
             'accounts' => $user->accounts,
             'totalBalance' => $user->total_balance,
-            'activeAccountsCount' => $user->active_accounts_count
+            'activeAccountsCount' => $user->active_accounts_count,
         ]);
-        
+
         // Total queries: ~6 (user, accounts, transactions, merchants, cards, transfers)
         // Without optimization: 100+ queries easily
     }
@@ -424,7 +426,7 @@ class EagerLoadingExamples
     {
         // Enable query logging
         DB::enableQueryLog();
-        
+
         // Lazy loading (BAD)
         $start = microtime(true);
         $users = User::limit(100)->get();
@@ -433,9 +435,9 @@ class EagerLoadingExamples
         }
         $lazyLoadTime = microtime(true) - $start;
         $lazyLoadQueries = count(DB::getQueryLog());
-        
+
         DB::flushQueryLog();
-        
+
         // Eager loading (GOOD)
         $start = microtime(true);
         $users = User::with('accounts')->limit(100)->get();
@@ -444,15 +446,16 @@ class EagerLoadingExamples
         }
         $eagerLoadTime = microtime(true) - $start;
         $eagerLoadQueries = count(DB::getQueryLog());
-        
+
         echo "Lazy Loading: {$lazyLoadQueries} queries in {$lazyLoadTime}s\n";
         echo "Eager Loading: {$eagerLoadQueries} queries in {$eagerLoadTime}s\n";
-        echo "Improvement: " . round(($lazyLoadTime - $eagerLoadTime) / $lazyLoadTime * 100, 2) . "%\n";
+        echo 'Improvement: '.round(($lazyLoadTime - $eagerLoadTime) / $lazyLoadTime * 100, 2)."%\n";
     }
 
     // Helper methods
-    private function processUserData($user) { }
-    private function processUser($user) { }
+    private function processUserData($user) {}
+
+    private function processUser($user) {}
 }
 
 /**
@@ -460,18 +463,18 @@ class EagerLoadingExamples
  */
 
 // User.php
-class UserModel extends \Illuminate\Database\Eloquent\Model
+class UserModel extends Model
 {
     public function accounts()
     {
         return $this->hasMany(Account::class);
     }
-    
+
     public function cards()
     {
         return $this->hasManyThrough(Card::class, Account::class);
     }
-    
+
     public function transactions()
     {
         return $this->hasManyThrough(Transaction::class, Account::class);
@@ -479,34 +482,34 @@ class UserModel extends \Illuminate\Database\Eloquent\Model
 }
 
 // Account.php
-class AccountModel extends \Illuminate\Database\Eloquent\Model
+class AccountModel extends Model
 {
     protected $touches = ['user']; // Touch parent on update
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
     }
-    
+
     public function cards()
     {
         return $this->hasMany(Card::class);
     }
 }
 
-// Transaction.php  
-class TransactionModel extends \Illuminate\Database\Eloquent\Model
+// Transaction.php
+class TransactionModel extends Model
 {
     public function account()
     {
         return $this->belongsTo(Account::class);
     }
-    
+
     public function merchant()
     {
         return $this->belongsTo(Merchant::class);

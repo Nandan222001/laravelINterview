@@ -32,6 +32,7 @@ class UserService extends BaseService
         if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         }
+
         return $this->repository->update($id, $data);
     }
 }

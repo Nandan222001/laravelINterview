@@ -64,7 +64,7 @@ class SecurityHeadersMiddleware
 
         // Add custom security headers
         $response->headers->set('X-Content-Type-Options', 'nosniff');
-        
+
         return $response;
     }
 
@@ -74,7 +74,7 @@ class SecurityHeadersMiddleware
     private function getContentSecurityPolicy(): string
     {
         $nonce = base64_encode(random_bytes(16));
-        
+
         // Store nonce in request for use in views
         request()->attributes->set('csp_nonce', $nonce);
 
@@ -89,7 +89,7 @@ class SecurityHeadersMiddleware
             "base-uri 'self'",
             "form-action 'self'",
             "object-src 'none'",
-            "upgrade-insecure-requests",
+            'upgrade-insecure-requests',
         ];
 
         return implode('; ', $directives);

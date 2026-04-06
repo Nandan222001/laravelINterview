@@ -14,7 +14,7 @@ class SearchIndexGenerator
             'domains' => [],
             'technologies' => [],
             'topics' => [],
-            'difficulty_levels' => []
+            'difficulty_levels' => [],
         ];
 
         foreach ($metadataCollection as $metadata) {
@@ -41,7 +41,7 @@ class SearchIndexGenerator
             'domain' => $metadata['domain'],
             'subdomain' => $metadata['subdomain'],
             'difficulty' => $metadata['difficulty'],
-            'technologies' => array_map(fn($t) => $t['name'], $metadata['technologies']),
+            'technologies' => array_map(fn ($t) => $t['name'], $metadata['technologies']),
             'topics' => $metadata['topics'],
             'question_count' => count($metadata['questions']),
             'code_example_count' => count($metadata['code_examples']),
@@ -49,7 +49,7 @@ class SearchIndexGenerator
             'word_count' => $metadata['word_count'],
             'last_modified' => date('c', $metadata['last_modified']),
             'questions' => $this->extractQuestionSummaries($metadata['questions']),
-            'searchable_content' => $this->generateSearchableContent($metadata)
+            'searchable_content' => $this->generateSearchableContent($metadata),
         ];
     }
 
@@ -61,34 +61,35 @@ class SearchIndexGenerator
     private function extractTitle(array $metadata): string
     {
         $fileName = basename($metadata['file_path'], '.md');
-        
+
         $fileName = preg_replace('/^\d+-/', '', $fileName);
         $fileName = preg_replace('/^(questions?|index|readme)/i', '', $fileName);
-        
+
         $title = ucwords(str_replace(['-', '_'], ' ', $fileName));
-        
-        if (empty(trim($title)) && !empty($metadata['topics'])) {
+
+        if (empty(trim($title)) && ! empty($metadata['topics'])) {
             $title = $metadata['topics'][0];
         }
-        
+
         if (empty(trim($title))) {
             $title = basename($metadata['file_path']);
         }
-        
+
         return trim($title);
     }
 
     private function extractQuestionSummaries(array $questions): array
     {
-        return array_slice(array_map(function($q) {
+        return array_slice(array_map(function ($q) {
             $text = $q['text'] ?? '';
             if (strlen($text) > 150) {
-                $text = substr($text, 0, 147) . '...';
+                $text = substr($text, 0, 147).'...';
             }
+
             return [
                 'number' => $q['number'] ?? null,
                 'text' => $text,
-                'type' => $q['type'] ?? 'unknown'
+                'type' => $q['type'] ?? 'unknown',
             ];
         }, $questions), 0, 100);
     }
@@ -96,31 +97,31 @@ class SearchIndexGenerator
     private function generateSearchableContent(array $metadata): string
     {
         $content = [];
-        
+
         $content[] = $this->extractTitle($metadata);
         $content[] = $metadata['domain'];
         $content[] = $metadata['subdomain'];
-        
+
         foreach ($metadata['topics'] as $topic) {
             $content[] = $topic;
         }
-        
+
         foreach ($metadata['technologies'] as $tech) {
             $content[] = $tech['name'];
         }
-        
+
         foreach ($metadata['questions'] as $question) {
             $content[] = $question['text'] ?? '';
         }
-        
+
         return strtolower(implode(' ', $content));
     }
 
     private function updateDomainIndex(array &$domains, array $metadata): void
     {
         $domain = $metadata['domain'];
-        
-        if (!isset($domains[$domain])) {
+
+        if (! isset($domains[$domain])) {
             $domains[$domain] = [
                 'name' => $domain,
                 'display_name' => $this->formatDomainName($domain),
@@ -131,18 +132,18 @@ class SearchIndexGenerator
                     'basic' => 0,
                     'intermediate' => 0,
                     'advanced' => 0,
-                    'expert' => 0
-                ]
+                    'expert' => 0,
+                ],
             ];
         }
-        
+
         $domains[$domain]['document_count']++;
         $domains[$domain]['question_count'] += count($metadata['questions']);
         $domains[$domain]['difficulty_distribution'][$metadata['difficulty']]++;
-        
+
         foreach ($metadata['technologies'] as $tech) {
             $techName = $tech['name'];
-            if (!in_array($techName, $domains[$domain]['technologies'])) {
+            if (! in_array($techName, $domains[$domain]['technologies'])) {
                 $domains[$domain]['technologies'][] = $techName;
             }
         }
@@ -152,29 +153,29 @@ class SearchIndexGenerator
     {
         foreach ($metadata['technologies'] as $tech) {
             $techName = $tech['name'];
-            
-            if (!isset($technologies[$techName])) {
+
+            if (! isset($technologies[$techName])) {
                 $technologies[$techName] = [
                     'name' => $techName,
                     'document_count' => 0,
                     'total_mentions' => 0,
                     'domains' => [],
-                    'related_technologies' => []
+                    'related_technologies' => [],
                 ];
             }
-            
+
             $technologies[$techName]['document_count']++;
             $technologies[$techName]['total_mentions'] += $tech['mentions'];
-            
+
             $domain = $metadata['domain'];
-            if (!isset($technologies[$techName]['domains'][$domain])) {
+            if (! isset($technologies[$techName]['domains'][$domain])) {
                 $technologies[$techName]['domains'][$domain] = 0;
             }
             $technologies[$techName]['domains'][$domain]++;
-            
+
             foreach ($metadata['technologies'] as $relatedTech) {
                 if ($relatedTech['name'] !== $techName) {
-                    $technologies[$techName]['related_technologies'][$relatedTech['name']] = 
+                    $technologies[$techName]['related_technologies'][$relatedTech['name']] =
                         ($technologies[$techName]['related_technologies'][$relatedTech['name']] ?? 0) + 1;
                 }
             }
@@ -185,19 +186,19 @@ class SearchIndexGenerator
     {
         foreach ($metadata['topics'] as $topic) {
             $topicKey = strtolower($topic);
-            
-            if (!isset($topics[$topicKey])) {
+
+            if (! isset($topics[$topicKey])) {
                 $topics[$topicKey] = [
                     'name' => $topic,
                     'document_count' => 0,
-                    'domains' => []
+                    'domains' => [],
                 ];
             }
-            
+
             $topics[$topicKey]['document_count']++;
-            
+
             $domain = $metadata['domain'];
-            if (!in_array($domain, $topics[$topicKey]['domains'])) {
+            if (! in_array($domain, $topics[$topicKey]['domains'])) {
                 $topics[$topicKey]['domains'][] = $domain;
             }
         }
@@ -206,21 +207,21 @@ class SearchIndexGenerator
     private function updateDifficultyIndex(array &$difficultyLevels, array $metadata): void
     {
         $difficulty = $metadata['difficulty'];
-        
-        if (!isset($difficultyLevels[$difficulty])) {
+
+        if (! isset($difficultyLevels[$difficulty])) {
             $difficultyLevels[$difficulty] = [
                 'level' => $difficulty,
                 'document_count' => 0,
                 'question_count' => 0,
-                'domains' => []
+                'domains' => [],
             ];
         }
-        
+
         $difficultyLevels[$difficulty]['document_count']++;
         $difficultyLevels[$difficulty]['question_count'] += count($metadata['questions']);
-        
+
         $domain = $metadata['domain'];
-        if (!isset($difficultyLevels[$difficulty]['domains'][$domain])) {
+        if (! isset($difficultyLevels[$difficulty]['domains'][$domain])) {
             $difficultyLevels[$difficulty]['domains'][$domain] = 0;
         }
         $difficultyLevels[$difficulty]['domains'][$domain]++;
@@ -229,12 +230,12 @@ class SearchIndexGenerator
     private function generateStatistics(array $index): array
     {
         return [
-            'total_questions' => array_sum(array_map(fn($d) => $d['question_count'], $index['documents'])),
-            'total_code_examples' => array_sum(array_map(fn($d) => $d['code_example_count'], $index['documents'])),
-            'total_diagrams' => array_sum(array_map(fn($d) => $d['diagram_count'], $index['documents'])),
+            'total_questions' => array_sum(array_map(fn ($d) => $d['question_count'], $index['documents'])),
+            'total_code_examples' => array_sum(array_map(fn ($d) => $d['code_example_count'], $index['documents'])),
+            'total_diagrams' => array_sum(array_map(fn ($d) => $d['diagram_count'], $index['documents'])),
             'domain_count' => count($index['domains']),
             'technology_count' => count($index['technologies']),
-            'topic_count' => count($index['topics'])
+            'topic_count' => count($index['topics']),
         ];
     }
 
@@ -246,37 +247,38 @@ class SearchIndexGenerator
     public function generateJsonIndex(array $metadataCollection): string
     {
         $index = $this->generateSearchIndex($metadataCollection);
+
         return json_encode($index, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     public function generateCompactJsonIndex(array $metadataCollection): string
     {
         $index = $this->generateSearchIndex($metadataCollection);
-        
+
         foreach ($index['documents'] as &$doc) {
             unset($doc['searchable_content']);
             $doc['questions'] = array_slice($doc['questions'], 0, 10);
         }
-        
+
         return json_encode($index, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     public function generateLunrIndex(array $metadataCollection): string
     {
         $documents = [];
-        
+
         foreach ($metadataCollection as $metadata) {
             $documents[] = [
                 'id' => $this->generateDocumentId($metadata['file_path']),
                 'title' => $this->extractTitle($metadata),
                 'domain' => $metadata['domain'],
                 'difficulty' => $metadata['difficulty'],
-                'technologies' => implode(' ', array_map(fn($t) => $t['name'], $metadata['technologies'])),
+                'technologies' => implode(' ', array_map(fn ($t) => $t['name'], $metadata['technologies'])),
                 'topics' => implode(' ', $metadata['topics']),
-                'content' => $this->generateSearchableContent($metadata)
+                'content' => $this->generateSearchableContent($metadata),
             ];
         }
-        
+
         return json_encode([
             'documents' => $documents,
             'config' => [
@@ -285,9 +287,9 @@ class SearchIndexGenerator
                     ['name' => 'domain', 'boost' => 5],
                     ['name' => 'topics', 'boost' => 8],
                     ['name' => 'technologies', 'boost' => 7],
-                    ['name' => 'content', 'boost' => 1]
-                ]
-            ]
+                    ['name' => 'content', 'boost' => 1],
+                ],
+            ],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
@@ -301,8 +303,8 @@ class SearchIndexGenerator
                         'type' => 'text',
                         'analyzer' => 'standard',
                         'fields' => [
-                            'keyword' => ['type' => 'keyword']
-                        ]
+                            'keyword' => ['type' => 'keyword'],
+                        ],
                     ],
                     'path' => ['type' => 'keyword'],
                     'domain' => ['type' => 'keyword'],
@@ -313,8 +315,8 @@ class SearchIndexGenerator
                         'type' => 'text',
                         'analyzer' => 'standard',
                         'fields' => [
-                            'keyword' => ['type' => 'keyword']
-                        ]
+                            'keyword' => ['type' => 'keyword'],
+                        ],
                     ],
                     'question_count' => ['type' => 'integer'],
                     'code_example_count' => ['type' => 'integer'],
@@ -326,14 +328,14 @@ class SearchIndexGenerator
                         'properties' => [
                             'number' => ['type' => 'integer'],
                             'text' => ['type' => 'text', 'analyzer' => 'standard'],
-                            'type' => ['type' => 'keyword']
-                        ]
+                            'type' => ['type' => 'keyword'],
+                        ],
                     ],
                     'searchable_content' => [
                         'type' => 'text',
-                        'analyzer' => 'standard'
-                    ]
-                ]
+                        'analyzer' => 'standard',
+                    ],
+                ],
             ],
             'settings' => [
                 'number_of_shards' => 1,
@@ -343,19 +345,19 @@ class SearchIndexGenerator
                         'custom_analyzer' => [
                             'type' => 'custom',
                             'tokenizer' => 'standard',
-                            'filter' => ['lowercase', 'stop', 'snowball']
-                        ]
-                    ]
-                ]
-            ]
+                            'filter' => ['lowercase', 'stop', 'snowball'],
+                        ],
+                    ],
+                ],
+            ],
         ];
-        
+
         return json_encode($mapping, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
     public function generateSearchInterface(): string
     {
-        return <<<HTML
+        return <<<'HTML'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -520,18 +522,18 @@ class SearchIndexGenerator
             
             container.innerHTML = results.slice(0, 50).map(doc => `
                 <div class="result-card">
-                    <div class="result-title">\${doc.title}</div>
+                    <div class="result-title">${doc.title}</div>
                     <div class="result-meta">
-                        <span class="badge badge-domain">\${doc.domain}</span>
-                        <span class="badge badge-difficulty">\${doc.difficulty}</span>
-                        \${doc.technologies.slice(0, 3).map(tech => 
-                            `<span class="badge badge-tech">\${tech}</span>`
+                        <span class="badge badge-domain">${doc.domain}</span>
+                        <span class="badge badge-difficulty">${doc.difficulty}</span>
+                        ${doc.technologies.slice(0, 3).map(tech => 
+                            `<span class="badge badge-tech">${tech}</span>`
                         ).join('')}
                     </div>
                     <div class="result-stats">
-                        \${doc.question_count} questions · 
-                        \${doc.code_example_count} code examples · 
-                        \${doc.diagram_count} diagrams
+                        ${doc.question_count} questions · 
+                        ${doc.code_example_count} code examples · 
+                        ${doc.diagram_count} diagrams
                     </div>
                 </div>
             `).join('');

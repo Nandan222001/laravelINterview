@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 /**
  * Payment request validation with security best practices.
@@ -35,7 +35,7 @@ class PaymentRequest extends FormRequest
                 Rule::exists('orders', 'id')->where(function ($query) {
                     // Ensure order belongs to authenticated user
                     $query->where('user_id', $this->user()->id)
-                          ->where('status', 'pending');
+                        ->where('status', 'pending');
                 }),
             ],
             'payment_method' => [
@@ -64,7 +64,7 @@ class PaymentRequest extends FormRequest
                 'max:255',
                 'regex:/^[a-zA-Z0-9_\-]+$/',
             ],
-            
+
             // Razorpay specific fields
             'razorpay_payment_id' => [
                 'required_if:payment_method,razorpay',
@@ -80,14 +80,14 @@ class PaymentRequest extends FormRequest
                 'required_if:payment_method,razorpay',
                 'string',
             ],
-            
+
             // Stripe specific fields
             'stripe_payment_method' => [
                 'required_if:payment_method,stripe',
                 'string',
                 'regex:/^pm_[a-zA-Z0-9]+$/',
             ],
-            
+
             // Optional metadata
             'metadata' => [
                 'sometimes',
@@ -163,11 +163,11 @@ class PaymentRequest extends FormRequest
 
         // Remove any non-numeric characters except decimal point
         $sanitized = preg_replace('/[^0-9.]/', '', (string) $amount);
-        
+
         // Ensure only one decimal point
         $parts = explode('.', $sanitized);
         if (count($parts) > 2) {
-            $sanitized = $parts[0] . '.' . implode('', array_slice($parts, 1));
+            $sanitized = $parts[0].'.'.implode('', array_slice($parts, 1));
         }
 
         return (float) $sanitized;

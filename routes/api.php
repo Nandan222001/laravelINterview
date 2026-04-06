@@ -8,6 +8,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    
+
     Route::apiResource('users', UserController::class);
 });

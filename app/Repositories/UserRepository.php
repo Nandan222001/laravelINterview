@@ -24,6 +24,7 @@ class UserRepository extends BaseRepository
     public function createWithHash(array $attributes): User
     {
         $attributes['password'] = bcrypt($attributes['password']);
+
         return $this->create($attributes);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 // Simple syntax test for all automation components
 
 echo "Testing automation components...\n\n";
@@ -13,19 +14,19 @@ $files = [
     'run-validation.php',
     'index.php',
     'example-usage.php',
-    'config.php'
+    'config.php',
 ];
 
 $allGood = true;
 
 foreach ($files as $file) {
     if (file_exists($file)) {
-        $result = exec("php -l " . escapeshellarg($file) . " 2>&1", $output, $returnCode);
+        $result = exec('php -l '.escapeshellarg($file).' 2>&1', $output, $returnCode);
         if ($returnCode === 0) {
             echo "✓ {$file}: OK\n";
         } else {
             echo "✗ {$file}: FAILED\n";
-            echo "  " . implode("\n  ", $output) . "\n";
+            echo '  '.implode("\n  ", $output)."\n";
             $allGood = false;
         }
         $output = [];

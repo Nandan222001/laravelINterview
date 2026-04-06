@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Route;
 
 // Public routes (no authentication)
 Route::prefix('v1')->group(function () {
-    
+
     // Authentication endpoints
     Route::prefix('auth')->group(function () {
         Route::post('/register', [SanctumAuthController::class, 'register'])
             ->middleware('throttle:register'); // 5 attempts per hour
-        
+
         Route::post('/login', [SanctumAuthController::class, 'login'])
             ->middleware('throttle:login'); // 5 attempts per minute
     });
-    
+
     // Webhook endpoints (signature verification in controller)
     Route::prefix('webhooks')->group(function () {
         Route::post('/razorpay', [WebhookController::class, 'razorpay']);
@@ -32,7 +32,7 @@ Route::prefix('v1')->group(function () {
 
 // Protected routes (Sanctum authentication required)
 Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
-    
+
     // Authentication management
     Route::prefix('auth')->group(function () {
         Route::get('/user', [SanctumAuthController::class, 'user']);
@@ -42,46 +42,46 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
         Route::post('/refresh', [SanctumAuthController::class, 'refresh']);
         Route::delete('/tokens/{token}', [SanctumAuthController::class, 'revokeToken']);
     });
-    
+
     // Payment endpoints with different rate limits
     Route::prefix('payments')->group(function () {
-        
+
         // List payments (read-only, less strict rate limit)
         Route::get('/', [PaymentController::class, 'index'])
             ->middleware('throttle:api') // 60 per minute
             ->middleware('ability:payment:read');
-        
+
         // View single payment
         Route::get('/{payment}', [PaymentController::class, 'show'])
             ->middleware('throttle:api')
             ->middleware('ability:payment:read');
-        
+
         // Create payment (write operation, strict rate limit)
         Route::post('/', [PaymentController::class, 'store'])
             ->middleware('throttle:payment') // 5 per minute
             ->middleware('ability:payment:write');
-        
+
         // Refund payment (critical operation, very strict)
         Route::post('/{payment}/refund', [PaymentController::class, 'refund'])
             ->middleware('throttle:payment')
             ->middleware('ability:payment:refund');
-        
+
         // Verify payment status
         Route::post('/{payment}/verify', [PaymentController::class, 'verify'])
             ->middleware('throttle:api')
             ->middleware('ability:payment:read');
     });
-    
+
     // Admin-only routes
     Route::prefix('admin')->middleware(['ability:admin'])->group(function () {
-        
+
         // Payment administration
         Route::prefix('payments')->group(function () {
             Route::get('/all', [PaymentController::class, 'adminIndex']);
             Route::get('/analytics', [PaymentController::class, 'analytics']);
             Route::post('/{payment}/force-refund', [PaymentController::class, 'forceRefund']);
         });
-        
+
         // System health and monitoring
         Route::get('/health', function () {
             return response()->json([
@@ -124,7 +124,7 @@ RateLimiter::for('register', function (Request $request) {
 // Payment operations (5 per minute, 50 per hour, 500 per day)
 RateLimiter::for('payment', function (Request $request) {
     $userId = $request->user()?->id ?: $request->ip();
-    
+
     return [
         Limit::perMinute(5)->by($userId)->response(function () {
             return response()->json([
@@ -141,7 +141,7 @@ RateLimiter::for('api', function (Request $request) {
     if ($request->user()?->isPremium()) {
         return Limit::perMinute(120)->by($request->user()->id);
     }
-    
+
     return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
 });
 
@@ -160,8 +160,8 @@ Route::prefix('v2')->middleware(['auth:sanctum'])->group(function () {
 Route::middleware(['auth:sanctum', 'api.version'])->group(function () {
     Route::apiResource('payments', function () {
         $version = request()->header('Accept-Version', 'v1');
-        
-        return match($version) {
+
+        return match ($version) {
             'v2' => app(PaymentControllerV2::class),
             default => app(PaymentController::class),
         };
@@ -221,7 +221,7 @@ Route::get('/schema', function () {
             'description' => 'Secure payment processing API',
         ],
         'servers' => [
-            ['url' => config('app.url') . '/api/v1'],
+            ['url' => config('app.url').'/api/v1'],
         ],
         // ... full OpenAPI schema
     ]);

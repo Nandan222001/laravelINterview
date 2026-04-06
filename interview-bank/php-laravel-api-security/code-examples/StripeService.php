@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\Payment;
 
+use App\Exceptions\PaymentGatewayException;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use App\Exceptions\PaymentGatewayException;
 
 /**
  * Stripe payment gateway integration with SCA support.
@@ -15,8 +15,9 @@ use App\Exceptions\PaymentGatewayException;
 class StripeService
 {
     private const API_BASE_URL = 'https://api.stripe.com/v1';
-    
+
     private string $secretKey;
+
     private string $webhookSecret;
 
     public function __construct()
@@ -35,7 +36,7 @@ class StripeService
                 ->asForm()
                 ->timeout(30)
                 ->retry(3, 1000)
-                ->post(self::API_BASE_URL . '/payment_intents', [
+                ->post(self::API_BASE_URL.'/payment_intents', [
                     'amount' => $payment->amount * 100, // Convert to cents
                     'currency' => strtolower($payment->currency),
                     'payment_method' => $paymentData['payment_method'] ?? null,
@@ -46,9 +47,9 @@ class StripeService
                     ],
                 ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Stripe payment intent creation failed: ' . $response->body()
+                    'Stripe payment intent creation failed: '.$response->body()
                 );
             }
 
@@ -80,13 +81,13 @@ class StripeService
             $response = Http::withToken($this->secretKey)
                 ->asForm()
                 ->timeout(30)
-                ->post(self::API_BASE_URL . "/payment_intents/{$paymentIntentId}/confirm", [
+                ->post(self::API_BASE_URL."/payment_intents/{$paymentIntentId}/confirm", [
                     'payment_method' => $paymentMethod,
                 ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Stripe payment confirmation failed: ' . $response->body()
+                    'Stripe payment confirmation failed: '.$response->body()
                 );
             }
 
@@ -113,15 +114,15 @@ class StripeService
                 ->asForm()
                 ->timeout(30)
                 ->retry(3, 1000)
-                ->post(self::API_BASE_URL . '/refunds', [
+                ->post(self::API_BASE_URL.'/refunds', [
                     'payment_intent' => $paymentIntentId,
                     'amount' => $amount * 100,
                     'reason' => $reason,
                 ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Stripe refund failed: ' . $response->body()
+                    'Stripe refund failed: '.$response->body()
                 );
             }
 
@@ -152,7 +153,7 @@ class StripeService
         // Parse signature header
         foreach (explode(',', $signature) as $element) {
             [$key, $value] = explode('=', $element, 2);
-            
+
             if ($key === 't') {
                 $timestamp = (int) $value;
             } elseif ($key === 'v1') {
@@ -161,13 +162,13 @@ class StripeService
         }
 
         // Check timestamp tolerance to prevent replay attacks
-        if (!isset($timestamp) || abs(time() - $timestamp) > $tolerance) {
+        if (! isset($timestamp) || abs(time() - $timestamp) > $tolerance) {
             return false;
         }
 
         // Construct signed payload
-        $signedPayload = $timestamp . '.' . $payload;
-        
+        $signedPayload = $timestamp.'.'.$payload;
+
         // Compute expected signature
         $computedSignature = hash_hmac('sha256', $signedPayload, $this->webhookSecret);
 
@@ -183,15 +184,16 @@ class StripeService
         try {
             $response = Http::withToken($this->secretKey)
                 ->timeout(30)
-                ->get(self::API_BASE_URL . "/payment_intents/{$paymentIntentId}");
+                ->get(self::API_BASE_URL."/payment_intents/{$paymentIntentId}");
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Stripe payment verification failed: ' . $response->body()
+                    'Stripe payment verification failed: '.$response->body()
                 );
             }
 
             $data = $response->json();
+
             return $data['status'];
         } catch (\Exception $e) {
             Log::error('Stripe payment verification failed', [
@@ -213,14 +215,14 @@ class StripeService
         try {
             $response = Http::withToken($this->secretKey)
                 ->asForm()
-                ->post(self::API_BASE_URL . '/customers', [
+                ->post(self::API_BASE_URL.'/customers', [
                     'email' => $email,
                     'metadata' => $metadata,
                 ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Stripe customer creation failed: ' . $response->body()
+                    'Stripe customer creation failed: '.$response->body()
                 );
             }
 
@@ -245,13 +247,13 @@ class StripeService
         try {
             $response = Http::withToken($this->secretKey)
                 ->asForm()
-                ->post(self::API_BASE_URL . '/setup_intents', [
+                ->post(self::API_BASE_URL.'/setup_intents', [
                     'customer' => $customerId,
                 ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Stripe setup intent creation failed: ' . $response->body()
+                    'Stripe setup intent creation failed: '.$response->body()
                 );
             }
 

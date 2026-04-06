@@ -23,7 +23,7 @@ enum PaymentStatus: string
      */
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'Pending',
             self::AUTHORIZED => 'Authorized',
             self::COMPLETED => 'Completed',
@@ -68,7 +68,7 @@ enum PaymentStatus: string
      */
     public function canTransitionTo(self $newStatus): bool
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => in_array($newStatus, [
                 self::AUTHORIZED,
                 self::COMPLETED,
@@ -94,7 +94,7 @@ enum PaymentStatus: string
      */
     public function cssClass(): string
     {
-        return match($this) {
+        return match ($this) {
             self::COMPLETED => 'success',
             self::PENDING, self::AUTHORIZED => 'warning',
             self::FAILED, self::CANCELLED => 'danger',
@@ -109,7 +109,7 @@ enum PaymentStatus: string
     {
         return array_filter(
             self::cases(),
-            fn($status) => $status->canRefund()
+            fn ($status) => $status->canRefund()
         );
     }
 }

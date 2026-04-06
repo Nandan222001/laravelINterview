@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ProcessPaymentWebhook;
 use App\Services\Payment\RazorpayService;
 use App\Services\Payment\StripeService;
-use App\Jobs\ProcessPaymentWebhook;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -31,7 +31,7 @@ class WebhookController extends Controller
         $signature = $request->header('X-Razorpay-Signature');
 
         // Verify webhook signature
-        if (!$this->razorpayService->verifyWebhookSignature($payload, $signature)) {
+        if (! $this->razorpayService->verifyWebhookSignature($payload, $signature)) {
             Log::warning('Invalid Razorpay webhook signature', [
                 'ip' => $request->ip(),
                 'signature' => $signature,
@@ -73,7 +73,7 @@ class WebhookController extends Controller
         $signature = $request->header('Stripe-Signature');
 
         // Verify webhook signature with timestamp tolerance
-        if (!$this->stripeService->verifyWebhookSignature($payload, $signature, 300)) {
+        if (! $this->stripeService->verifyWebhookSignature($payload, $signature, 300)) {
             Log::warning('Invalid Stripe webhook signature', [
                 'ip' => $request->ip(),
             ]);
@@ -109,7 +109,7 @@ class WebhookController extends Controller
      */
     private function isReplayAttack(array $event): bool
     {
-        if (!isset($event['created_at'])) {
+        if (! isset($event['created_at'])) {
             return false;
         }
 
@@ -126,12 +126,12 @@ class WebhookController extends Controller
      */
     private function isDuplicateEvent(?string $eventId): bool
     {
-        if (!$eventId) {
+        if (! $eventId) {
             return false;
         }
 
         $cacheKey = "webhook:processed:{$eventId}";
-        
+
         if (cache()->has($cacheKey)) {
             return true;
         }

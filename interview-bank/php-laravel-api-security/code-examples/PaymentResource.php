@@ -28,13 +28,13 @@ class PaymentResource extends JsonResource
                 'css_class' => $this->status->cssClass(),
             ],
             'payment_method' => $this->payment_method,
-            
+
             // Conditionally include sensitive data
             'gateway_payment_id' => $this->when(
                 $this->canViewSensitiveData($request),
                 $this->gateway_payment_id
             ),
-            
+
             // Include refund information if applicable
             'refund' => $this->when(
                 $this->status->canRefund() || $this->refunded_amount > 0,
@@ -43,35 +43,35 @@ class PaymentResource extends JsonResource
                     'refund_reason' => $this->refund_reason,
                 ]
             ),
-            
+
             // Include error message only for failed payments
             'error_message' => $this->when(
                 $this->status->value === 'failed',
                 $this->error_message
             ),
-            
+
             // Timestamps
             'created_at' => $this->created_at?->toISOString(),
             'completed_at' => $this->completed_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
-            
+
             // Include order data if loaded
             'order' => $this->whenLoaded('order', function () {
                 return new OrderResource($this->order);
             }),
-            
+
             // Include metadata for admins only
             'metadata' => $this->when(
                 $request->user()?->isAdmin(),
                 $this->metadata
             ),
-            
+
             // Include gateway response for admins only
             'gateway_response' => $this->when(
                 $request->user()?->isAdmin(),
                 $this->gateway_response
             ),
-            
+
             // HATEOAS links
             'links' => $this->getLinks($request),
         ];
@@ -91,8 +91,8 @@ class PaymentResource extends JsonResource
     private function canViewSensitiveData(Request $request): bool
     {
         $user = $request->user();
-        
-        if (!$user) {
+
+        if (! $user) {
             return false;
         }
 

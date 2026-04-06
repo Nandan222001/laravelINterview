@@ -48,12 +48,12 @@ class SanctumAuthController extends Controller
      */
     public function login(LoginRequest $request): JsonResponse
     {
-        $key = 'login:' . $request->ip();
+        $key = 'login:'.$request->ip();
 
         // Rate limiting: 5 attempts per minute
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $seconds = RateLimiter::availableIn($key);
-            
+
             throw ValidationException::withMessages([
                 'email' => ["Too many login attempts. Please try again in {$seconds} seconds."],
             ]);
@@ -61,7 +61,7 @@ class SanctumAuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             RateLimiter::hit($key, 60);
 
             throw ValidationException::withMessages([
@@ -79,7 +79,7 @@ class SanctumAuthController extends Controller
 
         // Create token with custom abilities based on user role
         $abilities = $this->getTokenAbilities($user);
-        
+
         $token = $user->createToken(
             name: $request->device_name ?? 'api-token',
             abilities: $abilities,
@@ -124,7 +124,7 @@ class SanctumAuthController extends Controller
     public function user(Request $request): JsonResponse
     {
         $user = $request->user();
-        
+
         return response()->json([
             'user' => $user,
             'current_token' => [
@@ -144,7 +144,7 @@ class SanctumAuthController extends Controller
         $tokens = $request->user()->tokens()->get();
 
         return response()->json([
-            'tokens' => $tokens->map(fn($token) => [
+            'tokens' => $tokens->map(fn ($token) => [
                 'id' => $token->id,
                 'name' => $token->name,
                 'abilities' => $token->abilities,
@@ -198,7 +198,7 @@ class SanctumAuthController extends Controller
      */
     private function getTokenAbilities(User $user): array
     {
-        return match($user->role) {
+        return match ($user->role) {
             'admin' => ['*'], // All permissions
             'manager' => [
                 'user:read',

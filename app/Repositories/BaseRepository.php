@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\RepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class BaseRepository implements RepositoryInterface
@@ -54,12 +54,14 @@ abstract class BaseRepository implements RepositoryInterface
     public function update(int|string $id, array $attributes): bool
     {
         $model = $this->findOrFail($id);
+
         return $model->update($attributes);
     }
 
     public function delete(int|string $id): bool
     {
         $model = $this->findOrFail($id);
+
         return $model->delete();
     }
 
@@ -76,6 +78,7 @@ abstract class BaseRepository implements RepositoryInterface
     public function with(array|string $relations): static
     {
         $this->model = $this->model->with($relations);
+
         return $this;
     }
 

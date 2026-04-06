@@ -8,7 +8,6 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Exceptions\ThrottleRequestsException;
 
 /**
  * Advanced rate limiting middleware using Redis.
@@ -17,7 +16,9 @@ use Illuminate\Http\Exceptions\ThrottleRequestsException;
 class RateLimitMiddleware
 {
     private const WINDOW_1MIN = 60;
+
     private const WINDOW_1HOUR = 3600;
+
     private const WINDOW_1DAY = 86400;
 
     /**
@@ -31,7 +32,7 @@ class RateLimitMiddleware
         // Check all time windows
         foreach ($limits as $window => $maxAttempts) {
             $attempts = $this->getAttempts($key, $window);
-            
+
             if ($attempts >= $maxAttempts) {
                 return $this->buildThrottledResponse($key, $window, $maxAttempts);
             }
@@ -53,7 +54,7 @@ class RateLimitMiddleware
      */
     private function getLimitsForTier(string $tier): array
     {
-        return match($tier) {
+        return match ($tier) {
             'strict' => [
                 self::WINDOW_1MIN => 10,
                 self::WINDOW_1HOUR => 100,
@@ -84,10 +85,10 @@ class RateLimitMiddleware
     {
         // Use user ID if authenticated, otherwise IP address
         if ($user = $request->user()) {
-            return 'rate_limit:user:' . $user->id . ':' . $request->path();
+            return 'rate_limit:user:'.$user->id.':'.$request->path();
         }
 
-        return 'rate_limit:ip:' . $request->ip() . ':' . $request->path();
+        return 'rate_limit:ip:'.$request->ip().':'.$request->path();
     }
 
     /**
@@ -136,10 +137,10 @@ class RateLimitMiddleware
             'message' => 'Too Many Requests',
             'retry_after' => $retryAfter,
         ], 429)
-        ->header('Retry-After', $retryAfter)
-        ->header('X-RateLimit-Limit', $maxAttempts)
-        ->header('X-RateLimit-Remaining', 0)
-        ->header('X-RateLimit-Reset', time() + $retryAfter);
+            ->header('Retry-After', $retryAfter)
+            ->header('X-RateLimit-Limit', $maxAttempts)
+            ->header('X-RateLimit-Remaining', 0)
+            ->header('X-RateLimit-Reset', time() + $retryAfter);
     }
 
     /**
@@ -153,7 +154,7 @@ class RateLimitMiddleware
 
         // Get oldest entry in current window
         $oldest = Redis::zrangebyscore($redisKey, $windowStart, '+inf', [
-            'LIMIT' => [0, 1]
+            'LIMIT' => [0, 1],
         ]);
 
         if (empty($oldest)) {
@@ -175,7 +176,7 @@ class RateLimitMiddleware
         $shortestWindow = min(array_keys($limits));
         $limit = $limits[$shortestWindow];
         $remaining = max(0, $limit - $this->getAttempts($key, $shortestWindow));
-        
+
         $response->headers->set('X-RateLimit-Limit', $limit);
         $response->headers->set('X-RateLimit-Remaining', $remaining);
         $response->headers->set('X-RateLimit-Reset', time() + $shortestWindow);

@@ -11,25 +11,25 @@ class MetadataExtractor
             '/simple/i',
             '/introduction/i',
             '/getting started/i',
-            '/⭐\s*$/m'
+            '/⭐\s*$/m',
         ],
         'intermediate' => [
             '/intermediate/i',
             '/practical/i',
-            '/⭐⭐\s*$/m'
+            '/⭐⭐\s*$/m',
         ],
         'advanced' => [
             '/advanced/i',
             '/complex/i',
             '/production/i',
-            '/⭐⭐⭐\s*$/m'
+            '/⭐⭐⭐\s*$/m',
         ],
         'expert' => [
             '/expert/i',
             '/system design/i',
             '/architecture/i',
-            '/⭐⭐⭐⭐\s*$/m'
-        ]
+            '/⭐⭐⭐⭐\s*$/m',
+        ],
     ];
 
     private array $technologyPatterns = [
@@ -82,12 +82,12 @@ class MetadataExtractor
         'JWT' => '/\bjwt\b|json\s+web\s+token/i',
         'Security' => '/\bsecurity\b|\bauth/i',
         'PCI DSS' => '/\bpci.?dss\b/i',
-        'OWASP' => '/\bowasp\b/i'
+        'OWASP' => '/\bowasp\b/i',
     ];
 
     public function extractFromFile(string $filePath): array
     {
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             throw new \RuntimeException("File not found: {$filePath}");
         }
 
@@ -108,7 +108,7 @@ class MetadataExtractor
             'line_count' => substr_count($content, "\n") + 1,
             'domain' => $this->extractDomain($relativePath),
             'subdomain' => $this->extractSubdomain($relativePath),
-            'last_modified' => filemtime($filePath)
+            'last_modified' => filemtime($filePath),
         ];
     }
 
@@ -119,7 +119,7 @@ class MetadataExtractor
             'basic' => 0,
             'intermediate' => 0,
             'advanced' => 0,
-            'expert' => 0
+            'expert' => 0,
         ];
 
         foreach ($this->difficultyPatterns as $level => $patterns) {
@@ -150,12 +150,12 @@ class MetadataExtractor
                 $count = preg_match_all($pattern, $content);
                 $technologies[] = [
                     'name' => $tech,
-                    'mentions' => $count
+                    'mentions' => $count,
                 ];
             }
         }
 
-        usort($technologies, fn($a, $b) => $b['mentions'] <=> $a['mentions']);
+        usort($technologies, fn ($a, $b) => $b['mentions'] <=> $a['mentions']);
 
         return $technologies;
     }
@@ -163,15 +163,15 @@ class MetadataExtractor
     private function extractTopics(string $content): array
     {
         $topics = [];
-        
+
         preg_match_all('/^#{2,3}\s+(.+)$/m', $content, $matches);
-        
+
         foreach ($matches[1] as $heading) {
             $heading = trim($heading);
             $heading = preg_replace('/\(Questions?\s+\d+-\d+\)/i', '', $heading);
             $heading = trim($heading);
-            
-            if (!empty($heading)) {
+
+            if (! empty($heading)) {
                 $topics[] = $heading;
             }
         }
@@ -186,9 +186,9 @@ class MetadataExtractor
         preg_match_all('/^(\d+)\.\s+(.+)$/m', $content, $numberedMatches, PREG_SET_ORDER);
         foreach ($numberedMatches as $match) {
             $questions[] = [
-                'number' => (int)$match[1],
+                'number' => (int) $match[1],
                 'text' => trim($match[2]),
-                'type' => 'numbered'
+                'type' => 'numbered',
             ];
         }
 
@@ -196,7 +196,7 @@ class MetadataExtractor
         foreach ($qaMatches[1] as $question) {
             $questions[] = [
                 'text' => trim($question),
-                'type' => 'qa_format'
+                'type' => 'qa_format',
             ];
         }
 
@@ -206,17 +206,17 @@ class MetadataExtractor
     private function extractCodeExamples(string $content): array
     {
         $examples = [];
-        
+
         preg_match_all('/```(\w+)?\n(.*?)```/s', $content, $matches, PREG_SET_ORDER);
-        
+
         foreach ($matches as $match) {
             $language = $match[1] ?? 'unknown';
             $code = $match[2];
-            
+
             $examples[] = [
                 'language' => $language,
                 'lines' => substr_count($code, "\n") + 1,
-                'characters' => strlen($code)
+                'characters' => strlen($code),
             ];
         }
 
@@ -226,20 +226,20 @@ class MetadataExtractor
     private function extractMermaidDiagrams(string $content): array
     {
         $diagrams = [];
-        
+
         preg_match_all('/```mermaid\n(.*?)```/s', $content, $matches);
-        
+
         foreach ($matches[1] as $diagram) {
             $firstLine = strtok(trim($diagram), "\n");
             $type = 'unknown';
-            
+
             if (preg_match('/^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|gantt|pie)/i', $firstLine, $typeMatch)) {
                 $type = $typeMatch[1];
             }
-            
+
             $diagrams[] = [
                 'type' => $type,
-                'lines' => substr_count($diagram, "\n") + 1
+                'lines' => substr_count($diagram, "\n") + 1,
             ];
         }
 
@@ -248,7 +248,7 @@ class MetadataExtractor
 
     private function extractFrontmatter(string $content): array
     {
-        if (!preg_match('/^---\n(.*?)\n---/s', $content, $matches)) {
+        if (! preg_match('/^---\n(.*?)\n---/s', $content, $matches)) {
             return [];
         }
 
@@ -271,6 +271,7 @@ class MetadataExtractor
         if (str_starts_with($filePath, $cwd)) {
             return substr($filePath, strlen($cwd) + 1);
         }
+
         return $filePath;
     }
 
@@ -279,6 +280,7 @@ class MetadataExtractor
         if (preg_match('#interview-bank[/\\\\]([^/\\\\]+)[/\\\\]#', $relativePath, $matches)) {
             return $matches[1];
         }
+
         return 'unknown';
     }
 
@@ -288,6 +290,7 @@ class MetadataExtractor
         if (count($parts) >= 3 && $parts[0] === 'interview-bank') {
             return $parts[2] ?? '';
         }
+
         return '';
     }
 
@@ -304,7 +307,7 @@ class MetadataExtractor
                 try {
                     $results[] = $this->extractFromFile($filePath);
                 } catch (\Exception $e) {
-                    error_log("Error extracting metadata from {$filePath}: " . $e->getMessage());
+                    error_log("Error extracting metadata from {$filePath}: ".$e->getMessage());
                 }
             }
         }
@@ -323,7 +326,7 @@ class MetadataExtractor
             'by_difficulty' => [],
             'by_technology' => [],
             'by_domain' => [],
-            'by_language' => []
+            'by_language' => [],
         ];
 
         foreach ($metadataCollection as $metadata) {
@@ -337,10 +340,10 @@ class MetadataExtractor
 
             foreach ($metadata['technologies'] as $tech) {
                 $techName = $tech['name'];
-                if (!isset($summary['by_technology'][$techName])) {
+                if (! isset($summary['by_technology'][$techName])) {
                     $summary['by_technology'][$techName] = [
                         'files' => 0,
-                        'mentions' => 0
+                        'mentions' => 0,
                     ];
                 }
                 $summary['by_technology'][$techName]['files']++;
@@ -348,11 +351,11 @@ class MetadataExtractor
             }
 
             $domain = $metadata['domain'];
-            if (!isset($summary['by_domain'][$domain])) {
+            if (! isset($summary['by_domain'][$domain])) {
                 $summary['by_domain'][$domain] = [
                     'files' => 0,
                     'questions' => 0,
-                    'code_examples' => 0
+                    'code_examples' => 0,
                 ];
             }
             $summary['by_domain'][$domain]['files']++;
@@ -361,10 +364,10 @@ class MetadataExtractor
 
             foreach ($metadata['code_examples'] as $example) {
                 $lang = $example['language'];
-                if (!isset($summary['by_language'][$lang])) {
+                if (! isset($summary['by_language'][$lang])) {
                     $summary['by_language'][$lang] = [
                         'count' => 0,
-                        'total_lines' => 0
+                        'total_lines' => 0,
                     ];
                 }
                 $summary['by_language'][$lang]['count']++;
@@ -372,8 +375,8 @@ class MetadataExtractor
             }
         }
 
-        uasort($summary['by_technology'], fn($a, $b) => $b['mentions'] <=> $a['mentions']);
-        uasort($summary['by_language'], fn($a, $b) => $b['count'] <=> $a['count']);
+        uasort($summary['by_technology'], fn ($a, $b) => $b['mentions'] <=> $a['mentions']);
+        uasort($summary['by_language'], fn ($a, $b) => $b['count'] <=> $a['count']);
 
         return $summary;
     }

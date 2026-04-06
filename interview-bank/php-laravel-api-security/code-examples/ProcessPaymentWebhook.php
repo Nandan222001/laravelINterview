@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\Payment;
 use App\Enums\PaymentStatus;
+use App\Models\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Queue job for async webhook processing with retry logic.
@@ -22,7 +22,9 @@ class ProcessPaymentWebhook implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $tries = 3;
+
     public int $timeout = 60;
+
     public array $backoff = [10, 30, 60];
 
     public function __construct(
@@ -52,8 +54,9 @@ class ProcessPaymentWebhook implements ShouldQueue
         $event = $this->eventData['event'] ?? null;
         $entity = $this->eventData['payload']['payment']['entity'] ?? null;
 
-        if (!$event || !$entity) {
+        if (! $event || ! $entity) {
             Log::warning('Invalid Razorpay webhook data', ['event' => $event]);
+
             return;
         }
 
@@ -63,10 +66,11 @@ class ProcessPaymentWebhook implements ShouldQueue
             ->lockForUpdate()
             ->first();
 
-        if (!$payment) {
+        if (! $payment) {
             Log::warning('Payment not found for Razorpay webhook', [
                 'gateway_payment_id' => $paymentId,
             ]);
+
             return;
         }
 
@@ -87,8 +91,9 @@ class ProcessPaymentWebhook implements ShouldQueue
         $eventType = $this->eventData['type'] ?? null;
         $object = $this->eventData['data']['object'] ?? null;
 
-        if (!$eventType || !$object) {
+        if (! $eventType || ! $object) {
             Log::warning('Invalid Stripe webhook data', ['event_type' => $eventType]);
+
             return;
         }
 
@@ -98,10 +103,11 @@ class ProcessPaymentWebhook implements ShouldQueue
             ->lockForUpdate()
             ->first();
 
-        if (!$payment) {
+        if (! $payment) {
             Log::warning('Payment not found for Stripe webhook', [
                 'payment_intent_id' => $paymentIntentId,
             ]);
+
             return;
         }
 

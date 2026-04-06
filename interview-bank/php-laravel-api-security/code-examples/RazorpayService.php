@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services\Payment;
 
+use App\Exceptions\PaymentGatewayException;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use App\Exceptions\PaymentGatewayException;
 
 /**
  * Razorpay payment gateway integration with webhook signature verification.
@@ -15,9 +15,11 @@ use App\Exceptions\PaymentGatewayException;
 class RazorpayService
 {
     private const API_BASE_URL = 'https://api.razorpay.com/v1';
-    
+
     private string $keyId;
+
     private string $keySecret;
+
     private string $webhookSecret;
 
     public function __construct()
@@ -70,15 +72,15 @@ class RazorpayService
                 ])
                 ->timeout(30)
                 ->retry(3, 1000)
-                ->post(self::API_BASE_URL . '/orders', [
+                ->post(self::API_BASE_URL.'/orders', [
                     'amount' => $amount * 100, // Convert to paise
                     'currency' => $currency,
                     'payment_capture' => 1, // Auto capture
                 ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Razorpay order creation failed: ' . $response->body()
+                    'Razorpay order creation failed: '.$response->body()
                 );
             }
 
@@ -108,14 +110,14 @@ class RazorpayService
             $response = Http::withBasicAuth($this->keyId, $this->keySecret)
                 ->timeout(30)
                 ->retry(3, 1000)
-                ->post(self::API_BASE_URL . "/payments/{$paymentId}/capture", [
+                ->post(self::API_BASE_URL."/payments/{$paymentId}/capture", [
                     'amount' => $amount * 100,
                     'currency' => $currency,
                 ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Razorpay payment capture failed: ' . $response->body()
+                    'Razorpay payment capture failed: '.$response->body()
                 );
             }
 
@@ -148,15 +150,15 @@ class RazorpayService
             $response = Http::withBasicAuth($this->keyId, $this->keySecret)
                 ->timeout(30)
                 ->retry(3, 1000)
-                ->post(self::API_BASE_URL . '/refunds', [
+                ->post(self::API_BASE_URL.'/refunds', [
                     'payment_id' => $paymentId,
                     'amount' => $amount * 100,
                     'notes' => ['reason' => $reason],
                 ]);
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Razorpay refund failed: ' . $response->body()
+                    'Razorpay refund failed: '.$response->body()
                 );
             }
 
@@ -183,7 +185,7 @@ class RazorpayService
     ): bool {
         $expectedSignature = hash_hmac(
             'sha256',
-            $orderId . '|' . $paymentId,
+            $orderId.'|'.$paymentId,
             $this->keySecret
         );
 
@@ -196,7 +198,7 @@ class RazorpayService
     public function verifyWebhookSignature(string $payload, string $signature): bool
     {
         $expectedSignature = hash_hmac('sha256', $payload, $this->webhookSecret);
-        
+
         // Constant-time comparison to prevent timing attacks
         return hash_equals($expectedSignature, $signature);
     }
@@ -209,15 +211,16 @@ class RazorpayService
         try {
             $response = Http::withBasicAuth($this->keyId, $this->keySecret)
                 ->timeout(30)
-                ->get(self::API_BASE_URL . "/payments/{$paymentId}");
+                ->get(self::API_BASE_URL."/payments/{$paymentId}");
 
-            if (!$response->successful()) {
+            if (! $response->successful()) {
                 throw new PaymentGatewayException(
-                    'Razorpay payment verification failed: ' . $response->body()
+                    'Razorpay payment verification failed: '.$response->body()
                 );
             }
 
             $data = $response->json();
+
             return $data['status'];
         } catch (\Exception $e) {
             Log::error('Razorpay payment verification failed', [

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Payment;
 
-use App\Models\Payment;
 use App\Models\IdempotencyKey;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
+use App\Models\Payment;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Idempotency service to prevent duplicate payment processing.
@@ -16,7 +16,9 @@ use Carbon\Carbon;
 class IdempotencyService
 {
     private const CACHE_PREFIX = 'idempotency:';
+
     private const CACHE_TTL = 86400; // 24 hours
+
     private const KEY_EXPIRY_DAYS = 7;
 
     /**
@@ -25,8 +27,8 @@ class IdempotencyService
     public function check(string $key): ?Payment
     {
         // Check cache first for performance
-        $cachedPaymentId = Cache::get(self::CACHE_PREFIX . $key);
-        
+        $cachedPaymentId = Cache::get(self::CACHE_PREFIX.$key);
+
         if ($cachedPaymentId) {
             return Payment::find($cachedPaymentId);
         }
@@ -39,7 +41,7 @@ class IdempotencyService
         if ($idempotencyRecord) {
             // Warm cache
             Cache::put(
-                self::CACHE_PREFIX . $key,
+                self::CACHE_PREFIX.$key,
                 $idempotencyRecord->payment_id,
                 self::CACHE_TTL
             );
@@ -64,7 +66,7 @@ class IdempotencyService
 
             // Store in cache for fast lookups
             Cache::put(
-                self::CACHE_PREFIX . $key,
+                self::CACHE_PREFIX.$key,
                 $payment->id,
                 self::CACHE_TTL
             );
@@ -85,7 +87,7 @@ class IdempotencyService
      */
     public function generateKey(string $prefix = 'idem'): string
     {
-        return $prefix . '_' . bin2hex(random_bytes(16)) . '_' . time();
+        return $prefix.'_'.bin2hex(random_bytes(16)).'_'.time();
     }
 
     /**
@@ -101,8 +103,8 @@ class IdempotencyService
      */
     public function acquireLock(string $key, int $timeout = 10): bool
     {
-        $lockKey = self::CACHE_PREFIX . 'lock:' . $key;
-        
+        $lockKey = self::CACHE_PREFIX.'lock:'.$key;
+
         return Cache::lock($lockKey, $timeout)->get(function () use ($key) {
             // Double-check if key exists
             return $this->check($key) === null;
@@ -114,7 +116,7 @@ class IdempotencyService
      */
     public function releaseLock(string $key): void
     {
-        $lockKey = self::CACHE_PREFIX . 'lock:' . $key;
+        $lockKey = self::CACHE_PREFIX.'lock:'.$key;
         Cache::lock($lockKey)->forceRelease();
     }
 }

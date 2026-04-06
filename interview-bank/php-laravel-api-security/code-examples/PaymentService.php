@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Services\Payment;
 
-use App\Models\Payment;
-use App\Models\Order;
 use App\Enums\PaymentStatus;
 use App\Events\PaymentProcessed;
 use App\Exceptions\PaymentException;
+use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 /**
@@ -42,6 +41,7 @@ class PaymentService
                 'idempotency_key' => $idempotencyKey,
                 'payment_id' => $existingPayment->id,
             ]);
+
             return $existingPayment;
         }
 
@@ -208,7 +208,7 @@ class PaymentService
 
         if ($payment->status->value !== $gatewayStatus) {
             $payment->update(['status' => PaymentStatus::from($gatewayStatus)]);
-            
+
             Log::warning('Payment status mismatch corrected', [
                 'payment_id' => $payment->id,
                 'old_status' => $payment->status->value,

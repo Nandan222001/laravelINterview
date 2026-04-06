@@ -7,18 +7,18 @@ class StatisticsDashboard
     public function generateDashboard(array $metadataCollection): string
     {
         $summary = $this->calculateSummary($metadataCollection);
-        
+
         $dashboard = "# Interview Bank Statistics Dashboard\n\n";
-        $dashboard .= "**Generated:** " . date('Y-m-d H:i:s') . "\n\n";
+        $dashboard .= '**Generated:** '.date('Y-m-d H:i:s')."\n\n";
         $dashboard .= "---\n\n";
-        
+
         $dashboard .= $this->generateOverview($summary);
         $dashboard .= $this->generateDifficultyDistribution($summary);
         $dashboard .= $this->generateDomainBreakdown($summary);
         $dashboard .= $this->generateTechnologyMatrix($summary);
         $dashboard .= $this->generateCodeStatistics($summary);
         $dashboard .= $this->generateContentMetrics($summary);
-        
+
         return $dashboard;
     }
 
@@ -36,7 +36,7 @@ class StatisticsDashboard
             'by_technology' => [],
             'by_language' => [],
             'by_topic' => [],
-            'files_by_domain_difficulty' => []
+            'files_by_domain_difficulty' => [],
         ];
 
         foreach ($metadataCollection as $metadata) {
@@ -50,14 +50,14 @@ class StatisticsDashboard
             $summary['by_difficulty'][$difficulty]++;
 
             $domain = $metadata['domain'];
-            if (!isset($summary['by_domain'][$domain])) {
+            if (! isset($summary['by_domain'][$domain])) {
                 $summary['by_domain'][$domain] = [
                     'files' => 0,
                     'questions' => 0,
                     'code_blocks' => 0,
                     'mermaid_diagrams' => 0,
                     'word_count' => 0,
-                    'by_difficulty' => ['basic' => 0, 'intermediate' => 0, 'advanced' => 0, 'expert' => 0]
+                    'by_difficulty' => ['basic' => 0, 'intermediate' => 0, 'advanced' => 0, 'expert' => 0],
                 ];
             }
             $summary['by_domain'][$domain]['files']++;
@@ -69,25 +69,25 @@ class StatisticsDashboard
 
             foreach ($metadata['technologies'] as $tech) {
                 $techName = $tech['name'];
-                if (!isset($summary['by_technology'][$techName])) {
+                if (! isset($summary['by_technology'][$techName])) {
                     $summary['by_technology'][$techName] = [
                         'files' => 0,
                         'mentions' => 0,
-                        'domains' => []
+                        'domains' => [],
                     ];
                 }
                 $summary['by_technology'][$techName]['files']++;
                 $summary['by_technology'][$techName]['mentions'] += $tech['mentions'];
-                $summary['by_technology'][$techName]['domains'][$domain] = 
+                $summary['by_technology'][$techName]['domains'][$domain] =
                     ($summary['by_technology'][$techName]['domains'][$domain] ?? 0) + 1;
             }
 
             foreach ($metadata['code_examples'] as $example) {
                 $lang = $example['language'];
-                if (!isset($summary['by_language'][$lang])) {
+                if (! isset($summary['by_language'][$lang])) {
                     $summary['by_language'][$lang] = [
                         'count' => 0,
-                        'total_lines' => 0
+                        'total_lines' => 0,
                     ];
                 }
                 $summary['by_language'][$lang]['count']++;
@@ -95,15 +95,15 @@ class StatisticsDashboard
             }
 
             foreach ($metadata['topics'] as $topic) {
-                if (!isset($summary['by_topic'][$topic])) {
+                if (! isset($summary['by_topic'][$topic])) {
                     $summary['by_topic'][$topic] = 0;
                 }
                 $summary['by_topic'][$topic]++;
             }
         }
 
-        uasort($summary['by_technology'], fn($a, $b) => $b['mentions'] <=> $a['mentions']);
-        uasort($summary['by_language'], fn($a, $b) => $b['count'] <=> $a['count']);
+        uasort($summary['by_technology'], fn ($a, $b) => $b['mentions'] <=> $a['mentions']);
+        uasort($summary['by_language'], fn ($a, $b) => $b['count'] <=> $a['count']);
         arsort($summary['by_topic']);
 
         return $summary;
@@ -114,14 +114,14 @@ class StatisticsDashboard
         $output = "## 📊 Overview\n\n";
         $output .= "| Metric | Value |\n";
         $output .= "|--------|-------|\n";
-        $output .= "| Total Files | " . number_format($summary['total_files']) . " |\n";
-        $output .= "| Total Questions | " . number_format($summary['total_questions']) . " |\n";
-        $output .= "| Total Code Blocks | " . number_format($summary['total_code_blocks']) . " |\n";
-        $output .= "| Total Mermaid Diagrams | " . number_format($summary['total_mermaid_diagrams']) . " |\n";
-        $output .= "| Total Words | " . number_format($summary['total_word_count']) . " |\n";
-        $output .= "| Total Lines | " . number_format($summary['total_line_count']) . " |\n";
-        $output .= "| Avg Questions/File | " . number_format($summary['total_questions'] / max(1, $summary['total_files']), 1) . " |\n";
-        $output .= "| Avg Code Blocks/File | " . number_format($summary['total_code_blocks'] / max(1, $summary['total_files']), 1) . " |\n";
+        $output .= '| Total Files | '.number_format($summary['total_files'])." |\n";
+        $output .= '| Total Questions | '.number_format($summary['total_questions'])." |\n";
+        $output .= '| Total Code Blocks | '.number_format($summary['total_code_blocks'])." |\n";
+        $output .= '| Total Mermaid Diagrams | '.number_format($summary['total_mermaid_diagrams'])." |\n";
+        $output .= '| Total Words | '.number_format($summary['total_word_count'])." |\n";
+        $output .= '| Total Lines | '.number_format($summary['total_line_count'])." |\n";
+        $output .= '| Avg Questions/File | '.number_format($summary['total_questions'] / max(1, $summary['total_files']), 1)." |\n";
+        $output .= '| Avg Code Blocks/File | '.number_format($summary['total_code_blocks'] / max(1, $summary['total_files']), 1)." |\n";
         $output .= "\n";
 
         return $output;
@@ -132,13 +132,13 @@ class StatisticsDashboard
         $output = "## 🎯 Difficulty Distribution\n\n";
         $output .= "| Difficulty | Files | Percentage |\n";
         $output .= "|------------|-------|------------|\n";
-        
+
         $total = $summary['total_files'];
         foreach ($summary['by_difficulty'] as $level => $count) {
             $percentage = $total > 0 ? ($count / $total * 100) : 0;
             $bar = $this->generateProgressBar($percentage);
             $icon = $this->getDifficultyIcon($level);
-            $output .= sprintf("| %s %s | %d | %.1f%% %s |\n", 
+            $output .= sprintf("| %s %s | %d | %.1f%% %s |\n",
                 $icon, ucfirst($level), $count, $percentage, $bar);
         }
         $output .= "\n";
@@ -177,7 +177,7 @@ class StatisticsDashboard
             $output .= "**{$domainName}**\n\n";
             $output .= "| Difficulty | Count | Percentage |\n";
             $output .= "|------------|-------|------------|\n";
-            
+
             $total = $stats['files'];
             foreach ($stats['by_difficulty'] as $level => $count) {
                 if ($count > 0) {
@@ -202,8 +202,10 @@ class StatisticsDashboard
 
         $count = 0;
         foreach ($summary['by_technology'] as $tech => $stats) {
-            if ($count++ >= 20) break;
-            
+            if ($count++ >= 20) {
+                break;
+            }
+
             $domainList = implode(', ', array_keys($stats['domains']));
             $output .= sprintf("| %s | %d | %d | %s |\n",
                 $tech,
@@ -241,14 +243,16 @@ class StatisticsDashboard
     private function generateContentMetrics(array $summary): string
     {
         $output = "## 📈 Content Metrics\n\n";
-        
+
         $output .= "### Top 15 Topics\n\n";
         $output .= "| Topic | Occurrences |\n";
         $output .= "|-------|-------------|\n";
-        
+
         $count = 0;
         foreach ($summary['by_topic'] as $topic => $occurrences) {
-            if ($count++ >= 15) break;
+            if ($count++ >= 15) {
+                break;
+            }
             $output .= sprintf("| %s | %d |\n", $topic, $occurrences);
         }
         $output .= "\n";
@@ -263,7 +267,7 @@ class StatisticsDashboard
 
     private function getDifficultyIcon(string $level): string
     {
-        return match($level) {
+        return match ($level) {
             'basic' => '⭐',
             'intermediate' => '⭐⭐',
             'advanced' => '⭐⭐⭐',
@@ -274,15 +278,16 @@ class StatisticsDashboard
 
     private function generateProgressBar(float $percentage, int $width = 10): string
     {
-        $filled = (int)round($percentage / 10);
+        $filled = (int) round($percentage / 10);
         $filled = min($filled, $width);
-        return str_repeat('█', $filled) . str_repeat('░', $width - $filled);
+
+        return str_repeat('█', $filled).str_repeat('░', $width - $filled);
     }
 
     public function generateJsonReport(array $metadataCollection): string
     {
         $summary = $this->calculateSummary($metadataCollection);
-        
+
         $report = [
             'generated_at' => date('c'),
             'summary' => [
@@ -290,13 +295,13 @@ class StatisticsDashboard
                 'total_questions' => $summary['total_questions'],
                 'total_code_blocks' => $summary['total_code_blocks'],
                 'total_mermaid_diagrams' => $summary['total_mermaid_diagrams'],
-                'total_word_count' => $summary['total_word_count']
+                'total_word_count' => $summary['total_word_count'],
             ],
             'difficulty_distribution' => $summary['by_difficulty'],
             'domain_breakdown' => $summary['by_domain'],
             'technology_coverage' => $summary['by_technology'],
             'programming_languages' => $summary['by_language'],
-            'topics' => $summary['by_topic']
+            'topics' => $summary['by_topic'],
         ];
 
         return json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -305,7 +310,7 @@ class StatisticsDashboard
     public function generateHtmlDashboard(array $metadataCollection): string
     {
         $summary = $this->calculateSummary($metadataCollection);
-        
+
         $html = <<<HTML
 <!DOCTYPE html>
 <html lang="en">
@@ -363,7 +368,7 @@ HTML;
         $html .= $this->generateDomainSection($summary);
         $html .= $this->generateTechnologySection($summary);
 
-        $html .= <<<HTML
+        $html .= <<<'HTML'
     </div>
 </body>
 </html>
@@ -386,20 +391,21 @@ HTML;
     {
         $html = '<div class="section"><h2>🎯 Difficulty Distribution</h2><table>';
         $html .= '<tr><th>Level</th><th>Files</th><th>Percentage</th><th>Distribution</th></tr>';
-        
+
         $total = $summary['total_files'];
         foreach ($summary['by_difficulty'] as $level => $count) {
             $percentage = $total > 0 ? ($count / $total * 100) : 0;
             $badgeClass = "badge-{$level}";
-            $html .= "<tr>";
-            $html .= "<td><span class='badge {$badgeClass}'>" . ucfirst($level) . "</span></td>";
+            $html .= '<tr>';
+            $html .= "<td><span class='badge {$badgeClass}'>".ucfirst($level).'</span></td>';
             $html .= "<td>{$count}</td>";
-            $html .= "<td>" . number_format($percentage, 1) . "%</td>";
+            $html .= '<td>'.number_format($percentage, 1).'%</td>';
             $html .= "<td><div class='progress-bar'><div class='progress-fill' style='width: {$percentage}%'></div></div></td>";
-            $html .= "</tr>";
+            $html .= '</tr>';
         }
-        
+
         $html .= '</table></div>';
+
         return $html;
     }
 
@@ -407,18 +413,19 @@ HTML;
     {
         $html = '<div class="section"><h2>📚 Domain Breakdown</h2><table>';
         $html .= '<tr><th>Domain</th><th>Files</th><th>Questions</th><th>Code</th><th>Diagrams</th></tr>';
-        
+
         foreach ($summary['by_domain'] as $domain => $stats) {
-            $html .= "<tr>";
-            $html .= "<td><strong>" . $this->formatDomainName($domain) . "</strong></td>";
+            $html .= '<tr>';
+            $html .= '<td><strong>'.$this->formatDomainName($domain).'</strong></td>';
             $html .= "<td>{$stats['files']}</td>";
             $html .= "<td>{$stats['questions']}</td>";
             $html .= "<td>{$stats['code_blocks']}</td>";
             $html .= "<td>{$stats['mermaid_diagrams']}</td>";
-            $html .= "</tr>";
+            $html .= '</tr>';
         }
-        
+
         $html .= '</table></div>';
+
         return $html;
     }
 
@@ -426,18 +433,21 @@ HTML;
     {
         $html = '<div class="section"><h2>💻 Technology Coverage (Top 15)</h2><table>';
         $html .= '<tr><th>Technology</th><th>Files</th><th>Mentions</th></tr>';
-        
+
         $count = 0;
         foreach ($summary['by_technology'] as $tech => $stats) {
-            if ($count++ >= 15) break;
-            $html .= "<tr>";
+            if ($count++ >= 15) {
+                break;
+            }
+            $html .= '<tr>';
             $html .= "<td><strong>{$tech}</strong></td>";
             $html .= "<td>{$stats['files']}</td>";
             $html .= "<td>{$stats['mentions']}</td>";
-            $html .= "</tr>";
+            $html .= '</tr>';
         }
-        
+
         $html .= '</table></div>';
+
         return $html;
     }
 

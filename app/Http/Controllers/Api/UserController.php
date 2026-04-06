@@ -21,6 +21,7 @@ class UserController extends Controller
     public function index(): JsonResponse
     {
         $users = $this->userService->getPaginated(15);
+
         return $this->successResponse(new UserCollection($users), 'Users retrieved successfully');
     }
 
@@ -28,7 +29,7 @@ class UserController extends Controller
     {
         $user = $this->userService->getById($id);
 
-        if (!$user) {
+        if (! $user) {
             return $this->notFoundResponse('User not found');
         }
 
@@ -44,21 +45,23 @@ class UserController extends Controller
 
         $updated = $this->userService->update($id, $validated);
 
-        if (!$updated) {
+        if (! $updated) {
             return $this->serverErrorResponse('Failed to update user');
         }
 
         $user = $this->userService->getById($id);
+
         return $this->successResponse(new UserResource($user), 'User updated successfully');
     }
 
     public function destroy(int $id): JsonResponse
     {
-        if (!$this->userService->exists($id)) {
+        if (! $this->userService->exists($id)) {
             return $this->notFoundResponse('User not found');
         }
 
         $this->userService->delete($id);
+
         return $this->successResponse(null, 'User deleted successfully');
     }
 }
