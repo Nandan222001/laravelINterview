@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CodeSnippetController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\SyntaxHighlightingController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserProgressController;
@@ -16,6 +18,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('users', UserController::class);
     Route::apiResource('questions', QuestionController::class);
+    Route::apiResource('code-snippets', CodeSnippetController::class);
+
+    Route::prefix('code-snippets')->group(function () {
+        Route::post('/detect-language', [CodeSnippetController::class, 'detectLanguage']);
+        Route::post('/highlight', [CodeSnippetController::class, 'highlightCode']);
+        Route::get('/supported-languages', [CodeSnippetController::class, 'supportedLanguages']);
+        Route::post('/reorder', [CodeSnippetController::class, 'reorder']);
+        Route::post('/bulk-create', [CodeSnippetController::class, 'bulkCreate']);
+        Route::post('/bulk-delete', [CodeSnippetController::class, 'bulkDelete']);
+        Route::post('/{code_snippet}/duplicate', [CodeSnippetController::class, 'duplicate']);
+        Route::get('/executable', [CodeSnippetController::class, 'getExecutable']);
+    });
+
+    Route::prefix('syntax-highlighting')->group(function () {
+        Route::get('/themes', [SyntaxHighlightingController::class, 'getThemes']);
+        Route::get('/client-instructions', [SyntaxHighlightingController::class, 'getClientSideInstructions']);
+        Route::get('/rendering-options', [SyntaxHighlightingController::class, 'getRenderingOptions']);
+        Route::get('/language-aliases', [SyntaxHighlightingController::class, 'getLanguageAliases']);
+    });
 
     Route::prefix('search')->group(function () {
         Route::post('/', [SearchController::class, 'search']);

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Snippet Syntax Highlighting Examples</title>
+    
+    <!-- Highlight.js Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #555;
+            margin-top: 40px;
+        }
+        
+        .snippet-container {
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .snippet-header {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .snippet-title {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .snippet-language {
+            background: #007bff;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        
+        pre {
+            margin: 0;
+            padding: 0;
+        }
+        
+        pre code {
+            display: block;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        .theme-selector {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .example-section {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Code Snippet Syntax Highlighting Examples</h1>
+        
+        <div class="info-box">
+            <strong>Info:</strong> This page demonstrates both pre-rendered (server-side) 
+            and client-side syntax highlighting using the Code Snippet Management API.
+        </div>
+
+        <div class="theme-selector">
+            <label for="theme-select"><strong>Choose Theme:</strong></label>
+            <select id="theme-select" onchange="changeTheme(this.value)">
+                <option value="atom-one-dark">Atom One Dark</option>
+                <option value="atom-one-light">Atom One Light</option>
+                <option value="github">GitHub</option>
+                <option value="github-dark">GitHub Dark</option>
+                <option value="monokai">Monokai</option>
+                <option value="vs2015">VS 2015</option>
+                <option value="dracula">Dracula</option>
+                <option value="nord">Nord</option>
+                <option value="default">Default</option>
+            </select>
+        </div>
+
+        <div class="example-section">
+            <h2>📝 Example 1: Client-Side Rendering</h2>
+            <p>Code is highlighted in the browser using highlight.js:</p>
+            
+            <div class="snippet-container">
+                <div class="snippet-header">
+                    <span class="snippet-title">JavaScript Example</span>
+                    <span class="snippet-language">JavaScript</span>
+                </div>
+                <pre><code class="language-javascript">// Fetch code snippets from API
+async function fetchCodeSnippets(questionId) {
+    const response = await fetch(`/api/code-snippets?question_id=${questionId}`);
+    const data = await response.json();
+    
+    if (data.success) {
+        return data.data;
+    }
+    
+    throw new Error(data.message);
+}
+
+// Display snippets
+fetchCodeSnippets(5).then(snippets => {
+    snippets.forEach(snippet => {
+        console.log(snippet.title);
+        console.log(snippet.code);
+    });
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🐍 Example 2: Python Code</h2>
+            
+            <div class="snippet-container">
+                <div class="snippet-header">
+                    <span class="snippet-title">Python List Comprehension</span>
+                    <span class="snippet-language">Python</span>
+                </div>
+                <pre><code class="language-python"># Filter and transform a list
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Get squares of even numbers
+even_squares = [x**2 for x in numbers if x % 2 == 0]
+print(even_squares)  # [4, 16, 36, 64, 100]
+
+# Dictionary comprehension
+word_lengths = {word: len(word) for word in ['hello', 'world', 'python']}
+print(word_lengths)  # {'hello': 5, 'world': 5, 'python': 6}</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🔧 Example 3: PHP Backend</h2>
+            
+            <div class="snippet-container">
+                <div class="snippet-header">
+                    <span class="snippet-title">Laravel API Endpoint</span>
+                    <span class="snippet-language">PHP</span>
+                </div>
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Services\CodeSnippetService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class CodeSnippetController extends Controller
+{
+    public function __construct(
+        private CodeSnippetService $codeSnippetService
+    ) {}
+
+    public function highlight(Request $request): JsonResponse
+    {
+        $code = $request->input('code');
+        $language = $request->input('language');
+        
+        $result = $this->codeSnippetService->highlightCode($code, $language);
+        
+        return response()->json([
+            'success' => true,
+            'data' => $result
+        ]);
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>☕ Example 4: Java Code</h2>
+            
+            <div class="snippet-container">
+                <div class="snippet-header">
+                    <span class="snippet-title">Java Stream API</span>
+                    <span class="snippet-language">Java</span>
+                </div>
+                <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+
+public class StreamExample {
+    public static void main(String[] args) {
+        List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        
+        // Filter even numbers and square them
+        List&lt;Integer&gt; evenSquares = numbers.stream()
+            .filter(n -&gt; n % 2 == 0)
+            .map(n -&gt; n * n)
+            .collect(Collectors.toList());
+        
+        System.out.println(evenSquares);
+        // Output: [4, 16, 36, 64, 100]
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🌐 Example 5: SQL Query</h2>
+            
+            <div class="snippet-container">
+                <div class="snippet-header">
+                    <span class="snippet-title">Complex SQL Query</span>
+                    <span class="snippet-language">SQL</span>
+                </div>
+                <pre><code class="language-sql">-- Get code snippets with question details
+SELECT 
+    cs.id,
+    cs.title,
+    cs.language,
+    cs.type,
+    q.title AS question_title,
+    COUNT(DISTINCT t.id) AS tag_count
+FROM code_snippets cs
+INNER JOIN questions q ON cs.question_id = q.id
+LEFT JOIN taggables tg ON tg.taggable_id = cs.id 
+    AND tg.taggable_type = 'App\\Models\\CodeSnippet'
+LEFT JOIN tags t ON t.id = tg.tag_id
+WHERE cs.is_executable = true
+    AND q.is_published = true
+GROUP BY cs.id, cs.title, cs.language, cs.type, q.title
+ORDER BY cs.created_at DESC
+LIMIT 10;</code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🚀 Interactive Demo</h2>
+            <p>Try highlighting your own code:</p>
+            
+            <div style="margin: 20px 0;">
+                <textarea id="custom-code" rows="6" style="width: 100%; padding: 10px; font-family: monospace; border: 1px solid #ddd; border-radius: 4px;">function fibonacci(n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log(fibonacci(10));</textarea>
+                
+                <div style="margin-top: 10px;">
+                    <button onclick="highlightCustomCode()">🎨 Highlight Code</button>
+                    <button onclick="detectLanguage()">🔍 Detect Language</button>
+                </div>
+            </div>
+            
+            <div id="highlighted-output" class="snippet-container" style="display: none;">
+                <div class="snippet-header">
+                    <span class="snippet-title">Highlighted Output</span>
+                    <span id="detected-language" class="snippet-language">Auto</span>
+                </div>
+                <pre><code id="highlighted-code" class="hljs"></code></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>📚 API Usage Examples</h2>
+            
+            <h3>Fetch Code Snippets with Pre-rendered HTML:</h3>
+            <div class="snippet-container">
+                <div class="snippet-header">
+                    <span class="snippet-title">API Request</span>
+                    <span class="snippet-language">JavaScript</span>
+                </div>
+                <pre><code class="language-javascript">// Request with pre-rendered HTML
+const response = await fetch('/api/code-snippets?question_id=5&render_html=true', {
+    headers: {
+        'Authorization': 'Bearer YOUR_TOKEN',
+        'Accept': 'application/json'
+    }
+});
+
+const data = await response.json();
+
+// Use pre-rendered HTML
+data.data.forEach(snippet => {
+    const container = document.createElement('div');
+    container.innerHTML = `
+        &lt;pre&gt;&lt;code class="hljs"&gt;
+            ${snippet.highlighted_code}
+        &lt;/code&gt;&lt;/pre&gt;
+    `;
+    document.body.appendChild(container);
+});</code></pre>
+            </div>
+
+            <h3>Create Code Snippet with Language Detection:</h3>
+            <div class="snippet-container">
+                <div class="snippet-header">
+                    <span class="snippet-title">API Request</span>
+                    <span class="snippet-language">JavaScript</span>
+                </div>
+                <pre><code class="language-javascript">// Create snippet (language auto-detected)
+const createSnippet = await fetch('/api/code-snippets', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer YOUR_TOKEN',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        question_id: 5,
+        title: 'Array Filter Example',
+        code: 'const filtered = arr.filter(x => x > 5);',
+        type: 'example',
+        is_executable: true
+    })
+});
+
+const snippet = await createSnippet.json();
+console.log('Created snippet with language:', snippet.data.language);</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Highlight.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <script>
+        // Initialize highlighting
+        hljs.highlightAll();
+        
+        // Change theme dynamically
+        function changeTheme(theme) {
+            const link = document.querySelector('link[href*="highlight.js"]');
+            link.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${theme}.min.css`;
+        }
+        
+        // Highlight custom code
+        function highlightCustomCode() {
+            const code = document.getElementById('custom-code').value;
+            const output = document.getElementById('highlighted-output');
+            const codeElement = document.getElementById('highlighted-code');
+            
+            // Use highlight.js to highlight the code
+            const result = hljs.highlightAuto(code);
+            codeElement.innerHTML = result.value;
+            document.getElementById('detected-language').textContent = result.language;
+            
+            output.style.display = 'block';
+        }
+        
+        // Detect language
+        async function detectLanguage() {
+            const code = document.getElementById('custom-code').value;
+            
+            // In a real app, you would call the API:
+            // const response = await fetch('/api/code-snippets/detect-language', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': 'Bearer YOUR_TOKEN'
+            //     },
+            //     body: JSON.stringify({ code })
+            // });
+            
+            // For demo, use client-side detection
+            const result = hljs.highlightAuto(code);
+            alert(`Detected language: ${result.language}\nRelevance: ${result.relevance}`);
+        }
+    </script>
+</body>
+</html>

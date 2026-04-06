@@ -116,6 +116,7 @@ php artisan queue:listen
 - **PHPUnit** - Testing framework
 - **Laravel Pint** - Code style fixer
 - **Mockery** - Mocking framework
+- **highlight.php (scrivo/highlight.php)** - Server-side syntax highlighting
 
 ## Architecture & Structure
 
@@ -288,6 +289,27 @@ SANCTUM_STATEFUL_DOMAINS=localhost,localhost:3000,127.0.0.1,127.0.0.1:8000
 - `PUT /api/users/{id}` - Update user
 - `DELETE /api/users/{id}` - Delete user
 
+### Code Snippet Endpoints
+- `GET /api/code-snippets` - List code snippets (with filtering)
+- `GET /api/code-snippets/{id}` - Get code snippet by ID
+- `POST /api/code-snippets` - Create code snippet
+- `PUT /api/code-snippets/{id}` - Update code snippet
+- `DELETE /api/code-snippets/{id}` - Delete code snippet
+- `POST /api/code-snippets/detect-language` - Detect programming language
+- `POST /api/code-snippets/highlight` - Highlight code syntax
+- `GET /api/code-snippets/supported-languages` - List supported languages
+- `POST /api/code-snippets/reorder` - Reorder snippets
+- `POST /api/code-snippets/bulk-create` - Bulk create snippets
+- `POST /api/code-snippets/bulk-delete` - Bulk delete snippets
+- `POST /api/code-snippets/{id}/duplicate` - Duplicate snippet
+- `GET /api/code-snippets/executable` - Get executable snippets
+
+### Syntax Highlighting Endpoints
+- `GET /api/syntax-highlighting/themes` - Get available themes
+- `GET /api/syntax-highlighting/client-instructions` - Get client-side setup instructions
+- `GET /api/syntax-highlighting/rendering-options` - Get rendering options
+- `GET /api/syntax-highlighting/language-aliases` - Get language aliases
+
 ## Documentation Files
 
 - **README.md** - Project overview and features
@@ -296,6 +318,8 @@ SANCTUM_STATEFUL_DOMAINS=localhost,localhost:3000,127.0.0.1,127.0.0.1:8000
 - **API-DOCUMENTATION.md** - Complete API endpoint documentation
 - **ARCHITECTURE.md** - Detailed architecture and design patterns
 - **AGENTS.md** - This file (agent/automation instructions)
+- **CODE_SNIPPET_API.md** - Code snippet management API documentation
+- **CODE_SNIPPET_README.md** - Code snippet feature documentation and usage guide
 
 ## Development Workflow
 
