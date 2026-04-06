@@ -13,5 +13,15 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        User::factory(10)->create();
+
+        $this->call([
+            DifficultyLevelSeeder::class,
+            CategorySeeder::class,
+            TagSeeder::class,
+            TopicSeeder::class,
+            QuestionSeeder::class,
+        ]);
     }
 }
