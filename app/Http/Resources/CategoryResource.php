@@ -17,6 +17,14 @@ class CategoryResource extends BaseResource
             'order' => $this->order,
             'is_active' => $this->is_active,
             'metadata' => $this->metadata,
+            'parent' => new CategoryResource($this->whenLoaded('parent')),
+            'children' => CategoryResource::collection($this->whenLoaded('children')),
+            'topics' => TopicResource::collection($this->whenLoaded('topics')),
+            'tags' => TagResource::collection($this->whenLoaded('tags')),
+            'topics_count' => $this->when(isset($this->topics_count), $this->topics_count),
+            'children_count' => $this->when(isset($this->children_count), $this->children_count),
+            'created_at' => $this->created_at?->toIso8601String(),
+            'updated_at' => $this->updated_at?->toIso8601String(),
         ];
     }
 }
