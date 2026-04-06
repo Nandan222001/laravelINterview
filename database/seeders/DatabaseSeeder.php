@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             TagSeeder::class,
             TopicSeeder::class,
-            QuestionSeeder::class,
+            InterviewQuestionsSeeder::class,
         ]);
     }
 }
