@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\QuestionController;
+use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -14,6 +15,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('users', UserController::class);
     Route::apiResource('questions', QuestionController::class);
+
+    Route::prefix('search')->group(function () {
+        Route::post('/', [SearchController::class, 'search']);
+        Route::get('/', [SearchController::class, 'search']);
+        Route::get('/suggestions', [SearchController::class, 'suggestions']);
+        Route::get('/statistics', [SearchController::class, 'statistics']);
+        Route::get('/filters', [SearchController::class, 'filters']);
+        Route::post('/excerpt', [SearchController::class, 'excerpt']);
+    });
 
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);

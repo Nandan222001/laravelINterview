@@ -84,4 +84,9 @@ class CodeSnippet extends Model
             ->orWhere('description', 'like', "%{$term}%")
             ->orWhere('code', 'like', "%{$term}%");
     }
+
+    public function scopeFullTextSearch(Builder $query, string $term): Builder
+    {
+        return $query->whereFullText(['title', 'description', 'code'], $term);
+    }
 }

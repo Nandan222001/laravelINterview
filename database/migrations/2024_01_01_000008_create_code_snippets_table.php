@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -26,11 +27,22 @@ return new class extends Migration
             $table->index('language');
             $table->index('type');
             $table->index(['question_id', 'order']);
+
+            if ($this->supportsFulltextIndexes()) {
+                $table->fullText(['title', 'description', 'code']);
+            }
         });
     }
 
     public function down(): void
     {
         Schema::dropIfExists('code_snippets');
+    }
+
+    protected function supportsFulltextIndexes(): bool
+    {
+        $driver = DB::connection()->getDriverName();
+
+        return in_array($driver, ['mysql', 'pgsql']);
     }
 };

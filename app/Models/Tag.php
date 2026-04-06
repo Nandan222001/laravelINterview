@@ -77,6 +77,11 @@ class Tag extends Model
             ->orWhere('slug', 'like', "%{$term}%");
     }
 
+    public function scopeFullTextSearch(Builder $query, string $term): Builder
+    {
+        return $query->whereFullText(['name', 'slug', 'description'], $term);
+    }
+
     public function incrementUsage(): void
     {
         $this->increment('usage_count');
