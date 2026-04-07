@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database & MySQL - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #00758f 0%, #00a6cc 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #00758f;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #005a6f;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #00758f;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #00758f;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #00758f;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #00758f;
+        }
+        .topic-section h3 {
+            color: #005a6f;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #00758f;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🗄️ Database & MySQL</h1>
+        <p>Comprehensive answers covering data types, keys, normalization, joins, indexes, triggers, views, stored procedures, transactions, query optimization, and engine differences</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#data-types">1. MySQL Data Types</a></li>
+                <li><a href="#keys">2. Keys (Primary, Unique, Foreign, Composite)</a></li>
+                <li><a href="#normalization">3. Database Normalization</a></li>
+                <li><a href="#joins">4. SQL Joins</a></li>
+                <li><a href="#indexes">5. Indexes & Types</a></li>
+                <li><a href="#index-optimization">6. Index Optimization</a></li>
+                <li><a href="#triggers">7. Triggers</a></li>
+                <li><a href="#views">8. Views</a></li>
+                <li><a href="#stored-procedures">9. Stored Procedures</a></li>
+                <li><a href="#transactions">10. Transactions & ACID</a></li>
+                <li><a href="#query-optimization">11. Query Optimization</a></li>
+                <li><a href="#explain">12. EXPLAIN & Query Analysis</a></li>
+                <li><a href="#engines">13. Storage Engines (InnoDB vs MyISAM)</a></li>
+            </ul>
+        </div>
+
+        <!-- Data Types -->
+        <section id="data-types" class="topic-section">
+            <h2>1. MySQL Data Types</h2>
+            
+            <h3>Numeric Data Types</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Range</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>TINYINT</strong></td>
+                    <td>1 byte</td>
+                    <td>-128 to 127 (signed)<br>0 to 255 (unsigned)</td>
+                    <td>Boolean flags, small numbers</td>
+                </tr>
+                <tr>
+                    <td><strong>SMALLINT</strong></td>
+                    <td>2 bytes</td>
+                    <td>-32,768 to 32,767</td>
+                    <td>Age, counts</td>
+                </tr>
+                <tr>
+                    <td><strong>MEDIUMINT</strong></td>
+                    <td>3 bytes</td>
+                    <td>-8,388,608 to 8,388,607</td>
+                    <td>Medium-range numbers</td>
+                </tr>
+                <tr>
+                    <td><strong>INT</strong></td>
+                    <td>4 bytes</td>
+                    <td>-2,147,483,648 to 2,147,483,647</td>
+                    <td>Primary keys, IDs</td>
+                </tr>
+                <tr>
+                    <td><strong>BIGINT</strong></td>
+                    <td>8 bytes</td>
+                    <td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
+                    <td>Large numbers, timestamps</td>
+                </tr>
+                <tr>
+                    <td><strong>DECIMAL(M,D)</strong></td>
+                    <td>Variable</td>
+                    <td>Exact precision</td>
+                    <td>Currency, financial data</td>
+                </tr>
+                <tr>
+                    <td><strong>FLOAT</strong></td>
+                    <td>4 bytes</td>
+                    <td>Approximate precision</td>
+                    <td>Scientific calculations</td>
+                </tr>
+                <tr>
+                    <td><strong>DOUBLE</strong></td>
+                    <td>8 bytes</td>
+                    <td>Approximate precision</td>
+                    <td>High-precision calculations</td>
+                </tr>
+            </table>
+
+            <h3>String Data Types</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Max Size</th>
+                    <th>Storage</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>CHAR(M)</strong></td>
+                    <td>255 characters</td>
+                    <td>Fixed-length</td>
+                    <td>Fixed codes (country codes, status codes)</td>
+                </tr>
+                <tr>
+                    <td><strong>VARCHAR(M)</strong></td>
+                    <td>65,535 characters</td>
+                    <td>Variable-length + 1-2 bytes</td>
+                    <td>Names, emails, descriptions</td>
+                </tr>
+                <tr>
+                    <td><strong>TINYTEXT</strong></td>
+                    <td>255 bytes</td>
+                    <td>Variable + 1 byte</td>
+                    <td>Short text</td>
+                </tr>
+                <tr>
+                    <td><strong>TEXT</strong></td>
+                    <td>65,535 bytes</td>
+                    <td>Variable + 2 bytes</td>
+                    <td>Articles, descriptions</td>
+                </tr>
+                <tr>
+                    <td><strong>MEDIUMTEXT</strong></td>
+                    <td>16,777,215 bytes</td>
+                    <td>Variable + 3 bytes</td>
+                    <td>Large content</td>
+                </tr>
+                <tr>
+                    <td><strong>LONGTEXT</strong></td>
+                    <td>4,294,967,295 bytes</td>
+                    <td>Variable + 4 bytes</td>
+                    <td>Very large content, JSON</td>
+                </tr>
+                <tr>
+                    <td><strong>ENUM</strong></td>
+                    <td>65,535 values</td>
+                    <td>1-2 bytes</td>
+                    <td>Status fields (active, inactive, pending)</td>
+                </tr>
+            </table>
+
+            <h3>Date and Time Data Types</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Format</th>
+                    <th>Range</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>DATE</strong></td>
+                    <td>YYYY-MM-DD</td>
+                    <td>1000-01-01 to 9999-12-31</td>
+                    <td>Birth dates, deadlines</td>
+                </tr>
+                <tr>
+                    <td><strong>TIME</strong></td>
+                    <td>HH:MM:SS</td>
+                    <td>-838:59:59 to 838:59:59</td>
+                    <td>Duration, time of day</td>
+                </tr>
+                <tr>
+                    <td><strong>DATETIME</strong></td>
+                    <td>YYYY-MM-DD HH:MM:SS</td>
+                    <td>1000-01-01 00:00:00 to 9999-12-31 23:59:59</td>
+                    <td>Event timestamps (not timezone-aware)</td>
+                </tr>
+                <tr>
+                    <td><strong>TIMESTAMP</strong></td>
+                    <td>YYYY-MM-DD HH:MM:SS</td>
+                    <td>1970-01-01 00:00:01 to 2038-01-19 03:14:07</td>
+                    <td>Created_at, updated_at (timezone-aware)</td>
+                </tr>
+                <tr>
+                    <td><strong>YEAR</strong></td>
+                    <td>YYYY</td>
+                    <td>1901 to 2155</td>
+                    <td>Year only fields</td>
+                </tr>
+            </table>
+
+            <h3>Binary and JSON Types</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Binary types
+BLOB            -- Binary Large Object (65,535 bytes)
+MEDIUMBLOB      -- 16,777,215 bytes
+LONGBLOB        -- 4,294,967,295 bytes
+
+-- JSON type (MySQL 5.7+)
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    attributes JSON
+);
+
+INSERT INTO products (id, name, attributes) VALUES (
+    1, 
+    'Laptop', 
+    '{"brand": "Dell", "ram": 16, "storage": "512GB SSD"}'
+);
+
+-- Query JSON data
+SELECT 
+    name,
+    JSON_EXTRACT(attributes, '$.brand') AS brand,
+    attributes->>'$.ram' AS ram
+FROM products;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Use DECIMAL for monetary values, VARCHAR for variable-length strings, and TIMESTAMP for automatic timezone conversion. Choose the smallest data type that fits your needs to optimize storage.
+            </div>
+        </section>
+
+        <!-- Keys -->
+        <section id="keys" class="topic-section">
+            <h2>2. Keys (Primary, Unique, Foreign, Composite)</h2>
+
+            <h3>Primary Key</h3>
+            <p>Uniquely identifies each record in a table. Only one primary key per table.</p>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Single column primary key
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100),
+    name VARCHAR(100)
+);
+
+-- Alternative syntax
+CREATE TABLE users (
+    id INT AUTO_INCREMENT,
+    email VARCHAR(100),
+    name VARCHAR(100),
+    PRIMARY KEY (id)
+);
+
+-- Add primary key to existing table
+ALTER TABLE users ADD PRIMARY KEY (id);</code></pre>
+            </div>
+
+            <h3>Composite Primary Key</h3>
+            <p>Primary key consisting of multiple columns combined.</p>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Composite primary key example
+CREATE TABLE order_items (
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price DECIMAL(10,2),
+    PRIMARY KEY (order_id, product_id)
+);
+
+-- Student course enrollment
+CREATE TABLE enrollments (
+    student_id INT,
+    course_id INT,
+    semester VARCHAR(20),
+    grade CHAR(2),
+    PRIMARY KEY (student_id, course_id, semester)
+);</code></pre>
+            </div>
+
+            <h3>Unique Key</h3>
+            <p>Ensures all values in a column are different. Multiple unique keys allowed per table.</p>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Single unique constraint
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE,
+    username VARCHAR(50) UNIQUE,
+    name VARCHAR(100)
+);
+
+-- Named unique constraint
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    email VARCHAR(100),
+    username VARCHAR(50),
+    CONSTRAINT uk_email UNIQUE (email),
+    CONSTRAINT uk_username UNIQUE (username)
+);
+
+-- Composite unique constraint
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    sku VARCHAR(50),
+    warehouse_id INT,
+    UNIQUE (sku, warehouse_id)
+);
+
+-- Add unique constraint to existing table
+ALTER TABLE users ADD UNIQUE (email);</code></pre>
+            </div>
+
+            <h3>Foreign Key</h3>
+            <p>Links two tables together, ensuring referential integrity.</p>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Basic foreign key
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    user_id INT,
+    total DECIMAL(10,2),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Foreign key with named constraint
+CREATE TABLE posts (
+    id INT PRIMARY KEY,
+    user_id INT,
+    title VARCHAR(200),
+    content TEXT,
+    CONSTRAINT fk_posts_user FOREIGN KEY (user_id) 
+        REFERENCES users(id)
+);
+
+-- Foreign key with CASCADE actions
+CREATE TABLE comments (
+    id INT PRIMARY KEY,
+    post_id INT,
+    user_id INT,
+    content TEXT,
+    FOREIGN KEY (post_id) REFERENCES posts(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+);
+
+-- Add foreign key to existing table
+ALTER TABLE orders 
+ADD CONSTRAINT fk_orders_user 
+FOREIGN KEY (user_id) REFERENCES users(id);</code></pre>
+            </div>
+
+            <h3>Foreign Key Actions</h3>
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>CASCADE</strong></td>
+                    <td>Automatically delete/update child rows when parent is deleted/updated</td>
+                    <td>Order items when order is deleted</td>
+                </tr>
+                <tr>
+                    <td><strong>SET NULL</strong></td>
+                    <td>Set foreign key to NULL when parent is deleted</td>
+                    <td>Comments when user is deleted (keep comment, remove author)</td>
+                </tr>
+                <tr>
+                    <td><strong>RESTRICT</strong></td>
+                    <td>Prevent deletion/update if child rows exist</td>
+                    <td>Prevent category deletion if products exist</td>
+                </tr>
+                <tr>
+                    <td><strong>NO ACTION</strong></td>
+                    <td>Similar to RESTRICT (default in MySQL)</td>
+                    <td>Standard referential integrity</td>
+                </tr>
+                <tr>
+                    <td><strong>SET DEFAULT</strong></td>
+                    <td>Set foreign key to default value</td>
+                    <td>Rarely used in MySQL</td>
+                </tr>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> Foreign keys in InnoDB require that referenced columns have an index. InnoDB automatically creates indexes on foreign key columns if they don't exist.
+            </div>
+        </section>
+
+        <!-- Normalization -->
+        <section id="normalization" class="topic-section">
+            <h2>3. Database Normalization</h2>
+
+            <p>Normalization is the process of organizing data to reduce redundancy and improve data integrity.</p>
+
+            <h3>First Normal Form (1NF)</h3>
+            <p><strong>Rules:</strong></p>
+            <ul>
+                <li>Each column contains atomic (indivisible) values</li>
+                <li>Each column contains values of a single type</li>
+                <li>Each column has a unique name</li>
+                <li>Order in which data is stored doesn't matter</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ VIOLATES 1NF (multiple values in one column)
+CREATE TABLE students_bad (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    phone_numbers VARCHAR(200)  -- '555-1234, 555-5678, 555-9012'
+);
+
+-- ✅ FOLLOWS 1NF (atomic values)
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+CREATE TABLE student_phones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    phone_number VARCHAR(20),
+    phone_type ENUM('mobile', 'home', 'work'),
+    FOREIGN KEY (student_id) REFERENCES students(id)
+);</code></pre>
+            </div>
+
+            <h3>Second Normal Form (2NF)</h3>
+            <p><strong>Rules:</strong></p>
+            <ul>
+                <li>Must be in 1NF</li>
+                <li>All non-key columns must depend on the entire primary key (no partial dependencies)</li>
+                <li>Only applies to tables with composite primary keys</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ VIOLATES 2NF (partial dependency)
+CREATE TABLE order_items_bad (
+    order_id INT,
+    product_id INT,
+    product_name VARCHAR(100),  -- Depends only on product_id
+    product_price DECIMAL(10,2), -- Depends only on product_id
+    quantity INT,
+    PRIMARY KEY (order_id, product_id)
+);
+
+-- ✅ FOLLOWS 2NF (no partial dependencies)
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    price DECIMAL(10,2)
+);
+
+CREATE TABLE order_items (
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);</code></pre>
+            </div>
+
+            <h3>Third Normal Form (3NF)</h3>
+            <p><strong>Rules:</strong></p>
+            <ul>
+                <li>Must be in 2NF</li>
+                <li>No transitive dependencies (non-key columns depend only on primary key)</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ VIOLATES 3NF (transitive dependency)
+CREATE TABLE employees_bad (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    department_id INT,
+    department_name VARCHAR(100),    -- Depends on department_id
+    department_location VARCHAR(100) -- Depends on department_id
+);
+
+-- ✅ FOLLOWS 3NF (no transitive dependencies)
+CREATE TABLE departments (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    location VARCHAR(100)
+);
+
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES departments(id)
+);</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 When to Normalize vs Denormalize:</strong> Normalize for data integrity and reducing redundancy. Denormalize selectively for read-heavy applications where performance is critical.
+            </div>
+        </section>
+
+        <!-- Joins -->
+        <section id="joins" class="topic-section">
+            <h2>4. SQL Joins</h2>
+
+            <h3>INNER JOIN</h3>
+            <p>Returns records that have matching values in both tables.</p>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Basic INNER JOIN
+SELECT 
+    orders.id,
+    orders.order_date,
+    users.name AS customer_name,
+    users.email
+FROM orders
+INNER JOIN users ON orders.user_id = users.id;
+
+-- Multiple INNER JOINs
+SELECT 
+    o.id AS order_id,
+    u.name AS customer,
+    p.name AS product,
+    oi.quantity,
+    oi.price
+FROM orders o
+INNER JOIN users u ON o.user_id = u.id
+INNER JOIN order_items oi ON o.id = oi.order_id
+INNER JOIN products p ON oi.product_id = p.id
+WHERE o.order_date >= '2024-01-01';</code></pre>
+            </div>
+
+            <h3>LEFT JOIN (LEFT OUTER JOIN)</h3>
+            <p>Returns all records from the left table and matched records from the right table.</p>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Get all users and their orders (including users with no orders)
+SELECT 
+    u.id,
+    u.name,
+    u.email,
+    COUNT(o.id) AS total_orders,
+    COALESCE(SUM(o.total), 0) AS total_spent
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name, u.email;
+
+-- Find users who never placed an order
+SELECT u.id, u.name, u.email
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE o.id IS NULL;</code></pre>
+            </div>
+
+            <h3>SELF JOIN</h3>
+            <p>A table joined with itself to compare rows within the same table.</p>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Employee hierarchy (employee and their manager)
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    manager_id INT,
+    FOREIGN KEY (manager_id) REFERENCES employees(id)
+);
+
+SELECT 
+    e.name AS employee,
+    m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Join Performance Tips:</strong>
+                <ul>
+                    <li>Always index foreign key columns used in joins</li>
+                    <li>Use INNER JOIN when possible (faster than OUTER joins)</li>
+                    <li>Filter data early with WHERE clauses before joining</li>
+                    <li>Use EXPLAIN to analyze join performance</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Indexes -->
+        <section id="indexes" class="topic-section">
+            <h2>5. Indexes & Types</h2>
+
+            <h3>What is an Index?</h3>
+            <p>An index is a data structure that improves the speed of data retrieval operations on a database table at the cost of additional writes and storage space.</p>
+
+            <h3>Primary Index (Clustered Index)</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Primary key automatically creates a clustered index in InnoDB
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100),
+    name VARCHAR(100)
+);
+
+-- In InnoDB, the entire table is organized around the primary key
+-- All data is stored in the primary key's B-Tree structure</code></pre>
+            </div>
+
+            <h3>Secondary Index (Non-Clustered Index)</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Single column index
+CREATE INDEX idx_email ON users(email);
+
+-- Alternative syntax
+ALTER TABLE users ADD INDEX idx_email (email);
+
+-- Named index with multiple columns
+CREATE INDEX idx_name_email ON users(name, email);</code></pre>
+            </div>
+
+            <h3>Unique Index</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Ensures uniqueness and creates an index
+CREATE UNIQUE INDEX idx_unique_email ON users(email);
+
+-- Multiple columns
+CREATE UNIQUE INDEX idx_unique_sku_warehouse 
+ON products(sku, warehouse_id);</code></pre>
+            </div>
+
+            <h3>Composite Index (Multi-Column Index)</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Index on multiple columns (order matters!)
+CREATE INDEX idx_user_date ON orders(user_id, order_date);
+
+-- This index helps queries like:
+-- ✅ WHERE user_id = 1
+-- ✅ WHERE user_id = 1 AND order_date > '2024-01-01'
+-- ✅ WHERE user_id = 1 ORDER BY order_date
+-- ❌ WHERE order_date > '2024-01-01' (doesn't use the index efficiently)
+
+-- Leftmost prefix rule
+CREATE INDEX idx_name_email_status ON users(name, email, status);
+-- Can use index for:
+-- name
+-- name, email
+-- name, email, status
+-- But NOT for: email, status (without name)</code></pre>
+            </div>
+
+            <h3>Full-Text Index</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Full-text index for text search
+CREATE TABLE articles (
+    id INT PRIMARY KEY,
+    title VARCHAR(200),
+    content TEXT,
+    FULLTEXT INDEX idx_fulltext (title, content)
+);
+
+-- Full-text search queries
+SELECT * FROM articles
+WHERE MATCH(title, content) AGAINST('database optimization');
+
+-- Boolean mode search
+SELECT * FROM articles
+WHERE MATCH(title, content) 
+AGAINST('+mysql -postgresql' IN BOOLEAN MODE);</code></pre>
+            </div>
+
+            <h3>Covering Index</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Covering index includes all columns needed by a query
+-- Allows index-only scan without accessing the table
+CREATE INDEX idx_covering ON orders(user_id, order_date, total, status);
+
+-- This query can be satisfied entirely from the index
+SELECT order_date, total, status
+FROM orders
+WHERE user_id = 123
+ORDER BY order_date DESC;</code></pre>
+            </div>
+
+            <h3>Index Management</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Show indexes on a table
+SHOW INDEX FROM users;
+
+-- Drop an index
+DROP INDEX idx_email ON users;
+ALTER TABLE users DROP INDEX idx_email;
+
+-- Add index to existing table
+ALTER TABLE users ADD INDEX idx_status (status);</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Index Trade-offs:</strong> While indexes speed up reads, they slow down writes (INSERT, UPDATE, DELETE) and consume disk space. Don't over-index!
+            </div>
+        </section>
+
+        <!-- Index Optimization -->
+        <section id="index-optimization" class="topic-section">
+            <h2>6. Index Optimization</h2>
+
+            <h3>When to Create Indexes</h3>
+            <ul>
+                <li><strong>WHERE clauses:</strong> Columns frequently used in WHERE conditions</li>
+                <li><strong>JOIN conditions:</strong> Foreign key columns used in joins</li>
+                <li><strong>ORDER BY:</strong> Columns used for sorting</li>
+                <li><strong>GROUP BY:</strong> Columns used for grouping</li>
+                <li><strong>DISTINCT:</strong> Columns used with DISTINCT</li>
+            </ul>
+
+            <h3>Composite Index Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Order columns by selectivity (most selective first)
+-- Rule: Equality > Range > Sort
+
+-- ✅ GOOD: High selectivity column first
+CREATE INDEX idx_optimized ON orders(
+    user_id,        -- Equality (most selective)
+    status,         -- Equality
+    order_date      -- Range/Sort
+);
+
+-- Query that benefits:
+SELECT * FROM orders
+WHERE user_id = 123
+    AND status = 'completed'
+    AND order_date >= '2024-01-01'
+ORDER BY order_date DESC;</code></pre>
+            </div>
+
+            <h3>Index Selectivity Analysis</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Calculate index selectivity (higher is better)
+-- Perfect selectivity = 1.0 (all unique values)
+-- Poor selectivity = 0.01 (few unique values)
+
+SELECT 
+    COUNT(DISTINCT email) / COUNT(*) AS email_selectivity,
+    COUNT(DISTINCT status) / COUNT(*) AS status_selectivity,
+    COUNT(DISTINCT country) / COUNT(*) AS country_selectivity
+FROM users;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Index Optimization Best Practices:</strong>
+                <ul>
+                    <li><strong>Composite index order:</strong> Equality → Range → Sort</li>
+                    <li><strong>Cardinality:</strong> Index high-cardinality columns</li>
+                    <li><strong>Covering indexes:</strong> Include all query columns when possible</li>
+                    <li><strong>Monitor:</strong> Use EXPLAIN to verify index usage</li>
+                    <li><strong>Maintain:</strong> Run ANALYZE TABLE periodically</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Triggers -->
+        <section id="triggers" class="topic-section">
+            <h2>7. Triggers</h2>
+
+            <p>Triggers are database operations that automatically execute in response to specific events on a table.</p>
+
+            <h3>Trigger Syntax</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">CREATE TRIGGER trigger_name
+{BEFORE | AFTER} {INSERT | UPDATE | DELETE}
+ON table_name
+FOR EACH ROW
+BEGIN
+    -- Trigger logic
+END;</code></pre>
+            </div>
+
+            <h3>BEFORE INSERT Trigger</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Auto-generate UUID before insert
+DELIMITER //
+CREATE TRIGGER before_user_insert
+BEFORE INSERT ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.uuid IS NULL THEN
+        SET NEW.uuid = UUID();
+    END IF;
+    
+    -- Convert email to lowercase
+    SET NEW.email = LOWER(NEW.email);
+    
+    -- Set default values
+    IF NEW.created_at IS NULL THEN
+        SET NEW.created_at = NOW();
+    END IF;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h3>AFTER INSERT Trigger</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Update user statistics after order is placed
+DELIMITER //
+CREATE TRIGGER after_order_insert
+AFTER INSERT ON orders
+FOR EACH ROW
+BEGIN
+    UPDATE user_statistics
+    SET 
+        total_orders = total_orders + 1,
+        total_spent = total_spent + NEW.total,
+        last_order_date = NEW.order_date
+    WHERE user_id = NEW.user_id;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h3>BEFORE UPDATE Trigger</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Track changes and update modified timestamp
+DELIMITER //
+CREATE TRIGGER before_user_update
+BEFORE UPDATE ON users
+FOR EACH ROW
+BEGIN
+    -- Always update the updated_at timestamp
+    SET NEW.updated_at = NOW();
+    
+    -- Prevent email from being changed
+    IF OLD.email != NEW.email THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Email cannot be changed';
+    END IF;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h3>Trigger Management</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Show all triggers
+SHOW TRIGGERS;
+
+-- Show triggers for specific table
+SHOW TRIGGERS WHERE `Table` = 'users';
+
+-- Drop trigger
+DROP TRIGGER IF EXISTS trigger_name;</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Trigger Limitations & Cautions:</strong>
+                <ul>
+                    <li>Triggers can't be directly called - they're automatic</li>
+                    <li>Excessive trigger logic can slow down operations</li>
+                    <li>Triggers don't fire for TRUNCATE TABLE</li>
+                    <li>Be careful with cascading triggers</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Views -->
+        <section id="views" class="topic-section">
+            <h2>8. Views</h2>
+
+            <p>A view is a virtual table based on the result of a SQL query. It contains rows and columns just like a real table but doesn't store data physically.</p>
+
+            <h3>Creating Views</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Simple view
+CREATE VIEW active_users AS
+SELECT id, name, email, created_at
+FROM users
+WHERE status = 'active';
+
+-- Use the view
+SELECT * FROM active_users;
+
+-- View with JOIN
+CREATE VIEW order_summary AS
+SELECT 
+    o.id AS order_id,
+    o.order_date,
+    u.name AS customer_name,
+    u.email,
+    COUNT(oi.id) AS item_count,
+    SUM(oi.quantity * oi.price) AS total
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN order_items oi ON o.id = oi.order_id
+GROUP BY o.id, o.order_date, u.name, u.email;</code></pre>
+            </div>
+
+            <h3>View Management</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Show all views
+SHOW FULL TABLES WHERE Table_type = 'VIEW';
+
+-- Show view definition
+SHOW CREATE VIEW view_name;
+
+-- Replace existing view
+CREATE OR REPLACE VIEW active_users AS
+SELECT id, name, email, status, created_at
+FROM users
+WHERE status = 'active';
+
+-- Drop view
+DROP VIEW IF EXISTS view_name;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 View vs Table:</strong> Views don't store data. They execute the underlying query each time they're accessed. Use views for simplification and security, not performance optimization.
+            </div>
+        </section>
+
+        <!-- Stored Procedures -->
+        <section id="stored-procedures" class="topic-section">
+            <h2>9. Stored Procedures</h2>
+
+            <p>Stored procedures are reusable SQL code blocks stored in the database. They can accept parameters, contain logic, and return results.</p>
+
+            <h3>Basic Stored Procedure</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Simple procedure without parameters
+DELIMITER //
+CREATE PROCEDURE get_all_users()
+BEGIN
+    SELECT id, name, email FROM users;
+END;//
+DELIMITER ;
+
+-- Call procedure
+CALL get_all_users();</code></pre>
+            </div>
+
+            <h3>Procedures with IN Parameters</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Procedure with input parameters
+DELIMITER //
+CREATE PROCEDURE get_user_orders(
+    IN p_user_id INT,
+    IN p_limit INT
+)
+BEGIN
+    SELECT 
+        id,
+        order_date,
+        total,
+        status
+    FROM orders
+    WHERE user_id = p_user_id
+    ORDER BY order_date DESC
+    LIMIT p_limit;
+END;//
+DELIMITER ;
+
+-- Call with parameters
+CALL get_user_orders(123, 10);</code></pre>
+            </div>
+
+            <h3>Procedures with OUT Parameters</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Procedure with output parameters
+DELIMITER //
+CREATE PROCEDURE get_user_stats(
+    IN p_user_id INT,
+    OUT p_order_count INT,
+    OUT p_total_spent DECIMAL(10,2)
+)
+BEGIN
+    SELECT 
+        COUNT(*),
+        COALESCE(SUM(total), 0)
+    INTO p_order_count, p_total_spent
+    FROM orders
+    WHERE user_id = p_user_id;
+END;//
+DELIMITER ;
+
+-- Call and get output
+CALL get_user_stats(123, @count, @total);
+SELECT @count AS order_count, @total AS total_spent;</code></pre>
+            </div>
+
+            <h3>Procedure Management</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Show all procedures
+SHOW PROCEDURE STATUS WHERE Db = 'your_database';
+
+-- Show procedure definition
+SHOW CREATE PROCEDURE procedure_name;
+
+-- Drop procedure
+DROP PROCEDURE IF EXISTS procedure_name;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Stored Procedure Benefits:</strong>
+                <ul>
+                    <li>Reusable business logic</li>
+                    <li>Reduced network traffic</li>
+                    <li>Centralized security control</li>
+                    <li>Performance improvements</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Transactions -->
+        <section id="transactions" class="topic-section">
+            <h2>10. Transactions & ACID</h2>
+
+            <h3>ACID Properties</h3>
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>Atomicity</strong></td>
+                    <td>All operations succeed or all fail (all-or-nothing)</td>
+                    <td>Bank transfer: debit and credit both succeed or both fail</td>
+                </tr>
+                <tr>
+                    <td><strong>Consistency</strong></td>
+                    <td>Database remains in valid state before and after transaction</td>
+                    <td>Account balances can't be negative</td>
+                </tr>
+                <tr>
+                    <td><strong>Isolation</strong></td>
+                    <td>Concurrent transactions don't interfere with each other</td>
+                    <td>Two users booking the same seat see consistent data</td>
+                </tr>
+                <tr>
+                    <td><strong>Durability</strong></td>
+                    <td>Committed changes persist even after system failure</td>
+                    <td>Completed payment survives server crash</td>
+                </tr>
+            </table>
+
+            <h3>Basic Transaction Operations</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Start transaction
+START TRANSACTION;
+-- or
+BEGIN;
+
+-- Perform operations
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+
+-- Commit transaction
+COMMIT;
+
+-- Or rollback on error
+ROLLBACK;</code></pre>
+            </div>
+
+            <h3>Transaction with Error Handling</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">DELIMITER //
+CREATE PROCEDURE transfer_money(
+    IN from_account INT,
+    IN to_account INT,
+    IN amount DECIMAL(10,2)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SELECT 'Transaction failed' AS message;
+    END;
+    
+    START TRANSACTION;
+    
+    -- Deduct from sender
+    UPDATE accounts 
+    SET balance = balance - amount 
+    WHERE id = from_account AND balance >= amount;
+    
+    -- Check if deduction succeeded
+    IF ROW_COUNT() = 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Insufficient funds';
+    END IF;
+    
+    -- Add to receiver
+    UPDATE accounts 
+    SET balance = balance + amount 
+    WHERE id = to_account;
+    
+    COMMIT;
+    SELECT 'Transfer successful' AS message;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h3>Isolation Levels</h3>
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Dirty Read</th>
+                    <th>Non-Repeatable Read</th>
+                    <th>Phantom Read</th>
+                </tr>
+                <tr>
+                    <td><strong>READ UNCOMMITTED</strong></td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td><strong>READ COMMITTED</strong></td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td><strong>REPEATABLE READ</strong> (default)</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Yes (InnoDB prevents)</td>
+                </tr>
+                <tr>
+                    <td><strong>SERIALIZABLE</strong></td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>No</td>
+                </tr>
+            </table>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Set isolation level
+SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+-- Or for specific transaction
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+START TRANSACTION;
+-- ... operations ...
+COMMIT;</code></pre>
+            </div>
+
+            <h3>Locking</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Shared lock (read lock)
+SELECT * FROM products WHERE id = 1 LOCK IN SHARE MODE;
+
+-- Exclusive lock (write lock)
+SELECT * FROM products WHERE id = 1 FOR UPDATE;
+
+-- Transaction with locking
+START TRANSACTION;
+SELECT balance FROM accounts WHERE id = 1 FOR UPDATE;
+-- Other transactions can't modify this row until commit
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+COMMIT;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Keep transactions short and commit as soon as possible. Long-running transactions can cause locking issues and degrade performance.
+            </div>
+        </section>
+
+        <!-- Query Optimization -->
+        <section id="query-optimization" class="topic-section">
+            <h2>11. Query Optimization</h2>
+
+            <h3>Query Optimization Techniques</h3>
+
+            <h4>1. Use Indexes Effectively</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: No index on WHERE clause
+SELECT * FROM users WHERE email = 'john@example.com';
+
+-- ✅ GOOD: Index on email column
+CREATE INDEX idx_email ON users(email);
+SELECT * FROM users WHERE email = 'john@example.com';</code></pre>
+            </div>
+
+            <h4>2. Avoid SELECT *</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Fetches all columns
+SELECT * FROM users WHERE id = 1;
+
+-- ✅ GOOD: Only fetch needed columns
+SELECT id, name, email FROM users WHERE id = 1;</code></pre>
+            </div>
+
+            <h4>3. Use LIMIT for Large Result Sets</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Fetches all rows
+SELECT * FROM orders ORDER BY created_at DESC;
+
+-- ✅ GOOD: Limit results with pagination
+SELECT * FROM orders 
+ORDER BY created_at DESC 
+LIMIT 20 OFFSET 0;</code></pre>
+            </div>
+
+            <h4>4. Optimize JOIN Operations</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Join without indexes
+SELECT u.name, o.total
+FROM users u
+JOIN orders o ON u.id = o.user_id;
+
+-- ✅ GOOD: Index foreign keys
+CREATE INDEX idx_user_id ON orders(user_id);
+SELECT u.name, o.total
+FROM users u
+JOIN orders o ON u.id = o.user_id;</code></pre>
+            </div>
+
+            <h4>5. Avoid Functions on Indexed Columns</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Function prevents index usage
+SELECT * FROM users WHERE YEAR(created_at) = 2024;
+
+-- ✅ GOOD: Use range comparison
+SELECT * FROM users 
+WHERE created_at >= '2024-01-01' 
+    AND created_at < '2025-01-01';</code></pre>
+            </div>
+
+            <h4>6. Use EXISTS Instead of IN for Subqueries</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ SLOWER: IN with subquery
+SELECT * FROM users
+WHERE id IN (SELECT user_id FROM orders WHERE total > 1000);
+
+-- ✅ FASTER: EXISTS
+SELECT * FROM users u
+WHERE EXISTS (
+    SELECT 1 FROM orders o 
+    WHERE o.user_id = u.id AND o.total > 1000
+);</code></pre>
+            </div>
+
+            <h4>7. Avoid OR Conditions When Possible</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: OR can prevent index usage
+SELECT * FROM users WHERE name = 'John' OR email = 'john@example.com';
+
+-- ✅ GOOD: Use UNION if appropriate
+SELECT * FROM users WHERE name = 'John'
+UNION
+SELECT * FROM users WHERE email = 'john@example.com';</code></pre>
+            </div>
+
+            <h4>8. Use Covering Indexes</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Create covering index
+CREATE INDEX idx_covering ON orders(user_id, status, total);
+
+-- Query uses only index (no table lookup needed)
+SELECT status, total 
+FROM orders 
+WHERE user_id = 123;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Query Optimization Checklist:</strong>
+                <ul>
+                    <li>Index columns used in WHERE, JOIN, ORDER BY</li>
+                    <li>Select only needed columns</li>
+                    <li>Use LIMIT for pagination</li>
+                    <li>Avoid functions on indexed columns</li>
+                    <li>Use EXISTS instead of IN for large subqueries</li>
+                    <li>Analyze queries with EXPLAIN</li>
+                    <li>Keep statistics up to date (ANALYZE TABLE)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- EXPLAIN -->
+        <section id="explain" class="topic-section">
+            <h2>12. EXPLAIN & Query Analysis</h2>
+
+            <h3>Using EXPLAIN</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Basic EXPLAIN
+EXPLAIN SELECT * FROM users WHERE email = 'john@example.com';
+
+-- More detailed format
+EXPLAIN FORMAT=JSON SELECT * FROM users WHERE id = 1;
+
+-- Analyze actual execution
+EXPLAIN ANALYZE SELECT * FROM orders WHERE user_id = 123;</code></pre>
+            </div>
+
+            <h3>EXPLAIN Output Columns</h3>
+            <table>
+                <tr>
+                    <th>Column</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>id</strong></td>
+                    <td>SELECT identifier (for subqueries)</td>
+                </tr>
+                <tr>
+                    <td><strong>select_type</strong></td>
+                    <td>Type of SELECT (SIMPLE, PRIMARY, SUBQUERY, etc.)</td>
+                </tr>
+                <tr>
+                    <td><strong>table</strong></td>
+                    <td>Table name</td>
+                </tr>
+                <tr>
+                    <td><strong>type</strong></td>
+                    <td>Join type (system, const, eq_ref, ref, range, index, ALL)</td>
+                </tr>
+                <tr>
+                    <td><strong>possible_keys</strong></td>
+                    <td>Indexes that could be used</td>
+                </tr>
+                <tr>
+                    <td><strong>key</strong></td>
+                    <td>Index actually used</td>
+                </tr>
+                <tr>
+                    <td><strong>key_len</strong></td>
+                    <td>Length of index used</td>
+                </tr>
+                <tr>
+                    <td><strong>rows</strong></td>
+                    <td>Estimated rows examined</td>
+                </tr>
+                <tr>
+                    <td><strong>Extra</strong></td>
+                    <td>Additional information</td>
+                </tr>
+            </table>
+
+            <h3>Join Types (Best to Worst)</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Performance</th>
+                </tr>
+                <tr>
+                    <td><strong>system</strong></td>
+                    <td>Table has only one row</td>
+                    <td>⭐⭐⭐⭐⭐ Best</td>
+                </tr>
+                <tr>
+                    <td><strong>const</strong></td>
+                    <td>Primary key or unique index lookup</td>
+                    <td>⭐⭐⭐⭐⭐ Excellent</td>
+                </tr>
+                <tr>
+                    <td><strong>eq_ref</strong></td>
+                    <td>Primary key or unique index join</td>
+                    <td>⭐⭐⭐⭐ Very Good</td>
+                </tr>
+                <tr>
+                    <td><strong>ref</strong></td>
+                    <td>Non-unique index lookup</td>
+                    <td>⭐⭐⭐ Good</td>
+                </tr>
+                <tr>
+                    <td><strong>range</strong></td>
+                    <td>Index range scan</td>
+                    <td>⭐⭐⭐ Good</td>
+                </tr>
+                <tr>
+                    <td><strong>index</strong></td>
+                    <td>Full index scan</td>
+                    <td>⭐⭐ Fair</td>
+                </tr>
+                <tr>
+                    <td><strong>ALL</strong></td>
+                    <td>Full table scan</td>
+                    <td>⭐ Poor (avoid if possible)</td>
+                </tr>
+            </table>
+
+            <h3>Example Analysis</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Query to analyze
+EXPLAIN SELECT u.name, o.total
+FROM users u
+JOIN orders o ON u.id = o.user_id
+WHERE o.status = 'completed'
+ORDER BY o.created_at DESC
+LIMIT 10;
+
+-- Good EXPLAIN output should show:
+-- type: ref or eq_ref (not ALL)
+-- key: showing index name (not NULL)
+-- rows: small number
+-- Extra: Using index condition (good)</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Warning Signs in EXPLAIN:</strong>
+                <ul>
+                    <li><strong>type: ALL</strong> - Full table scan (add indexes)</li>
+                    <li><strong>key: NULL</strong> - No index used</li>
+                    <li><strong>rows: large number</strong> - Too many rows examined</li>
+                    <li><strong>Extra: Using filesort</strong> - Expensive sort operation</li>
+                    <li><strong>Extra: Using temporary</strong> - Creates temporary table</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Engines -->
+        <section id="engines" class="topic-section">
+            <h2>13. Storage Engines (InnoDB vs MyISAM)</h2>
+
+            <h3>InnoDB vs MyISAM Comparison</h3>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>InnoDB</th>
+                    <th>MyISAM</th>
+                </tr>
+                <tr>
+                    <td><strong>Transactions</strong></td>
+                    <td>✅ Yes (ACID compliant)</td>
+                    <td>❌ No</td>
+                </tr>
+                <tr>
+                    <td><strong>Foreign Keys</strong></td>
+                    <td>✅ Yes</td>
+                    <td>❌ No</td>
+                </tr>
+                <tr>
+                    <td><strong>Row-level Locking</strong></td>
+                    <td>✅ Yes (better concurrency)</td>
+                    <td>❌ No (table-level only)</td>
+                </tr>
+                <tr>
+                    <td><strong>Crash Recovery</strong></td>
+                    <td>✅ Yes (automatic)</td>
+                    <td>⚠️ Manual repair needed</td>
+                </tr>
+                <tr>
+                    <td><strong>Full-text Search</strong></td>
+                    <td>✅ Yes (5.6+)</td>
+                    <td>✅ Yes</td>
+                </tr>
+                <tr>
+                    <td><strong>Clustered Index</strong></td>
+                    <td>✅ Yes (data stored in PK order)</td>
+                    <td>❌ No</td>
+                </tr>
+                <tr>
+                    <td><strong>Memory Usage</strong></td>
+                    <td>Higher (caches data & indexes)</td>
+                    <td>Lower (caches indexes only)</td>
+                </tr>
+                <tr>
+                    <td><strong>Best For</strong></td>
+                    <td>Most applications, OLTP, high concurrency</td>
+                    <td>Read-heavy, no transactions needed</td>
+                </tr>
+            </table>
+
+            <h3>Choosing Storage Engine</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Create table with InnoDB (default in MySQL 5.5+)
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    name VARCHAR(100)
+) ENGINE=InnoDB;
+
+-- Create table with MyISAM
+CREATE TABLE logs (
+    id INT PRIMARY KEY,
+    message TEXT
+) ENGINE=MyISAM;
+
+-- Check table engine
+SHOW TABLE STATUS WHERE Name = 'users';
+
+-- Change engine
+ALTER TABLE users ENGINE=InnoDB;</code></pre>
+            </div>
+
+            <h3>InnoDB Features</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- InnoDB specific features
+
+-- Foreign key constraints
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- Transactions
+START TRANSACTION;
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;
+
+-- Row-level locking
+SELECT * FROM products WHERE id = 1 FOR UPDATE;</code></pre>
+            </div>
+
+            <h3>When to Use Each Engine</h3>
+            <div class="success-box">
+                <strong>✅ Use InnoDB for:</strong>
+                <ul>
+                    <li>Transactional applications (e-commerce, banking)</li>
+                    <li>High concurrency (many simultaneous users)</li>
+                    <li>Data integrity is critical</li>
+                    <li>Foreign key constraints needed</li>
+                    <li>Crash recovery important</li>
+                    <li><strong>Default choice for most applications</strong></li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Use MyISAM for:</strong>
+                <ul>
+                    <li>Read-heavy workloads with rare writes</li>
+                    <li>Logging and archival data</li>
+                    <li>Full-text search (pre MySQL 5.6)</li>
+                    <li>Simple data that doesn't need transactions</li>
+                    <li><strong>Note: InnoDB is recommended for most use cases</strong></li>
+                </ul>
+            </div>
+
+            <h3>Performance Tuning</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- InnoDB buffer pool (most important setting)
+-- Set to 70-80% of available RAM
+SET GLOBAL innodb_buffer_pool_size = 8G;
+
+-- InnoDB log file size
+SET GLOBAL innodb_log_file_size = 512M;
+
+-- Check engine status
+SHOW ENGINE INNODB STATUS;
+
+-- View engine variables
+SHOW VARIABLES LIKE 'innodb%';</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> MySQL 5.5+ uses InnoDB as the default storage engine. MyISAM is considered legacy and should only be used for specific use cases. Always prefer InnoDB unless you have a specific reason to use another engine.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>📚 Comprehensive Database & MySQL Guide</p>
+        <p style="margin-top: 0.5rem;">Master database concepts from fundamentals to advanced optimization</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
