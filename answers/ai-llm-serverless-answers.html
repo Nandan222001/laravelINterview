@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI, LLM & Serverless - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+            color: #667eea;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .topic-section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🤖 AI, LLM & Serverless</h1>
+        <p>Comprehensive answers covering LLM integration, vector databases, RAG systems, AWS Lambda, prompt engineering, and cost optimization</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#llm-fundamentals">1. LLM Fundamentals & Integration</a></li>
+                <li><a href="#prompt-engineering">2. Prompt Engineering</a></li>
+                <li><a href="#embeddings-vectors">3. Embeddings & Vector Databases</a></li>
+                <li><a href="#rag-systems">4. RAG Systems</a></li>
+                <li><a href="#serverless-basics">5. Serverless Computing Basics</a></li>
+                <li><a href="#aws-lambda">6. AWS Lambda Patterns</a></li>
+                <li><a href="#cost-optimization">7. Cost Optimization</a></li>
+                <li><a href="#security-best-practices">8. Security & Best Practices</a></li>
+            </ul>
+        </div>
+
+        <!-- LLM Fundamentals -->
+        <section id="llm-fundamentals" class="topic-section">
+            <h2>1. LLM Fundamentals & Integration</h2>
+            
+            <h3>What are Large Language Models (LLMs)?</h3>
+            <p>Large Language Models are neural networks trained on massive text datasets. They learn patterns in language and can generate text, answer questions, translate, and summarize. Examples include GPT-4, Claude, and Gemini.</p>
+
+            <h3>OpenAI API Integration</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import openai
+import os
+from typing import List, Dict
+
+openai.api_key = os.environ['OPENAI_API_KEY']
+
+class OpenAIClient:
+    def __init__(self, model: str = "gpt-4-turbo-preview"):
+        self.model = model
+    
+    def chat_completion(self, messages: List[Dict], 
+                       temperature: float = 0.7,
+                       max_tokens: int = None) -> Dict:
+        """Basic chat completion"""
+        response = openai.ChatCompletion.create(
+            model=self.model,
+            messages=messages,
+            temperature=temperature,
+            max_tokens=max_tokens
+        )
+        
+        return {
+            'content': response.choices[0].message.content,
+            'usage': {
+                'prompt_tokens': response.usage.prompt_tokens,
+                'completion_tokens': response.usage.completion_tokens,
+                'total_tokens': response.usage.total_tokens
+            }
+        }
+    
+    def stream_completion(self, messages: List[Dict]):
+        """Streaming response for better UX"""
+        response = openai.ChatCompletion.create(
+            model=self.model,
+            messages=messages,
+            stream=True
+        )
+        
+        for chunk in response:
+            if chunk.choices[0].delta.get('content'):
+                yield chunk.choices[0].delta.content
+
+# Usage
+client = OpenAIClient()
+messages = [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "Explain RAG in one paragraph."}
+]
+
+result = client.chat_completion(messages)
+print(result['content'])
+print(f"Tokens used: {result['usage']['total_tokens']}")</code></pre>
+            </div>
+
+            <h3>Anthropic Claude API Integration</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import anthropic
+import os
+
+class ClaudeClient:
+    def __init__(self, model: str = "claude-3-sonnet-20240229"):
+        self.client = anthropic.Anthropic(
+            api_key=os.environ['ANTHROPIC_API_KEY']
+        )
+        self.model = model
+    
+    def create_message(self, messages: List[Dict], 
+                      system: str = None,
+                      max_tokens: int = 1024) -> Dict:
+        """Create message with Claude"""
+        kwargs = {
+            'model': self.model,
+            'max_tokens': max_tokens,
+            'messages': messages
+        }
+        
+        if system:
+            kwargs['system'] = system
+        
+        response = self.client.messages.create(**kwargs)
+        
+        return {
+            'content': response.content[0].text,
+            'usage': {
+                'input_tokens': response.usage.input_tokens,
+                'output_tokens': response.usage.output_tokens
+            }
+        }
+
+# Usage
+client = ClaudeClient()
+result = client.create_message(
+    messages=[{"role": "user", "content": "What is prompt engineering?"}],
+    system="You are a helpful AI assistant."
+)
+print(result['content'])</code></pre>
+            </div>
+
+            <h3>Function Calling (Tool Use)</h3>
+            <div class="code-example">
+                <pre><code class="language-python">def function_calling_example():
+    """Function calling with OpenAI"""
+    client = OpenAIClient()
+    
+    functions = [
+        {
+            "name": "get_weather",
+            "description": "Get current weather for a location",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "City name"
+                    },
+                    "unit": {
+                        "type": "string",
+                        "enum": ["celsius", "fahrenheit"]
+                    }
+                },
+                "required": ["location"]
+            }
+        }
+    ]
+    
+    messages = [
+        {"role": "user", "content": "What's the weather in San Francisco?"}
+    ]
+    
+    response = openai.ChatCompletion.create(
+        model="gpt-4-turbo-preview",
+        messages=messages,
+        functions=functions,
+        function_call="auto"
+    )
+    
+    message = response.choices[0].message
+    
+    if message.get('function_call'):
+        function_name = message.function_call.name
+        arguments = json.loads(message.function_call.arguments)
+        
+        # Execute function
+        if function_name == "get_weather":
+            weather_data = get_weather(**arguments)
+            
+            # Add function result to conversation
+            messages.append({
+                "role": "function",
+                "name": function_name,
+                "content": json.dumps(weather_data)
+            })
+            
+            # Get final response
+            final_response = openai.ChatCompletion.create(
+                model="gpt-4-turbo-preview",
+                messages=messages
+            )
+            
+            return final_response.choices[0].message.content
+
+def get_weather(location: str, unit: str = "celsius") -> dict:
+    """Mock weather function"""
+    return {
+        "location": location,
+        "temperature": 22,
+        "unit": unit,
+        "condition": "sunny"
+    }</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Key Parameters:</strong>
+                <ul>
+                    <li><strong>Temperature (0-1):</strong> 0 = deterministic, 1 = creative</li>
+                    <li><strong>Max Tokens:</strong> Limit response length and control cost</li>
+                    <li><strong>Top P:</strong> Nucleus sampling for diversity control</li>
+                    <li><strong>Frequency/Presence Penalty:</strong> Reduce repetition</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Prompt Engineering -->
+        <section id="prompt-engineering" class="topic-section">
+            <h2>2. Prompt Engineering</h2>
+            
+            <h3>Few-Shot Prompting</h3>
+            <p>Include examples in the prompt to show desired behavior. More effective than zero-shot for complex tasks.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-python">def few_shot_example():
+    """Few-shot prompting for classification"""
+    prompt = """Classify the sentiment of the following customer reviews:
+
+Review: "This product exceeded my expectations!"
+Sentiment: Positive
+
+Review: "Terrible quality, waste of money."
+Sentiment: Negative
+
+Review: "It's okay, nothing special."
+Sentiment: Neutral
+
+Review: "Best purchase I've made this year!"
+Sentiment: """
+
+    response = client.chat_completion([
+        {"role": "user", "content": prompt}
+    ], temperature=0)
+    
+    return response['content']</code></pre>
+            </div>
+
+            <h3>Chain-of-Thought Prompting</h3>
+            <p>Ask the model to "think step by step" to improve accuracy on reasoning tasks.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-python">def chain_of_thought_example():
+    """Chain-of-thought for complex reasoning"""
+    prompt = """Question: A bank offers a loan with 5% annual interest, 
+compounded monthly. If someone borrows $10,000 for 2 years, 
+what will they owe at the end?
+
+Let's solve this step by step:
+1. First, identify the variables
+2. Convert annual rate to monthly rate
+3. Calculate number of periods
+4. Apply compound interest formula
+5. Calculate final amount"""
+
+    response = client.chat_completion([
+        {"role": "system", "content": "You are a helpful math tutor."},
+        {"role": "user", "content": prompt}
+    ], temperature=0)
+    
+    return response['content']</code></pre>
+            </div>
+
+            <h3>Prompt Templates</h3>
+            <div class="code-example">
+                <pre><code class="language-python">class PromptTemplate:
+    """Reusable prompt templates"""
+    
+    @staticmethod
+    def qa_with_context(context: str, question: str) -> str:
+        """Q&A template with context"""
+        return f"""Based on the following context, answer the question.
+If the answer is not in the context, say "I don't know."
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+    
+    @staticmethod
+    def summarization(text: str, max_sentences: int = 3) -> str:
+        """Summarization template"""
+        return f"""Summarize the following text in {max_sentences} sentences:
+
+{text}
+
+Summary:"""
+    
+    @staticmethod
+    def code_review(code: str, language: str) -> str:
+        """Code review template"""
+        return f"""Review the following {language} code and provide:
+1. Potential bugs or issues
+2. Performance improvements
+3. Best practice recommendations
+
+Code:
+```{language}
+{code}
+```
+
+Review:"""
+
+# Usage
+template = PromptTemplate()
+prompt = template.qa_with_context(
+    context="Our bank offers personal loans from $1,000 to $50,000.",
+    question="What is the maximum loan amount?"
+)</code></pre>
+            </div>
+
+            <h3>System Message Best Practices</h3>
+            <div class="code-example">
+                <pre><code class="language-python">SYSTEM_MESSAGES = {
+    'assistant': "You are a helpful assistant.",
+    
+    'expert': """You are an expert financial advisor with 20 years 
+of experience. Provide accurate, detailed advice based on current 
+regulations and best practices.""",
+    
+    'concise': """You are a concise assistant. Provide brief, 
+direct answers without unnecessary elaboration.""",
+    
+    'creative': """You are a creative content writer. Generate 
+engaging, original content that captures attention.""",
+    
+    'fact_checker': """You are a fact-checking assistant. 
+Only provide information you're certain about. If unsure, 
+clearly state "I don't know" rather than guessing."""
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Prompt Injection Prevention:</strong>
+                <ul>
+                    <li>Validate and sanitize user inputs</li>
+                    <li>Use explicit delimiters (e.g., triple quotes)</li>
+                    <li>Implement content filtering</li>
+                    <li>Never execute code from LLM outputs without review</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Embeddings & Vector Databases -->
+        <section id="embeddings-vectors" class="topic-section">
+            <h2>3. Embeddings & Vector Databases</h2>
+            
+            <h3>What are Embeddings?</h3>
+            <p>Embeddings convert text to vector representations. Similar texts have similar embeddings. Used for similarity search, clustering, and recommendations.</p>
+
+            <h3>Generating Embeddings with OpenAI</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import openai
+
+def generate_embeddings(texts: List[str]) -> List[List[float]]:
+    """Generate embeddings for texts"""
+    response = openai.Embedding.create(
+        input=texts,
+        model="text-embedding-3-small"  # or text-embedding-ada-002
+    )
+    
+    return [item['embedding'] for item in response['data']]
+
+# Usage
+texts = [
+    "What are the loan requirements?",
+    "How to apply for a mortgage?",
+    "Personal loan eligibility criteria"
+]
+
+embeddings = generate_embeddings(texts)
+print(f"Embedding dimension: {len(embeddings[0])}")  # 1536 for ada-002</code></pre>
+            </div>
+
+            <h3>Pinecone Vector Database</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import pinecone
+import openai
+
+# Initialize Pinecone
+pinecone.init(
+    api_key=os.environ['PINECONE_API_KEY'],
+    environment=os.environ['PINECONE_ENVIRONMENT']
+)
+
+class PineconeVectorDB:
+    def __init__(self, index_name: str):
+        # Create index if doesn't exist
+        if index_name not in pinecone.list_indexes():
+            pinecone.create_index(
+                name=index_name,
+                dimension=1536,  # ada-002 dimension
+                metric='cosine'
+            )
+        
+        self.index = pinecone.Index(index_name)
+    
+    def upsert_documents(self, documents: List[Dict]):
+        """Insert/update documents with embeddings"""
+        # Generate embeddings
+        texts = [doc['text'] for doc in documents]
+        embeddings = generate_embeddings(texts)
+        
+        # Prepare vectors
+        vectors = []
+        for doc, embedding in zip(documents, embeddings):
+            vectors.append({
+                'id': doc['id'],
+                'values': embedding,
+                'metadata': {
+                    'text': doc['text'],
+                    **doc.get('metadata', {})
+                }
+            })
+        
+        # Upsert to Pinecone
+        self.index.upsert(vectors=vectors)
+    
+    def search(self, query: str, top_k: int = 5, 
+               filter: Dict = None) -> List[Dict]:
+        """Search similar documents"""
+        # Generate query embedding
+        query_embedding = generate_embeddings([query])[0]
+        
+        # Search
+        results = self.index.query(
+            vector=query_embedding,
+            top_k=top_k,
+            filter=filter,
+            include_metadata=True
+        )
+        
+        # Format results
+        matches = []
+        for match in results['matches']:
+            matches.append({
+                'score': match['score'],
+                'text': match['metadata']['text'],
+                'metadata': match['metadata']
+            })
+        
+        return matches
+
+# Usage
+db = PineconeVectorDB('banking-docs')
+
+# Insert documents
+documents = [
+    {
+        'id': 'doc1',
+        'text': 'Personal loan requires 2 years employment.',
+        'metadata': {'category': 'loans'}
+    },
+    {
+        'id': 'doc2',
+        'text': 'Home loan rates start from 8.5% APR.',
+        'metadata': {'category': 'rates'}
+    }
+]
+
+db.upsert_documents(documents)
+
+# Search
+results = db.search("loan eligibility", top_k=3)
+for result in results:
+    print(f"Score: {result['score']:.3f} - {result['text']}")</code></pre>
+            </div>
+
+            <h3>Metadata Filtering</h3>
+            <div class="code-example">
+                <pre><code class="language-python">def search_with_filters():
+    """Search with metadata filters"""
+    
+    # Filter by single field
+    results = db.search(
+        query="loan requirements",
+        top_k=5,
+        filter={'category': {'$eq': 'loans'}}
+    )
+    
+    # Complex filters (AND/OR)
+    results = db.search(
+        query="interest rates",
+        top_k=5,
+        filter={
+            '$and': [
+                {'category': {'$eq': 'rates'}},
+                {'date': {'$gte': '2024-01-01'}}
+            ]
+        }
+    )
+    
+    # Multiple values (OR)
+    results = db.search(
+        query="banking products",
+        top_k=5,
+        filter={
+            'category': {'$in': ['loans', 'savings', 'credit']}
+        }
+    )
+    
+    return results</code></pre>
+            </div>
+
+            <h3>Vector Database Comparison</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Database</th>
+                        <th>Best For</th>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pinecone</td>
+                        <td>Production RAG</td>
+                        <td>Managed, scalable, fast</td>
+                        <td>Cost at scale</td>
+                    </tr>
+                    <tr>
+                        <td>Weaviate</td>
+                        <td>Multi-modal search</td>
+                        <td>Hybrid search, GraphQL</td>
+                        <td>Self-hosted complexity</td>
+                    </tr>
+                    <tr>
+                        <td>pgvector</td>
+                        <td>Existing PostgreSQL</td>
+                        <td>No new infrastructure</td>
+                        <td>Not optimized for scale</td>
+                    </tr>
+                    <tr>
+                        <td>Milvus</td>
+                        <td>Large scale</td>
+                        <td>High performance</td>
+                        <td>Operational complexity</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <strong>✅ Embedding Use Cases:</strong>
+                <ul>
+                    <li><strong>Semantic Search:</strong> Find similar documents by meaning</li>
+                    <li><strong>Recommendations:</strong> Suggest similar items</li>
+                    <li><strong>Clustering:</strong> Group similar content</li>
+                    <li><strong>Anomaly Detection:</strong> Find outliers</li>
+                    <li><strong>Classification:</strong> Few-shot learning</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- RAG Systems -->
+        <section id="rag-systems" class="topic-section">
+            <h2>4. RAG (Retrieval-Augmented Generation) Systems</h2>
+            
+            <h3>What is RAG?</h3>
+            <p>RAG retrieves relevant documents from a knowledge base and provides them as context to an LLM. This reduces hallucinations and grounds responses in factual data.</p>
+
+            <h3>RAG Pipeline</h3>
+            <div class="code-example">
+                <pre><code class="language-python">class RAGPipeline:
+    """Complete RAG implementation"""
+    
+    def __init__(self, index_name: str):
+        self.vector_db = PineconeVectorDB(index_name)
+        self.llm_client = OpenAIClient()
+    
+    def ingest_documents(self, documents: List[Dict]):
+        """Step 1-4: Ingest, chunk, embed, store"""
+        chunks = []
+        
+        for doc in documents:
+            # Split into chunks
+            text_chunks = self.chunk_text(doc['content'])
+            
+            for i, chunk in enumerate(text_chunks):
+                chunks.append({
+                    'id': f"{doc['id']}_chunk_{i}",
+                    'text': chunk,
+                    'metadata': {
+                        'source': doc['source'],
+                        'chunk_index': i,
+                        **doc.get('metadata', {})
+                    }
+                })
+        
+        # Embed and store
+        self.vector_db.upsert_documents(chunks)
+    
+    def chunk_text(self, text: str, chunk_size: int = 1000, 
+                   overlap: int = 200) -> List[str]:
+        """Split text into overlapping chunks"""
+        chunks = []
+        start = 0
+        
+        while start < len(text):
+            end = start + chunk_size
+            chunk = text[start:end]
+            chunks.append(chunk)
+            start = end - overlap
+        
+        return chunks
+    
+    def retrieve(self, query: str, top_k: int = 5) -> List[Dict]:
+        """Step 5: Retrieve relevant documents"""
+        return self.vector_db.search(query, top_k)
+    
+    def generate_answer(self, query: str, top_k: int = 5) -> Dict:
+        """Step 6: Generate answer with retrieved context"""
+        # Retrieve documents
+        documents = self.retrieve(query, top_k)
+        
+        if not documents:
+            return {
+                'answer': "No relevant information found.",
+                'sources': []
+            }
+        
+        # Build context
+        context = "\n\n".join([
+            f"[Source {i+1}]:\n{doc['text']}"
+            for i, doc in enumerate(documents)
+        ])
+        
+        # Create prompt
+        prompt = f"""Answer the question based on the context below.
+If the answer is not in the context, say "I don't know."
+
+Context:
+{context}
+
+Question: {query}
+
+Answer:"""
+        
+        # Generate answer
+        response = self.llm_client.chat_completion([
+            {"role": "system", "content": "You are a helpful assistant that answers based on provided context."},
+            {"role": "user", "content": prompt}
+        ], temperature=0.7)
+        
+        # Extract sources
+        sources = list(set([
+            doc['metadata']['source'] 
+            for doc in documents
+        ]))
+        
+        return {
+            'answer': response['content'],
+            'sources': sources,
+            'retrieved_docs': documents
+        }
+
+# Usage
+rag = RAGPipeline('knowledge-base')
+
+# Ingest documents
+documents = [
+    {
+        'id': 'policy_001',
+        'content': 'Personal loan eligibility requires...',
+        'source': 'loan_policy.pdf',
+        'metadata': {'category': 'policies'}
+    }
+]
+
+rag.ingest_documents(documents)
+
+# Query
+result = rag.generate_answer("What are loan requirements?")
+print(f"Answer: {result['answer']}")
+print(f"Sources: {result['sources']}")</code></pre>
+            </div>
+
+            <h3>Advanced RAG: Reranking</h3>
+            <div class="code-example">
+                <pre><code class="language-python">from sentence_transformers import CrossEncoder
+
+class AdvancedRAG(RAGPipeline):
+    """RAG with two-stage retrieval and reranking"""
+    
+    def __init__(self, index_name: str):
+        super().__init__(index_name)
+        self.reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+    
+    def retrieve_and_rerank(self, query: str, 
+                           initial_k: int = 20,
+                           final_k: int = 5) -> List[Dict]:
+        """Two-stage retrieval with reranking"""
+        # Stage 1: Vector search
+        candidates = self.vector_db.search(query, top_k=initial_k)
+        
+        # Stage 2: Rerank with cross-encoder
+        pairs = [[query, doc['text']] for doc in candidates]
+        rerank_scores = self.reranker.predict(pairs)
+        
+        # Combine scores
+        for i, doc in enumerate(candidates):
+            doc['vector_score'] = doc['score']
+            doc['rerank_score'] = float(rerank_scores[i])
+            doc['combined_score'] = (
+                0.5 * doc['vector_score'] + 
+                0.5 * doc['rerank_score']
+            )
+        
+        # Sort by combined score
+        candidates.sort(key=lambda x: x['combined_score'], reverse=True)
+        
+        return candidates[:final_k]</code></pre>
+            </div>
+
+            <h3>Conversational RAG with Memory</h3>
+            <div class="code-example">
+                <pre><code class="language-python">class ConversationalRAG(RAGPipeline):
+    """RAG with conversation history"""
+    
+    def __init__(self, index_name: str):
+        super().__init__(index_name)
+        self.conversation_history = []
+        self.max_history = 5
+    
+    def chat(self, query: str, top_k: int = 5) -> Dict:
+        """Chat with conversation context"""
+        # Retrieve documents
+        documents = self.retrieve(query, top_k)
+        
+        # Build context
+        context = "\n\n".join([doc['text'] for doc in documents])
+        
+        # Build conversation history
+        history_text = "\n".join([
+            f"Human: {q}\nAssistant: {a}"
+            for q, a in self.conversation_history[-self.max_history:]
+        ])
+        
+        # Create prompt with history
+        prompt = f"""Previous conversation:
+{history_text}
+
+Relevant context:
+{context}
+
+Current question: {query}
+
+Answer based on the context and conversation history:"""
+        
+        # Generate response
+        response = self.llm_client.chat_completion([
+            {"role": "system", "content": "You are a helpful assistant with memory."},
+            {"role": "user", "content": prompt}
+        ])
+        
+        answer = response['content']
+        
+        # Update history
+        self.conversation_history.append((query, answer))
+        
+        return {
+            'answer': answer,
+            'sources': [doc['metadata']['source'] for doc in documents]
+        }
+    
+    def reset(self):
+        """Clear conversation history"""
+        self.conversation_history = []</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 RAG Best Practices:</strong>
+                <ul>
+                    <li>Chunk size: 500-1000 tokens with 100-200 overlap</li>
+                    <li>Retrieve 5-10 documents initially</li>
+                    <li>Use reranking for better relevance</li>
+                    <li>Include metadata for filtering</li>
+                    <li>Monitor and evaluate retrieval quality</li>
+                    <li>Handle "I don't know" cases gracefully</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Serverless Basics -->
+        <section id="serverless-basics" class="topic-section">
+            <h2>5. Serverless Computing Basics</h2>
+            
+            <h3>What is Serverless?</h3>
+            <p>Execute code without managing servers. Cloud provider handles infrastructure, scaling, and maintenance. Pay only for actual execution time.</p>
+
+            <h3>Key Benefits</h3>
+            <ul>
+                <li><strong>No server management:</strong> Focus on code, not infrastructure</li>
+                <li><strong>Auto-scaling:</strong> Handles 0 to millions of requests</li>
+                <li><strong>Pay-per-use:</strong> Only pay for execution time</li>
+                <li><strong>High availability:</strong> Built-in redundancy</li>
+                <li><strong>Faster development:</strong> Less operational overhead</li>
+            </ul>
+
+            <h3>Basic Lambda Function (Python)</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import json
+import boto3
+import os
+
+# Initialize clients outside handler (reused across invocations)
+s3_client = boto3.client('s3')
+dynamodb = boto3.resource('dynamodb')
+
+def lambda_handler(event, context):
+    """
+    AWS Lambda handler function
+    
+    Args:
+        event: Input event data
+        context: Runtime information
+    """
+    
+    try:
+        # Parse input
+        body = json.loads(event.get('body', '{}'))
+        user_id = body.get('user_id')
+        
+        # Business logic
+        result = process_request(user_id)
+        
+        # Return response
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'message': 'Success',
+                'data': result
+            })
+        }
+        
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+
+def process_request(user_id: str) -> dict:
+    """Business logic"""
+    # Process and return data
+    return {'user_id': user_id, 'status': 'processed'}</code></pre>
+            </div>
+
+            <h3>Lambda with API Gateway</h3>
+            <div class="code-example">
+                <pre><code class="language-python">def api_handler(event, context):
+    """Handle API Gateway requests"""
+    
+    # Extract request details
+    http_method = event['httpMethod']
+    path = event['path']
+    query_params = event.get('queryStringParameters', {})
+    headers = event.get('headers', {})
+    body = json.loads(event.get('body', '{}'))
+    
+    # Route based on method and path
+    if http_method == 'GET' and path == '/users':
+        return get_users(query_params)
+    
+    elif http_method == 'POST' and path == '/users':
+        return create_user(body)
+    
+    elif http_method == 'GET' and path.startswith('/users/'):
+        user_id = path.split('/')[-1]
+        return get_user(user_id)
+    
+    else:
+        return {
+            'statusCode': 404,
+            'body': json.dumps({'error': 'Not found'})
+        }
+
+def get_users(params):
+    """GET /users"""
+    # Fetch from database
+    table = dynamodb.Table('users')
+    response = table.scan()
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps(response['Items'])
+    }
+
+def create_user(data):
+    """POST /users"""
+    table = dynamodb.Table('users')
+    
+    table.put_item(Item={
+        'id': data['id'],
+        'name': data['name'],
+        'email': data['email']
+    })
+    
+    return {
+        'statusCode': 201,
+        'body': json.dumps({'message': 'User created'})
+    }</code></pre>
+            </div>
+
+            <h3>Event-Driven Patterns</h3>
+            <div class="code-example">
+                <pre><code class="language-python"># S3 Event Handler
+def s3_event_handler(event, context):
+    """Process S3 object creation events"""
+    
+    for record in event['Records']:
+        bucket = record['s3']['bucket']['name']
+        key = record['s3']['object']['key']
+        
+        print(f"Processing: s3://{bucket}/{key}")
+        
+        # Download and process file
+        obj = s3_client.get_object(Bucket=bucket, Key=key)
+        content = obj['Body'].read()
+        
+        # Process content
+        result = process_file(content)
+        
+        # Store result
+        output_key = f"processed/{key}"
+        s3_client.put_object(
+            Bucket=bucket,
+            Key=output_key,
+            Body=json.dumps(result)
+        )
+
+# SQS Event Handler
+def sqs_event_handler(event, context):
+    """Process SQS messages in batches"""
+    
+    batch_item_failures = []
+    
+    for record in event['Records']:
+        message_id = record['messageId']
+        body = json.loads(record['body'])
+        
+        try:
+            # Process message
+            process_message(body)
+            
+        except Exception as e:
+            print(f"Error processing {message_id}: {e}")
+            # Add to failures for retry
+            batch_item_failures.append({
+                'itemIdentifier': message_id
+            })
+    
+    return {
+        'batchItemFailures': batch_item_failures
+    }</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Lambda Limitations:</strong>
+                <ul>
+                    <li><strong>Timeout:</strong> Maximum 15 minutes execution</li>
+                    <li><strong>Memory:</strong> 128 MB to 10 GB</li>
+                    <li><strong>Cold Starts:</strong> 100ms-15s delay on first invocation</li>
+                    <li><strong>Deployment Size:</strong> 50 MB (zipped), 250 MB (unzipped)</li>
+                    <li><strong>Ephemeral Storage:</strong> 512 MB to 10 GB (/tmp)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- AWS Lambda Patterns -->
+        <section id="aws-lambda" class="topic-section">
+            <h2>6. AWS Lambda Patterns</h2>
+            
+            <h3>Cold Start Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import os
+import time
+from functools import lru_cache
+
+# Initialize expensive resources OUTSIDE handler
+# These are reused across warm invocations
+import boto3
+from sqlalchemy import create_engine
+
+# Connection pool (reused)
+db_engine = create_engine(
+    os.environ['DATABASE_URL'],
+    pool_pre_ping=True,
+    pool_recycle=3600,
+    pool_size=1,  # Single connection for Lambda
+    max_overflow=0
+)
+
+# AWS clients (reused)
+s3_client = boto3.client('s3')
+dynamodb = boto3.resource('dynamodb')
+
+# Cache expensive operations
+@lru_cache(maxsize=128)
+def get_config(key: str):
+    """Cached configuration"""
+    table = dynamodb.Table(os.environ['CONFIG_TABLE'])
+    response = table.get_item(Key={'key': key})
+    return response.get('Item', {}).get('value')
+
+def lambda_handler(event, context):
+    """Optimized handler"""
+    start_time = time.time()
+    
+    # Check if cold start
+    is_cold_start = not hasattr(lambda_handler, 'count')
+    if is_cold_start:
+        lambda_handler.count = 0
+        print("COLD START")
+    
+    lambda_handler.count += 1
+    
+    # Use cached config
+    api_key = get_config('api_key')
+    
+    # Use connection pool
+    with db_engine.connect() as conn:
+        result = conn.execute("SELECT COUNT(*) FROM users")
+        count = result.scalar()
+    
+    execution_time = (time.time() - start_time) * 1000
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps({
+            'cold_start': is_cold_start,
+            'invocation': lambda_handler.count,
+            'execution_ms': execution_time,
+            'user_count': count
+        })
+    }</code></pre>
+            </div>
+
+            <h3>Lambda Layers (Shared Dependencies)</h3>
+            <div class="code-example">
+                <pre><code class="language-python"># layer/python/db_utils.py
+"""Lambda layer for database utilities"""
+
+import os
+from contextlib import contextmanager
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+class DatabaseConnection:
+    """Singleton database connection"""
+    
+    _instance = None
+    _engine = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._engine = create_engine(
+                os.environ['DATABASE_URL'],
+                pool_pre_ping=True,
+                pool_size=1
+            )
+            cls._session_factory = sessionmaker(bind=cls._engine)
+        return cls._instance
+    
+    @contextmanager
+    def get_session(self):
+        """Context manager for sessions"""
+        session = self._session_factory()
+        try:
+            yield session
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()
+
+# Lambda function using the layer
+from db_utils import DatabaseConnection
+
+def lambda_handler(event, context):
+    """Function using shared layer"""
+    db = DatabaseConnection()
+    
+    with db.get_session() as session:
+        # Use session
+        result = session.execute("SELECT * FROM users")
+        users = result.fetchall()
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps({'count': len(users)})
+    }</code></pre>
+            </div>
+
+            <h3>Lambda Authorizer (Custom Authentication)</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import jwt
+import os
+
+def lambda_authorizer(event, context):
+    """Custom authorizer for API Gateway"""
+    
+    token = event['authorizationToken'].replace('Bearer ', '')
+    method_arn = event['methodArn']
+    
+    try:
+        # Verify JWT
+        secret = os.environ['JWT_SECRET']
+        payload = jwt.decode(token, secret, algorithms=['HS256'])
+        
+        user_id = payload['user_id']
+        role = payload.get('role', 'user')
+        
+        # Generate IAM policy
+        policy = {
+            'principalId': user_id,
+            'policyDocument': {
+                'Version': '2012-10-17',
+                'Statement': [{
+                    'Action': 'execute-api:Invoke',
+                    'Effect': 'Allow',
+                    'Resource': method_arn
+                }]
+            },
+            'context': {
+                'user_id': user_id,
+                'role': role
+            }
+        }
+        
+        return policy
+        
+    except jwt.ExpiredSignatureError:
+        raise Exception('Unauthorized: Token expired')
+    except jwt.InvalidTokenError:
+        raise Exception('Unauthorized: Invalid token')</code></pre>
+            </div>
+
+            <h3>Step Functions Workflow</h3>
+            <div class="code-example">
+                <pre><code class="language-python"># Lambda functions for Step Functions workflow
+
+def validate_order(event, context):
+    """Step 1: Validate order"""
+    order = event['order']
+    
+    if order['total'] > 0 and order['items']:
+        return {
+            'statusCode': 200,
+            'valid': True,
+            'order': order
+        }
+    else:
+        raise Exception('Invalid order')
+
+def process_payment(event, context):
+    """Step 2: Process payment"""
+    order = event['order']
+    
+    # Process payment
+    payment_id = charge_customer(order['total'])
+    
+    return {
+        'statusCode': 200,
+        'payment_id': payment_id,
+        'order': order
+    }
+
+def fulfill_order(event, context):
+    """Step 3: Fulfill order"""
+    order = event['order']
+    payment_id = event['payment_id']
+    
+    # Create shipment
+    tracking_number = create_shipment(order)
+    
+    return {
+        'statusCode': 200,
+        'tracking_number': tracking_number,
+        'order': order
+    }
+
+def send_notification(event, context):
+    """Step 4: Send notification"""
+    tracking_number = event['tracking_number']
+    order = event['order']
+    
+    # Send email
+    send_email(
+        to=order['customer_email'],
+        subject='Order Confirmed',
+        body=f'Tracking: {tracking_number}'
+    )
+    
+    return {
+        'statusCode': 200,
+        'message': 'Order completed'
+    }</code></pre>
+            </div>
+
+            <h3>Step Functions State Machine (JSON)</h3>
+            <div class="code-example">
+                <pre><code class="language-json">{
+  "Comment": "Order processing workflow",
+  "StartAt": "ValidateOrder",
+  "States": {
+    "ValidateOrder": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:validate-order",
+      "Next": "ProcessPayment",
+      "Catch": [{
+        "ErrorEquals": ["States.ALL"],
+        "Next": "OrderFailed"
+      }]
+    },
+    "ProcessPayment": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:process-payment",
+      "Next": "FulfillOrder",
+      "Retry": [{
+        "ErrorEquals": ["States.ALL"],
+        "IntervalSeconds": 2,
+        "MaxAttempts": 3,
+        "BackoffRate": 2.0
+      }]
+    },
+    "FulfillOrder": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:fulfill-order",
+      "Next": "SendNotification"
+    },
+    "SendNotification": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:send-notification",
+      "End": true
+    },
+    "OrderFailed": {
+      "Type": "Fail",
+      "Error": "OrderProcessingFailed",
+      "Cause": "Order validation or processing failed"
+    }
+  }
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Lambda Best Practices:</strong>
+                <ul>
+                    <li>Initialize clients outside handler</li>
+                    <li>Use environment variables for configuration</li>
+                    <li>Implement proper error handling</li>
+                    <li>Use Lambda layers for shared code</li>
+                    <li>Monitor with CloudWatch metrics and logs</li>
+                    <li>Set appropriate memory and timeout</li>
+                    <li>Use provisioned concurrency for critical functions</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Cost Optimization -->
+        <section id="cost-optimization" class="topic-section">
+            <h2>7. Cost Optimization</h2>
+            
+            <h3>LLM Cost Tracking</h3>
+            <div class="code-example">
+                <pre><code class="language-python">from dataclasses import dataclass
+from typing import Dict, List
+import time
+
+@dataclass
+class APICall:
+    timestamp: float
+    model: str
+    prompt_tokens: int
+    completion_tokens: int
+    total_tokens: int
+    cost: float
+    user_id: str = None
+
+class LLMCostTracker:
+    """Track and analyze LLM costs"""
+    
+    # Pricing per 1K tokens (2024)
+    PRICING = {
+        'gpt-4-turbo-preview': {'input': 0.01, 'output': 0.03},
+        'gpt-4': {'input': 0.03, 'output': 0.06},
+        'gpt-3.5-turbo': {'input': 0.0005, 'output': 0.0015},
+        'claude-3-opus': {'input': 0.015, 'output': 0.075},
+        'claude-3-sonnet': {'input': 0.003, 'output': 0.015},
+        'claude-3-haiku': {'input': 0.00025, 'output': 0.00125},
+        'text-embedding-3-small': {'input': 0.00002, 'output': 0},
+    }
+    
+    def __init__(self):
+        self.calls: List[APICall] = []
+    
+    def calculate_cost(self, model: str, 
+                      prompt_tokens: int, 
+                      completion_tokens: int) -> float:
+        """Calculate cost for API call"""
+        pricing = self.PRICING.get(model, {'input': 0, 'output': 0})
+        
+        input_cost = (prompt_tokens / 1000) * pricing['input']
+        output_cost = (completion_tokens / 1000) * pricing['output']
+        
+        return input_cost + output_cost
+    
+    def track_call(self, model: str, usage: Dict, 
+                  user_id: str = None):
+        """Track API call"""
+        cost = self.calculate_cost(
+            model,
+            usage['prompt_tokens'],
+            usage.get('completion_tokens', 0)
+        )
+        
+        call = APICall(
+            timestamp=time.time(),
+            model=model,
+            prompt_tokens=usage['prompt_tokens'],
+            completion_tokens=usage.get('completion_tokens', 0),
+            total_tokens=usage['total_tokens'],
+            cost=cost,
+            user_id=user_id
+        )
+        
+        self.calls.append(call)
+    
+    def get_stats(self) -> Dict:
+        """Get usage statistics"""
+        if not self.calls:
+            return {}
+        
+        total_cost = sum(c.cost for c in self.calls)
+        total_tokens = sum(c.total_tokens for c in self.calls)
+        
+        # Cost by model
+        cost_by_model = {}
+        for call in self.calls:
+            model = call.model
+            cost_by_model[model] = cost_by_model.get(model, 0) + call.cost
+        
+        # Cost by user
+        cost_by_user = {}
+        for call in self.calls:
+            if call.user_id:
+                user = call.user_id
+                cost_by_user[user] = cost_by_user.get(user, 0) + call.cost
+        
+        return {
+            'total_calls': len(self.calls),
+            'total_cost': total_cost,
+            'total_tokens': total_tokens,
+            'avg_cost_per_call': total_cost / len(self.calls),
+            'cost_by_model': cost_by_model,
+            'cost_by_user': cost_by_user
+        }
+
+# Usage
+tracker = LLMCostTracker()
+
+# Track a call
+response = client.chat_completion(messages)
+tracker.track_call(
+    model='gpt-4-turbo-preview',
+    usage=response['usage'],
+    user_id='user_123'
+)
+
+# Get statistics
+stats = tracker.get_stats()
+print(f"Total cost: ${stats['total_cost']:.4f}")
+print(f"Total tokens: {stats['total_tokens']}")</code></pre>
+            </div>
+
+            <h3>Caching Strategies</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import hashlib
+import json
+from typing import Dict, Optional
+
+class LLMCache:
+    """Cache LLM responses to reduce costs"""
+    
+    def __init__(self):
+        self.cache = {}  # In production: use Redis
+    
+    def _generate_key(self, messages: List[Dict], 
+                     model: str, **params) -> str:
+        """Generate cache key from request"""
+        cache_input = {
+            'messages': messages,
+            'model': model,
+            **params
+        }
+        
+        # Create hash
+        key_string = json.dumps(cache_input, sort_keys=True)
+        return hashlib.sha256(key_string.encode()).hexdigest()
+    
+    def get(self, messages: List[Dict], model: str, 
+           **params) -> Optional[Dict]:
+        """Get cached response"""
+        key = self._generate_key(messages, model, **params)
+        return self.cache.get(key)
+    
+    def set(self, messages: List[Dict], model: str, 
+           response: Dict, **params):
+        """Cache response"""
+        key = self._generate_key(messages, model, **params)
+        self.cache[key] = response
+
+class CachedLLMClient(OpenAIClient):
+    """LLM client with caching"""
+    
+    def __init__(self, model: str = "gpt-4-turbo-preview"):
+        super().__init__(model)
+        self.cache = LLMCache()
+    
+    def chat_completion(self, messages: List[Dict], 
+                       temperature: float = 0.7,
+                       use_cache: bool = True,
+                       **kwargs) -> Dict:
+        """Chat completion with caching"""
+        
+        # Check cache
+        if use_cache:
+            cached = self.cache.get(
+                messages, self.model, 
+                temperature=temperature, **kwargs
+            )
+            
+            if cached:
+                print("Cache hit!")
+                return cached
+        
+        # Call API
+        response = super().chat_completion(
+            messages, temperature, **kwargs
+        )
+        
+        # Cache response (only if deterministic)
+        if use_cache and temperature == 0:
+            self.cache.set(
+                messages, self.model, response,
+                temperature=temperature, **kwargs
+            )
+        
+        return response</code></pre>
+            </div>
+
+            <h3>Lambda Cost Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-python">"""
+Lambda Cost Optimization Strategies
+"""
+
+# 1. Right-size memory allocation
+# Lambda charges for memory × execution time
+# More memory = faster CPU, potentially lower total cost
+
+def optimize_memory():
+    """
+    Test different memory sizes:
+    - 128 MB: Cheapest per ms, slowest execution
+    - 1024 MB: Balanced
+    - 3008 MB: Fastest, but expensive
+    
+    Formula: Cost = (Memory/1024) × Duration × $0.0000166667
+    
+    Example:
+    128 MB × 1000 ms = $0.0000021
+    1024 MB × 200 ms = $0.0000034
+    
+    Choose based on your workload!
+    """
+    pass
+
+# 2. Minimize cold starts
+def minimize_cold_starts():
+    """
+    - Use provisioned concurrency for critical functions
+    - Keep deployment packages small
+    - Use Lambda layers for dependencies
+    - Choose lightweight runtimes (Node.js > Python > Java)
+    """
+    pass
+
+# 3. Batch processing
+def batch_processor(event, context):
+    """Process multiple items per invocation"""
+    
+    # Instead of 1 item per invocation
+    # Process batch of 100 items
+    batch = event['Records']  # Up to 10,000 from SQS
+    
+    results = []
+    for record in batch:
+        result = process_item(record)
+        results.append(result)
+    
+    return {
+        'processed': len(results),
+        'cost_savings': f"Saved {len(results)-1} invocations"
+    }
+
+# 4. Async processing
+def use_async_patterns():
+    """
+    - Use SQS/SNS for async work
+    - Don't wait for responses in API calls
+    - Offload heavy processing to background jobs
+    """
+    
+    # Bad: Synchronous
+    result = heavy_processing()  # 10 seconds
+    return result
+    
+    # Good: Asynchronous
+    sqs.send_message(Queue='processing-queue', Message=data)
+    return {'status': 'queued'}  # < 100ms</code></pre>
+            </div>
+
+            <h3>Cost Comparison Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Pricing Model</th>
+                        <th>Cost (approx)</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GPT-4 Turbo</td>
+                        <td>Per 1K tokens</td>
+                        <td>$0.01 input, $0.03 output</td>
+                        <td>Complex reasoning</td>
+                    </tr>
+                    <tr>
+                        <td>GPT-3.5 Turbo</td>
+                        <td>Per 1K tokens</td>
+                        <td>$0.0005 input, $0.0015 output</td>
+                        <td>Simple tasks, high volume</td>
+                    </tr>
+                    <tr>
+                        <td>Claude Haiku</td>
+                        <td>Per 1K tokens</td>
+                        <td>$0.00025 input, $0.00125 output</td>
+                        <td>Fast, cheap responses</td>
+                    </tr>
+                    <tr>
+                        <td>Embeddings</td>
+                        <td>Per 1K tokens</td>
+                        <td>$0.00002</td>
+                        <td>Vector search</td>
+                    </tr>
+                    <tr>
+                        <td>Lambda</td>
+                        <td>Per request + duration</td>
+                        <td>$0.20/1M requests + $0.0000166667/GB-second</td>
+                        <td>Event-driven workloads</td>
+                    </tr>
+                    <tr>
+                        <td>Pinecone</td>
+                        <td>Per pod</td>
+                        <td>$70/month (1M vectors)</td>
+                        <td>Production vector search</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <strong>💡 Cost Optimization Tips:</strong>
+                <ul>
+                    <li>Use cheaper models (GPT-3.5) for simple tasks</li>
+                    <li>Implement caching for common queries</li>
+                    <li>Batch API requests when possible</li>
+                    <li>Set max_tokens to limit response length</li>
+                    <li>Monitor usage with dashboards and alerts</li>
+                    <li>Use streaming for better perceived performance</li>
+                    <li>Compress prompts by removing unnecessary context</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Security & Best Practices -->
+        <section id="security-best-practices" class="topic-section">
+            <h2>8. Security & Best Practices</h2>
+            
+            <h3>API Key Management</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import os
+import boto3
+from botocore.exceptions import ClientError
+
+class SecretManager:
+    """Secure secret management with AWS Secrets Manager"""
+    
+    def __init__(self):
+        self.client = boto3.client('secretsmanager')
+        self._cache = {}
+    
+    def get_secret(self, secret_name: str) -> str:
+        """Retrieve secret from AWS Secrets Manager"""
+        
+        # Check cache
+        if secret_name in self._cache:
+            return self._cache[secret_name]
+        
+        try:
+            response = self.client.get_secret_value(
+                SecretId=secret_name
+            )
+            
+            secret = response['SecretString']
+            self._cache[secret_name] = secret
+            
+            return secret
+            
+        except ClientError as e:
+            print(f"Error retrieving secret: {e}")
+            raise
+
+# Usage
+secrets = SecretManager()
+
+# Don't do this
+# openai.api_key = "sk-..." ❌
+
+# Do this
+openai.api_key = secrets.get_secret('openai-api-key')  # ✓</code></pre>
+            </div>
+
+            <h3>Input Validation & Sanitization</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import re
+from typing import Dict
+
+class InputValidator:
+    """Validate and sanitize user inputs"""
+    
+    @staticmethod
+    def sanitize_prompt(user_input: str, 
+                       max_length: int = 1000) -> str:
+        """Sanitize user prompt"""
+        
+        # Trim length
+        user_input = user_input[:max_length]
+        
+        # Remove potential prompt injection
+        dangerous_patterns = [
+            r'ignore previous instructions',
+            r'ignore all previous',
+            r'disregard',
+            r'system:',
+            r'<\|im_start\|>',
+            r'<\|im_end\|>'
+        ]
+        
+        for pattern in dangerous_patterns:
+            user_input = re.sub(
+                pattern, '', 
+                user_input, 
+                flags=re.IGNORECASE
+            )
+        
+        return user_input.strip()
+    
+    @staticmethod
+    def validate_metadata(metadata: Dict) -> Dict:
+        """Validate metadata fields"""
+        allowed_keys = {'category', 'source', 'date', 'author'}
+        
+        # Filter to allowed keys only
+        validated = {
+            k: v for k, v in metadata.items() 
+            if k in allowed_keys
+        }
+        
+        # Validate types
+        if 'date' in validated:
+            # Ensure date format
+            pass
+        
+        return validated
+
+# Usage
+validator = InputValidator()
+
+user_input = request.get('query')
+safe_input = validator.sanitize_prompt(user_input)
+
+# Use safe input in prompt
+prompt = f"Answer this question: {safe_input}"</code></pre>
+            </div>
+
+            <h3>Rate Limiting</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import time
+from collections import defaultdict
+from typing import Optional
+
+class RateLimiter:
+    """Rate limiting for API calls"""
+    
+    def __init__(self, max_requests: int = 100, 
+                window_seconds: int = 60):
+        self.max_requests = max_requests
+        self.window_seconds = window_seconds
+        self.requests = defaultdict(list)
+    
+    def is_allowed(self, user_id: str) -> bool:
+        """Check if request is allowed"""
+        now = time.time()
+        
+        # Clean old requests
+        cutoff = now - self.window_seconds
+        self.requests[user_id] = [
+            timestamp for timestamp in self.requests[user_id]
+            if timestamp > cutoff
+        ]
+        
+        # Check limit
+        if len(self.requests[user_id]) >= self.max_requests:
+            return False
+        
+        # Record request
+        self.requests[user_id].append(now)
+        return True
+    
+    def get_remaining(self, user_id: str) -> int:
+        """Get remaining requests"""
+        now = time.time()
+        cutoff = now - self.window_seconds
+        
+        valid_requests = [
+            t for t in self.requests[user_id]
+            if t > cutoff
+        ]
+        
+        return max(0, self.max_requests - len(valid_requests))
+
+# Usage in Lambda
+rate_limiter = RateLimiter(max_requests=10, window_seconds=60)
+
+def lambda_handler(event, context):
+    user_id = event['user_id']
+    
+    if not rate_limiter.is_allowed(user_id):
+        return {
+            'statusCode': 429,
+            'body': json.dumps({
+                'error': 'Rate limit exceeded',
+                'retry_after': 60
+            })
+        }
+    
+    # Process request
+    return process_request(event)</code></pre>
+            </div>
+
+            <h3>Content Moderation</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import openai
+
+class ContentModerator:
+    """Moderate user inputs and LLM outputs"""
+    
+    @staticmethod
+    def check_input(text: str) -> Dict:
+        """Check input for harmful content"""
+        response = openai.Moderation.create(input=text)
+        result = response['results'][0]
+        
+        return {
+            'flagged': result['flagged'],
+            'categories': result['categories'],
+            'scores': result['category_scores']
+        }
+    
+    @staticmethod
+    def is_safe(text: str, threshold: float = 0.5) -> bool:
+        """Check if text is safe"""
+        result = ContentModerator.check_input(text)
+        
+        if result['flagged']:
+            return False
+        
+        # Check individual category scores
+        for category, score in result['scores'].items():
+            if score > threshold:
+                return False
+        
+        return True
+
+# Usage
+moderator = ContentModerator()
+
+user_input = event['user_input']
+
+if not moderator.is_safe(user_input):
+    return {
+        'statusCode': 400,
+        'body': json.dumps({
+            'error': 'Input contains inappropriate content'
+        })
+    }
+
+# Process safe input
+response = llm_client.chat_completion([
+    {"role": "user", "content": user_input}
+])
+
+# Moderate output too
+if not moderator.is_safe(response['content']):
+    return {
+        'statusCode': 500,
+        'body': json.dumps({
+            'error': 'Unable to generate appropriate response'
+        })
+    }</code></pre>
+            </div>
+
+            <h3>Logging & Monitoring</h3>
+            <div class="code-example">
+                <pre><code class="language-python">import logging
+import json
+from datetime import datetime
+
+# Configure structured logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+class LLMLogger:
+    """Structured logging for LLM operations"""
+    
+    @staticmethod
+    def log_request(user_id: str, prompt: str, 
+                   model: str, metadata: Dict = None):
+        """Log LLM request"""
+        logger.info(json.dumps({
+            'event': 'llm_request',
+            'timestamp': datetime.utcnow().isoformat(),
+            'user_id': user_id,
+            'prompt_length': len(prompt),
+            'model': model,
+            'metadata': metadata or {}
+        }))
+    
+    @staticmethod
+    def log_response(user_id: str, response: Dict, 
+                    latency_ms: float):
+        """Log LLM response"""
+        logger.info(json.dumps({
+            'event': 'llm_response',
+            'timestamp': datetime.utcnow().isoformat(),
+            'user_id': user_id,
+            'tokens': response['usage']['total_tokens'],
+            'cost': calculate_cost(response),
+            'latency_ms': latency_ms
+        }))
+    
+    @staticmethod
+    def log_error(user_id: str, error: Exception, 
+                 context: Dict = None):
+        """Log error"""
+        logger.error(json.dumps({
+            'event': 'llm_error',
+            'timestamp': datetime.utcnow().isoformat(),
+            'user_id': user_id,
+            'error': str(error),
+            'error_type': type(error).__name__,
+            'context': context or {}
+        }))
+
+# Usage
+llm_logger = LLMLogger()
+
+def process_request(user_id: str, prompt: str):
+    start_time = time.time()
+    
+    try:
+        # Log request
+        llm_logger.log_request(user_id, prompt, 'gpt-4')
+        
+        # Make API call
+        response = client.chat_completion([
+            {"role": "user", "content": prompt}
+        ])
+        
+        # Log response
+        latency = (time.time() - start_time) * 1000
+        llm_logger.log_response(user_id, response, latency)
+        
+        return response
+        
+    except Exception as e:
+        # Log error
+        llm_logger.log_error(user_id, e, {'prompt': prompt})
+        raise</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Security Checklist:</strong>
+                <ul>
+                    <li>✓ Never hardcode API keys in code</li>
+                    <li>✓ Use AWS Secrets Manager or Parameter Store</li>
+                    <li>✓ Validate and sanitize all user inputs</li>
+                    <li>✓ Implement rate limiting per user</li>
+                    <li>✓ Use content moderation APIs</li>
+                    <li>✓ Log all requests (without sensitive data)</li>
+                    <li>✓ Implement proper error handling</li>
+                    <li>✓ Use HTTPS for all API calls</li>
+                    <li>✓ Follow principle of least privilege (IAM)</li>
+                    <li>✓ Regularly rotate credentials</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Production-Ready Checklist:</strong>
+                <ul>
+                    <li>Implement comprehensive error handling</li>
+                    <li>Set up monitoring and alerting</li>
+                    <li>Use caching to reduce costs</li>
+                    <li>Implement retry logic with exponential backoff</li>
+                    <li>Track costs per user/endpoint</li>
+                    <li>Set budget alerts</li>
+                    <li>Use streaming for better UX</li>
+                    <li>Implement graceful degradation</li>
+                    <li>Test with production-like data</li>
+                    <li>Have a rollback plan</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Interview Preparation Bank - AI, LLM & Serverless</p>
+        <p>Complete answers with production-ready code examples</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
