@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magento 2 & Drupal CMS - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #f26322 0%, #ee672d 50%, #0e7fc1 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #f26322;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #d65419;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #f26322;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #0e7fc1;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .section-divider {
+            background: linear-gradient(135deg, #f26322 0%, #0e7fc1 100%);
+            height: 4px;
+            margin: 3rem 0 2rem 0;
+            border-radius: 2px;
+        }
+        .platform-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .magento-badge {
+            background: #f26322;
+            color: white;
+        }
+        .drupal-badge {
+            background: #0e7fc1;
+            color: white;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #f26322;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #f26322;
+        }
+        .topic-section h3 {
+            color: #0e7fc1;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f26322;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🛒 Magento 2 & 🔷 Drupal CMS</h1>
+        <p>Comprehensive answers covering enterprise e-commerce and content management platforms</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><strong>Magento 2</strong></li>
+                <li><a href="#magento-architecture">1. Magento 2 Architecture</a></li>
+                <li><a href="#eav-model">2. EAV Model</a></li>
+                <li><a href="#plugins-observers">3. Plugins vs Observers</a></li>
+                <li><a href="#payment-gateway">4. Payment Gateway Integration</a></li>
+                <li><a href="#graphql">5. GraphQL</a></li>
+                <li style="margin-top: 1rem;"><strong>Drupal</strong></li>
+                <li><a href="#drupal-module">6. Module Development</a></li>
+                <li><a href="#drupal-hooks">7. Hooks System</a></li>
+                <li><a href="#form-api">8. Form API</a></li>
+                <li><a href="#views">9. Views</a></li>
+                <li><a href="#theming">10. Theming</a></li>
+                <li><a href="#twig">11. Twig Templates</a></li>
+            </ul>
+        </div>
+
+        <div class="section-divider"></div>
+        <h2 style="text-align: center; color: #f26322; font-size: 2.5rem; margin: 2rem 0;">🛒 MAGENTO 2</h2>
+
+        <section id="magento-architecture" class="topic-section">
+            <span class="platform-badge magento-badge">MAGENTO 2</span>
+            <h2>1. Magento 2 Architecture</h2>
+            
+            <h3>Overview</h3>
+            <p>Magento 2 follows a modular architecture with service contracts, dependency injection, and a layered design pattern.</p>
+            
+            <h3>Architecture Layers</h3>
+            <table>
+                <tr>
+                    <th>Layer</th>
+                    <th>Purpose</th>
+                    <th>Components</th>
+                </tr>
+                <tr>
+                    <td><strong>Presentation Layer</strong></td>
+                    <td>User interface and web APIs</td>
+                    <td>Layouts, blocks, templates, controllers</td>
+                </tr>
+                <tr>
+                    <td><strong>Service Layer</strong></td>
+                    <td>Business logic and service contracts</td>
+                    <td>Service contracts, APIs</td>
+                </tr>
+                <tr>
+                    <td><strong>Domain Layer</strong></td>
+                    <td>Business logic implementation</td>
+                    <td>Models, resource models, collections</td>
+                </tr>
+                <tr>
+                    <td><strong>Persistence Layer</strong></td>
+                    <td>Data access and storage</td>
+                    <td>Database operations, indexers</td>
+                </tr>
+            </table>
+
+            <h3>Module Structure</h3>
+            <div class="code-example">
+                <pre><code>Vendor/Module/
+├── Api/                    # Service contracts
+│   ├── Data/              # Data interfaces
+│   └── RepositoryInterface.php
+├── Block/                 # View blocks
+├── Console/               # CLI commands
+├── Controller/            # Controllers
+│   ├── Adminhtml/        # Admin controllers
+│   └── Index/            # Frontend controllers
+├── Cron/                 # Cron jobs
+├── etc/                  # Configuration
+│   ├── module.xml        # Module declaration
+│   ├── di.xml            # Dependency injection
+│   ├── routes.xml        # URL routes
+│   ├── acl.xml           # Access control
+│   └── config.xml        # Default config
+├── Helper/               # Helper classes
+├── Model/                # Business logic
+│   ├── ResourceModel/    # Database operations
+│   └── Repository.php    # Repository implementation
+├── Observer/             # Event observers
+├── Plugin/               # Plugins (interceptors)
+├── Setup/                # Installation scripts
+├── Ui/                   # UI components
+├── view/                 # Frontend assets
+│   ├── adminhtml/        # Admin templates
+│   └── frontend/         # Frontend templates
+├── composer.json         # Composer configuration
+└── registration.php      # Module registration</code></pre>
+            </div>
+
+            <h3>module.xml</h3>
+            <div class="code-example">
+                <pre><code class="language-xml">&lt;?xml version="1.0"?&gt;
+&lt;config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd"&gt;
+    &lt;module name="Vendor_Module" setup_version="1.0.0"&gt;
+        &lt;sequence&gt;
+            &lt;module name="Magento_Catalog"/&gt;
+            &lt;module name="Magento_Customer"/&gt;
+        &lt;/sequence&gt;
+    &lt;/module&gt;
+&lt;/config&gt;</code></pre>
+            </div>
+
+            <h3>registration.php</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+use Magento\Framework\Component\ComponentRegistrar;
+
+ComponentRegistrar::register(
+    ComponentRegistrar::MODULE,
+    'Vendor_Module',
+    __DIR__
+);</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Key Principle:</strong> Magento 2 uses dependency injection extensively. Never instantiate objects directly using 'new' - always inject dependencies through constructors.
+            </div>
+        </section>
+
+        <section id="eav-model" class="topic-section">
+            <span class="platform-badge magento-badge">MAGENTO 2</span>
+            <h2>2. EAV (Entity-Attribute-Value) Model</h2>
+            
+            <h3>What is EAV?</h3>
+            <p>EAV is a data model that allows dynamic attribute management without modifying database schema. Used extensively for products, categories, and customers.</p>
+            
+            <h3>EAV Database Structure</h3>
+            <table>
+                <tr>
+                    <th>Table Type</th>
+                    <th>Purpose</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>Entity</strong></td>
+                    <td>Main entity data</td>
+                    <td>catalog_product_entity</td>
+                </tr>
+                <tr>
+                    <td><strong>Attribute</strong></td>
+                    <td>Attribute metadata</td>
+                    <td>eav_attribute</td>
+                </tr>
+                <tr>
+                    <td><strong>Value Tables</strong></td>
+                    <td>Attribute values by type</td>
+                    <td>catalog_product_entity_int, _varchar, _text, _decimal, _datetime</td>
+                </tr>
+            </table>
+
+            <h3>Creating Custom EAV Attribute</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Vendor\Module\Setup\Patch\Data;
+
+use Magento\Eav\Setup\EavSetup;
+use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
+
+class AddCustomAttribute implements DataPatchInterface
+{
+    private $moduleDataSetup;
+    private $eavSetupFactory;
+
+    public function __construct(
+        ModuleDataSetupInterface $moduleDataSetup,
+        EavSetupFactory $eavSetupFactory
+    ) {
+        $this->moduleDataSetup = $moduleDataSetup;
+        $this->eavSetupFactory = $eavSetupFactory;
+    }
+
+    public function apply()
+    {
+        $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
+        
+        $eavSetup->addAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'custom_attribute',
+            [
+                'type' => 'varchar',
+                'label' => 'Custom Attribute',
+                'input' => 'text',
+                'required' => false,
+                'sort_order' => 100,
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                'used_in_product_listing' => true,
+                'visible_on_front' => true,
+                'user_defined' => true,
+                'apply_to' => 'simple,configurable',
+                'group' => 'General',
+            ]
+        );
+    }
+
+    public static function getDependencies()
+    {
+        return [];
+    }
+
+    public function getAliases()
+    {
+        return [];
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Performance:</strong> EAV queries can be slow due to multiple table joins. Use flat tables for product/category data in production, and consider using collections with proper attribute filtering.
+            </div>
+        </section>
+
+        <section id="plugins-observers" class="topic-section">
+            <span class="platform-badge magento-badge">MAGENTO 2</span>
+            <h2>3. Plugins vs Observers</h2>
+            
+            <h3>Plugins (Interceptors)</h3>
+            <p>Plugins allow you to modify the behavior of public methods by intercepting function calls.</p>
+            
+            <h4>Plugin Types</h4>
+            <ul>
+                <li><strong>Before:</strong> Runs before the observed method</li>
+                <li><strong>After:</strong> Runs after the observed method, can modify result</li>
+                <li><strong>Around:</strong> Wraps around the observed method, full control</li>
+            </ul>
+
+            <h4>Plugin Implementation</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Vendor\Module\Plugin;
+
+use Magento\Catalog\Model\Product;
+
+class ProductPlugin
+{
+    public function beforeSetName(Product $subject, $name)
+    {
+        $name = strtoupper($name);
+        return [$name];
+    }
+
+    public function afterGetName(Product $subject, $result)
+    {
+        $result .= ' - Modified';
+        return $result;
+    }
+
+    public function aroundSave(Product $subject, callable $proceed)
+    {
+        $this->doSomethingBefore();
+        $result = $proceed();
+        $this->doSomethingAfter();
+        return $result;
+    }
+
+    private function doSomethingBefore() {}
+    private function doSomethingAfter() {}
+}</code></pre>
+            </div>
+
+            <h3>Observers (Events)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Vendor\Module\Observer;
+
+use Magento\Framework\Event\Observer;
+use Magento\Framework\Event\ObserverInterface;
+
+class ProductSaveAfter implements ObserverInterface
+{
+    public function execute(Observer $observer)
+    {
+        $product = $observer->getEvent()->getProduct();
+        // Custom logic here
+    }
+}</code></pre>
+            </div>
+
+            <h3>Comparison</h3>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Plugins</th>
+                    <th>Observers</th>
+                </tr>
+                <tr>
+                    <td><strong>Use Case</strong></td>
+                    <td>Modify method behavior</td>
+                    <td>React to events</td>
+                </tr>
+                <tr>
+                    <td><strong>Can modify result</strong></td>
+                    <td>Yes (after/around)</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Works on</strong></td>
+                    <td>Public methods only</td>
+                    <td>Dispatched events</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="payment-gateway" class="topic-section">
+            <span class="platform-badge magento-badge">MAGENTO 2</span>
+            <h2>4. Payment Gateway Integration</h2>
+            
+            <h3>Payment Method Model</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Vendor\Module\Model;
+
+use Magento\Payment\Model\Method\AbstractMethod;
+
+class Payment extends AbstractMethod
+{
+    const CODE = 'custompayment';
+    
+    protected $_code = self::CODE;
+    protected $_canAuthorize = true;
+    protected $_canCapture = true;
+    protected $_canRefund = true;
+
+    public function authorize(InfoInterface $payment, $amount)
+    {
+        $transactionId = $this->processAuthorization($payment, $amount);
+        $payment->setTransactionId($transactionId);
+        $payment->setIsTransactionClosed(false);
+        return $this;
+    }
+
+    public function capture(InfoInterface $payment, $amount)
+    {
+        $transactionId = $this->processCapture($payment, $amount);
+        $payment->setTransactionId($transactionId);
+        $payment->setIsTransactionClosed(true);
+        return $this;
+    }
+
+    public function refund(InfoInterface $payment, $amount)
+    {
+        $transactionId = $this->processRefund($payment, $amount);
+        $payment->setTransactionId($transactionId . '-refund');
+        return $this;
+    }
+
+    private function processAuthorization($payment, $amount)
+    {
+        return 'AUTH-' . time();
+    }
+
+    private function processCapture($payment, $amount)
+    {
+        return 'CAPTURE-' . time();
+    }
+
+    private function processRefund($payment, $amount)
+    {
+        return 'REFUND-' . time();
+    }
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Security:</strong> Never store sensitive payment data (card numbers, CVV) in Magento. Use tokenization and comply with PCI-DSS standards.
+            </div>
+        </section>
+
+        <section id="graphql" class="topic-section">
+            <span class="platform-badge magento-badge">MAGENTO 2</span>
+            <h2>5. GraphQL</h2>
+            
+            <h3>GraphQL Schema Definition</h3>
+            <div class="code-example">
+                <pre><code class="language-graphql">type Query {
+    customProducts(
+        filter: ProductFilterInput
+        pageSize: Int = 20
+        currentPage: Int = 1
+    ): CustomProductsOutput @resolver(class: "Vendor\\Module\\Model\\Resolver\\Products")
+}
+
+type CustomProduct {
+    id: Int
+    name: String
+    sku: String
+    price: Float
+    description: String
+}</code></pre>
+            </div>
+
+            <h3>Query Resolver</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Vendor\Module\Model\Resolver;
+
+use Magento\Framework\GraphQl\Query\ResolverInterface;
+
+class Products implements ResolverInterface
+{
+    private $productRepository;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepository
+    ) {
+        $this->productRepository = $productRepository;
+    }
+
+    public function resolve($field, $context, $info, $value = null, $args = null)
+    {
+        $searchResult = $this->productRepository->getList($searchCriteria);
+        
+        $items = [];
+        foreach ($searchResult->getItems() as $product) {
+            $items[] = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'sku' => $product->getSku(),
+                'price' => $product->getPrice(),
+            ];
+        }
+        
+        return ['items' => $items];
+    }
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Performance:</strong> GraphQL allows clients to request only the data they need, reducing payload size and improving performance.
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+        <h2 style="text-align: center; color: #0e7fc1; font-size: 2.5rem; margin: 2rem 0;">🔷 DRUPAL</h2>
+
+        <section id="drupal-module" class="topic-section">
+            <span class="platform-badge drupal-badge">DRUPAL</span>
+            <h2>6. Drupal Module Development</h2>
+            
+            <h3>Module Structure</h3>
+            <div class="code-example">
+                <pre><code>custom_module/
+├── custom_module.info.yml
+├── custom_module.module
+├── custom_module.routing.yml
+├── custom_module.permissions.yml
+├── custom_module.services.yml
+├── src/
+│   ├── Controller/
+│   ├── Form/
+│   ├── Plugin/Block/
+│   └── Service/
+└── templates/</code></pre>
+            </div>
+
+            <h3>Module Info File</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml">name: Custom Module
+type: module
+description: 'A custom Drupal module'
+core_version_requirement: ^9 || ^10
+package: Custom
+
+dependencies:
+  - drupal:node
+  - drupal:user</code></pre>
+            </div>
+
+            <h3>Controller</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Drupal\custom_module\Controller;
+
+use Drupal\Core\Controller\ControllerBase;
+
+class HelloController extends ControllerBase {
+
+    public function content() {
+        return [
+            '#markup' => $this->t('Hello from Custom Module!'),
+        ];
+    }
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Use dependency injection for services instead of using \Drupal::service(). This makes code more testable and maintainable.
+            </div>
+        </section>
+
+        <section id="drupal-hooks" class="topic-section">
+            <span class="platform-badge drupal-badge">DRUPAL</span>
+            <h2>7. Drupal Hooks System</h2>
+            
+            <h3>Common Hooks</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function custom_module_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    if ($form_id == 'node_article_form') {
+        $form['title']['widget'][0]['value']['#description'] = t('Custom description');
+    }
+}
+
+function custom_module_entity_presave(EntityInterface $entity) {
+    if ($entity->getEntityTypeId() == 'node') {
+        $entity->set('field_custom', 'Custom value');
+    }
+}
+
+function custom_module_entity_insert(EntityInterface $entity) {
+    if ($entity instanceof NodeInterface) {
+        \Drupal::logger('custom_module')->notice('Node created: @title', [
+            '@title' => $entity->getTitle()
+        ]);
+    }
+}
+
+function custom_module_preprocess_node(&$variables) {
+    $node = $variables['node'];
+    $variables['custom_variable'] = 'Custom value';
+}
+
+function custom_module_cron() {
+    $last_run = \Drupal::state()->get('custom_module.last_cron', 0);
+    $now = \Drupal::time()->getRequestTime();
+    
+    if ($now - $last_run > 3600) {
+        \Drupal::state()->set('custom_module.last_cron', $now);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Hook Types</h3>
+            <table>
+                <tr>
+                    <th>Hook</th>
+                    <th>When It Runs</th>
+                    <th>Common Use</th>
+                </tr>
+                <tr>
+                    <td>hook_form_alter()</td>
+                    <td>Before form renders</td>
+                    <td>Modify form structure</td>
+                </tr>
+                <tr>
+                    <td>hook_entity_presave()</td>
+                    <td>Before entity saves</td>
+                    <td>Modify entity data</td>
+                </tr>
+                <tr>
+                    <td>hook_entity_insert()</td>
+                    <td>After entity created</td>
+                    <td>React to new entities</td>
+                </tr>
+                <tr>
+                    <td>hook_preprocess_HOOK()</td>
+                    <td>Before template renders</td>
+                    <td>Add template variables</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="form-api" class="topic-section">
+            <span class="platform-badge drupal-badge">DRUPAL</span>
+            <h2>8. Form API</h2>
+            
+            <h3>Creating a Form</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Drupal\custom_module\Form;
+
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+
+class CustomForm extends FormBase {
+
+    public function getFormId() {
+        return 'custom_module_custom_form';
+    }
+
+    public function buildForm(array $form, FormStateInterface $form_state) {
+        $form['name'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Name'),
+            '#required' => TRUE,
+            '#maxlength' => 255,
+        ];
+
+        $form['email'] = [
+            '#type' => 'email',
+            '#title' => $this->t('Email'),
+            '#required' => TRUE,
+        ];
+
+        $form['message'] = [
+            '#type' => 'textarea',
+            '#title' => $this->t('Message'),
+            '#required' => TRUE,
+            '#rows' => 5,
+        ];
+
+        $form['submit'] = [
+            '#type' => 'submit',
+            '#value' => $this->t('Submit'),
+        ];
+
+        return $form;
+    }
+
+    public function validateForm(array &$form, FormStateInterface $form_state) {
+        $name = $form_state->getValue('name');
+        if (strlen($name) < 3) {
+            $form_state->setErrorByName('name', 
+                $this->t('Name must be at least 3 characters.')
+            );
+        }
+    }
+
+    public function submitForm(array &$form, FormStateInterface $form_state) {
+        $values = $form_state->getValues();
+        
+        $this->messenger()->addMessage(
+            $this->t('Thank you @name!', ['@name' => $values['name']])
+        );
+    }
+}</code></pre>
+            </div>
+
+            <h3>Configuration Form</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Drupal\custom_module\Form;
+
+use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormStateInterface;
+
+class SettingsForm extends ConfigFormBase {
+
+    public function getFormId() {
+        return 'custom_module_settings_form';
+    }
+
+    protected function getEditableConfigNames() {
+        return ['custom_module.settings'];
+    }
+
+    public function buildForm(array $form, FormStateInterface $form_state) {
+        $config = $this->config('custom_module.settings');
+
+        $form['api_key'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('API Key'),
+            '#default_value' => $config->get('api_key'),
+        ];
+
+        return parent::buildForm($form, $form_state);
+    }
+
+    public function submitForm(array &$form, FormStateInterface $form_state) {
+        $this->config('custom_module.settings')
+            ->set('api_key', $form_state->getValue('api_key'))
+            ->save();
+
+        parent::submitForm($form, $form_state);
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="views" class="topic-section">
+            <span class="platform-badge drupal-badge">DRUPAL</span>
+            <h2>9. Views</h2>
+            
+            <h3>What are Views?</h3>
+            <p>Views is Drupal's powerful query builder that allows you to create, manage, and display lists of content without writing code.</p>
+            
+            <h3>Creating Views Programmatically</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml"># config/install/views.view.custom_articles.yml
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: custom_articles
+label: 'Custom Articles'
+module: views
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      fields:
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          label: Title
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          value: '1'
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            article: article
+      sorts:
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          order: DESC</code></pre>
+            </div>
+
+            <h3>Custom Views Plugin</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Drupal\custom_module\Plugin\views\field;
+
+use Drupal\views\Plugin\views\field\FieldPluginBase;
+use Drupal\views\ResultRow;
+
+/**
+ * @ViewsField("custom_field")
+ */
+class CustomField extends FieldPluginBase {
+
+    public function query() {
+        // No query needed
+    }
+
+    public function render(ResultRow $values) {
+        $node = $values->_entity;
+        return [
+            '#markup' => $this->t('Custom: @title', [
+                '@title' => $node->getTitle()
+            ]),
+        ];
+    }
+}</code></pre>
+            </div>
+
+            <h3>Views Hooks</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function custom_module_views_data_alter(array &$data) {
+    $data['node']['custom_field'] = [
+        'title' => t('Custom Field'),
+        'field' => [
+            'title' => t('Custom Field'),
+            'help' => t('Custom field description'),
+            'id' => 'custom_field',
+        ],
+    ];
+}
+
+function custom_module_views_pre_render(&$view) {
+    if ($view->id() == 'custom_articles') {
+        // Modify view before rendering
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="theming" class="topic-section">
+            <span class="platform-badge drupal-badge">DRUPAL</span>
+            <h2>10. Drupal Theming</h2>
+            
+            <h3>Theme Structure</h3>
+            <div class="code-example">
+                <pre><code>mytheme/
+├── mytheme.info.yml
+├── mytheme.libraries.yml
+├── mytheme.theme
+├── css/
+├── js/
+├── images/
+└── templates/
+    ├── page.html.twig
+    ├── node.html.twig
+    └── block.html.twig</code></pre>
+            </div>
+
+            <h3>Theme Info File</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml">name: My Theme
+type: theme
+base theme: classy
+core_version_requirement: ^9 || ^10
+
+libraries:
+  - mytheme/global-styling
+
+regions:
+  header: Header
+  content: Content
+  sidebar: Sidebar
+  footer: Footer</code></pre>
+            </div>
+
+            <h3>Libraries Definition</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml">global-styling:
+  version: 1.0
+  css:
+    theme:
+      css/style.css: {}
+  js:
+    js/script.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal</code></pre>
+            </div>
+
+            <h3>Theme Hooks</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function mytheme_preprocess_page(&$variables) {
+    $variables['custom_variable'] = 'Custom value';
+}
+
+function mytheme_preprocess_node(&$variables) {
+    $node = $variables['node'];
+    $variables['reading_time'] = _mytheme_calculate_reading_time($node);
+}
+
+function mytheme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+    if ($node = \Drupal::routeMatch()->getParameter('node')) {
+        $suggestions[] = 'page__node__' . $node->bundle();
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="twig" class="topic-section">
+            <span class="platform-badge drupal-badge">DRUPAL</span>
+            <h2>11. Twig Templates</h2>
+            
+            <h3>Basic Twig Syntax</h3>
+            <div class="code-example">
+                <pre><code class="language-twig">{# node.html.twig #}
+&lt;article class="node node--{{ node.bundle }}"&gt;
+    &lt;h2&gt;{{ node.title.value }}&lt;/h2&gt;
+    
+    &lt;div class="node__content"&gt;
+        {{ content.body }}
+    &lt;/div&gt;
+    
+    {% if node.field_image %}
+        &lt;div class="node__image"&gt;
+            {{ content.field_image }}
+        &lt;/div&gt;
+    {% endif %}
+    
+    &lt;div class="node__meta"&gt;
+        &lt;span&gt;{{ 'Posted on'|t }} {{ node.created.value|date('F j, Y') }}&lt;/span&gt;
+        &lt;span&gt;{{ 'by'|t }} {{ node.owner.name.value }}&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            </div>
+
+            <h3>Twig Filters</h3>
+            <div class="code-example">
+                <pre><code class="language-twig">{# Common Twig filters #}
+{{ content|render }}
+{{ title|upper }}
+{{ content|striptags }}
+{{ created|date('Y-m-d') }}
+{{ content|raw }}
+{{ items|length }}
+{{ text|truncate(100) }}</code></pre>
+            </div>
+
+            <h3>Twig Functions</h3>
+            <div class="code-example">
+                <pre><code class="language-twig">{# Common Twig functions #}
+{{ url('entity.node.canonical', {'node': node.id}) }}
+{{ path('custom_module.hello') }}
+{{ attach_library('mytheme/global-styling') }}
+{{ drupal_entity('block', 'block_id') }}
+{{ drupal_field('field_name', 'node', node.id) }}</code></pre>
+            </div>
+
+            <h3>Control Structures</h3>
+            <div class="code-example">
+                <pre><code class="language-twig">{# If/else #}
+{% if node.field_image %}
+    {{ content.field_image }}
+{% else %}
+    &lt;img src="/default-image.jpg" alt="Default"&gt;
+{% endif %}
+
+{# For loop #}
+{% for item in items %}
+    &lt;div class="item"&gt;{{ item.title }}&lt;/div&gt;
+{% endfor %}
+
+{# Set variables #}
+{% set classes = [
+    'node',
+    'node--' ~ node.bundle,
+    node.isPromoted ? 'node--promoted',
+] %}
+
+&lt;article{{ attributes.addClass(classes) }}&gt;
+    {{ content }}
+&lt;/article&gt;</code></pre>
+            </div>
+
+            <h3>Custom Twig Extension</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace Drupal\custom_module\TwigExtension;
+
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+
+class CustomTwigExtension extends AbstractExtension {
+
+    public function getFilters() {
+        return [
+            new TwigFilter('custom_filter', [$this, 'customFilter']),
+        ];
+    }
+
+    public function getFunctions() {
+        return [
+            new TwigFunction('custom_function', [$this, 'customFunction']),
+        ];
+    }
+
+    public function customFilter($string) {
+        return strtoupper($string);
+    }
+
+    public function customFunction($arg) {
+        return 'Custom: ' . $arg;
+    }
+}</code></pre>
+            </div>
+
+            <h3>Register Twig Extension</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml"># custom_module.services.yml
+services:
+  custom_module.twig_extension:
+    class: Drupal\custom_module\TwigExtension\CustomTwigExtension
+    tags:
+      - { name: twig.extension }</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Security:</strong> Twig automatically escapes output to prevent XSS attacks. Use |raw filter only when absolutely necessary and the content is trusted.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>📚 Magento 2 & Drupal CMS Comprehensive Guide</p>
+        <p style="margin-top: 0.5rem;">All code examples follow industry best practices and coding standards</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
