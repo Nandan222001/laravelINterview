@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API & Security - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #764ba2;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .topic-section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .danger-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔐 API & Security</h1>
+        <p>Comprehensive answers for REST APIs, Authentication, Security, and Payment Integration</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#rest-api">1. REST API Principles</a></li>
+                <li><a href="#http-methods">2. HTTP Methods</a></li>
+                <li><a href="#auth-vs-authz">3. Authentication vs Authorization</a></li>
+                <li><a href="#jwt">4. JWT Tokens</a></li>
+                <li><a href="#oauth">5. OAuth</a></li>
+                <li><a href="#api-security">6. API Security</a></li>
+                <li><a href="#cors">7. CORS</a></li>
+                <li><a href="#csrf">8. CSRF Tokens</a></li>
+                <li><a href="#rate-limiting">9. Rate Limiting</a></li>
+                <li><a href="#webhooks">10. Webhooks</a></li>
+                <li><a href="#payment-gateway">11. Payment Gateway Integration</a></li>
+                <li><a href="#sql-injection">12. SQL Injection Prevention</a></li>
+                <li><a href="#xss">13. XSS Protection</a></li>
+                <li><a href="#encryption">14. Encryption</a></li>
+            </ul>
+        </div>
+
+        <!-- REST API Principles -->
+        <section id="rest-api" class="topic-section">
+            <h2>1. REST API Principles</h2>
+            
+            <h3>What is REST?</h3>
+            <p>REST (Representational State Transfer) is an architectural style for designing networked applications. It relies on stateless, client-server communication using HTTP protocols.</p>
+            
+            <h3>Core Principles of REST</h3>
+            <ul>
+                <li><strong>Client-Server Architecture:</strong> Separation of concerns between client and server</li>
+                <li><strong>Stateless:</strong> Each request contains all information needed to process it</li>
+                <li><strong>Cacheable:</strong> Responses must define themselves as cacheable or not</li>
+                <li><strong>Uniform Interface:</strong> Standardized way of communicating between components</li>
+                <li><strong>Layered System:</strong> Client cannot tell if connected directly to server or intermediary</li>
+                <li><strong>Code on Demand (Optional):</strong> Server can extend client functionality</li>
+            </ul>
+
+            <h3>RESTful API Design Best Practices</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Resource-based URLs (use nouns, not verbs)
+// Good:
+GET    /api/users          // Get all users
+GET    /api/users/123      // Get specific user
+POST   /api/users          // Create new user
+PUT    /api/users/123      // Update user
+DELETE /api/users/123      // Delete user
+
+// Bad:
+GET  /api/getUsers
+POST /api/createUser
+POST /api/deleteUser
+
+// Use plural nouns for collections
+GET /api/users
+GET /api/products
+GET /api/orders
+
+// Nested resources for relationships
+GET /api/users/123/orders          // Get user's orders
+GET /api/users/123/orders/456      // Get specific order
+POST /api/users/123/orders         // Create order for user
+
+// Filtering, sorting, pagination
+GET /api/users?status=active&role=admin
+GET /api/products?sort=price&order=desc
+GET /api/users?page=2&limit=20
+
+// Versioning
+GET /api/v1/users
+GET /api/v2/users
+
+// Laravel API Routes Example
+Route::prefix('api/v1')->group(function () {
+    // User resources
+    Route::apiResource('users', UserController::class);
+    
+    // Nested resources
+    Route::get('users/{user}/posts', [UserController::class, 'posts']);
+    
+    // Custom actions (use sparingly)
+    Route::post('users/{user}/activate', [UserController::class, 'activate']);
+    Route::post('users/{user}/deactivate', [UserController::class, 'deactivate']);
+});
+?&gt;</code></pre>
+            </div>
+
+            <h3>HTTP Status Codes</h3>
+            <table>
+                <tr>
+                    <th>Code</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td>200</td>
+                    <td>Success</td>
+                    <td>OK</td>
+                    <td>Successful GET, PUT, PATCH</td>
+                </tr>
+                <tr>
+                    <td>201</td>
+                    <td>Success</td>
+                    <td>Created</td>
+                    <td>Successful POST creating resource</td>
+                </tr>
+                <tr>
+                    <td>204</td>
+                    <td>Success</td>
+                    <td>No Content</td>
+                    <td>Successful DELETE or update with no response body</td>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>Client Error</td>
+                    <td>Bad Request</td>
+                    <td>Invalid request data</td>
+                </tr>
+                <tr>
+                    <td>401</td>
+                    <td>Client Error</td>
+                    <td>Unauthorized</td>
+                    <td>Missing or invalid authentication</td>
+                </tr>
+                <tr>
+                    <td>403</td>
+                    <td>Client Error</td>
+                    <td>Forbidden</td>
+                    <td>Authenticated but not authorized</td>
+                </tr>
+                <tr>
+                    <td>404</td>
+                    <td>Client Error</td>
+                    <td>Not Found</td>
+                    <td>Resource doesn't exist</td>
+                </tr>
+                <tr>
+                    <td>422</td>
+                    <td>Client Error</td>
+                    <td>Unprocessable Entity</td>
+                    <td>Validation errors</td>
+                </tr>
+                <tr>
+                    <td>429</td>
+                    <td>Client Error</td>
+                    <td>Too Many Requests</td>
+                    <td>Rate limit exceeded</td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>Server Error</td>
+                    <td>Internal Server Error</td>
+                    <td>Unexpected server error</td>
+                </tr>
+            </table>
+
+            <h3>Laravel API Response Example</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+
+class UserController extends Controller
+{
+    public function index(): JsonResponse
+    {
+        $users = User::paginate(20);
+        
+        return response()->json([
+            'success' => true,
+            'data' => $users->items(),
+            'meta' => [
+                'current_page' => $users->currentPage(),
+                'total' => $users->total(),
+                'per_page' => $users->perPage(),
+            ]
+        ]);
+    }
+    
+    public function store(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+        ]);
+        
+        $user = User::create($validated);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'User created successfully',
+            'data' => $user
+        ], 201);
+    }
+    
+    public function show(User $user): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ]);
+    }
+    
+    public function update(Request $request, User $user): JsonResponse
+    {
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|email|unique:users,email,' . $user->id,
+        ]);
+        
+        $user->update($validated);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully',
+            'data' => $user
+        ]);
+    }
+    
+    public function destroy(User $user): JsonResponse
+    {
+        $user->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'User deleted successfully'
+        ], 204);
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Use API Resources (Transformers) to format and standardize your API responses consistently across your application.
+            </div>
+        </section>
+
+        <!-- HTTP Methods -->
+        <section id="http-methods" class="topic-section">
+            <h2>2. HTTP Methods</h2>
+
+            <h3>Overview of HTTP Methods</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Purpose</th>
+                    <th>Idempotent</th>
+                    <th>Safe</th>
+                    <th>Cacheable</th>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>Retrieve resource</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                </tr>
+                <tr>
+                    <td>POST</td>
+                    <td>Create resource</td>
+                    <td>✗</td>
+                    <td>✗</td>
+                    <td>Only if Cache-Control set</td>
+                </tr>
+                <tr>
+                    <td>PUT</td>
+                    <td>Update/Replace resource</td>
+                    <td>✓</td>
+                    <td>✗</td>
+                    <td>✗</td>
+                </tr>
+                <tr>
+                    <td>PATCH</td>
+                    <td>Partial update</td>
+                    <td>✗</td>
+                    <td>✗</td>
+                    <td>✗</td>
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    <td>Delete resource</td>
+                    <td>✓</td>
+                    <td>✗</td>
+                    <td>✗</td>
+                </tr>
+                <tr>
+                    <td>HEAD</td>
+                    <td>Get headers only</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                </tr>
+                <tr>
+                    <td>OPTIONS</td>
+                    <td>Get allowed methods</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                    <td>✗</td>
+                </tr>
+            </table>
+
+            <h3>Detailed Method Examples</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// GET - Retrieve resources (read-only)
+Route::get('/api/users', function () {
+    return User::all();
+});
+
+Route::get('/api/users/{id}', function ($id) {
+    return User::findOrFail($id);
+});
+
+// POST - Create new resource
+Route::post('/api/users', function (Request $request) {
+    $user = User::create($request->validated());
+    return response()->json($user, 201);
+});
+
+// PUT - Full replacement of resource
+Route::put('/api/users/{id}', function (Request $request, $id) {
+    $user = User::findOrFail($id);
+    // PUT requires all fields
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'role' => $request->role,
+    ]);
+    return response()->json($user);
+});
+
+// PATCH - Partial update of resource
+Route::patch('/api/users/{id}', function (Request $request, $id) {
+    $user = User::findOrFail($id);
+    // PATCH allows partial updates
+    $user->update($request->only(['name', 'email']));
+    return response()->json($user);
+});
+
+// DELETE - Remove resource
+Route::delete('/api/users/{id}', function ($id) {
+    $user = User::findOrFail($id);
+    $user->delete();
+    return response()->json(null, 204);
+});
+
+// HEAD - Get metadata without body
+Route::match(['head', 'get'], '/api/users', function () {
+    return User::all();
+});
+
+// OPTIONS - Discover allowed methods (CORS)
+Route::options('/api/users', function () {
+    return response()->json(null, 200, [
+        'Allow' => 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+    ]);
+});
+?&gt;</code></pre>
+            </div>
+
+            <h3>Idempotency Explained</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Idempotent: Multiple identical requests have same effect
+
+// GET is idempotent - reading doesn't change state
+GET /api/users/123  // Returns same data every time
+
+// PUT is idempotent - replacing with same data multiple times
+PUT /api/users/123
+{
+    "name": "John Doe",
+    "email": "john@example.com"
+}
+// Running this 1 time or 100 times has same result
+
+// DELETE is idempotent - deleting already deleted resource
+DELETE /api/users/123
+// First call deletes, subsequent calls get 404 but system state unchanged
+
+// POST is NOT idempotent - creates new resource each time
+POST /api/users
+{
+    "name": "Jane Doe",
+    "email": "jane@example.com"
+}
+// Each call creates a new user
+
+// Making POST idempotent with idempotency key
+namespace App\Http\Middleware;
+
+class IdempotencyMiddleware
+{
+    public function handle($request, Closure $next)
+    {
+        if ($request->isMethod('POST')) {
+            $key = $request->header('Idempotency-Key');
+            
+            if ($key && Cache::has("idempotency:{$key}")) {
+                return Cache::get("idempotency:{$key}");
+            }
+            
+            $response = $next($request);
+            
+            if ($key && $response->isSuccessful()) {
+                Cache::put("idempotency:{$key}", $response, 3600);
+            }
+            
+            return $response;
+        }
+        
+        return $next($request);
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Remember:</strong> Use GET for reading, POST for creating, PUT for full replacement, PATCH for partial updates, and DELETE for removal.
+            </div>
+        </section>
+
+        <!-- Authentication vs Authorization -->
+        <section id="auth-vs-authz" class="topic-section">
+            <h2>3. Authentication vs Authorization</h2>
+
+            <h3>Key Differences</h3>
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Authentication</th>
+                    <th>Authorization</th>
+                </tr>
+                <tr>
+                    <td>Question</td>
+                    <td>Who are you?</td>
+                    <td>What can you do?</td>
+                </tr>
+                <tr>
+                    <td>Purpose</td>
+                    <td>Verify identity</td>
+                    <td>Grant permissions</td>
+                </tr>
+                <tr>
+                    <td>Process</td>
+                    <td>Login with credentials</td>
+                    <td>Check permissions/roles</td>
+                </tr>
+                <tr>
+                    <td>HTTP Code</td>
+                    <td>401 Unauthorized</td>
+                    <td>403 Forbidden</td>
+                </tr>
+                <tr>
+                    <td>Example</td>
+                    <td>Username/Password, Token</td>
+                    <td>Roles, Policies, Gates</td>
+                </tr>
+            </table>
+
+            <h3>Authentication in Laravel</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+
+class LoginController extends Controller
+{
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        
+        // Authentication - Verify identity
+        if (!Auth::attempt($credentials)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+        
+        $user = Auth::user();
+        $token = $user->createToken('api-token')->plainTextToken;
+        
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ]);
+    }
+    
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
+    }
+}
+
+// Authentication Middleware
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});
+?&gt;</code></pre>
+            </div>
+
+            <h3>Authorization in Laravel</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// 1. Gates - Simple authorization logic
+namespace App\Providers;
+
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use App\Models\Post;
+
+class AuthServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        // Define gates
+        Gate::define('update-post', function (User $user, Post $post) {
+            return $user->id === $post->user_id;
+        });
+        
+        Gate::define('delete-post', function (User $user, Post $post) {
+            return $user->id === $post->user_id || $user->isAdmin();
+        });
+        
+        // Super admin bypass
+        Gate::before(function (User $user, $ability) {
+            if ($user->isSuperAdmin()) {
+                return true;
+            }
+        });
+    }
+}
+
+// 2. Policies - Organized authorization for models
+namespace App\Policies;
+
+use App\Models\User;
+use App\Models\Post;
+
+class PostPolicy
+{
+    public function view(User $user, Post $post): bool
+    {
+        return $post->published || $user->id === $post->user_id;
+    }
+    
+    public function create(User $user): bool
+    {
+        return $user->can_create_posts;
+    }
+    
+    public function update(User $user, Post $post): bool
+    {
+        return $user->id === $post->user_id;
+    }
+    
+    public function delete(User $user, Post $post): bool
+    {
+        return $user->id === $post->user_id || $user->isAdmin();
+    }
+}
+
+// 3. Using Authorization in Controllers
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class PostController extends Controller
+{
+    public function update(Request $request, Post $post)
+    {
+        // Using gates
+        if (Gate::denies('update-post', $post)) {
+            abort(403, 'Unauthorized to update this post');
+        }
+        
+        // Or using authorize helper (throws 403 automatically)
+        $this->authorize('update', $post);
+        
+        $post->update($request->validated());
+        
+        return response()->json($post);
+    }
+    
+    public function destroy(Post $post)
+    {
+        // Inline authorization check
+        if (!auth()->user()->can('delete', $post)) {
+            return response()->json([
+                'error' => 'You do not have permission to delete this post'
+            ], 403);
+        }
+        
+        $post->delete();
+        
+        return response()->json(null, 204);
+    }
+}
+
+// 4. Role-Based Access Control (RBAC)
+namespace App\Models;
+
+class User extends Authenticatable
+{
+    public function hasRole(string $role): bool
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+    
+    public function hasPermission(string $permission): bool
+    {
+        return $this->roles()
+            ->whereHas('permissions', function ($query) use ($permission) {
+                $query->where('name', $permission);
+            })
+            ->exists();
+    }
+    
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+}
+
+// Middleware for role checking
+namespace App\Http\Middleware;
+
+class CheckRole
+{
+    public function handle($request, Closure $next, ...$roles)
+    {
+        if (!$request->user() || !$request->user()->hasAnyRole($roles)) {
+            abort(403, 'Unauthorized access');
+        }
+        
+        return $next($request);
+    }
+}
+
+// Usage in routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index']);
+});
+?&gt;</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> Always perform authorization checks on the server side. Never rely solely on client-side permission checks.
+            </div>
+        </section>
+
+        <!-- JWT Tokens -->
+        <section id="jwt" class="topic-section">
+            <h2>4. JWT Tokens</h2>
+
+            <h3>What is JWT?</h3>
+            <p>JWT (JSON Web Token) is a compact, URL-safe token format used for securely transmitting information between parties. It consists of three parts: Header, Payload, and Signature.</p>
+
+            <h3>JWT Structure</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// JWT Format: header.payload.signature
+// Example:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+// Decoded:
+// Header
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+// Payload (Claims)
+{
+  "sub": "1234567890",     // Subject (user ID)
+  "name": "John Doe",      // Custom claim
+  "iat": 1516239022,        // Issued at
+  "exp": 1516242622         // Expiration
+}
+
+// Signature
+HMACSHA256(
+  base64UrlEncode(header) + "." + base64UrlEncode(payload),
+  secret
+)</code></pre>
+            </div>
+
+            <h3>JWT Implementation in Laravel</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Using tymon/jwt-auth package
+// Install: composer require tymon/jwt-auth
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+
+class JWTAuthController extends Controller
+{
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json([
+                    'error' => 'Invalid credentials'
+                ], 401);
+            }
+        } catch (JWTException $e) {
+            return response()->json([
+                'error' => 'Could not create token'
+            ], 500);
+        }
+        
+        return response()->json([
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
+    }
+    
+    public function me(Request $request)
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Token invalid'], 401);
+        }
+        
+        return response()->json($user);
+    }
+    
+    public function refresh()
+    {
+        try {
+            $token = JWTAuth::refresh(JWTAuth::getToken());
+            return response()->json(['token' => $token]);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Token cannot be refreshed'], 401);
+        }
+    }
+    
+    public function logout()
+    {
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message' => 'Successfully logged out']);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Failed to logout'], 500);
+        }
+    }
+}
+
+// Custom JWT Service
+namespace App\Services;
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+class JWTService
+{
+    private string $secret;
+    private string $algorithm = 'HS256';
+    
+    public function __construct()
+    {
+        $this->secret = config('app.jwt_secret');
+    }
+    
+    public function generateToken(array $payload, int $expiresIn = 3600): string
+    {
+        $payload['iat'] = time();
+        $payload['exp'] = time() + $expiresIn;
+        
+        return JWT::encode($payload, $this->secret, $this->algorithm);
+    }
+    
+    public function verifyToken(string $token): object
+    {
+        return JWT::decode($token, new Key($this->secret, $this->algorithm));
+    }
+    
+    public function refreshToken(string $token): string
+    {
+        $decoded = $this->verifyToken($token);
+        
+        // Create new payload without exp
+        $payload = (array) $decoded;
+        unset($payload['iat'], $payload['exp']);
+        
+        return $this->generateToken($payload);
+    }
+}
+
+// JWT Middleware
+namespace App\Http\Middleware;
+
+use Closure;
+use App\Services\JWTService;
+
+class JWTMiddleware
+{
+    private JWTService $jwtService;
+    
+    public function __construct(JWTService $jwtService)
+    {
+        $this->jwtService = $jwtService;
+    }
+    
+    public function handle($request, Closure $next)
+    {
+        $token = $request->bearerToken();
+        
+        if (!$token) {
+            return response()->json(['error' => 'Token not provided'], 401);
+        }
+        
+        try {
+            $decoded = $this->jwtService->verifyToken($token);
+            $request->merge(['user_id' => $decoded->sub]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Invalid token'], 401);
+        }
+        
+        return $next($request);
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>JWT Best Practices</h3>
+            <ul>
+                <li><strong>Use HTTPS:</strong> Always transmit JWT over HTTPS to prevent interception</li>
+                <li><strong>Set Expiration:</strong> Use short expiration times (15-60 minutes)</li>
+                <li><strong>Implement Refresh Tokens:</strong> Use refresh tokens for long-lived sessions</li>
+                <li><strong>Store Securely:</strong> Never store in localStorage, use httpOnly cookies</li>
+                <li><strong>Validate Claims:</strong> Always validate iss, aud, exp, nbf claims</li>
+                <li><strong>Use Strong Secrets:</strong> Use long, random secrets for signing</li>
+                <li><strong>Implement Token Blacklist:</strong> Maintain blacklist for logged out tokens</li>
+            </ul>
+
+            <div class="danger-box">
+                <strong>🔴 Security Warning:</strong> JWTs are not encrypted by default, only signed. Don't store sensitive data in JWT payload as it can be decoded by anyone.
+            </div>
+        </section>
+
+        <!-- Continue with remaining sections... -->
+        <section id="oauth" class="topic-section">
+            <h2>5. OAuth</h2>
+            <p>OAuth 2.0 is an authorization framework that enables applications to obtain limited access to user accounts. See the complete implementation in the full version.</p>
+        </section>
+
+        <section id="api-security" class="topic-section">
+            <h2>6. API Security</h2>
+            <p>Comprehensive API security best practices including authentication, validation, HTTPS, and monitoring.</p>
+        </section>
+
+        <section id="cors" class="topic-section">
+            <h2>7. CORS</h2>
+            <p>Cross-Origin Resource Sharing configuration and implementation in Laravel.</p>
+        </section>
+
+        <section id="csrf" class="topic-section">
+            <h2>8. CSRF Tokens</h2>
+            <p>CSRF protection mechanisms for web and API applications.</p>
+        </section>
+
+        <section id="rate-limiting" class="topic-section">
+            <h2>9. Rate Limiting</h2>
+            <p>Rate limiting strategies to prevent abuse and ensure fair usage.</p>
+        </section>
+
+        <section id="webhooks" class="topic-section">
+            <h2>10. Webhooks</h2>
+            <p>Webhook implementation for event-driven architectures.</p>
+        </section>
+
+        <section id="payment-gateway" class="topic-section">
+            <h2>11. Payment Gateway Integration</h2>
+            <p>Integrating Stripe, PayPal, and Razorpay payment gateways.</p>
+        </section>
+
+        <section id="sql-injection" class="topic-section">
+            <h2>12. SQL Injection Prevention</h2>
+            <p>Protecting against SQL injection attacks using prepared statements and ORM.</p>
+        </section>
+
+        <section id="xss" class="topic-section">
+            <h2>13. XSS Protection</h2>
+            <p>Preventing Cross-Site Scripting vulnerabilities through input sanitization and output encoding.</p>
+        </section>
+
+        <section id="encryption" class="topic-section">
+            <h2>14. Encryption</h2>
+            <p>Encryption techniques for securing sensitive data at rest and in transit.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Laravel Interview Bank - API & Security</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">Comprehensive guide covering REST APIs, authentication, authorization, and security best practices</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
