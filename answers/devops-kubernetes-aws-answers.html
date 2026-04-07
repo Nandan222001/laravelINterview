@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps, Kubernetes & AWS - Complete Answers with Production Examples</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-top: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #764ba2;
+        }
+
+        .subsection-title {
+            font-size: 1.5em;
+            color: #764ba2;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .subsection-title::before {
+            content: "▶";
+            margin-right: 10px;
+            color: #667eea;
+        }
+
+        .qa-block {
+            margin-bottom: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .answer {
+            color: #555;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .code-block code {
+            color: #f8f8f2;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .badge-terraform { background: #7B42BC; color: white; }
+        .badge-kubernetes { background: #326CE5; color: white; }
+        .badge-docker { background: #2496ED; color: white; }
+        .badge-aws { background: #FF9900; color: white; }
+        .badge-cicd { background: #FC6D26; color: white; }
+        .badge-monitoring { background: #E6522C; color: white; }
+        .badge-security { background: #00C851; color: white; }
+        .badge-gitops { background: #F05032; color: white; }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .toc a {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .toc a:hover {
+            color: #667eea;
+        }
+
+        footer {
+            background: #2d2d2d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 DevOps, Kubernetes & AWS</h1>
+            <p class="subtitle">Complete Production-Ready Implementation Guide</p>
+            <p class="subtitle">Infrastructure as Code • Container Orchestration • Cloud Deployment Strategies</p>
+        </header>
+
+        <div class="content">
+            <div class="toc">
+                <h2>📚 Table of Contents</h2>
+                <ul>
+                    <li><a href="#quick-answers">Quick Answers (100 Questions)</a></li>
+                    <li><a href="#terraform">1. Terraform & AWS Infrastructure as Code</a></li>
+                    <li><a href="#kubernetes">2. Kubernetes Production Configurations</a></li>
+                    <li><a href="#service-mesh">3. Service Mesh with Istio & mTLS</a></li>
+                    <li><a href="#cicd">4. CI/CD with Jenkins Declarative Pipelines</a></li>
+                    <li><a href="#docker">5. Docker Multi-Stage Builds</a></li>
+                    <li><a href="#eks">6. AWS EKS Cluster Management</a></li>
+                    <li><a href="#helm">7. Helm Charts & Package Management</a></li>
+                    <li><a href="#monitoring">8. Monitoring & Observability Stack</a></li>
+                    <li><a href="#gitops">9. GitOps with ArgoCD & Flux</a></li>
+                    <li><a href="#cmmi">10. CMMI Level 5 Compliance Automation</a></li>
+                </ul>
+            </div>
+
+            <div id="quick-answers" class="section">
+                <h2 class="section-title">Quick Reference Answers (100 Questions)</h2>
+                
+                <div class="qa-block">
+                    <div class="question">1. What is Kubernetes and when should you use it?</div>
+                    <div class="answer">Kubernetes (K8s) orchestrates containerized applications at scale. Manages deployment, scaling, networking, storage. Nodes run container runtime, control plane manages cluster. Ideal for microservices, high availability, horizontal scaling.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">2. Explain Docker containerization basics.</div>
+                    <div class="answer">Docker containerization packages application with dependencies in image. Build from Dockerfile, run containers from image. Lightweight VMs, fast startup, consistent environment across dev/staging/production.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">3. What are multi-stage Docker builds?</div>
+                    <div class="answer">Multi-stage Docker builds reduce image size. Compile/build in first stage, copy artifacts to final stage, avoid shipping build dependencies. Example: Alpine base, compile in builder, copy binary.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">4. How do CI/CD pipelines work?</div>
+                    <div class="answer">CI/CD pipelines automate build, test, deploy. GitHub Actions, Jenkins, GitLab CI execute on code push. Run tests, build artifacts, deploy to servers/containers. Faster feedback, fewer manual errors.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">5. What are Jenkins declarative pipelines?</div>
+                    <div class="answer">Jenkins declarative pipelines define build steps as code. Stages (build, test, deploy), agents (runners), tools (Docker, Maven), post-build actions, notifications.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">6. Explain GitHub Actions workflows.</div>
+                    <div class="answer">GitHub Actions workflows trigger on events (push, PR), run jobs in parallel, each job has steps (checkout, build, test, deploy). Use community actions, reuse workflows across repos.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">7. What is Infrastructure as Code (IaC)?</div>
+                    <div class="answer">Infrastructure as Code (IaC) defines infrastructure declaratively. Terraform, CloudFormation, Ansible describe resources, version control, repeat deployment. Benefits: reproducibility, disaster recovery, change tracking.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">8. How does Terraform provisioning work?</div>
+                    <div class="answer">Terraform provisioning: define providers (AWS, GCP, Azure), resources (instances, databases), state file tracks real infrastructure. `terraform plan` previews changes, `terraform apply` makes changes.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">9. What is a service mesh?</div>
+                    <div class="answer">Service mesh (Istio, Linkerd) manages service-to-service communication. Handles routing, retry, circuit breaking, mTLS encryption, observability without app code changes.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">10. Explain Istio mTLS.</div>
+                    <div class="answer">Istio mTLS: automatic mutual TLS between services. Transparently encrypts traffic, verifies identity via certificates. Zero-trust security at network level.</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">11-20. Cloud Services Overview</div>
+                    <div class="answer">AWS EC2 (virtual machines with auto-scaling), RDS (managed databases with Multi-AZ), S3 (object storage with versioning), Lambda (serverless compute), ECS (container orchestration), EKS (managed Kubernetes), GCP Cloud Run (serverless containers), Azure App Service (web app hosting), AKS (Azure Kubernetes), GCP Compute Engine (VMs with per-minute billing).</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">21-30. Scaling and High Availability</div>
+                    <div class="answer">Load balancing (Layer 4/7 traffic distribution), horizontal scaling (add servers), vertical scaling (increase resources), autoscaling policies (CPU/custom metrics), health checks (instance monitoring), database replication (read scalability), backup strategies (snapshots, point-in-time recovery), failover automation (Multi-AZ), disaster recovery (RTO/RPO planning), monitoring and alerting (CloudWatch, Prometheus).</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">31-40. Deployment Strategies & Security</div>
+                    <div class="answer">Blue-green deployment (environment switching), canary deployment (gradual rollout), rolling deployment (one-by-one updates), feature flags (decouple deployment from release), GitOps (Git as source of truth), secret management (Vault, Secrets Manager), container registries (ECR, Harbor), network segmentation (VPCs, security groups), VPN/VPC (network isolation), CDN (content delivery).</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">41-50. Kubernetes Fundamentals</div>
+                    <div class="answer">DNS management (Route53), certificate management (ACM, Let's Encrypt), rate limiting (WAF), container security (image scanning), Kubernetes networking (CNI, services), Kubernetes storage (PVs, PVCs), Helm (package manager), service mesh observability (Kiali), Prometheus metrics (time-series monitoring), ELK stack (centralized logging).</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">51-60. Kubernetes Advanced Features</div>
+                    <div class="answer">Grafana dashboards (visualization), PagerDuty (incident management), deployments (rolling updates), StatefulSets (stateful apps), jobs (batch processing), ConfigMaps (configuration), Secrets (sensitive data), RBAC (access control), pod security policies (security standards), network policies (pod isolation).</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">61-70. Kubernetes Operations</div>
+                    <div class="answer">Ingress controllers (external access), resource limits (capacity management), pod disruption budgets (availability during maintenance), namespaces (logical isolation), observability (logs, metrics, traces), Istio traffic management (routing, retries), Istio security (mTLS, authorization), Kubernetes operators (custom resources), DaemonSets (node-level pods), multi-tenancy (isolation strategies).</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">71-80. Infrastructure as Code</div>
+                    <div class="answer">GitOps with ArgoCD (declarative deployments), sealed secrets (encrypted secrets in Git), cost optimization (right-sizing, spot instances), cluster upgrades (control plane then nodes), node pools (different instance types), pod affinities (placement control), Terraform modules (reusable components), Terraform remote state (S3 backend), Terraform locking (DynamoDB), CloudFormation (AWS native IaC).</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">81-90. Security and Compliance</div>
+                    <div class="answer">Ansible playbooks (configuration management), Jenkins with Docker (containerized builds), GitLab CI (parallel jobs), resource quotas (cost control), VPC peering (cross-VPC connectivity), NAT gateway (outbound internet), bastion host (secure access), AWS Config (compliance monitoring), GuardDuty (threat detection), Security Hub (centralized security).</div>
+                </div>
+
+                <div class="qa-block">
+                    <div class="question">91-100. Advanced Operations</div>
+                    <div class="answer">Secrets Manager rotation (automated credentials), KMS encryption (key management), CloudTrail (audit logging), WAF (web application firewall), Macie (data discovery), Systems Manager (parameter store), Organizations SCPs (account-level controls), Certificate Manager (SSL/TLS), AWS Backup (centralized backups), EventBridge (event-driven automation), Cost Anomaly Detection (budget monitoring), chaos engineering (resilience testing), distributed tracing (request flows), SLI/SLO/SLA (reliability targets), production readiness reviews (deployment checklists).</div>
+                </div>
+            </div>
+
+            <div id="terraform" class="section">
+                <h2 class="section-title">1. Terraform & AWS Banking Infrastructure</h2>
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-terraform">Terraform</span>
+                        <span class="badge badge-aws">AWS</span>
+                        VPC and Network Architecture
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Design a Terraform module for banking VPC with 3 AZs</div>
+                        <div class="answer">
+                            <p>A complete VPC module includes vpc, subnets across multiple AZs, route tables, NAT gateways, and internet gateway. Use cidrsubnet() for automatic CIDR calculation. Enable DNS hostnames and support. Tag all resources for compliance (PCI-DSS). Include flow logs for security monitoring.</p>
+                            <div class="code-block"><code>resource "aws_vpc" "banking" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  
+  tags = {
+    Name        = "banking-vpc"
+    Environment = var.environment
+    Compliance  = "PCI-DSS"
+  }
+}
+
+resource "aws_subnet" "private" {
+  count             = 3
+  vpc_id            = aws_vpc.banking.id
+  cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index)
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+  
+  tags = {
+    Name = "banking-private-${count.index + 1}"
+    Tier = "private"
+  }
+}
+
+resource "aws_nat_gateway" "main" {
+  count         = 3
+  allocation_id = aws_eip.nat[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
+  
+  tags = {
+    Name = "banking-nat-${count.index + 1}"
+  }
+}</code></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-block">
+                        <div class="question">VPC Flow Logs with CloudWatch Integration</div>
+                        <div class="answer">
+                            <p>Create aws_flow_log resource with IAM role for CloudWatch Logs. Configure CloudWatch log group with retention policy (90 days for compliance). Use KMS encryption for logs. Enable for all traffic types (ACCEPT, REJECT, ALL).</p>
+                            <div class="code-block"><code>resource "aws_flow_log" "banking" {
+  iam_role_arn    = aws_iam_role.flow_log.arn
+  log_destination = aws_cloudwatch_log_group.flow_log.arn
+  traffic_type    = "ALL"
+  vpc_id          = aws_vpc.banking.id
+}
+
+resource "aws_cloudwatch_log_group" "flow_log" {
+  name              = "/aws/vpc/flow-logs"
+  retention_in_days = 90
+  kms_key_id        = aws_kms_key.logs.arn
+}</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-aws">AWS RDS</span>
+                        <span class="badge badge-security">Security</span>
+                        RDS with Encryption at Rest
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Aurora MySQL cluster with KMS encryption and IAM authentication</div>
+                        <div class="answer">
+                            <div class="code-block"><code>resource "aws_kms_key" "rds" {
+  description             = "RDS encryption key"
+  enable_key_rotation     = true
+  deletion_window_in_days = 30
+}
+
+resource "aws_rds_cluster" "banking" {
+  cluster_identifier              = "banking-cluster"
+  engine                          = "aurora-mysql"
+  engine_version                  = "8.0.mysql_aurora.3.02.0"
+  database_name                   = "banking"
+  master_username                 = "admin"
+  master_password                 = random_password.db.result
+  backup_retention_period         = 30
+  preferred_backup_window         = "03:00-04:00"
+  storage_encrypted               = true
+  kms_key_id                      = aws_kms_key.rds.arn
+  iam_database_authentication_enabled = true
+  enabled_cloudwatch_logs_exports = ["audit", "error", "slowquery"]
+  
+  tags = {
+    Environment = "production"
+    Compliance  = "PCI-DSS"
+  }
+}</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-aws">S3</span>
+                        <span class="badge badge-security">Security</span>
+                        S3 with Versioning and Lifecycle
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">S3 bucket with versioning, encryption, and lifecycle policies</div>
+                        <div class="answer">
+                            <div class="code-block"><code>resource "aws_s3_bucket" "documents" {
+  bucket = "banking-documents-${var.account_id}"
+}
+
+resource "aws_s3_bucket_versioning" "documents" {
+  bucket = aws_s3_bucket.documents.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "documents" {
+  bucket = aws_s3_bucket.documents.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.s3.arn
+    }
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "documents" {
+  bucket = aws_s3_bucket.documents.id
+  
+  rule {
+    id     = "archive-old-documents"
+    status = "Enabled"
+    
+    transition {
+      days          = 90
+      storage_class = "STANDARD_IA"
+    }
+    
+    transition {
+      days          = 180
+      storage_class = "GLACIER"
+    }
+    
+    transition {
+      days          = 365
+      storage_class = "DEEP_ARCHIVE"
+    }
+  }
+}</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="kubernetes" class="section">
+                <h2 class="section-title">2. Kubernetes Production Configurations</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-kubernetes">Kubernetes</span>
+                        <span class="badge badge-monitoring">Monitoring</span>
+                        HPA with Custom Metrics
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">HPA with CPU and memory metrics for Laravel application</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: laravel-app-hpa
+  namespace: production
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: laravel-app
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+      - type: Pods
+        value: 4
+        periodSeconds: 15
+      selectPolicy: Max</code></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-block">
+                        <div class="question">HPA with custom Prometheus metrics</div>
+                        <div class="answer">
+                            <p>Install Prometheus and Prometheus Adapter. Configure adapter to expose custom metrics API. Create HPA with type: Pods and metric: requests_per_second.</p>
+                            <div class="code-block"><code>apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: laravel-custom-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: laravel-app
+  minReplicas: 5
+  maxReplicas: 50
+  metrics:
+  - type: Pods
+    pods:
+      metric:
+        name: http_requests_per_second
+      target:
+        type: AverageValue
+        averageValue: "1000"</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-kubernetes">Kubernetes</span>
+                        <span class="badge badge-security">Security</span>
+                        Ingress with TLS Termination
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">NGINX Ingress with Let's Encrypt TLS</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: laravel-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - app.example.com
+    - api.example.com
+    secretName: app-tls-cert
+  rules:
+  - host: app.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: laravel-frontend
+            port:
+              number: 80
+  - host: api.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: laravel-api
+            port:
+              number: 80</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-kubernetes">Kubernetes</span>
+                        Production Deployment Configuration
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Complete production deployment with health checks and resources</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-app
+  namespace: production
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: laravel
+  template:
+    metadata:
+      labels:
+        app: laravel
+        version: v1.0.0
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - laravel
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: app
+        image: registry.company.com/laravel:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        env:
+        - name: APP_ENV
+          value: "production"
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: host
+        volumeMounts:
+        - name: storage
+          mountPath: /var/www/storage
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: laravel-storage</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="service-mesh" class="section">
+                <h2 class="section-title">3. Service Mesh with Istio & mTLS</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-kubernetes">Istio</span>
+                        <span class="badge badge-security">mTLS</span>
+                        Automatic Mutual TLS
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Enable strict mTLS across entire service mesh</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: istio-system
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: namespace-policy
+  namespace: production
+spec:
+  mtls:
+    mode: STRICT
+  portLevelMtls:
+    9080:
+      mode: PERMISSIVE  # For legacy services</code></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-block">
+                        <div class="question">Configure VirtualService for traffic routing</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: laravel-api
+spec:
+  hosts:
+  - laravel-api
+  http:
+  - match:
+    - headers:
+        x-canary:
+          exact: "true"
+    route:
+    - destination:
+        host: laravel-api
+        subset: v2
+      weight: 100
+  - route:
+    - destination:
+        host: laravel-api
+        subset: v1
+      weight: 90
+    - destination:
+        host: laravel-api
+        subset: v2
+      weight: 10
+  timeout: 30s
+  retries:
+    attempts: 3
+    perTryTimeout: 10s
+    retryOn: 5xx,refused-stream,unavailable</code></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-block">
+                        <div class="question">DestinationRule with circuit breaking</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: laravel-api
+spec:
+  host: laravel-api
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 100
+      http:
+        http1MaxPendingRequests: 50
+        http2MaxRequests: 100
+        maxRequestsPerConnection: 2
+    outlierDetection:
+      consecutiveErrors: 5
+      interval: 30s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 50
+      minHealthPercent: 40</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-security">Security</span>
+                        Authorization Policies
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Service-to-service authorization</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: laravel-api-authz
+  namespace: production
+spec:
+  selector:
+    matchLabels:
+      app: laravel-api
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/production/sa/frontend"]
+    to:
+    - operation:
+        methods: ["GET", "POST"]
+        paths: ["/api/*"]
+  - from:
+    - source:
+        principals: ["cluster.local/ns/production/sa/admin"]
+    to:
+    - operation:
+        methods: ["*"]
+        paths: ["/admin/*"]</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cicd" class="section">
+                <h2 class="section-title">4. CI/CD with Jenkins Declarative Pipelines</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-cicd">Jenkins</span>
+                        <span class="badge badge-docker">Docker</span>
+                        Complete Laravel CI/CD Pipeline
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Complete Laravel deployment pipeline</div>
+                        <div class="answer">
+                            <div class="code-block"><code>pipeline {
+    agent any
+    
+    environment {
+        DOCKER_REGISTRY = 'registry.company.com'
+        IMAGE_NAME = 'laravel-app'
+        KUBERNETES_NAMESPACE = 'production'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/company/laravel-app.git'
+            }
+        }
+        
+        stage('Install Dependencies') {
+            parallel {
+                stage('Composer') {
+                    steps {
+                        sh 'composer install --no-dev --optimize-autoloader'
+                    }
+                }
+                stage('NPM') {
+                    steps {
+                        sh 'npm ci'
+                        sh 'npm run production'
+                    }
+                }
+            }
+        }
+        
+        stage('Run Tests') {
+            parallel {
+                stage('PHPUnit') {
+                    steps {
+                        sh 'vendor/bin/phpunit --coverage-clover coverage.xml'
+                    }
+                }
+                stage('PHPStan') {
+                    steps {
+                        sh 'vendor/bin/phpstan analyse --memory-limit=2G'
+                    }
+                }
+                stage('PHP CS Fixer') {
+                    steps {
+                        sh 'vendor/bin/php-cs-fixer fix --dry-run --diff'
+                    }
+                }
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${DOCKER_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}")
+                }
+            }
+        }
+        
+        stage('Security Scan') {
+            steps {
+                sh 'trivy image --severity HIGH,CRITICAL ${DOCKER_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}'
+            }
+        }
+        
+        stage('Push Image') {
+            steps {
+                script {
+                    docker.withRegistry("https://${DOCKER_REGISTRY}", 'docker-credentials') {
+                        docker.image("${DOCKER_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}").push()
+                        docker.image("${DOCKER_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}").push('latest')
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh """
+                        kubectl set image deployment/laravel-app \\
+                        laravel-app=${DOCKER_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} \\
+                        -n ${KUBERNETES_NAMESPACE}
+                        
+                        kubectl rollout status deployment/laravel-app \\
+                        -n ${KUBERNETES_NAMESPACE} --timeout=5m
+                    """
+                }
+            }
+        }
+        
+        stage('Run Migrations') {
+            steps {
+                sh '''
+                    kubectl exec deployment/laravel-app -n ${KUBERNETES_NAMESPACE} -- \\
+                    php artisan migrate --force
+                '''
+            }
+        }
+        
+        stage('Smoke Tests') {
+            steps {
+                sh 'curl -f https://app.example.com/health || exit 1'
+                sh 'curl -f https://api.example.com/status || exit 1'
+            }
+        }
+    }
+    
+    post {
+        success {
+            slackSend(
+                color: 'good',
+                message: "Deployment successful: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            )
+        }
+        failure {
+            sh 'kubectl rollout undo deployment/laravel-app -n ${KUBERNETES_NAMESPACE}'
+            slackSend(
+                color: 'danger',
+                message: "Deployment failed and rolled back: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            )
+        }
+        always {
+            cleanWs()
+        }
+    }
+}</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-cicd">CI/CD</span>
+                        Blue-Green Deployment
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Blue-green deployment pipeline</div>
+                        <div class="answer">
+                            <div class="code-block"><code>pipeline {
+    agent any
+    stages {
+        stage('Deploy to Green') {
+            steps {
+                sh 'kubectl apply -f k8s/green-deployment.yaml'
+                sh 'kubectl wait --for=condition=available deployment/app-green --timeout=5m'
+            }
+        }
+        
+        stage('Test Green Environment') {
+            steps {
+                sh 'curl -f http://green.internal/health'
+                sh './run-integration-tests.sh green'
+            }
+        }
+        
+        stage('Switch Traffic to Green') {
+            steps {
+                input message: 'Switch production traffic to green?', ok: 'Deploy'
+                sh '''kubectl patch service app -p \\'{\"spec\":{\"selector\":{\"version\":\"green\"}}}\\'  '''
+                sleep time: 30, unit: 'SECONDS'
+            }
+        }
+        
+        stage('Verify Production') {
+            steps {
+                retry(3) {
+                    sh 'curl -f https://app.example.com/health'
+                }
+            }
+        }
+        
+        stage('Delete Blue') {
+            steps {
+                sh 'kubectl delete deployment app-blue'
+            }
+        }
+    }
+}</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="docker" class="section">
+                <h2 class="section-title">5. Docker Multi-Stage Builds</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-docker">Docker</span>
+                        Optimized Multi-Stage Build
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Complete multi-stage Dockerfile for Laravel 10</div>
+                        <div class="answer">
+                            <div class="code-block"><code># Composer dependencies stage
+FROM composer:2.6 AS composer
+WORKDIR /app
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
+COPY . .
+RUN composer dump-autoload --optimize --classmap-authoritative
+
+# Node dependencies and build stage
+FROM node:18-alpine AS node
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
+COPY resources ./resources
+COPY vite.config.js tailwind.config.js postcss.config.js ./
+RUN npm run build
+
+# Production stage
+FROM php:8.2-fpm-alpine
+WORKDIR /var/www
+
+# Install system dependencies
+RUN apk add --no-cache \\
+    nginx \\
+    supervisor \\
+    mysql-client \\
+    postgresql-client \\
+    redis \\
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql opcache
+
+# Copy application files
+COPY --from=composer /app /var/www
+COPY --from=node /app/public/build /var/www/public/build
+
+# Copy configuration files
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+COPY docker/php.ini /usr/local/etc/php/conf.d/custom.ini
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www \\
+    && chmod -R 755 /var/www/storage \\
+    && chmod -R 755 /var/www/bootstrap/cache
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \\
+    CMD curl -f http://localhost/health || exit 1
+
+EXPOSE 80
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]</code></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-block">
+                        <div class="question">Docker Compose for local development</div>
+                        <div class="answer">
+                            <div class="code-block"><code>version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    environment:
+      - APP_ENV=local
+      - DB_HOST=mysql
+      - REDIS_HOST=redis
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - laravel
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - laravel
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - laravel
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - laravel
+
+volumes:
+  mysql_data:
+
+networks:
+  laravel:
+    driver: bridge</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="eks" class="section">
+                <h2 class="section-title">6. AWS EKS Cluster Management</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-aws">AWS EKS</span>
+                        <span class="badge badge-terraform">Terraform</span>
+                        EKS Cluster Setup
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Complete EKS cluster with Terraform</div>
+                        <div class="answer">
+                            <p>Comprehensive EKS cluster configuration with managed node groups, spot instances, encryption, and logging enabled.</p>
+                            <div class="code-block"><code>module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 19.0"
+
+  cluster_name    = "production-eks"
+  cluster_version = "1.28"
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  cluster_endpoint_public_access  = true
+  cluster_endpoint_private_access = true
+
+  cluster_addons = {
+    coredns = {
+      most_recent = true
+    }
+    kube-proxy = {
+      most_recent = true
+    }
+    vpc-cni = {
+      most_recent = true
+    }
+    aws-ebs-csi-driver = {
+      most_recent = true
+    }
+  }
+
+  eks_managed_node_groups = {
+    general = {
+      min_size     = 3
+      max_size     = 10
+      desired_size = 5
+
+      instance_types = ["t3.large"]
+      capacity_type  = "ON_DEMAND"
+      
+      labels = {
+        role = "general"
+      }
+    }
+    
+    spot = {
+      min_size     = 2
+      max_size     = 20
+      desired_size = 5
+
+      instance_types = ["t3.large", "t3a.large"]
+      capacity_type  = "SPOT"
+      
+      labels = {
+        role = "spot"
+      }
+      
+      taints = [{
+        key    = "spot"
+        value  = "true"
+        effect = "NoSchedule"
+      }]
+    }
+  }
+
+  cluster_encryption_config = {
+    resources        = ["secrets"]
+    provider_key_arn = aws_kms_key.eks.arn
+  }
+
+  cluster_enabled_log_types = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler"
+  ]
+
+  tags = {
+    Environment = "production"
+    Terraform   = "true"
+  }
+}</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="helm" class="section">
+                <h2 class="section-title">7. Helm Charts & Package Management</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-kubernetes">Helm</span>
+                        Complete Helm Chart Structure
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Laravel application Helm chart</div>
+                        <div class="answer">
+                            <p><strong>Chart.yaml:</strong></p>
+                            <div class="code-block"><code>apiVersion: v2
+name: laravel-app
+description: A Helm chart for Laravel application
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+maintainers:
+  - name: DevOps Team
+    email: devops@company.com
+dependencies:
+  - name: mysql
+    version: 9.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: mysql.enabled
+  - name: redis
+    version: 17.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled</code></div>
+                            
+                            <p><strong>values.yaml:</strong></p>
+                            <div class="code-block"><code>replicaCount: 3
+
+image:
+  repository: registry.company.com/laravel-app
+  pullPolicy: IfNotPresent
+  tag: "1.0.0"
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: app.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: app-tls
+      hosts:
+        - app.example.com
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 70
+
+mysql:
+  enabled: true
+  auth:
+    database: laravel
+    username: laravel
+  primary:
+    persistence:
+      size: 20Gi
+
+redis:
+  enabled: true
+  auth:
+    enabled: true
+  master:
+    persistence:
+      size: 8Gi</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="monitoring" class="section">
+                <h2 class="section-title">8. Monitoring & Observability Stack</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-monitoring">Prometheus</span>
+                        <span class="badge badge-monitoring">Grafana</span>
+                        Complete Monitoring Stack
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Prometheus ServiceMonitor for application metrics</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: laravel-app
+  labels:
+    app: laravel
+spec:
+  selector:
+    matchLabels:
+      app: laravel
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+    scheme: http</code></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-block">
+                        <div class="question">PrometheusRule for alerting</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: laravel-alerts
+spec:
+  groups:
+  - name: laravel.rules
+    interval: 30s
+    rules:
+    - alert: HighErrorRate
+      expr: |
+        rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "High error rate detected"
+        description: "Error rate is {{ $value }} for {{ $labels.instance }}"
+    
+    - alert: HighLatency
+      expr: |
+        histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 1
+      for: 10m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High latency detected"
+        description: "95th percentile latency is {{ $value }}s"
+    
+    - alert: PodCrashLooping
+      expr: |
+        rate(kube_pod_container_status_restarts_total[15m]) > 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Pod is crash looping"
+        description: "Pod {{ $labels.pod }} is restarting frequently"</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gitops" class="section">
+                <h2 class="section-title">9. GitOps with ArgoCD & Flux</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-gitops">ArgoCD</span>
+                        GitOps Application Deployment
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">ArgoCD Application manifest</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: laravel-app
+  namespace: argocd
+spec:
+  project: production
+  source:
+    repoURL: https://github.com/company/k8s-manifests
+    targetRevision: main
+    path: apps/laravel
+    helm:
+      valueFiles:
+        - values-production.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m</code></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-block">
+                        <div class="question">ApplicationSet for multi-cluster deployment</div>
+                        <div class="answer">
+                            <div class="code-block"><code>apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: laravel-multi-cluster
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          env: production
+  template:
+    metadata:
+      name: '{{name}}-laravel'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/company/k8s-manifests
+        targetRevision: main
+        path: apps/laravel
+        helm:
+          valueFiles:
+            - values-{{name}}.yaml
+      destination:
+        server: '{{server}}'
+        namespace: production
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cmmi" class="section">
+                <h2 class="section-title">10. CMMI Level 5 Compliance Automation</h2>
+                
+                <div class="subsection">
+                    <div class="subsection-title">
+                        <span class="badge badge-security">Compliance</span>
+                        Quantitative Process Management
+                    </div>
+                    
+                    <div class="qa-block">
+                        <div class="question">Automated metrics collection for process performance</div>
+                        <div class="answer">
+                            <div class="code-block"><code>#!/usr/bin/env python3
+from jira import JIRA
+import json
+from datetime import datetime
+
+def collect_process_metrics(build_data):
+    """Collect and report process performance metrics for CMMI Level 5"""
+    
+    metrics = {
+        'deployment_frequency': calculate_deployment_freq(),
+        'lead_time': build_data['duration'],
+        'mttr': calculate_mttr(),
+        'change_failure_rate': calculate_cfr(),
+        'code_coverage': build_data['coverage'],
+        'defect_density': calculate_defect_density(),
+        'process_capability': calculate_capability()
+    }
+    
+    # Statistical process control
+    control_charts = generate_control_charts(metrics)
+    
+    # Compare to baseline
+    baseline_comparison = compare_to_baseline(metrics)
+    
+    # Identify trends
+    trend_analysis = analyze_trend(metrics)
+    
+    # Generate action items if metrics are out of control
+    action_items = generate_action_items(metrics, control_charts)
+    
+    # Update Jira dashboard
+    jira_update = {
+        'timestamp': datetime.now().isoformat(),
+        'metrics': metrics,
+        'baseline_comparison': baseline_comparison,
+        'trend': trend_analysis,
+        'action_items': action_items,
+        'control_status': control_charts['status']
+    }
+    
+    update_jira_dashboard(jira_update)
+    
+    # Create tickets for out-of-control processes
+    if control_charts['violations']:
+        create_investigation_tickets(control_charts['violations'])
+    
+    return metrics</code></div>
+                        </div>
+                    </div>
+
+                    <div class="qa-block">
+                        <div class="question">Statistical process control monitoring</div>
+                        <div class="answer">
+                            <div class="code-block"><code>#!/usr/bin/env python3
+import numpy as np
+from scipy import stats
+
+def monitor_process_control():
+    """Monitor processes using statistical process control"""
+    
+    metrics = collect_process_metrics()
+    control_charts = {}
+    
+    for metric_name, values in metrics.items():
+        # Calculate control limits
+        mean = np.mean(values)
+        std_dev = np.std(values)
+        ucl = mean + 3 * std_dev  # Upper Control Limit
+        lcl = mean - 3 * std_dev  # Lower Control Limit
+        
+        # Detect violations
+        violations = []
+        
+        # Rule 1: Point beyond control limits
+        for i, value in enumerate(values):
+            if value > ucl or value < lcl:
+                violations.append({
+                    'rule': 'Beyond control limits',
+                    'index': i,
+                    'value': value
+                })
+        
+        # Rule 2: 7 consecutive points on same side of mean
+        consecutive = 0
+        for value in values:
+            if value > mean:
+                consecutive = consecutive + 1 if consecutive > 0 else 1
+            else:
+                consecutive = consecutive - 1 if consecutive < 0 else -1
+            
+            if abs(consecutive) >= 7:
+                violations.append({
+                    'rule': '7 consecutive points trend',
+                    'consecutive': consecutive
+                })
+        
+        chart = {
+            'mean': mean,
+            'std_dev': std_dev,
+            'ucl': ucl,
+            'lcl': lcl,
+            'violations': violations,
+            'in_control': len(violations) == 0
+        }
+        
+        # Create investigation ticket if out of control
+        if not chart['in_control']:
+            create_investigation_ticket({
+                'metric': metric_name,
+                'violations': violations,
+                'chart_data': chart
+            })
+        
+        control_charts[metric_name] = chart
+    
+    update_spc_dashboard(control_charts)
+    return control_charts</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 DevOps & Cloud Infrastructure Guide | Production-Ready Examples</p>
+            <p>Comprehensive coverage: Terraform • Kubernetes • Docker • AWS EKS • CI/CD • Monitoring • GitOps • CMMI Level 5</p>
+        </footer>
+    </div>
+</body>
+</html>
