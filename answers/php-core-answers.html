@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP Core Fundamentals - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #764ba2;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .topic-section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐘 PHP Core Fundamentals</h1>
+        <p>Comprehensive answers with syntax-highlighted examples</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#variables">1. Variables & Data Types</a></li>
+                <li><a href="#operators">2. Operators</a></li>
+                <li><a href="#control-structures">3. Control Structures</a></li>
+                <li><a href="#functions">4. Functions</a></li>
+                <li><a href="#arrays">5. Arrays</a></li>
+                <li><a href="#oop-basics">6. OOP Basics</a></li>
+                <li><a href="#error-handling">7. Error Handling</a></li>
+                <li><a href="#magic-methods">8. Magic Methods</a></li>
+                <li><a href="#constants">9. Constants</a></li>
+                <li><a href="#traits">10. Traits</a></li>
+                <li><a href="#namespaces">11. Namespaces</a></li>
+            </ul>
+        </div>
+
+        <!-- Variables & Data Types -->
+        <section id="variables" class="topic-section">
+            <h2>1. Variables & Data Types</h2>
+            
+            <h3>Variable Declaration and Scope</h3>
+            <p>PHP is a loosely typed language where variables don't need explicit type declarations. Variables start with $ and are case-sensitive.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Variable declaration
+$name = "John Doe";              // String
+$age = 30;                       // Integer
+$height = 5.9;                   // Float
+$isActive = true;                // Boolean
+$data = null;                    // NULL
+$fruits = ["apple", "banana"];   // Array
+
+// Variable scope
+$globalVar = "I'm global";
+
+function testScope() {
+    global $globalVar;  // Access global variable
+    $localVar = "I'm local";
+    static $counter = 0;  // Static variable persists between calls
+    $counter++;
+    
+    echo $globalVar . PHP_EOL;
+    echo "Counter: $counter" . PHP_EOL;
+}
+
+testScope();  // Counter: 1
+testScope();  // Counter: 2
+
+// Variable variables
+$var = "hello";
+$$var = "world";  // Creates $hello = "world"
+echo $hello;  // Outputs: world
+?&gt;</code></pre>
+            </div>
+
+            <h3>Data Types in PHP</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>String</td>
+                    <td>Sequence of characters</td>
+                    <td>"Hello World"</td>
+                </tr>
+                <tr>
+                    <td>Integer</td>
+                    <td>Whole numbers</td>
+                    <td>42, -17, 0</td>
+                </tr>
+                <tr>
+                    <td>Float</td>
+                    <td>Decimal numbers</td>
+                    <td>3.14, -0.5</td>
+                </tr>
+                <tr>
+                    <td>Boolean</td>
+                    <td>True or false</td>
+                    <td>true, false</td>
+                </tr>
+                <tr>
+                    <td>Array</td>
+                    <td>Collection of values</td>
+                    <td>[1, 2, 3]</td>
+                </tr>
+                <tr>
+                    <td>Object</td>
+                    <td>Instance of a class</td>
+                    <td>new User()</td>
+                </tr>
+                <tr>
+                    <td>NULL</td>
+                    <td>No value</td>
+                    <td>null</td>
+                </tr>
+                <tr>
+                    <td>Resource</td>
+                    <td>External resource reference</td>
+                    <td>Database connection</td>
+                </tr>
+            </table>
+
+            <h3>Type Juggling and Type Casting</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Type juggling (automatic conversion)
+$result = "10" + 5;  // 15 (string converted to int)
+$concat = "10" . 5;  // "105" (int converted to string)
+
+// Explicit type casting
+$str = "123";
+$int = (int)$str;        // Cast to integer
+$float = (float)"3.14";  // Cast to float
+$bool = (bool)1;         // Cast to boolean
+$array = (array)$str;    // Cast to array
+
+// Type checking
+var_dump(is_string($str));      // bool(true)
+var_dump(is_int($int));         // bool(true)
+var_dump(is_float($float));     // bool(true)
+var_dump(is_bool($bool));       // bool(true)
+var_dump(is_array($array));     // bool(true)
+var_dump(is_null($data));       // bool(true)
+
+// Get variable type
+echo gettype($int);  // "integer"
+
+// Strict type checking (PHP 7+)
+function strictAdd(int $a, int $b): int {
+    return $a + $b;
+}
+
+// With declare(strict_types=1), this would throw TypeError
+// strictAdd("5", "10");  // TypeError
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Use type hints and return type declarations in PHP 7+ for better code reliability and IDE support.
+            </div>
+        </section>
+
+        <!-- Operators -->
+        <section id="operators" class="topic-section">
+            <h2>2. Operators</h2>
+
+            <h3>Arithmetic Operators</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$a = 10;
+$b = 3;
+
+echo $a + $b;   // 13 (Addition)
+echo $a - $b;   // 7  (Subtraction)
+echo $a * $b;   // 30 (Multiplication)
+echo $a / $b;   // 3.333... (Division)
+echo $a % $b;   // 1  (Modulus)
+echo $a ** $b;  // 1000 (Exponentiation - PHP 5.6+)
+
+// Increment/Decrement
+$x = 5;
+echo ++$x;  // 6 (Pre-increment)
+echo $x++;  // 6 (Post-increment, then $x becomes 7)
+echo --$x;  // 6 (Pre-decrement)
+echo $x--;  // 6 (Post-decrement, then $x becomes 5)
+?&gt;</code></pre>
+            </div>
+
+            <h3>Comparison Operators</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Equal (type juggling)
+var_dump(5 == "5");   // bool(true)
+
+// Identical (strict comparison)
+var_dump(5 === "5");  // bool(false)
+var_dump(5 === 5);    // bool(true)
+
+// Not equal
+var_dump(5 != 6);     // bool(true)
+var_dump(5 <> 6);     // bool(true) - alternative syntax
+
+// Not identical
+var_dump(5 !== "5");  // bool(true)
+
+// Spaceship operator (PHP 7+)
+echo 1 <=> 1;  // 0 (equal)
+echo 1 <=> 2;  // -1 (less than)
+echo 2 <=> 1;  // 1 (greater than)
+
+// Null coalescing operator (PHP 7+)
+$username = $_GET['user'] ?? 'guest';
+
+// Null coalescing assignment (PHP 7.4+)
+$config['timeout'] ??= 30;  // Assign only if null or not set
+?&gt;</code></pre>
+            </div>
+
+            <h3>Logical Operators</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$a = true;
+$b = false;
+
+// AND operators
+var_dump($a && $b);  // bool(false)
+var_dump($a and $b); // bool(false) - lower precedence
+
+// OR operators
+var_dump($a || $b);  // bool(true)
+var_dump($a or $b);  // bool(true) - lower precedence
+
+// NOT operator
+var_dump(!$a);       // bool(false)
+
+// XOR operator
+var_dump($a xor $b); // bool(true) - true if only one is true
+
+// Short-circuit evaluation
+$result = $a || expensiveFunction();  // expensiveFunction() not called
+?&gt;</code></pre>
+            </div>
+
+            <h3>String Operators</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Concatenation
+$first = "Hello";
+$last = "World";
+$full = $first . " " . $last;  // "Hello World"
+
+// Concatenation assignment
+$text = "Hello";
+$text .= " World";  // "Hello World"
+
+// String interpolation
+$name = "John";
+echo "Hello, $name!";           // "Hello, John!"
+echo "Hello, {$name}!";         // "Hello, John!"
+echo "Array: {$arr['key']}";   // Access array in string
+?&gt;</code></pre>
+            </div>
+
+            <h3>Assignment Operators</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$x = 10;
+
+$x += 5;   // $x = $x + 5  (15)
+$x -= 3;   // $x = $x - 3  (12)
+$x *= 2;   // $x = $x * 2  (24)
+$x /= 4;   // $x = $x / 4  (6)
+$x %= 4;   // $x = $x % 4  (2)
+
+// Ternary operator
+$age = 20;
+$status = ($age >= 18) ? "Adult" : "Minor";  // "Adult"
+
+// Elvis operator (PHP 5.3+)
+$username = $inputName ?: "Guest";  // Use $inputName or "Guest" if falsy
+?&gt;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Remember:</strong> Always use strict comparison (=== and !==) unless you specifically need type juggling.
+            </div>
+        </section>
+
+        <!-- Control Structures -->
+        <section id="control-structures" class="topic-section">
+            <h2>3. Control Structures</h2>
+
+            <h3>If-Else Statements</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$score = 85;
+
+// Basic if-else
+if ($score >= 90) {
+    echo "Grade: A";
+} elseif ($score >= 80) {
+    echo "Grade: B";
+} elseif ($score >= 70) {
+    echo "Grade: C";
+} else {
+    echo "Grade: F";
+}
+
+// Alternative syntax (useful in templates)
+if ($loggedIn):
+    echo "Welcome back!";
+else:
+    echo "Please login";
+endif;
+
+// Match expression (PHP 8+)
+$result = match(true) {
+    $score >= 90 => 'A',
+    $score >= 80 => 'B',
+    $score >= 70 => 'C',
+    default => 'F'
+};
+?&gt;</code></pre>
+            </div>
+
+            <h3>Switch Statements</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$day = "Monday";
+
+switch ($day) {
+    case "Monday":
+    case "Tuesday":
+    case "Wednesday":
+    case "Thursday":
+    case "Friday":
+        echo "Weekday";
+        break;
+    case "Saturday":
+    case "Sunday":
+        echo "Weekend";
+        break;
+    default:
+        echo "Invalid day";
+}
+
+// Alternative syntax
+switch ($status):
+    case 'active':
+        processActive();
+        break;
+    case 'inactive':
+        processInactive();
+        break;
+endswitch;
+?&gt;</code></pre>
+            </div>
+
+            <h3>Loops</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// For loop
+for ($i = 0; $i < 5; $i++) {
+    echo "Iteration: $i\n";
+}
+
+// While loop
+$count = 0;
+while ($count < 5) {
+    echo "Count: $count\n";
+    $count++;
+}
+
+// Do-while loop
+$num = 0;
+do {
+    echo "Number: $num\n";
+    $num++;
+} while ($num < 5);
+
+// Foreach loop
+$fruits = ["apple", "banana", "orange"];
+foreach ($fruits as $fruit) {
+    echo $fruit . "\n";
+}
+
+// Foreach with key-value
+$person = ["name" => "John", "age" => 30, "city" => "NYC"];
+foreach ($person as $key => $value) {
+    echo "$key: $value\n";
+}
+
+// Alternative syntax for loops
+foreach ($items as $item):
+    echo $item;
+endforeach;
+
+// Loop control
+for ($i = 0; $i < 10; $i++) {
+    if ($i === 3) {
+        continue;  // Skip iteration
+    }
+    if ($i === 8) {
+        break;  // Exit loop
+    }
+    echo $i;
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>Control Structure Best Practices</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Early returns to reduce nesting
+function processUser($user) {
+    if (!$user) {
+        return null;
+    }
+    
+    if (!$user->isActive()) {
+        return null;
+    }
+    
+    // Main logic here
+    return $user->process();
+}
+
+// Guard clauses
+function calculateDiscount($amount, $user) {
+    if ($amount < 0) {
+        throw new InvalidArgumentException("Amount must be positive");
+    }
+    
+    if (!$user->isPremium()) {
+        return 0;
+    }
+    
+    return $amount * 0.1;
+}
+
+// Avoid deep nesting
+// Bad:
+if ($a) {
+    if ($b) {
+        if ($c) {
+            // Deep nesting
+        }
+    }
+}
+
+// Good:
+if (!$a) return;
+if (!$b) return;
+if (!$c) return;
+// Clear logic
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Functions -->
+        <section id="functions" class="topic-section">
+            <h2>4. Functions</h2>
+
+            <h3>Function Declaration and Usage</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Basic function
+function greet($name) {
+    return "Hello, $name!";
+}
+
+echo greet("John");  // "Hello, John!"
+
+// Function with default parameters
+function createUser($name, $role = "user", $active = true) {
+    return [
+        'name' => $name,
+        'role' => $role,
+        'active' => $active
+    ];
+}
+
+$user1 = createUser("John");  // Uses defaults
+$user2 = createUser("Jane", "admin");  // Override role
+
+// Type hints (PHP 7+)
+function add(int $a, int $b): int {
+    return $a + $b;
+}
+
+// Nullable types (PHP 7.1+)
+function findUser(?int $id): ?array {
+    if ($id === null) {
+        return null;
+    }
+    return ['id' => $id, 'name' => 'John'];
+}
+
+// Union types (PHP 8+)
+function process(int|float $number): int|float {
+    return $number * 2;
+}
+
+// Mixed type (PHP 8+)
+function getValue(): mixed {
+    return "anything";
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>Variable Functions and Anonymous Functions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Variable functions
+function sayHello() {
+    return "Hello!";
+}
+
+$funcName = "sayHello";
+echo $funcName();  // "Hello!"
+
+// Anonymous functions (closures)
+$greet = function($name) {
+    return "Hello, $name!";
+};
+
+echo $greet("John");  // "Hello, John!"
+
+// Closures with use keyword
+$message = "Welcome";
+$greetUser = function($name) use ($message) {
+    return "$message, $name!";
+};
+
+echo $greetUser("Jane");  // "Welcome, Jane!"
+
+// Arrow functions (PHP 7.4+)
+$multiply = fn($a, $b) => $a * $b;
+echo $multiply(5, 3);  // 15
+
+// Passing to array functions
+$numbers = [1, 2, 3, 4, 5];
+$squared = array_map(fn($n) => $n ** 2, $numbers);
+print_r($squared);  // [1, 4, 9, 16, 25]
+?&gt;</code></pre>
+            </div>
+
+            <h3>Variable Arguments</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Variadic functions (PHP 5.6+)
+function sum(...$numbers) {
+    return array_sum($numbers);
+}
+
+echo sum(1, 2, 3, 4, 5);  // 15
+
+// Argument unpacking
+function multiply($a, $b, $c) {
+    return $a * $b * $c;
+}
+
+$numbers = [2, 3, 4];
+echo multiply(...$numbers);  // 24
+
+// Named arguments (PHP 8+)
+function createPost($title, $content, $published = false) {
+    return compact('title', 'content', 'published');
+}
+
+// Can specify arguments by name in any order
+$post = createPost(
+    content: "This is the content",
+    title: "My Post",
+    published: true
+);
+
+// Old way: func_get_args() and func_num_args()
+function oldVariadic() {
+    $args = func_get_args();
+    $numArgs = func_num_args();
+    return array_sum($args);
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>Pass by Reference</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Pass by value (default)
+function incrementValue($num) {
+    $num++;
+    return $num;
+}
+
+$x = 5;
+$result = incrementValue($x);
+echo $x;       // 5 (unchanged)
+echo $result;  // 6
+
+// Pass by reference
+function incrementReference(&$num) {
+    $num++;
+}
+
+$y = 5;
+incrementReference($y);
+echo $y;  // 6 (modified)
+
+// Return by reference
+class Counter {
+    private $count = 0;
+    
+    public function &getCount() {
+        return $this->count;
+    }
+}
+
+$counter = new Counter();
+$ref = &$counter->getCount();
+$ref = 10;  // Modifies internal count
+?&gt;</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Caution:</strong> Pass by reference can make code harder to understand and debug. Use it sparingly and document when you do.
+            </div>
+        </section>
+
+        <!-- Arrays -->
+        <section id="arrays" class="topic-section">
+            <h2>5. Arrays</h2>
+
+            <h3>Array Creation and Access</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Indexed arrays
+$fruits = ["apple", "banana", "orange"];
+$numbers = array(1, 2, 3, 4, 5);  // Old syntax
+
+echo $fruits[0];  // "apple"
+echo $numbers[2]; // 3
+
+// Associative arrays
+$person = [
+    "name" => "John Doe",
+    "age" => 30,
+    "email" => "john@example.com"
+];
+
+echo $person["name"];  // "John Doe"
+
+// Multi-dimensional arrays
+$users = [
+    [
+        "name" => "John",
+        "email" => "john@example.com",
+        "roles" => ["admin", "editor"]
+    ],
+    [
+        "name" => "Jane",
+        "email" => "jane@example.com",
+        "roles" => ["user"]
+    ]
+];
+
+echo $users[0]["name"];      // "John"
+echo $users[0]["roles"][0];  // "admin"
+
+// Array destructuring (PHP 7.1+)
+[$first, $second, $third] = $fruits;
+echo $first;  // "apple"
+
+// Associative array destructuring
+["name" => $name, "age" => $age] = $person;
+echo $name;  // "John Doe"
+?&gt;</code></pre>
+            </div>
+
+            <h3>Array Manipulation</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$arr = [1, 2, 3];
+
+// Adding elements
+$arr[] = 4;              // Append to end
+array_push($arr, 5, 6);  // Append multiple
+array_unshift($arr, 0);  // Prepend
+
+// Removing elements
+$last = array_pop($arr);     // Remove and return last
+$first = array_shift($arr);  // Remove and return first
+unset($arr[2]);              // Remove by index
+
+// Merging arrays
+$arr1 = [1, 2, 3];
+$arr2 = [4, 5, 6];
+$merged = array_merge($arr1, $arr2);  // [1, 2, 3, 4, 5, 6]
+$combined = [...$arr1, ...$arr2];     // Spread operator (PHP 7.4+)
+
+// Slicing and splicing
+$slice = array_slice($arr, 1, 3);  // Get portion
+array_splice($arr, 1, 2, [10, 20]); // Replace portion
+
+// Searching
+$key = array_search("banana", $fruits);  // Returns key
+$exists = in_array("apple", $fruits);    // Returns boolean
+$hasKey = array_key_exists("name", $person);
+
+// Sorting
+$numbers = [3, 1, 4, 1, 5, 9, 2, 6];
+sort($numbers);      // Sort values ascending
+rsort($numbers);     // Sort values descending
+asort($numbers);     // Sort maintaining keys
+ksort($numbers);     // Sort by keys
+usort($numbers, fn($a, $b) => $a <=> $b);  // Custom sort
+?&gt;</code></pre>
+            </div>
+
+            <h3>Array Functions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$numbers = [1, 2, 3, 4, 5];
+
+// Map: Transform each element
+$squared = array_map(fn($n) => $n ** 2, $numbers);
+// [1, 4, 9, 16, 25]
+
+// Filter: Keep elements matching condition
+$evens = array_filter($numbers, fn($n) => $n % 2 === 0);
+// [2, 4]
+
+// Reduce: Combine all elements into single value
+$sum = array_reduce($numbers, fn($carry, $n) => $carry + $n, 0);
+// 15
+
+// Array walking
+array_walk($numbers, function(&$value, $key) {
+    $value *= 2;
+});
+
+// Combining arrays
+$keys = ['a', 'b', 'c'];
+$values = [1, 2, 3];
+$combined = array_combine($keys, $values);
+// ['a' => 1, 'b' => 2, 'c' => 3]
+
+// Flipping arrays
+$flipped = array_flip($combined);
+// [1 => 'a', 2 => 'b', 3 => 'c']
+
+// Chunking
+$chunks = array_chunk($numbers, 2);
+// [[1, 2], [3, 4], [5]]
+
+// Unique values
+$unique = array_unique([1, 2, 2, 3, 3, 3]);
+// [1, 2, 3]
+
+// Counting values
+$counted = array_count_values([1, 1, 2, 2, 2, 3]);
+// [1 => 2, 2 => 3, 3 => 1]
+
+// Array info
+count($numbers);      // Number of elements
+empty($numbers);      // Check if empty
+is_array($numbers);   // Type check
+?&gt;</code></pre>
+            </div>
+
+            <h3>Array Iteration Patterns</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$users = [
+    ['name' => 'John', 'age' => 30],
+    ['name' => 'Jane', 'age' => 25],
+    ['name' => 'Bob', 'age' => 35]
+];
+
+// Extract specific column
+$names = array_column($users, 'name');
+// ['John', 'Jane', 'Bob']
+
+// Extract column with custom key
+$byName = array_column($users, null, 'name');
+// ['John' => [...], 'Jane' => [...], 'Bob' => [...]]
+
+// Pluck pattern (Laravel-style)
+function pluck($array, $key) {
+    return array_map(fn($item) => $item[$key] ?? null, $array);
+}
+
+// Group by pattern
+function groupBy($array, $key) {
+    $result = [];
+    foreach ($array as $item) {
+        $result[$item[$key]][] = $item;
+    }
+    return $result;
+}
+
+// Partition: Split into two arrays based on condition
+function partition($array, $callback) {
+    $passed = [];
+    $failed = [];
+    foreach ($array as $key => $value) {
+        if ($callback($value, $key)) {
+            $passed[$key] = $value;
+        } else {
+            $failed[$key] = $value;
+        }
+    }
+    return [$passed, $failed];
+}
+
+[$adults, $minors] = partition($users, fn($u) => $u['age'] >= 30);
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- OOP Basics -->
+        <section id="oop-basics" class="topic-section">
+            <h2>6. OOP Basics</h2>
+
+            <h3>Classes and Objects</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Basic class
+class User {
+    // Properties
+    private string $name;
+    private string $email;
+    protected int $age;
+    public bool $active = true;
+    
+    // Constructor
+    public function __construct(
+        string $name,
+        string $email,
+        int $age = 0
+    ) {
+        $this->name = $name;
+        $this->email = $email;
+        $this->age = $age;
+    }
+    
+    // Methods
+    public function getName(): string {
+        return $this->name;
+    }
+    
+    public function setName(string $name): void {
+        $this->name = $name;
+    }
+    
+    public function getEmail(): string {
+        return $this->email;
+    }
+    
+    // Method chaining
+    public function activate(): self {
+        $this->active = true;
+        return $this;
+    }
+    
+    public function deactivate(): self {
+        $this->active = false;
+        return $this;
+    }
+}
+
+// Creating objects
+$user = new User("John Doe", "john@example.com", 30);
+echo $user->getName();  // "John Doe"
+
+// Method chaining
+$user->activate()->setName("Jane Doe");
+?&gt;</code></pre>
+            </div>
+
+            <h3>Inheritance</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Base class
+class Animal {
+    protected string $name;
+    
+    public function __construct(string $name) {
+        $this->name = $name;
+    }
+    
+    public function makeSound(): string {
+        return "Some generic sound";
+    }
+    
+    public function getName(): string {
+        return $this->name;
+    }
+}
+
+// Child class
+class Dog extends Animal {
+    private string $breed;
+    
+    public function __construct(string $name, string $breed) {
+        parent::__construct($name);  // Call parent constructor
+        $this->breed = $breed;
+    }
+    
+    // Override parent method
+    public function makeSound(): string {
+        return "Woof!";
+    }
+    
+    public function getBreed(): string {
+        return $this->breed;
+    }
+    
+    // Add new method
+    public function fetch(): string {
+        return "{$this->name} is fetching!";
+    }
+}
+
+$dog = new Dog("Buddy", "Golden Retriever");
+echo $dog->makeSound();  // "Woof!"
+echo $dog->fetch();      // "Buddy is fetching!"
+
+// Final classes and methods
+final class CannotExtend {
+    // This class cannot be extended
+}
+
+class BaseClass {
+    final public function cannotOverride() {
+        // This method cannot be overridden
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>Abstract Classes and Interfaces</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Abstract class
+abstract class Shape {
+    protected string $color;
+    
+    public function __construct(string $color) {
+        $this->color = $color;
+    }
+    
+    // Abstract method (must be implemented by child)
+    abstract public function calculateArea(): float;
+    
+    // Concrete method
+    public function getColor(): string {
+        return $this->color;
+    }
+}
+
+class Circle extends Shape {
+    private float $radius;
+    
+    public function __construct(string $color, float $radius) {
+        parent::__construct($color);
+        $this->radius = $radius;
+    }
+    
+    public function calculateArea(): float {
+        return pi() * $this->radius ** 2;
+    }
+}
+
+// Interface
+interface Drawable {
+    public function draw(): string;
+}
+
+interface Colorable {
+    public function setColor(string $color): void;
+    public function getColor(): string;
+}
+
+// Implementing multiple interfaces
+class Rectangle implements Drawable, Colorable {
+    private string $color;
+    private float $width;
+    private float $height;
+    
+    public function __construct(float $width, float $height) {
+        $this->width = $width;
+        $this->height = $height;
+    }
+    
+    public function draw(): string {
+        return "Drawing a {$this->color} rectangle";
+    }
+    
+    public function setColor(string $color): void {
+        $this->color = $color;
+    }
+    
+    public function getColor(): string {
+        return $this->color;
+    }
+}
+
+// Interface inheritance
+interface Renderable extends Drawable {
+    public function render(): string;
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>Static Members and Visibility</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Database {
+    // Class constants
+    public const VERSION = '1.0';
+    private const MAX_CONNECTIONS = 100;
+    
+    // Static properties
+    private static int $connectionCount = 0;
+    private static ?self $instance = null;
+    
+    // Static methods
+    public static function connect(): void {
+        self::$connectionCount++;
+    }
+    
+    public static function getConnectionCount(): int {
+        return self::$connectionCount;
+    }
+    
+    // Singleton pattern
+    public static function getInstance(): self {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    private function __construct() {
+        // Private constructor for singleton
+    }
+}
+
+// Accessing static members
+echo Database::VERSION;  // "1.0"
+Database::connect();
+echo Database::getConnectionCount();  // 1
+
+$db = Database::getInstance();
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Error Handling -->
+        <section id="error-handling" class="topic-section">
+            <h2>7. Error Handling</h2>
+
+            <h3>Try-Catch-Finally</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Basic try-catch
+try {
+    $result = riskyOperation();
+    echo "Success: $result";
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+// Multiple catch blocks
+try {
+    $file = new SplFileObject('nonexistent.txt');
+} catch (RuntimeException $e) {
+    echo "Runtime error: " . $e->getMessage();
+} catch (Exception $e) {
+    echo "General error: " . $e->getMessage();
+}
+
+// Catch multiple exception types (PHP 7.1+)
+try {
+    // code
+} catch (InvalidArgumentException | LogicException $e) {
+    echo "Argument or logic error: " . $e->getMessage();
+}
+
+// Finally block (always executes)
+try {
+    $file = fopen('data.txt', 'r');
+    $content = fread($file, 1024);
+} catch (Exception $e) {
+    echo "Error reading file";
+} finally {
+    if (isset($file) && $file) {
+        fclose($file);
+    }
+    echo "Cleanup complete";
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>Custom Exceptions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Custom exception class
+class ValidationException extends Exception {
+    private array $errors;
+    
+    public function __construct(array $errors, string $message = "Validation failed") {
+        parent::__construct($message);
+        $this->errors = $errors;
+    }
+    
+    public function getErrors(): array {
+        return $this->errors;
+    }
+}
+
+class PaymentException extends Exception {
+    private string $transactionId;
+    
+    public function __construct(
+        string $message,
+        string $transactionId,
+        int $code = 0,
+        ?Throwable $previous = null
+    ) {
+        parent::__construct($message, $code, $previous);
+        $this->transactionId = $transactionId;
+    }
+    
+    public function getTransactionId(): string {
+        return $this->transactionId;
+    }
+}
+
+// Using custom exceptions
+function processPayment(array $data): void {
+    $errors = [];
+    
+    if (empty($data['amount'])) {
+        $errors['amount'] = 'Amount is required';
+    }
+    
+    if (empty($data['card'])) {
+        $errors['card'] = 'Card number is required';
+    }
+    
+    if (!empty($errors)) {
+        throw new ValidationException($errors);
+    }
+}
+
+// Handling custom exceptions
+try {
+    processPayment(['amount' => 100]);
+} catch (ValidationException $e) {
+    foreach ($e->getErrors() as $field => $error) {
+        echo "$field: $error\n";
+    }
+} catch (PaymentException $e) {
+    echo "Transaction {$e->getTransactionId()} failed";
+}
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Always use specific exception types and provide meaningful error messages. Create custom exceptions for domain-specific errors.
+            </div>
+        </section>
+
+        <!-- Magic Methods -->
+        <section id="magic-methods" class="topic-section">
+            <h2>8. Magic Methods</h2>
+
+            <h3>Common Magic Methods</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class MagicExample {
+    private array $data = [];
+    
+    // Constructor
+    public function __construct(array $data = []) {
+        $this->data = $data;
+    }
+    
+    // Destructor (called when object is destroyed)
+    public function __destruct() {
+        echo "Object destroyed\n";
+    }
+    
+    // Get inaccessible property
+    public function __get(string $name) {
+        return $this->data[$name] ?? null;
+    }
+    
+    // Set inaccessible property
+    public function __set(string $name, $value): void {
+        $this->data[$name] = $value;
+    }
+    
+    // Check if inaccessible property is set
+    public function __isset(string $name): bool {
+        return isset($this->data[$name]);
+    }
+    
+    // Unset inaccessible property
+    public function __unset(string $name): void {
+        unset($this->data[$name]);
+    }
+    
+    // Call inaccessible method
+    public function __call(string $name, array $arguments) {
+        echo "Called method: $name";
+    }
+    
+    // Call inaccessible static method
+    public static function __callStatic(string $name, array $arguments) {
+        echo "Called static method: $name";
+    }
+    
+    // Convert to string
+    public function __toString(): string {
+        return json_encode($this->data);
+    }
+    
+    // Invoke object as function
+    public function __invoke(...$args) {
+        return "Called with args: " . implode(', ', $args);
+    }
+}
+
+// Usage examples
+$obj = new MagicExample(['name' => 'John']);
+echo $obj->name;  // __get
+$obj->email = 'john@example.com';  // __set
+echo $obj;  // __toString
+echo $obj('test');  // __invoke
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Constants -->
+        <section id="constants" class="topic-section">
+            <h2>9. Constants</h2>
+
+            <h3>Defining Constants</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Global constants
+define('APP_NAME', 'My Application');
+define('VERSION', '1.0.0');
+define('DEBUG', true);
+
+echo APP_NAME;  // "My Application"
+
+// Const keyword (preferred, compile-time)
+const DATABASE_HOST = 'localhost';
+const DATABASE_PORT = 3306;
+
+// Array constants (PHP 5.6+)
+const ALLOWED_EXTENSIONS = ['jpg', 'png', 'gif'];
+define('HTTP_CODES', [
+    200 => 'OK',
+    404 => 'Not Found',
+    500 => 'Internal Server Error'
+]);
+
+// Magic constants
+echo __LINE__;       // Current line number
+echo __FILE__;       // Full path and filename
+echo __DIR__;        // Directory of the file
+echo __FUNCTION__;   // Function name
+echo __CLASS__;      // Class name
+echo __METHOD__;     // Class method name
+echo __NAMESPACE__;  // Current namespace
+echo __TRAIT__;      // Trait name
+?&gt;</code></pre>
+            </div>
+
+            <h3>Class Constants</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Status {
+    // Class constants
+    public const PENDING = 'pending';
+    public const ACTIVE = 'active';
+    public const INACTIVE = 'inactive';
+    public const DELETED = 'deleted';
+    
+    // Visibility modifiers (PHP 7.1+)
+    private const SECRET = 'secret_value';
+    protected const INTERNAL = 'internal_value';
+    
+    public static function getAll(): array {
+        return [
+            self::PENDING,
+            self::ACTIVE,
+            self::INACTIVE,
+            self::DELETED
+        ];
+    }
+}
+
+// Accessing class constants
+echo Status::ACTIVE;  // "active"
+
+// Native Enums (PHP 8.1+)
+enum PaymentStatus: string {
+    case PENDING = 'pending';
+    case COMPLETED = 'completed';
+    case FAILED = 'failed';
+    
+    public function label(): string {
+        return match($this) {
+            self::PENDING => 'Pending Payment',
+            self::COMPLETED => 'Payment Completed',
+            self::FAILED => 'Payment Failed'
+        };
+    }
+}
+
+$status = PaymentStatus::COMPLETED;
+echo $status->value;   // "completed"
+echo $status->label(); // "Payment Completed"
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <!-- Traits -->
+        <section id="traits" class="topic-section">
+            <h2>10. Traits</h2>
+
+            <h3>Basic Trait Usage</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Define a trait
+trait Timestampable {
+    protected ?DateTime $createdAt = null;
+    protected ?DateTime $updatedAt = null;
+    
+    public function setCreatedAt(DateTime $date): void {
+        $this->createdAt = $date;
+    }
+    
+    public function setUpdatedAt(DateTime $date): void {
+        $this->updatedAt = $date;
+    }
+    
+    public function touch(): void {
+        $this->updatedAt = new DateTime();
+    }
+}
+
+trait SoftDeletes {
+    protected ?DateTime $deletedAt = null;
+    
+    public function delete(): void {
+        $this->deletedAt = new DateTime();
+    }
+    
+    public function restore(): void {
+        $this->deletedAt = null;
+    }
+    
+    public function isDeleted(): bool {
+        return $this->deletedAt !== null;
+    }
+}
+
+// Use traits in a class
+class Post {
+    use Timestampable, SoftDeletes;
+    
+    private string $title;
+    private string $content;
+    
+    public function __construct(string $title, string $content) {
+        $this->title = $title;
+        $this->content = $content;
+        $this->setCreatedAt(new DateTime());
+    }
+}
+
+$post = new Post('My Post', 'Content here');
+$post->touch();
+$post->delete();
+echo $post->isDeleted() ? 'Deleted' : 'Active';
+?&gt;</code></pre>
+            </div>
+
+            <h3>Trait Conflict Resolution</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+trait Logger {
+    public function log(string $message): void {
+        echo "[Logger] $message\n";
+    }
+}
+
+trait Debugger {
+    public function log(string $message): void {
+        echo "[Debugger] $message\n";
+    }
+}
+
+class Application {
+    // Resolve conflicts
+    use Logger, Debugger {
+        // Use Logger's log instead of Debugger's
+        Logger::log insteadof Debugger;
+        
+        // Create alias for Debugger's log
+        Debugger::log as debugLog;
+    }
+}
+
+$app = new Application();
+$app->log('Regular log');      // Uses Logger::log
+$app->debugLog('Debug log');   // Uses Debugger::log
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 When to Use Traits:</strong> Use traits for horizontal code reuse across unrelated classes. Don't overuse them - prefer composition over complex trait hierarchies.
+            </div>
+        </section>
+
+        <!-- Namespaces -->
+        <section id="namespaces" class="topic-section">
+            <h2>11. Namespaces</h2>
+
+            <h3>Declaring and Using Namespaces</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Declaring a namespace (must be first statement)
+namespace App\Models;
+
+class User {
+    public string $name;
+}
+
+// Using fully qualified name
+$user = new \App\Models\User();
+
+// Importing with 'use'
+use App\Models\User;
+use App\Models\Post;
+
+$user = new User();
+$post = new Post();
+
+// Aliasing
+use App\Models\User as UserModel;
+use App\Services\User as UserService;
+
+$model = new UserModel();
+$service = new UserService();
+
+// Importing multiple classes from same namespace
+use App\Models\{User, Post, Comment};
+
+// Importing functions and constants
+use function App\Helpers\formatDate;
+use const App\Constants\MAX_UPLOAD_SIZE;
+?&gt;</code></pre>
+            </div>
+
+            <h3>Namespace Organization</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// File: src/Controllers/UserController.php
+namespace App\Controllers;
+
+use App\Models\User;
+use App\Services\UserService;
+
+class UserController {
+    private UserService $userService;
+    
+    public function __construct(UserService $userService) {
+        $this->userService = $userService;
+    }
+    
+    public function index(): array {
+        return $this->userService->getAll();
+    }
+}
+
+// File: src/Models/User.php
+namespace App\Models;
+
+class User {
+    private int $id;
+    private string $name;
+    private string $email;
+    
+    public function __construct(int $id, string $name, string $email) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->email = $email;
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>Autoloading with PSR-4</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// composer.json autoloading configuration
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
+
+// After running: composer dump-autoload
+require 'vendor/autoload.php';
+
+// PSR-4 autoloading example
+// Class: App\Controllers\UserController
+// File:  src/Controllers/UserController.php
+
+// Now you can use classes without manual requires
+use App\Models\User;
+use App\Controllers\UserController;
+
+$user = new User(1, 'John', 'john@example.com');
+$controller = new UserController(new UserService());
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Follow PSR-4 autoloading standards for consistent namespace-to-directory mapping. Use Composer for automatic autoloading in modern PHP projects.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Laravel Interview Bank - PHP Core Fundamentals</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">Comprehensive guide covering all essential PHP concepts with practical examples</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
