@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps & Git - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #34495e;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #3498db;
+        }
+        .topic-section h3 {
+            color: #34495e;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #2c3e50;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⚙️ DevOps & Git</h1>
+        <p>Comprehensive answers covering Git commands, branching strategies, CI/CD, GitHub Actions, and deployment</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#git-basics">1. Git Basics</a></li>
+                <li><a href="#fetch-vs-pull">2. Fetch vs Pull</a></li>
+                <li><a href="#merge-vs-rebase">3. Merge vs Rebase</a></li>
+                <li><a href="#cherry-pick">4. Cherry-Pick</a></li>
+                <li><a href="#git-reset">5. Git Reset</a></li>
+                <li><a href="#branching-strategies">6. Branching Strategies</a></li>
+                <li><a href="#conflict-resolution">7. Conflict Resolution</a></li>
+                <li><a href="#git-workflows">8. Git Workflows</a></li>
+                <li><a href="#cicd-pipelines">9. CI/CD Pipelines</a></li>
+                <li><a href="#github-actions">10. GitHub Actions</a></li>
+                <li><a href="#deployment">11. Deployment</a></li>
+                <li><a href="#versioning">12. Versioning</a></li>
+                <li><a href="#project-lifecycle">13. Project Lifecycle</a></li>
+                <li><a href="#git-advanced">14. Advanced Git</a></li>
+                <li><a href="#best-practices">15. Best Practices</a></li>
+            </ul>
+        </div>
+
+        <section id="git-basics" class="topic-section">
+            <h2>1. Git Basics</h2>
+            <p>Git is a distributed version control system for tracking changes in source code during software development.</p>
+            <div class="code-example"><pre><code class="language-bash"># Initialize repository
+git init
+
+# Clone repository
+git clone https://github.com/user/repo.git
+
+# Check status
+git status
+
+# Stage files
+git add file.txt
+git add .
+
+# Commit changes
+git commit -m "Commit message"
+
+# View history
+git log
+git log --oneline --graph
+
+# Push/Pull
+git push origin main
+git pull origin main</code></pre></div>
+        </section>
+
+        <section id="fetch-vs-pull" class="topic-section">
+            <h2>2. Fetch vs Pull</h2>
+            <h3>Git Fetch</h3>
+            <p>Downloads changes from remote without merging.</p>
+            <div class="code-example"><pre><code class="language-bash"># Fetch from remote
+git fetch origin
+git fetch --all
+git fetch --prune
+
+# View fetched changes
+git log origin/main
+git diff origin/main</code></pre></div>
+            
+            <h3>Git Pull</h3>
+            <p>Fetch + Merge in one command.</p>
+            <div class="code-example"><pre><code class="language-bash"># Pull with merge
+git pull origin main
+
+# Pull with rebase
+git pull --rebase origin main</code></pre></div>
+            
+            <table>
+                <tr><th>Aspect</th><th>Fetch</th><th>Pull</th></tr>
+                <tr><td>Operation</td><td>Download only</td><td>Download + merge</td></tr>
+                <tr><td>Safety</td><td>Safe</td><td>Can cause conflicts</td></tr>
+                <tr><td>Use Case</td><td>Review before merge</td><td>Quick update</td></tr>
+            </table>
+        </section>
+
+        <section id="merge-vs-rebase" class="topic-section">
+            <h2>3. Merge vs Rebase</h2>
+            <h3>Git Merge</h3>
+            <div class="code-example"><pre><code class="language-bash"># Merge branch
+git checkout main
+git merge feature-branch
+
+# No fast-forward
+git merge --no-ff feature-branch
+
+# Squash merge
+git merge --squash feature-branch</code></pre></div>
+            
+            <h3>Git Rebase</h3>
+            <div class="code-example"><pre><code class="language-bash"># Rebase onto main
+git checkout feature-branch
+git rebase main
+
+# Interactive rebase
+git rebase -i HEAD~5
+
+# Continue/abort
+git rebase --continue
+git rebase --abort</code></pre></div>
+            
+            <div class="warning-box"><strong>⚠️ Golden Rule:</strong> Never rebase public branches!</div>
+        </section>
+
+        <section id="cherry-pick" class="topic-section">
+            <h2>4. Cherry-Pick</h2>
+            <p>Apply specific commits from one branch to another.</p>
+            <div class="code-example"><pre><code class="language-bash"># Cherry-pick commit
+git cherry-pick abc123
+
+# Multiple commits
+git cherry-pick abc123 def456
+
+# Range of commits
+git cherry-pick abc123..def456
+
+# Continue/abort
+git cherry-pick --continue
+git cherry-pick --abort</code></pre></div>
+        </section>
+
+        <section id="git-reset" class="topic-section">
+            <h2>5. Git Reset (Soft, Mixed, Hard)</h2>
+            <h3>Soft Reset</h3>
+            <p>Move HEAD, keep changes staged.</p>
+            <div class="code-example"><pre><code class="language-bash">git reset --soft HEAD~1</code></pre></div>
+            
+            <h3>Mixed Reset (default)</h3>
+            <p>Move HEAD, unstage changes.</p>
+            <div class="code-example"><pre><code class="language-bash">git reset HEAD~1
+git reset --mixed HEAD~1</code></pre></div>
+            
+            <h3>Hard Reset</h3>
+            <p>Move HEAD, discard all changes.</p>
+            <div class="code-example"><pre><code class="language-bash">git reset --hard HEAD~1
+git reset --hard origin/main</code></pre></div>
+            
+            <div class="warning-box"><strong>⚠️ DANGER:</strong> Hard reset permanently deletes changes!</div>
+        </section>
+
+        <section id="branching-strategies" class="topic-section">
+            <h2>6. Branching Strategies</h2>
+            <h3>1. Git Flow</h3>
+            <p>Robust model for scheduled releases.</p>
+            <div class="code-example"><pre><code class="language-plaintext">main (production)
+├── develop (integration)
+    ├── feature/* (new features)
+    ├── release/* (release prep)
+    └── hotfix/* (production fixes)</code></pre></div>
+            
+            <h3>2. GitHub Flow</h3>
+            <p>Simpler workflow for continuous deployment.</p>
+            <div class="code-example"><pre><code class="language-plaintext">main (always deployable)
+├── feature-1
+├── feature-2
+└── bugfix-1</code></pre></div>
+            
+            <h3>3. Trunk-Based Development</h3>
+            <p>Short-lived branches, frequent integration.</p>
+        </section>
+
+        <section id="conflict-resolution" class="topic-section">
+            <h2>7. Conflict Resolution</h2>
+            <h3>Identifying Conflicts</h3>
+            <div class="code-example"><pre><code class="language-bash">git merge feature-branch
+# CONFLICT in file.txt
+
+git status
+# Shows unmerged paths</code></pre></div>
+            
+            <h3>Conflict Markers</h3>
+            <div class="code-example"><pre><code class="language-plaintext"><<<<<<< HEAD
+Your changes
+=======
+Their changes
+>>>>>>> feature-branch</code></pre></div>
+            
+            <h3>Resolving</h3>
+            <div class="code-example"><pre><code class="language-bash"># Edit file, remove markers
+git add file.txt
+git commit
+
+# Or accept one side
+git checkout --ours file.txt
+git checkout --theirs file.txt
+
+# Abort if needed
+git merge --abort</code></pre></div>
+        </section>
+
+        <section id="git-workflows" class="topic-section">
+            <h2>8. Git Workflows</h2>
+            <h3>Pull Request Workflow</h3>
+            <div class="code-example"><pre><code class="language-bash"># Create feature branch
+git checkout -b feature/new-feature
+
+# Make changes
+git add .
+git commit -m "Add feature"
+
+# Push and create PR
+git push -u origin feature/new-feature
+
+# After review, merge via GitHub UI</code></pre></div>
+            
+            <h3>Forking Workflow</h3>
+            <div class="code-example"><pre><code class="language-bash"># Fork on GitHub, then clone
+git clone https://github.com/you/repo.git
+
+# Add upstream
+git remote add upstream https://github.com/original/repo.git
+
+# Keep fork updated
+git fetch upstream
+git merge upstream/main</code></pre></div>
+        </section>
+
+        <section id="cicd-pipelines" class="topic-section">
+            <h2>9. CI/CD Pipelines</h2>
+            <p><strong>CI:</strong> Automatically build and test code changes.</p>
+            <p><strong>CD:</strong> Automatically deploy to production.</p>
+            
+            <h3>Pipeline Stages</h3>
+            <div class="code-example"><pre><code class="language-plaintext">1. Source → 2. Build → 3. Test → 4. Deploy → 5. Monitor</code></pre></div>
+            
+            <h3>GitLab CI Example</h3>
+            <div class="code-example"><pre><code class="language-yaml"># .gitlab-ci.yml
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+test:
+  stage: test
+  script:
+    - npm test
+
+deploy:
+  stage: deploy
+  script:
+    - npm run deploy
+  only:
+    - main</code></pre></div>
+        </section>
+
+        <section id="github-actions" class="topic-section">
+            <h2>10. GitHub Actions</h2>
+            <h3>Basic Workflow</h3>
+            <div class="code-example"><pre><code class="language-yaml"># .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - run: npm ci
+    - run: npm test
+    - run: npm run build</code></pre></div>
+            
+            <h3>Deploy Workflow</h3>
+            <div class="code-example"><pre><code class="language-yaml">deploy:
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/main'
+  steps:
+    - uses: actions/checkout@v3
+    - name: Deploy
+      run: npm run deploy
+      env:
+        API_KEY: ${{ secrets.API_KEY }}</code></pre></div>
+        </section>
+
+        <section id="deployment" class="topic-section">
+            <h2>11. Deployment Processes</h2>
+            <h3>Deployment Strategies</h3>
+            
+            <h4>1. Blue-Green Deployment</h4>
+            <p>Two identical environments. Deploy to inactive, then switch traffic.</p>
+            
+            <h4>2. Rolling Deployment</h4>
+            <p>Gradually replace instances one at a time.</p>
+            
+            <h4>3. Canary Deployment</h4>
+            <p>Deploy to small subset first, monitor, then roll out to all.</p>
+            
+            <h3>Docker Deployment</h3>
+            <div class="code-example"><pre><code class="language-bash"># Build and push
+docker build -t myapp:1.0.0 .
+docker push registry.com/myapp:1.0.0
+
+# Deploy with compose
+docker-compose pull
+docker-compose up -d</code></pre></div>
+            
+            <h3>Zero-Downtime with PM2</h3>
+            <div class="code-example"><pre><code class="language-bash">pm2 reload ecosystem.config.js
+pm2 gracefulReload myapp</code></pre></div>
+        </section>
+
+        <section id="versioning" class="topic-section">
+            <h2>12. Versioning (Semantic Versioning)</h2>
+            <p>Format: <strong>MAJOR.MINOR.PATCH</strong> (e.g., 2.3.1)</p>
+            
+            <table>
+                <tr><th>Version</th><th>When to Increment</th><th>Example</th></tr>
+                <tr><td>MAJOR</td><td>Breaking changes</td><td>1.5.2 → 2.0.0</td></tr>
+                <tr><td>MINOR</td><td>New features (compatible)</td><td>1.5.2 → 1.6.0</td></tr>
+                <tr><td>PATCH</td><td>Bug fixes</td><td>1.5.2 → 1.5.3</td></tr>
+            </table>
+            
+            <h3>Git Tags</h3>
+            <div class="code-example"><pre><code class="language-bash"># Create tag
+git tag -a v1.0.0 -m "Version 1.0.0"
+
+# Push tags
+git push origin --tags
+
+# List tags
+git tag
+
+# Checkout tag
+git checkout v1.0.0</code></pre></div>
+            
+            <h3>Conventional Commits</h3>
+            <div class="code-example"><pre><code class="language-plaintext">feat: Add user authentication
+fix: Resolve login bug
+docs: Update README
+style: Format code
+refactor: Restructure auth module
+test: Add login tests
+chore: Update dependencies
+
+BREAKING CHANGE: Remove deprecated API</code></pre></div>
+        </section>
+
+        <section id="project-lifecycle" class="topic-section">
+            <h2>13. Project Lifecycle Management</h2>
+            
+            <h3>Development Phases</h3>
+            <ol>
+                <li><strong>Planning:</strong> Requirements gathering, architecture design</li>
+                <li><strong>Development:</strong> Feature branches, code reviews, testing</li>
+                <li><strong>Testing:</strong> QA in staging environment</li>
+                <li><strong>Release:</strong> Version tagging, deployment to production</li>
+                <li><strong>Maintenance:</strong> Bug fixes, security patches</li>
+            </ol>
+            
+            <h3>Release Process</h3>
+            <div class="code-example"><pre><code class="language-bash"># 1. Create release branch
+git checkout -b release/1.0.0 develop
+
+# 2. Finalize version
+npm version 1.0.0
+
+# 3. Merge to main
+git checkout main
+git merge --no-ff release/1.0.0
+
+# 4. Tag release
+git tag -a v1.0.0 -m "Release 1.0.0"
+
+# 5. Merge back to develop
+git checkout develop
+git merge --no-ff release/1.0.0
+
+# 6. Push everything
+git push origin main develop --tags</code></pre></div>
+            
+            <h3>Environment Management</h3>
+            <table>
+                <tr><th>Environment</th><th>Branch</th><th>Purpose</th></tr>
+                <tr><td>Development</td><td>develop/feature/*</td><td>Active development</td></tr>
+                <tr><td>Staging</td><td>develop/release/*</td><td>QA testing</td></tr>
+                <tr><td>Production</td><td>main</td><td>Live system</td></tr>
+            </table>
+        </section>
+
+        <section id="git-advanced" class="topic-section">
+            <h2>14. Advanced Git Commands</h2>
+            
+            <h3>Git Stash</h3>
+            <div class="code-example"><pre><code class="language-bash"># Stash changes
+git stash
+git stash save "Work in progress"
+
+# List stashes
+git stash list
+
+# Apply stash
+git stash apply
+git stash pop
+
+# Apply specific stash
+git stash apply stash@{2}
+
+# Delete stash
+git stash drop
+git stash clear</code></pre></div>
+            
+            <h3>Git Reflog</h3>
+            <div class="code-example"><pre><code class="language-bash"># View reflog
+git reflog
+
+# Recover lost commit
+git reset --hard HEAD@{2}
+
+# Create branch from reflog
+git branch recovered HEAD@{5}</code></pre></div>
+            
+            <h3>Git Bisect</h3>
+            <div class="code-example"><pre><code class="language-bash"># Start bisect
+git bisect start
+git bisect bad                # Current commit is bad
+git bisect good v1.0.0        # This commit was good
+
+# Git will checkout middle commit
+# Test and mark
+git bisect good   # or git bisect bad
+
+# Repeat until found
+git bisect reset  # End bisect</code></pre></div>
+            
+            <h3>Git Submodules</h3>
+            <div class="code-example"><pre><code class="language-bash"># Add submodule
+git submodule add https://github.com/user/lib.git lib
+
+# Clone with submodules
+git clone --recurse-submodules repo-url
+
+# Update submodules
+git submodule update --init --recursive
+git submodule update --remote</code></pre></div>
+            
+            <h3>Git Worktree</h3>
+            <div class="code-example"><pre><code class="language-bash"># Add worktree
+git worktree add ../hotfix hotfix/bug-123
+
+# List worktrees
+git worktree list
+
+# Remove worktree
+git worktree remove ../hotfix</code></pre></div>
+        </section>
+
+        <section id="best-practices" class="topic-section">
+            <h2>15. DevOps Best Practices</h2>
+            
+            <h3>Git Best Practices</h3>
+            <ul>
+                <li><strong>Commit Often:</strong> Small, atomic commits are easier to review and revert</li>
+                <li><strong>Write Good Commit Messages:</strong> Clear, descriptive messages</li>
+                <li><strong>Use Branches:</strong> Never commit directly to main</li>
+                <li><strong>Pull Before Push:</strong> Always sync before pushing</li>
+                <li><strong>Review Code:</strong> Use pull requests for all changes</li>
+                <li><strong>Tag Releases:</strong> Use semantic versioning</li>
+                <li><strong>Keep History Clean:</strong> Use rebase for feature branches</li>
+            </ul>
+            
+            <h3>CI/CD Best Practices</h3>
+            <ul>
+                <li><strong>Automate Everything:</strong> Build, test, deploy</li>
+                <li><strong>Fast Feedback:</strong> Keep pipeline under 10 minutes</li>
+                <li><strong>Test Pyramid:</strong> More unit tests, fewer E2E tests</li>
+                <li><strong>Deploy Often:</strong> Small, frequent releases</li>
+                <li><strong>Monitor Everything:</strong> Logs, metrics, alerts</li>
+                <li><strong>Rollback Ready:</strong> Always have a rollback plan</li>
+            </ul>
+            
+            <h3>Deployment Best Practices</h3>
+            <ul>
+                <li><strong>Infrastructure as Code:</strong> Version control infrastructure</li>
+                <li><strong>Immutable Infrastructure:</strong> Never modify running servers</li>
+                <li><strong>Database Migrations:</strong> Always backward compatible</li>
+                <li><strong>Feature Flags:</strong> Control feature rollout</li>
+                <li><strong>Health Checks:</strong> Automated monitoring</li>
+                <li><strong>Blue-Green/Canary:</strong> Safe deployment strategies</li>
+                <li><strong>Secrets Management:</strong> Never commit secrets</li>
+            </ul>
+            
+            <h3>Code Review Checklist</h3>
+            <div class="code-example"><pre><code class="language-plaintext">✓ Code follows project conventions
+✓ Tests are included and passing
+✓ Documentation updated
+✓ No secrets or credentials committed
+✓ Error handling implemented
+✓ Performance considered
+✓ Security vulnerabilities checked
+✓ Backward compatibility maintained</code></pre></div>
+            
+            <div class="success-box">
+                <strong>✅ Remember:</strong> DevOps is about culture, automation, measurement, and sharing. Focus on continuous improvement.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Interview Preparation Bank. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
