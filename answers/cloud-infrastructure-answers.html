@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Infrastructure - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #FF9900 0%, #ff6b6b 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #FF9900;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #cc7a00;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #FF9900;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #cc7a00;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #FF9900;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #FF9900;
+        }
+        .topic-section h3 {
+            color: #cc7a00;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #FF9900;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>☁️ Cloud Infrastructure</h1>
+        <p>Comprehensive answers covering AWS, Docker, Kubernetes, caching, microservices, and scalability</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#lambda">1. AWS Lambda</a></li>
+                <li><a href="#s3">2. AWS S3</a></li>
+                <li><a href="#ec2">3. AWS EC2</a></li>
+                <li><a href="#rds">4. AWS RDS</a></li>
+                <li><a href="#elasticache">5. AWS ElastiCache</a></li>
+                <li><a href="#ses">6. AWS SES</a></li>
+                <li><a href="#sns">7. AWS SNS</a></li>
+                <li><a href="#cognito">8. AWS Cognito</a></li>
+                <li><a href="#docker">9. Docker Basics</a></li>
+                <li><a href="#kubernetes">10. Kubernetes Concepts</a></li>
+                <li><a href="#caching">11. Redis & Memcached</a></li>
+                <li><a href="#microservices">12. Microservices Architecture</a></li>
+                <li><a href="#serverless">13. Serverless Architecture</a></li>
+                <li><a href="#load-balancing">14. Load Balancing</a></li>
+                <li><a href="#scalability">15. Scalability Patterns</a></li>
+            </ul>
+        </div>
+
+        <!-- Lambda -->
+        <section id="lambda" class="topic-section">
+            <h2>1. AWS Lambda</h2>
+            
+            <h3>What is AWS Lambda?</h3>
+            <p>AWS Lambda is a serverless compute service that runs code in response to events without requiring server management. You pay only for the compute time consumed.</p>
+            
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Event-driven execution:</strong> Triggered by AWS services (S3, DynamoDB, API Gateway, etc.)</li>
+                <li><strong>Auto-scaling:</strong> Automatically scales based on request volume</li>
+                <li><strong>Pay-per-use:</strong> Charged only for execution time (100ms increments)</li>
+                <li><strong>Multiple runtimes:</strong> Node.js, Python, Java, Go, Ruby, .NET, custom runtimes</li>
+                <li><strong>Built-in fault tolerance:</strong> Automatic retries and dead-letter queues</li>
+            </ul>
+
+            <h3>Lambda Function Example (Node.js)</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">exports.handler = async (event, context) => {
+    console.log('Event:', JSON.stringify(event));
+    
+    const response = {
+        statusCode: 200,
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({
+            message: 'Hello from Lambda!',
+            input: event
+        })
+    };
+    
+    return response;
+};
+
+// Processing S3 events
+exports.s3Handler = async (event) => {
+    const records = event.Records;
+    
+    for (const record of records) {
+        const bucket = record.s3.bucket.name;
+        const key = decodeURIComponent(record.s3.object.key.replace(/\+/g, ' '));
+        
+        console.log(`Processing file: ${key} from bucket: ${bucket}`);
+        await processFile(bucket, key);
+    }
+    
+    return { statusCode: 200 };
+};</code></pre>
+            </div>
+
+            <h3>Lambda Limitations</h3>
+            <table>
+                <tr>
+                    <th>Resource</th>
+                    <th>Limit</th>
+                </tr>
+                <tr>
+                    <td>Max execution time</td>
+                    <td>15 minutes</td>
+                </tr>
+                <tr>
+                    <td>Memory allocation</td>
+                    <td>128 MB to 10,240 MB</td>
+                </tr>
+                <tr>
+                    <td>Deployment package size</td>
+                    <td>50 MB (zipped), 250 MB (unzipped)</td>
+                </tr>
+                <tr>
+                    <td>Concurrent executions</td>
+                    <td>1,000 (soft limit, can be increased)</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>💡 Use Cases:</strong> API backends, data processing, scheduled tasks, real-time file processing, IoT backends, and event-driven workflows.
+            </div>
+        </section>
+
+        <!-- S3 -->
+        <section id="s3" class="topic-section">
+            <h2>2. AWS S3</h2>
+            
+            <h3>What is S3?</h3>
+            <p>Amazon S3 is an object storage service offering scalability, data availability, security, and performance. It stores data as objects within buckets.</p>
+            
+            <h3>S3 Operations with AWS SDK</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">const AWS = require('aws-sdk');
+const s3 = new AWS.S3();
+
+async function uploadFile(bucket, key, body) {
+    const params = {
+        Bucket: bucket,
+        Key: key,
+        Body: body,
+        ContentType: 'image/jpeg',
+        ACL: 'public-read'
+    };
+    
+    const result = await s3.upload(params).promise();
+    return result.Location;
+}
+
+function getPresignedUrl(bucket, key, expiresIn = 3600) {
+    return s3.getSignedUrl('getObject', {
+        Bucket: bucket,
+        Key: key,
+        Expires: expiresIn
+    });
+}</code></pre>
+            </div>
+
+            <h3>S3 Storage Classes</h3>
+            <table>
+                <tr>
+                    <th>Class</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td>S3 Standard</td>
+                    <td>Frequently accessed data</td>
+                </tr>
+                <tr>
+                    <td>S3 Intelligent-Tiering</td>
+                    <td>Unknown access patterns</td>
+                </tr>
+                <tr>
+                    <td>S3 Glacier</td>
+                    <td>Long-term archive</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- EC2 -->
+        <section id="ec2" class="topic-section">
+            <h2>3. AWS EC2</h2>
+            
+            <h3>What is EC2?</h3>
+            <p>Amazon EC2 provides resizable virtual servers in the cloud with complete control over computing resources.</p>
+            
+            <h3>Instance Types</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td>General Purpose (t3, m5)</td>
+                    <td>Balanced compute, memory, networking</td>
+                </tr>
+                <tr>
+                    <td>Compute Optimized (c5)</td>
+                    <td>High-performance processors</td>
+                </tr>
+                <tr>
+                    <td>Memory Optimized (r5)</td>
+                    <td>Large datasets in memory</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- RDS -->
+        <section id="rds" class="topic-section">
+            <h2>4. AWS RDS</h2>
+            
+            <h3>What is RDS?</h3>
+            <p>Amazon RDS is a managed relational database service supporting MySQL, PostgreSQL, MariaDB, Oracle, SQL Server, and Aurora.</p>
+            
+            <h3>RDS Features</h3>
+            <ul>
+                <li>Automated backups with point-in-time recovery</li>
+                <li>Multi-AZ deployment for high availability</li>
+                <li>Read replicas for read scaling</li>
+                <li>Encryption at rest with AWS KMS</li>
+                <li>Automated patching and upgrades</li>
+            </ul>
+        </section>
+
+        <!-- ElastiCache -->
+        <section id="elasticache" class="topic-section">
+            <h2>5. AWS ElastiCache</h2>
+            
+            <h3>What is ElastiCache?</h3>
+            <p>Amazon ElastiCache is a fully managed in-memory caching service supporting Redis and Memcached.</p>
+            
+            <h3>Redis vs Memcached</h3>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Redis</th>
+                    <th>Memcached</th>
+                </tr>
+                <tr>
+                    <td>Data Types</td>
+                    <td>Complex (lists, sets, hashes)</td>
+                    <td>Simple strings</td>
+                </tr>
+                <tr>
+                    <td>Persistence</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Replication</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- SES -->
+        <section id="ses" class="topic-section">
+            <h2>6. AWS SES</h2>
+            
+            <h3>What is SES?</h3>
+            <p>Amazon SES is a cloud-based email sending service for transactional and marketing emails with high deliverability.</p>
+            
+            <h3>Sending Email</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">const ses = new AWS.SES();
+
+async function sendEmail(to, subject, body) {
+    const params = {
+        Source: 'noreply@example.com',
+        Destination: { ToAddresses: [to] },
+        Message: {
+            Subject: { Data: subject },
+            Body: { Text: { Data: body } }
+        }
+    };
+    
+    return await ses.sendEmail(params).promise();
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- SNS -->
+        <section id="sns" class="topic-section">
+            <h2>7. AWS SNS</h2>
+            
+            <h3>What is SNS?</h3>
+            <p>Amazon SNS is a fully managed pub/sub messaging service for application-to-application and application-to-person communication.</p>
+            
+            <h3>Publishing Messages</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">const sns = new AWS.SNS();
+
+async function publishMessage(topicArn, message) {
+    const params = {
+        TopicArn: topicArn,
+        Message: JSON.stringify(message)
+    };
+    
+    return await sns.publish(params).promise();
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Cognito -->
+        <section id="cognito" class="topic-section">
+            <h2>8. AWS Cognito</h2>
+            
+            <h3>What is AWS Cognito?</h3>
+            <p>Amazon Cognito provides authentication, authorization, and user management for web and mobile apps.</p>
+            
+            <h3>User Authentication</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">const cognito = new AWS.CognitoIdentityServiceProvider();
+
+async function signIn(username, password) {
+    const params = {
+        AuthFlow: 'USER_PASSWORD_AUTH',
+        ClientId: CLIENT_ID,
+        AuthParameters: {
+            USERNAME: username,
+            PASSWORD: password
+        }
+    };
+    
+    const result = await cognito.initiateAuth(params).promise();
+    return result.AuthenticationResult;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Docker -->
+        <section id="docker" class="topic-section">
+            <h2>9. Docker Basics</h2>
+            
+            <h3>What is Docker?</h3>
+            <p>Docker is a platform for developing, shipping, and running applications in containers that package code with dependencies.</p>
+            
+            <h3>Dockerfile Example</h3>
+            <div class="code-example">
+                <pre><code class="language-dockerfile">FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 3000
+CMD ["node", "index.js"]</code></pre>
+            </div>
+
+            <h3>Docker Commands</h3>
+            <div class="code-example">
+                <pre><code class="language-bash"># Build image
+docker build -t myapp:latest .
+
+# Run container
+docker run -d -p 3000:3000 --name myapp myapp:latest
+
+# View logs
+docker logs -f myapp
+
+# Execute command
+docker exec -it myapp sh</code></pre>
+            </div>
+        </section>
+
+        <!-- Kubernetes -->
+        <section id="kubernetes" class="topic-section">
+            <h2>10. Kubernetes Concepts</h2>
+            
+            <h3>What is Kubernetes?</h3>
+            <p>Kubernetes is an open-source container orchestration platform for automating deployment, scaling, and management of containerized applications.</p>
+            
+            <h3>Core Components</h3>
+            <ul>
+                <li><strong>Pod:</strong> Smallest deployable unit, one or more containers</li>
+                <li><strong>Deployment:</strong> Manages replica sets and rolling updates</li>
+                <li><strong>Service:</strong> Network endpoint to access pods</li>
+                <li><strong>ConfigMap:</strong> Configuration data</li>
+                <li><strong>Secret:</strong> Sensitive data like passwords</li>
+                <li><strong>Ingress:</strong> HTTP/HTTPS routing</li>
+            </ul>
+
+            <h3>Deployment Example</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: myapp:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"</code></pre>
+            </div>
+
+            <h3>Service Example</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: myapp
+  ports:
+  - port: 80
+    targetPort: 3000</code></pre>
+            </div>
+        </section>
+
+        <!-- Caching -->
+        <section id="caching" class="topic-section">
+            <h2>11. Redis & Memcached Caching</h2>
+            
+            <h3>Caching Strategies</h3>
+            <ul>
+                <li><strong>Cache-Aside:</strong> Application manages cache, loads from DB on miss</li>
+                <li><strong>Write-Through:</strong> Write to cache and DB simultaneously</li>
+                <li><strong>Write-Behind:</strong> Write to cache first, DB asynchronously</li>
+                <li><strong>Refresh-Ahead:</strong> Proactively refresh before expiration</li>
+            </ul>
+
+            <h3>Redis Cache Implementation</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">const redis = require('redis');
+const client = redis.createClient();
+
+async function getUser(userId) {
+    const cacheKey = `user:${userId}`;
+    
+    // Try cache first
+    let user = await client.get(cacheKey);
+    if (user) {
+        return JSON.parse(user);
+    }
+    
+    // Fetch from database
+    user = await db.users.findById(userId);
+    
+    // Store in cache
+    await client.setEx(cacheKey, 3600, JSON.stringify(user));
+    
+    return user;
+}</code></pre>
+            </div>
+
+            <h3>Cache Invalidation Patterns</h3>
+            <ul>
+                <li><strong>TTL-based:</strong> Automatic expiration after time period</li>
+                <li><strong>Event-based:</strong> Invalidate on data updates</li>
+                <li><strong>Tag-based:</strong> Group related cache entries</li>
+            </ul>
+        </section>
+
+        <!-- Microservices -->
+        <section id="microservices" class="topic-section">
+            <h2>12. Microservices Architecture</h2>
+            
+            <h3>What are Microservices?</h3>
+            <p>Microservices architecture structures an application as a collection of small, independent services that communicate over networks.</p>
+            
+            <h3>Key Principles</h3>
+            <ul>
+                <li><strong>Single Responsibility:</strong> Each service focuses on one business capability</li>
+                <li><strong>Autonomous:</strong> Independent deployment and scaling</li>
+                <li><strong>Decentralized:</strong> Own database per service</li>
+                <li><strong>Resilient:</strong> Failure isolation and graceful degradation</li>
+                <li><strong>Observable:</strong> Logging, monitoring, tracing</li>
+            </ul>
+
+            <h3>Communication Patterns</h3>
+            <table>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>Synchronous (REST)</td>
+                    <td>HTTP request/response</td>
+                    <td>API Gateway to services</td>
+                </tr>
+                <tr>
+                    <td>Asynchronous (Events)</td>
+                    <td>Message queues, pub/sub</td>
+                    <td>Order service publishes events</td>
+                </tr>
+                <tr>
+                    <td>gRPC</td>
+                    <td>High-performance RPC</td>
+                    <td>Service-to-service communication</td>
+                </tr>
+            </table>
+
+            <h3>API Gateway Pattern</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// API Gateway routes requests to microservices
+const express = require('express');
+const httpProxy = require('http-proxy');
+
+const app = express();
+const proxy = httpProxy.createProxyServer();
+
+app.use('/users', (req, res) => {
+    proxy.web(req, res, { target: 'http://user-service:3001' });
+});
+
+app.use('/orders', (req, res) => {
+    proxy.web(req, res, { target: 'http://order-service:3002' });
+});
+
+app.use('/products', (req, res) => {
+    proxy.web(req, res, { target: 'http://product-service:3003' });
+});</code></pre>
+            </div>
+
+            <h3>Service Discovery</h3>
+            <p>Services register themselves and discover other services dynamically using tools like Consul, Eureka, or Kubernetes DNS.</p>
+
+            <div class="warning-box">
+                <strong>⚠️ Challenges:</strong> Distributed data management, network latency, service coordination, testing complexity, and operational overhead.
+            </div>
+        </section>
+
+        <!-- Serverless -->
+        <section id="serverless" class="topic-section">
+            <h2>13. Serverless Architecture</h2>
+            
+            <h3>What is Serverless?</h3>
+            <p>Serverless computing allows building applications without managing servers. Cloud provider handles infrastructure, scaling, and maintenance.</p>
+            
+            <h3>Serverless Components</h3>
+            <ul>
+                <li><strong>Functions as a Service (FaaS):</strong> AWS Lambda, Azure Functions, Google Cloud Functions</li>
+                <li><strong>Backend as a Service (BaaS):</strong> Firebase, AWS Amplify, Supabase</li>
+                <li><strong>API Gateway:</strong> HTTP endpoints for functions</li>
+                <li><strong>Event Sources:</strong> Triggers from various services</li>
+            </ul>
+
+            <h3>Serverless REST API Example</h3>
+            <div class="code-example">
+                <pre><code class="language-yaml"># serverless.yml
+service: my-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+
+functions:
+  getUsers:
+    handler: handlers/users.get
+    events:
+      - http:
+          path: users
+          method: get
+          cors: true
+  
+  createUser:
+    handler: handlers/users.create
+    events:
+      - http:
+          path: users
+          method: post
+          cors: true
+  
+  getUser:
+    handler: handlers/users.getById
+    events:
+      - http:
+          path: users/{id}
+          method: get
+          cors: true</code></pre>
+            </div>
+
+            <h3>Benefits & Trade-offs</h3>
+            <table>
+                <tr>
+                    <th>Benefits</th>
+                    <th>Trade-offs</th>
+                </tr>
+                <tr>
+                    <td>No server management</td>
+                    <td>Cold start latency</td>
+                </tr>
+                <tr>
+                    <td>Auto-scaling</td>
+                    <td>Vendor lock-in</td>
+                </tr>
+                <tr>
+                    <td>Pay per execution</td>
+                    <td>Execution time limits</td>
+                </tr>
+                <tr>
+                    <td>High availability</td>
+                    <td>Debugging complexity</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Load Balancing -->
+        <section id="load-balancing" class="topic-section">
+            <h2>14. Load Balancing</h2>
+            
+            <h3>What is Load Balancing?</h3>
+            <p>Load balancing distributes network traffic across multiple servers to ensure no single server becomes overwhelmed, improving performance and availability.</p>
+            
+            <h3>Load Balancing Algorithms</h3>
+            <ul>
+                <li><strong>Round Robin:</strong> Distributes requests evenly in sequence</li>
+                <li><strong>Least Connections:</strong> Routes to server with fewest active connections</li>
+                <li><strong>IP Hash:</strong> Routes based on client IP address</li>
+                <li><strong>Weighted Round Robin:</strong> Assigns weights based on server capacity</li>
+                <li><strong>Least Response Time:</strong> Routes to fastest responding server</li>
+            </ul>
+
+            <h3>AWS Load Balancers</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Layer</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td>Application Load Balancer (ALB)</td>
+                    <td>Layer 7 (HTTP/HTTPS)</td>
+                    <td>Web applications, microservices</td>
+                </tr>
+                <tr>
+                    <td>Network Load Balancer (NLB)</td>
+                    <td>Layer 4 (TCP/UDP)</td>
+                    <td>High performance, low latency</td>
+                </tr>
+                <tr>
+                    <td>Gateway Load Balancer</td>
+                    <td>Layer 3</td>
+                    <td>Third-party virtual appliances</td>
+                </tr>
+            </table>
+
+            <h3>Nginx Load Balancer Configuration</h3>
+            <div class="code-example">
+                <pre><code class="language-nginx">upstream backend {
+    # Load balancing method
+    least_conn;
+    
+    # Backend servers
+    server app1.example.com:3000 weight=3;
+    server app2.example.com:3000 weight=2;
+    server app3.example.com:3000 weight=1;
+    
+    # Health check
+    server app4.example.com:3000 backup;
+}
+
+server {
+    listen 80;
+    server_name example.com;
+    
+    location / {
+        proxy_pass http://backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        
+        # Timeouts
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 10s;
+        proxy_read_timeout 10s;
+    }
+}</code></pre>
+            </div>
+
+            <h3>Health Checks</h3>
+            <p>Load balancers perform health checks to ensure traffic only routes to healthy instances. Failed instances are automatically removed from the pool.</p>
+        </section>
+
+        <!-- Scalability -->
+        <section id="scalability" class="topic-section">
+            <h2>15. Scalability Patterns</h2>
+            
+            <h3>Types of Scaling</h3>
+            <ul>
+                <li><strong>Vertical Scaling (Scale Up):</strong> Increase resources of single server (CPU, RAM)</li>
+                <li><strong>Horizontal Scaling (Scale Out):</strong> Add more servers to distribute load</li>
+            </ul>
+
+            <h3>Horizontal Scaling Patterns</h3>
+            <table>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Stateless Services</td>
+                    <td>No session data stored on servers, easy to add/remove instances</td>
+                </tr>
+                <tr>
+                    <td>Database Replication</td>
+                    <td>Read replicas for read-heavy workloads</td>
+                </tr>
+                <tr>
+                    <td>Caching Layer</td>
+                    <td>Redis/Memcached to reduce database load</td>
+                </tr>
+                <tr>
+                    <td>CDN</td>
+                    <td>Content delivery network for static assets</td>
+                </tr>
+                <tr>
+                    <td>Message Queues</td>
+                    <td>Async processing to handle traffic spikes</td>
+                </tr>
+                <tr>
+                    <td>Database Sharding</td>
+                    <td>Partition data across multiple databases</td>
+                </tr>
+            </table>
+
+            <h3>Auto-Scaling Example (AWS)</h3>
+            <div class="code-example">
+                <pre><code class="language-json">{
+  "AutoScalingGroupName": "my-app-asg",
+  "MinSize": 2,
+  "MaxSize": 10,
+  "DesiredCapacity": 3,
+  "TargetGroupARNs": ["arn:aws:elasticloadbalancing:..."],
+  "HealthCheckType": "ELB",
+  "HealthCheckGracePeriod": 300,
+  "ScalingPolicies": [
+    {
+      "PolicyName": "scale-out",
+      "AdjustmentType": "ChangeInCapacity",
+      "ScalingAdjustment": 2,
+      "TargetTrackingConfiguration": {
+        "PredefinedMetricType": "ASGAverageCPUUtilization",
+        "TargetValue": 70.0
+      }
+    }
+  ]
+}</code></pre>
+            </div>
+
+            <h3>Database Scaling Strategies</h3>
+            <ul>
+                <li><strong>Read Replicas:</strong> Offload read traffic from primary database</li>
+                <li><strong>Connection Pooling:</strong> Reuse database connections efficiently</li>
+                <li><strong>Vertical Partitioning:</strong> Split tables by columns</li>
+                <li><strong>Horizontal Partitioning (Sharding):</strong> Split data by rows across multiple databases</li>
+                <li><strong>CQRS:</strong> Separate read and write models</li>
+            </ul>
+
+            <h3>CAP Theorem</h3>
+            <p>In distributed systems, you can only guarantee 2 of 3 properties:</p>
+            <ul>
+                <li><strong>Consistency:</strong> All nodes see the same data at the same time</li>
+                <li><strong>Availability:</strong> Every request receives a response</li>
+                <li><strong>Partition Tolerance:</strong> System continues despite network failures</li>
+            </ul>
+
+            <div class="success-box">
+                <strong>✅ Best Practices:</strong> Design for horizontal scaling, use caching aggressively, implement async processing, monitor metrics, use CDN for static content, and optimize database queries.
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>☁️ Cloud Infrastructure - Complete guide for AWS, containers, and scalable architectures</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
