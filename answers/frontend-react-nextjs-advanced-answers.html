@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend React & Next.js Advanced - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #61dafb 0%, #282c34 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #61dafb;
+            color: #282c34;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            background: #4fa8c5;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #61dafb;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #282c34;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+            color: #61dafb;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #61dafb;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #61dafb;
+        }
+        .topic-section h3 {
+            color: #282c34;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #61dafb;
+            color: #282c34;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #282c34;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⚛️ Frontend React & Next.js Advanced</h1>
+        <p>Comprehensive answers covering React 18 concurrent rendering, Next.js 14 App Router, performance optimization, state management, and testing</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#react-18-concurrent">1. React 18 Concurrent Features</a></li>
+                <li><a href="#nextjs-14-app-router">2. Next.js 14 App Router</a></li>
+                <li><a href="#performance-optimization">3. Performance Optimization</a></li>
+                <li><a href="#state-management">4. State Management (Zustand/Redux)</a></li>
+                <li><a href="#custom-hooks">5. Advanced Custom Hooks</a></li>
+                <li><a href="#server-components">6. Server Components & SSR</a></li>
+                <li><a href="#testing-strategies">7. Testing Strategies</a></li>
+                <li><a href="#typescript-patterns">8. TypeScript Patterns</a></li>
+            </ul>
+        </div>
+
+        <!-- React 18 Concurrent Features -->
+        <section id="react-18-concurrent" class="topic-section">
+            <h2>1. React 18 Concurrent Features</h2>
+            
+            <h3>Automatic Batching</h3>
+            <p>React 18 automatically batches state updates in event handlers, timeouts, promises, and async functions to reduce re-renders.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">// Before React 18: Multiple re-renders
+function handleClick() {
+  setCount(c => c + 1); // Re-render
+  setFlag(f => !f);     // Re-render
+  setItems([...items]); // Re-render
+}
+
+// React 18: Single re-render (automatic batching)
+function handleClick() {
+  setCount(c => c + 1);
+  setFlag(f => !f);
+  setItems([...items]);
+  // All batched into one re-render
+}
+
+// Car booking example
+function CarBooking() {
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [bookingDate, setBookingDate] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleBooking(carId, date) {
+    const response = await fetch('/api/book');
+    const data = await response.json();
+    
+    // All updates batched automatically
+    setSelectedCar(data.car);
+    setBookingDate(data.date);
+    setIsLoading(false);
+  }
+
+  return /* JSX */;
+}</code></pre>
+            </div>
+
+            <h3>Opting Out of Automatic Batching</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">import { flushSync } from 'react-dom';
+
+function handleClick() {
+  flushSync(() => {
+    setCount(c => c + 1);
+  }); // Re-render happens immediately
+  
+  flushSync(() => {
+    setFlag(f => !f);
+  }); // Another re-render
+}</code></pre>
+            </div>
+
+            <h3>Suspense for Data Fetching</h3>
+            <p>Suspense lets you declaratively specify loading states while waiting for code or data to load.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">import { Suspense, lazy } from 'react';
+
+const CarDetails = lazy(() => import('./CarDetails'));
+
+function CarCatalog() {
+  return (
+    &lt;Suspense fallback={&lt;CarDetailsSkeleton /&gt;}&gt;
+      &lt;CarDetails carId={selectedCarId} /&gt;
+    &lt;/Suspense&gt;
+  );
+}
+
+// Multiple Suspense boundaries
+function App() {
+  return (
+    &lt;Suspense fallback={&lt;PageSkeleton /&gt;}&gt;
+      &lt;Header /&gt;
+      &lt;Suspense fallback={&lt;SidebarSkeleton /&gt;}&gt;
+        &lt;Sidebar /&gt;
+      &lt;/Suspense&gt;
+      &lt;Suspense fallback={&lt;ContentSkeleton /&gt;}&gt;
+        &lt;Content /&gt;
+      &lt;/Suspense&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>useTransition Hook</h3>
+            <p>Mark state updates as non-urgent transitions, allowing React to keep the UI responsive during expensive renders.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">import { useState, useTransition } from 'react';
+
+function CarFilter() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredCars, setFilteredCars] = useState(cars);
+  const [isPending, startTransition] = useTransition();
+
+  function handleSearch(e) {
+    const value = e.target.value;
+    setSearchTerm(value); // Urgent: update input immediately
+    
+    startTransition(() => {
+      // Non-urgent: filter can be delayed
+      const filtered = cars.filter(car =>
+        car.name.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredCars(filtered);
+    });
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;input 
+        value={searchTerm} 
+        onChange={handleSearch}
+        placeholder="Search cars..."
+      /&gt;
+      {isPending && &lt;Spinner /&gt;}
+      &lt;CarList cars={filteredCars} /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>useDeferredValue Hook</h3>
+            <p>Defer updating part of the UI to keep it responsive during expensive renders.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">import { useState, useDeferredValue, useMemo } from 'react';
+
+function CarSearch() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const deferredSearchTerm = useDeferredValue(searchTerm);
+
+  const filteredCars = useMemo(() => {
+    return cars.filter(car =>
+      car.name.toLowerCase().includes(deferredSearchTerm.toLowerCase())
+    );
+  }, [deferredSearchTerm]);
+
+  const isStale = searchTerm !== deferredSearchTerm;
+
+  return (
+    &lt;div&gt;
+      &lt;input 
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      /&gt;
+      &lt;div style={{ opacity: isStale ? 0.5 : 1 }}&gt;
+        &lt;CarList cars={filteredCars} /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>New Root API</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Legacy (React 17)
+import ReactDOM from 'react-dom';
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+
+// Modern (React 18)
+import { createRoot } from 'react-dom/client';
+const root = createRoot(document.getElementById('root'));
+root.render(&lt;App /&gt;);</code></pre>
+            </div>
+
+            <h3>Streaming SSR with Suspense</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Server-side
+import { renderToPipeableStream } from 'react-dom/server';
+
+function handleRequest(req, res) {
+  const { pipe } = renderToPipeableStream(
+    &lt;App /&gt;,
+    {
+      onShellReady() {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        pipe(res);
+      },
+      onError(error) {
+        console.error(error);
+      }
+    }
+  );
+}
+
+// Component with streaming
+function App() {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;Header /&gt;
+        &lt;Suspense fallback={&lt;Spinner /&gt;}&gt;
+          &lt;CarCatalog /&gt;
+        &lt;/Suspense&gt;
+        &lt;Footer /&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>useSyncExternalStore Hook</h3>
+            <p>Subscribe to external stores safely with concurrent rendering.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">import { useSyncExternalStore } from 'react';
+
+function useCarStore() {
+  return useSyncExternalStore(
+    carStore.subscribe,
+    carStore.getSnapshot,
+    carStore.getServerSnapshot
+  );
+}
+
+// External store implementation
+const carStore = {
+  state: { cars: [], selectedCar: null },
+  listeners: new Set(),
+  
+  subscribe(listener) {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  },
+  
+  getSnapshot() {
+    return this.state;
+  },
+  
+  getServerSnapshot() {
+    return this.state;
+  },
+  
+  setState(newState) {
+    this.state = { ...this.state, ...newState };
+    this.listeners.forEach(listener => listener());
+  }
+};</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Concurrent Rendering Benefits:</strong> React 18's concurrent features enable better responsiveness during heavy renders, reduced input lag, smoother animations, and the ability to abandon outdated work.
+            </div>
+
+            <h3>useId Hook</h3>
+            <p>Generate unique IDs that are stable across server and client rendering.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">import { useId } from 'react';
+
+function CarForm() {
+  const nameId = useId();
+  const emailId = useId();
+
+  return (
+    &lt;form&gt;
+      &lt;label htmlFor={nameId}&gt;Name:&lt;/label&gt;
+      &lt;input id={nameId} type="text" /&gt;
+      
+      &lt;label htmlFor={emailId}&gt;Email:&lt;/label&gt;
+      &lt;input id={emailId} type="email" /&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Next.js 14 App Router -->
+        <section id="nextjs-14-app-router" class="topic-section">
+            <h2>2. Next.js 14 App Router</h2>
+            
+            <h3>File-Based Routing</h3>
+            <p>The App Router uses file-system based routing with the <code>app</code> directory.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-plaintext">app/
+├── page.tsx                 → /
+├── layout.tsx              → Root layout
+├── loading.tsx             → Loading UI
+├── error.tsx               → Error UI
+├── not-found.tsx           → 404 page
+├── cars/
+│   ├── page.tsx            → /cars
+│   ├── [id]/
+│   │   ├── page.tsx        → /cars/:id
+│   │   └── loading.tsx     → Loading for car details
+│   └── layout.tsx          → Cars layout
+├── dashboard/
+│   ├── @analytics/         → Parallel route
+│   ├── @team/              → Parallel route
+│   └── layout.tsx
+└── api/
+    └── cars/
+        └── route.ts        → API endpoint</code></pre>
+            </div>
+
+            <h3>Server Components (Default)</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/cars/page.tsx (Server Component)
+import { db } from '@/lib/db';
+
+// Async Server Component
+export default async function CarsPage() {
+  // Direct database access on server
+  const cars = await db.car.findMany({
+    include: { brand: true },
+    orderBy: { createdAt: 'desc' }
+  });
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Available Cars&lt;/h1&gt;
+      &lt;CarList cars={cars} /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Client Components</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// components/CarFilter.tsx
+'use client';
+
+import { useState } from 'react';
+
+export default function CarFilter({ cars }) {
+  const [filter, setFilter] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState('');
+
+  const filteredCars = cars.filter(car => {
+    const matchesFilter = car.name.toLowerCase().includes(filter.toLowerCase());
+    const matchesBrand = !selectedBrand || car.brand.id === selectedBrand;
+    return matchesFilter && matchesBrand;
+  });
+
+  return (
+    &lt;div&gt;
+      &lt;input 
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        placeholder="Search cars..."
+      /&gt;
+      &lt;select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}&gt;
+        &lt;option value=""&gt;All Brands&lt;/option&gt;
+        {/* options */}
+      &lt;/select&gt;
+      &lt;div&gt;
+        {filteredCars.map(car => &lt;CarCard key={car.id} car={car} /&gt;)}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Nested Layouts</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/layout.tsx (Root Layout)
+export default function RootLayout({ children }) {
+  return (
+    &lt;html lang="en"&gt;
+      &lt;body&gt;
+        &lt;Header /&gt;
+        &lt;main&gt;{children}&lt;/main&gt;
+        &lt;Footer /&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+
+// app/cars/layout.tsx (Cars Layout)
+export default function CarsLayout({ children }) {
+  return (
+    &lt;div className="cars-layout"&gt;
+      &lt;CarsSidebar /&gt;
+      &lt;div className="cars-content"&gt;
+        {children}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Dynamic Routes</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/cars/[id]/page.tsx
+import { notFound } from 'next/navigation';
+import { db } from '@/lib/db';
+
+interface PageProps {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function CarDetailsPage({ params }: PageProps) {
+  const car = await db.car.findUnique({
+    where: { id: params.id },
+    include: { brand: true, reviews: true }
+  });
+
+  if (!car) {
+    notFound();
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{car.name}&lt;/h1&gt;
+      &lt;p&gt;{car.description}&lt;/p&gt;
+      &lt;CarBookingForm carId={car.id} /&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Generate static params
+export async function generateStaticParams() {
+  const cars = await db.car.findMany();
+  
+  return cars.map((car) => ({
+    id: car.id,
+  }));
+}</code></pre>
+            </div>
+
+            <h3>Loading UI</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/cars/loading.tsx
+export default function Loading() {
+  return (
+    &lt;div className="loading-skeleton"&gt;
+      &lt;div className="skeleton-header" /&gt;
+      &lt;div className="skeleton-grid"&gt;
+        {[...Array(6)].map((_, i) => (
+          &lt;div key={i} className="skeleton-card" /&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Error Handling</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/cars/error.tsx
+'use client';
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  return (
+    &lt;div className="error-container"&gt;
+      &lt;h2&gt;Something went wrong!&lt;/h2&gt;
+      &lt;p&gt;{error.message}&lt;/p&gt;
+      &lt;button onClick={() => reset()}&gt;Try again&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Server Actions</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/actions.ts
+'use server';
+
+import { revalidatePath } from 'next/cache';
+import { db } from '@/lib/db';
+
+export async function bookCar(formData: FormData) {
+  const carId = formData.get('carId') as string;
+  const userId = formData.get('userId') as string;
+  const startDate = formData.get('startDate') as string;
+  const endDate = formData.get('endDate') as string;
+
+  const booking = await db.booking.create({
+    data: {
+      carId,
+      userId,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
+      status: 'pending'
+    }
+  });
+
+  revalidatePath('/cars');
+  revalidatePath(`/bookings/${booking.id}`);
+
+  return { success: true, bookingId: booking.id };
+}
+
+// Component using server action
+// app/cars/[id]/BookingForm.tsx
+'use client';
+
+import { bookCar } from '@/app/actions';
+import { useFormStatus } from 'react-dom';
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    &lt;button type="submit" disabled={pending}&gt;
+      {pending ? 'Booking...' : 'Book Now'}
+    &lt;/button&gt;
+  );
+}
+
+export default function BookingForm({ carId }) {
+  return (
+    &lt;form action={bookCar}&gt;
+      &lt;input type="hidden" name="carId" value={carId} /&gt;
+      &lt;input type="date" name="startDate" required /&gt;
+      &lt;input type="date" name="endDate" required /&gt;
+      &lt;SubmitButton /&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Route Handlers (API Routes)</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/api/cars/route.ts
+import { NextResponse } from 'next/server';
+import { db } from '@/lib/db';
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const brand = searchParams.get('brand');
+  
+  const cars = await db.car.findMany({
+    where: brand ? { brandId: brand } : {},
+    include: { brand: true }
+  });
+  
+  return NextResponse.json(cars);
+}
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  
+  const car = await db.car.create({
+    data: {
+      name: body.name,
+      brandId: body.brandId,
+      price: body.price,
+      description: body.description
+    }
+  });
+  
+  return NextResponse.json(car, { status: 201 });
+}
+
+// app/api/cars/[id]/route.ts
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const car = await db.car.findUnique({
+    where: { id: params.id },
+    include: { brand: true, reviews: true }
+  });
+  
+  if (!car) {
+    return NextResponse.json(
+      { error: 'Car not found' },
+      { status: 404 }
+    );
+  }
+  
+  return NextResponse.json(car);
+}</code></pre>
+            </div>
+
+            <h3>Middleware</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// middleware.ts
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('token');
+  
+  // Redirect to login if not authenticated
+  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+  
+  // Add custom header
+  const response = NextResponse.next();
+  response.headers.set('x-custom-header', 'value');
+  
+  return response;
+}
+
+export const config = {
+  matcher: ['/dashboard/:path*', '/api/:path*'],
+};</code></pre>
+            </div>
+
+            <h3>Dynamic Metadata</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/cars/[id]/page.tsx
+import { Metadata } from 'next';
+import { db } from '@/lib/db';
+
+interface PageProps {
+  params: { id: string };
+}
+
+export async function generateMetadata(
+  { params }: PageProps
+): Promise&lt;Metadata&gt; {
+  const car = await db.car.findUnique({
+    where: { id: params.id },
+    include: { brand: true }
+  });
+  
+  if (!car) {
+    return {
+      title: 'Car Not Found',
+    };
+  }
+  
+  return {
+    title: `${car.brand.name} ${car.name} - Rent Now`,
+    description: car.description,
+    openGraph: {
+      title: `${car.brand.name} ${car.name}`,
+      description: car.description,
+      images: [car.imageUrl],
+    },
+  };
+}</code></pre>
+            </div>
+
+            <h3>Caching Strategies</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+// Opt out of caching
+export const revalidate = 0;
+
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
+// Static rendering
+export const dynamic = 'force-static';
+
+// Custom fetch caching
+async function getCars() {
+  const res = await fetch('https://api.example.com/cars', {
+    next: { revalidate: 3600 } // Cache for 1 hour
+  });
+  return res.json();
+}
+
+// No caching for specific fetch
+async function getLivePrices() {
+  const res = await fetch('https://api.example.com/prices', {
+    cache: 'no-store'
+  });
+  return res.json();
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ App Router Benefits:</strong> Server Components by default, automatic code splitting, built-in loading states, error boundaries, and improved performance with streaming SSR.
+            </div>
+        </section>
+
+        <!-- Performance Optimization -->
+        <section id="performance-optimization" class="topic-section">
+            <h2>3. Performance Optimization</h2>
+            
+            <h3>Code Splitting</h3>
+            <p>Automatically split code by routes and lazy load components on demand.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-typescript">import dynamic from 'next/dynamic';
+import { lazy, Suspense } from 'react';
+
+// Next.js dynamic import
+const CarMap = dynamic(() => import('@/components/CarMap'), {
+  loading: () => &lt;MapSkeleton /&gt;,
+  ssr: false // Disable SSR for this component
+});
+
+// React lazy loading
+const HeavyChart = lazy(() => import('@/components/HeavyChart'));
+
+function CarDetails() {
+  return (
+    &lt;div&gt;
+      &lt;CarInfo /&gt;
+      &lt;CarMap location={car.location} /&gt;
+      &lt;Suspense fallback={&lt;ChartSkeleton /&gt;}&gt;
+        &lt;HeavyChart data={car.statistics} /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Image Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import Image from 'next/image';
+
+function CarCard({ car }) {
+  return (
+    &lt;div className="car-card"&gt;
+      &lt;Image
+        src={car.imageUrl}
+        alt={car.name}
+        width={400}
+        height={300}
+        placeholder="blur"
+        blurDataURL={car.blurDataUrl}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        priority={car.featured} // Load eagerly for above-fold images
+      /&gt;
+      &lt;h3&gt;{car.name}&lt;/h3&gt;
+      &lt;p&gt;${car.price}/day&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>React.memo & useMemo</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { memo, useMemo } from 'react';
+
+// Memoize expensive component
+const CarCard = memo(function CarCard({ car, onSelect }) {
+  return (
+    &lt;div onClick={() => onSelect(car.id)}&gt;
+      &lt;h3&gt;{car.name}&lt;/h3&gt;
+      &lt;p&gt;${car.price}/day&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}, (prevProps, nextProps) => {
+  // Custom comparison
+  return prevProps.car.id === nextProps.car.id &&
+         prevProps.car.price === nextProps.car.price;
+});
+
+// Memoize expensive computation
+function CarCatalog({ cars, filters }) {
+  const filteredAndSortedCars = useMemo(() => {
+    return cars
+      .filter(car => {
+        return (!filters.brand || car.brandId === filters.brand) &&
+               (!filters.maxPrice || car.price <= filters.maxPrice);
+      })
+      .sort((a, b) => {
+        if (filters.sortBy === 'price') return a.price - b.price;
+        if (filters.sortBy === 'name') return a.name.localeCompare(b.name);
+        return 0;
+      });
+  }, [cars, filters]);
+
+  return (
+    &lt;div&gt;
+      {filteredAndSortedCars.map(car => (
+        &lt;CarCard key={car.id} car={car} /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>useCallback</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { useState, useCallback } from 'react';
+
+function CarBooking() {
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [bookings, setBookings] = useState([]);
+
+  // Memoize callback to prevent child re-renders
+  const handleCarSelect = useCallback((carId) => {
+    setSelectedCar(carId);
+  }, []);
+
+  const handleBooking = useCallback((bookingData) => {
+    setBookings(prev => [...prev, bookingData]);
+  }, []);
+
+  return (
+    &lt;div&gt;
+      &lt;CarList onCarSelect={handleCarSelect} /&gt;
+      &lt;BookingForm onSubmit={handleBooking} /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Virtual Scrolling</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { useVirtualizer } from '@tanstack/react-virtual';
+import { useRef } from 'react';
+
+function CarList({ cars }) {
+  const parentRef = useRef(null);
+
+  const virtualizer = useVirtualizer({
+    count: cars.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 100, // Estimated row height
+    overscan: 5 // Number of items to render outside viewport
+  });
+
+  return (
+    &lt;div
+      ref={parentRef}
+      style={{
+        height: '600px',
+        overflow: 'auto'
+      }}
+    &gt;
+      &lt;div
+        style={{
+          height: `${virtualizer.getTotalSize()}px`,
+          position: 'relative'
+        }}
+      &gt;
+        {virtualizer.getVirtualItems().map((virtualRow) => (
+          &lt;div
+            key={virtualRow.index}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: `${virtualRow.size}px`,
+              transform: `translateY(${virtualRow.start}px)`
+            }}
+          &gt;
+            &lt;CarCard car={cars[virtualRow.index]} /&gt;
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Web Vitals Monitoring</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/layout.tsx
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
+export default function RootLayout({ children }) {
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        {children}
+        &lt;Analytics /&gt;
+        &lt;SpeedInsights /&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+
+// Custom Web Vitals reporting
+export function reportWebVitals(metric) {
+  switch (metric.name) {
+    case 'FCP':
+      console.log('First Contentful Paint:', metric.value);
+      break;
+    case 'LCP':
+      console.log('Largest Contentful Paint:', metric.value);
+      break;
+    case 'CLS':
+      console.log('Cumulative Layout Shift:', metric.value);
+      break;
+    case 'FID':
+      console.log('First Input Delay:', metric.value);
+      break;
+    case 'TTFB':
+      console.log('Time to First Byte:', metric.value);
+      break;
+  }
+  
+  // Send to analytics
+  analytics.track('web-vital', {
+    name: metric.name,
+    value: metric.value,
+    id: metric.id
+  });
+}</code></pre>
+            </div>
+
+            <h3>Bundle Analysis</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// next.config.js
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+module.exports = withBundleAnalyzer({
+  // Next.js config
+});
+
+// package.json
+{
+  "scripts": {
+    "analyze": "ANALYZE=true next build"
+  }
+}</code></pre>
+            </div>
+
+            <h3>Prefetching & Preloading</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+function CarCard({ car }) {
+  const router = useRouter();
+
+  // Automatic prefetch with Link
+  return (
+    &lt;Link href={`/cars/${car.id}`} prefetch={true}&gt;
+      &lt;div
+        onMouseEnter={() => {
+          // Manual prefetch on hover
+          router.prefetch(`/cars/${car.id}`);
+        }}
+      &gt;
+        &lt;h3&gt;{car.name}&lt;/h3&gt;
+      &lt;/div&gt;
+    &lt;/Link&gt;
+  );
+}
+
+// Preload critical resources
+function CarDetailsPage() {
+  return (
+    &lt;&gt;
+      &lt;link
+        rel="preload"
+        href="/fonts/custom-font.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      /&gt;
+      &lt;link rel="preconnect" href="https://api.example.com" /&gt;
+      {/* Page content */}
+    &lt;/&gt;
+  );
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Performance Budget:</strong> Target bundle size &lt; 200KB (gzipped), LCP &lt; 2.5s, FID &lt; 100ms, CLS &lt; 0.1. Monitor and enforce these limits in CI/CD.
+            </div>
+        </section>
+
+        <!-- State Management -->
+        <section id="state-management" class="topic-section">
+            <h2>4. State Management (Zustand/Redux)</h2>
+            
+            <h3>Zustand - Lightweight State Management</h3>
+            <p>Simple, unopinionated state management with minimal boilerplate.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-typescript">// stores/carStore.ts
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
+
+interface Car {
+  id: string;
+  name: string;
+  price: number;
+  brandId: string;
+}
+
+interface CarStore {
+  cars: Car[];
+  selectedCar: Car | null;
+  isLoading: boolean;
+  error: string | null;
+  fetchCars: () => Promise&lt;void&gt;;
+  selectCar: (carId: string) => void;
+  clearSelection: () => void;
+}
+
+export const useCarStore = create&lt;CarStore&gt;()(
+  devtools(
+    persist(
+      (set, get) => ({
+        cars: [],
+        selectedCar: null,
+        isLoading: false,
+        error: null,
+        
+        fetchCars: async () => {
+          set({ isLoading: true, error: null });
+          try {
+            const response = await fetch('/api/cars');
+            const cars = await response.json();
+            set({ cars, isLoading: false });
+          } catch (error) {
+            set({ error: error.message, isLoading: false });
+          }
+        },
+        
+        selectCar: (carId) => {
+          const car = get().cars.find(c => c.id === carId);
+          set({ selectedCar: car || null });
+        },
+        
+        clearSelection: () => set({ selectedCar: null })
+      }),
+      { name: 'car-storage' }
+    )
+  )
+);
+
+// Component usage
+function CarCatalog() {
+  const { cars, isLoading, fetchCars } = useCarStore();
+  
+  useEffect(() => {
+    fetchCars();
+  }, [fetchCars]);
+  
+  if (isLoading) return &lt;Spinner /&gt;;
+  
+  return (
+    &lt;div&gt;
+      {cars.map(car => &lt;CarCard key={car.id} car={car} /&gt;)}
+    &lt;/div&gt;
+  );
+}
+
+// Selecting specific state
+function CarDetails() {
+  const selectedCar = useCarStore(state => state.selectedCar);
+  const clearSelection = useCarStore(state => state.clearSelection);
+  
+  if (!selectedCar) return null;
+  
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{selectedCar.name}&lt;/h2&gt;
+      &lt;button onClick={clearSelection}&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Redux Toolkit - Full-Featured State Management</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// store/carSlice.ts
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+
+interface Car {
+  id: string;
+  name: string;
+  price: number;
+}
+
+interface CarState {
+  cars: Car[];
+  selectedCarId: string | null;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
+
+const initialState: CarState = {
+  cars: [],
+  selectedCarId: null,
+  status: 'idle',
+  error: null
+};
+
+// Async thunk
+export const fetchCars = createAsyncThunk(
+  'cars/fetchCars',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch('/api/cars');
+      if (!response.ok) throw new Error('Failed to fetch');
+      return await response.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const bookCar = createAsyncThunk(
+  'cars/bookCar',
+  async (bookingData: { carId: string; dates: { start: string; end: string } }) => {
+    const response = await fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bookingData)
+    });
+    return response.json();
+  }
+);
+
+const carSlice = createSlice({
+  name: 'cars',
+  initialState,
+  reducers: {
+    selectCar: (state, action: PayloadAction&lt;string&gt;) => {
+      state.selectedCarId = action.payload;
+    },
+    clearSelection: (state) => {
+      state.selectedCarId = null;
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCars.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCars.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.cars = action.payload;
+      })
+      .addCase(fetchCars.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+      .addCase(bookCar.fulfilled, (state, action) => {
+        const car = state.cars.find(c => c.id === action.payload.carId);
+        if (car) {
+          car.available = false;
+        }
+      });
+  }
+});
+
+export const { selectCar, clearSelection } = carSlice.actions;
+export default carSlice.reducer;
+
+// store/index.ts
+import { configureStore } from '@reduxjs/toolkit';
+import carReducer from './carSlice';
+import bookingReducer from './bookingSlice';
+
+export const store = configureStore({
+  reducer: {
+    cars: carReducer,
+    bookings: bookingReducer
+  }
+});
+
+export type RootState = ReturnType&lt;typeof store.getState&gt;;
+export type AppDispatch = typeof store.dispatch;</code></pre>
+            </div>
+
+            <h3>SWR - Data Fetching & Caching</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import useSWR from 'swr';
+
+const fetcher = (url: string) => fetch(url).then(r => r.json());
+
+function CarList() {
+  const { data, error, isLoading, mutate } = useSWR('/api/cars', fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+    dedupingInterval: 5000
+  });
+
+  if (isLoading) return &lt;Spinner /&gt;;
+  if (error) return &lt;Error message="Failed to load cars" /&gt;;
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() => mutate()}&gt;Refresh&lt;/button&gt;
+      {data.cars.map(car => &lt;CarCard key={car.id} car={car} /&gt;)}
+    &lt;/div&gt;
+  );
+}
+
+// Optimistic updates with SWR
+function BookingForm({ carId }) {
+  const { data, mutate } = useSWR(`/api/cars/${carId}`);
+
+  async function handleBooking(bookingData) {
+    // Optimistic update
+    mutate(
+      { ...data, available: false },
+      { revalidate: false }
+    );
+
+    try {
+      await fetch('/api/bookings', {
+        method: 'POST',
+        body: JSON.stringify(bookingData)
+      });
+      // Revalidate to sync with server
+      mutate();
+    } catch (error) {
+      // Rollback on error
+      mutate();
+    }
+  }
+
+  return &lt;form onSubmit={handleBooking}&gt;...&lt;/form&gt;;
+}</code></pre>
+            </div>
+
+            <h3>TanStack Query (React Query)</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+// Query hook
+function useCars() {
+  return useQuery({
+    queryKey: ['cars'],
+    queryFn: async () => {
+      const response = await fetch('/api/cars');
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json();
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000 // 10 minutes
+  });
+}
+
+// Mutation hook
+function useBookCar() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (bookingData) => {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData)
+      });
+      return response.json();
+    },
+    onMutate: async (newBooking) => {
+      await queryClient.cancelQueries({ queryKey: ['cars', newBooking.carId] });
+      const previousCar = queryClient.getQueryData(['cars', newBooking.carId]);
+      
+      queryClient.setQueryData(['cars', newBooking.carId], (old) => ({
+        ...old,
+        available: false
+      }));
+      
+      return { previousCar };
+    },
+    onError: (err, newBooking, context) => {
+      queryClient.setQueryData(
+        ['cars', newBooking.carId],
+        context.previousCar
+      );
+    },
+    onSettled: (data, error, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['cars'] });
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+    }
+  });
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Choosing State Management:</strong>
+                <ul>
+                    <li><strong>Zustand:</strong> Simple apps, minimal boilerplate, small bundle size</li>
+                    <li><strong>Redux Toolkit:</strong> Complex apps, time-travel debugging, strict patterns</li>
+                    <li><strong>SWR/React Query:</strong> Server state, automatic caching, optimistic updates</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Custom Hooks -->
+        <section id="custom-hooks" class="topic-section">
+            <h2>5. Advanced Custom Hooks</h2>
+            
+            <h3>useLocalStorage Hook</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { useState, useEffect } from 'react';
+
+function useLocalStorage&lt;T&gt;(key: string, initialValue: T) {
+  const [storedValue, setStoredValue] = useState&lt;T&gt;(() => {
+    if (typeof window === 'undefined') {
+      return initialValue;
+    }
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.error(error);
+      return initialValue;
+    }
+  });
+
+  const setValue = (value: T | ((val: T) => T)) => {
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return [storedValue, setValue] as const;
+}
+
+// Usage
+function CarPreferences() {
+  const [preferences, setPreferences] = useLocalStorage('carPreferences', {
+    sortBy: 'price',
+    viewMode: 'grid'
+  });
+
+  return (
+    &lt;div&gt;
+      &lt;select 
+        value={preferences.sortBy}
+        onChange={(e) => setPreferences({ ...preferences, sortBy: e.target.value })}
+      &gt;
+        &lt;option value="price"&gt;Price&lt;/option&gt;
+        &lt;option value="name"&gt;Name&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>useDebounce Hook</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { useState, useEffect } from 'react';
+
+function useDebounce&lt;T&gt;(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState&lt;T&gt;(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+// Usage
+function CarSearch() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      fetch(`/api/cars/search?q=${debouncedSearchTerm}`)
+        .then(res => res.json())
+        .then(data => setResults(data));
+    }
+  }, [debouncedSearchTerm]);
+
+  return (
+    &lt;input
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      placeholder="Search cars..."
+    /&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>useIntersectionObserver Hook</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { useEffect, useRef, useState } from 'react';
+
+function useIntersectionObserver(
+  options?: IntersectionObserverInit
+) {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const targetRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  useEffect(() => {
+    const target = targetRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsIntersecting(entry.isIntersecting),
+      options
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [options]);
+
+  return { targetRef, isIntersecting };
+}
+
+// Usage: Lazy load images
+function CarImage({ src, alt }) {
+  const { targetRef, isIntersecting } = useIntersectionObserver({
+    threshold: 0.1
+  });
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    if (isIntersecting) {
+      setShouldLoad(true);
+    }
+  }, [isIntersecting]);
+
+  return (
+    &lt;div ref={targetRef}&gt;
+      {shouldLoad ? (
+        &lt;img src={src} alt={alt} /&gt;
+      ) : (
+        &lt;div className="placeholder" /&gt;
+      )}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>useMediaQuery Hook</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { useState, useEffect } from 'react';
+
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+
+    const listener = () => setMatches(media.matches);
+    media.addEventListener('change', listener);
+
+    return () => media.removeEventListener('change', listener);
+  }, [matches, query]);
+
+  return matches;
+}
+
+// Usage
+function CarGrid() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
+  const isDesktop = useMediaQuery('(min-width: 1025px)');
+
+  const columns = isMobile ? 1 : isTablet ? 2 : 3;
+
+  return (
+    &lt;div style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}&gt;
+      {cars.map(car => &lt;CarCard key={car.id} car={car} /&gt;)}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Server Components & SSR -->
+        <section id="server-components" class="topic-section">
+            <h2>6. Server Components & SSR</h2>
+            
+            <h3>React Server Components</h3>
+            <p>Server Components render on the server, reducing JavaScript bundle size and enabling direct data access.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-typescript">// app/cars/page.tsx (Server Component)
+import { db } from '@/lib/db';
+import CarFilter from './CarFilter'; // Client Component
+
+export default async function CarsPage() {
+  // Direct database access - no API route needed
+  const cars = await db.car.findMany({
+    include: {
+      brand: true,
+      reviews: {
+        select: {
+          rating: true
+        }
+      }
+    },
+    orderBy: {
+      createdAt: 'desc'
+    }
+  });
+
+  // Calculate average ratings on server
+  const carsWithRatings = cars.map(car => ({
+    ...car,
+    avgRating: car.reviews.reduce((acc, r) => acc + r.rating, 0) / car.reviews.length
+  }));
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Car Catalog&lt;/h1&gt;
+      &lt;CarFilter cars={carsWithRatings} /&gt;
+    &lt;/div&gt;
+  );
+}
+
+// components/CarFilter.tsx (Client Component)
+'use client';
+
+import { useState } from 'react';
+
+export default function CarFilter({ cars }) {
+  const [filter, setFilter] = useState('');
+  
+  const filtered = cars.filter(car => 
+    car.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  return (
+    &lt;div&gt;
+      &lt;input
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+      /&gt;
+      {filtered.map(car => &lt;CarCard key={car.id} car={car} /&gt;)}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Streaming with Suspense</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// Fast initial load, stream slow data
+export default function CarDetailsPage({ params }) {
+  return (
+    &lt;div&gt;
+      &lt;CarHeader carId={params.id} /&gt;
+      
+      &lt;Suspense fallback={&lt;ReviewsSkeleton /&gt;}&gt;
+        &lt;Reviews carId={params.id} /&gt;
+      &lt;/Suspense&gt;
+      
+      &lt;Suspense fallback={&lt;RecommendationsSkeleton /&gt;}&gt;
+        &lt;Recommendations carId={params.id} /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Slow async component
+async function Reviews({ carId }) {
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  const reviews = await db.review.findMany({ where: { carId } });
+  
+  return (
+    &lt;div&gt;
+      {reviews.map(review => &lt;ReviewCard key={review.id} review={review} /&gt;)}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Server Components Benefits:</strong>
+                <ul>
+                    <li>Zero JavaScript sent to client (smaller bundles)</li>
+                    <li>Direct database/API access (no extra endpoints)</li>
+                    <li>Automatic code splitting</li>
+                    <li>SEO-friendly by default</li>
+                    <li>Reduced client-side data fetching waterfalls</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Testing Strategies -->
+        <section id="testing-strategies" class="topic-section">
+            <h2>7. Testing Strategies</h2>
+            
+            <h3>React Testing Library - Component Tests</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// __tests__/CarCard.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import CarCard from '@/components/CarCard';
+
+describe('CarCard', () => {
+  const mockCar = {
+    id: '1',
+    name: 'Tesla Model 3',
+    price: 99,
+    brand: { name: 'Tesla' },
+    imageUrl: '/tesla.jpg'
+  };
+
+  it('renders car information correctly', () => {
+    render(&lt;CarCard car={mockCar} /&gt;);
+    
+    expect(screen.getByText('Tesla Model 3')).toBeInTheDocument();
+    expect(screen.getByText('$99/day')).toBeInTheDocument();
+    expect(screen.getByRole('img')).toHaveAttribute('alt', 'Tesla Model 3');
+  });
+
+  it('calls onSelect when card is clicked', async () => {
+    const handleSelect = jest.fn();
+    render(&lt;CarCard car={mockCar} onSelect={handleSelect} /&gt;);
+    
+    const card = screen.getByRole('button');
+    await userEvent.click(card);
+    
+    expect(handleSelect).toHaveBeenCalledWith(mockCar.id);
+  });
+
+  it('displays availability badge', () => {
+    render(&lt;CarCard car={{ ...mockCar, available: true }} /&gt;);
+    expect(screen.getByText('Available')).toBeInTheDocument();
+  });
+});</code></pre>
+            </div>
+
+            <h3>Testing with Mock Service Worker (MSW)</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// mocks/handlers.ts
+import { http, HttpResponse } from 'msw';
+
+export const handlers = [
+  http.get('/api/cars', () => {
+    return HttpResponse.json({
+      cars: [
+        { id: '1', name: 'Tesla Model 3', price: 99 },
+        { id: '2', name: 'BMW i4', price: 120 }
+      ]
+    });
+  }),
+  
+  http.post('/api/bookings', async ({ request }) => {
+    const body = await request.json();
+    return HttpResponse.json({
+      id: 'booking-123',
+      ...body,
+      status: 'confirmed'
+    }, { status: 201 });
+  })
+];
+
+// setup.ts
+import { beforeAll, afterEach, afterAll } from 'vitest';
+import { server } from './mocks/server';
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());</code></pre>
+            </div>
+
+            <h3>E2E Testing with Playwright</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// tests/car-booking.spec.ts
+import { test, expect } from '@playwright/test';
+
+test.describe('Car Booking Flow', () => {
+  test('user can search and book a car', async ({ page }) => {
+    await page.goto('/cars');
+    
+    // Search for car
+    await page.fill('input[placeholder="Search cars..."]', 'Tesla');
+    await expect(page.getByText('Tesla Model 3')).toBeVisible();
+    
+    // Click on car
+    await page.click('text=Tesla Model 3');
+    await expect(page).toHaveURL(/\/cars\/\w+/);
+    
+    // Book car
+    await page.fill('input[name="startDate"]', '2024-01-15');
+    await page.fill('input[name="endDate"]', '2024-01-20');
+    await page.click('button:text("Book Now")');
+    
+    // Verify booking confirmation
+    await expect(page.getByText('Booking confirmed')).toBeVisible();
+  });
+});</code></pre>
+            </div>
+        </section>
+
+        <!-- TypeScript Patterns -->
+        <section id="typescript-patterns" class="topic-section">
+            <h2>8. TypeScript Patterns</h2>
+            
+            <h3>Component Props Typing</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// Basic props
+interface CarCardProps {
+  car: Car;
+  onSelect?: (id: string) => void;
+  className?: string;
+}
+
+export function CarCard({ car, onSelect, className }: CarCardProps) {
+  return &lt;div className={className}&gt;{car.name}&lt;/div&gt;;
+}
+
+// With children
+interface LayoutProps {
+  children: React.ReactNode;
+  title: string;
+}
+
+// With generic types
+interface ListProps&lt;T&gt; {
+  items: T[];
+  renderItem: (item: T) => React.ReactNode;
+  keyExtractor: (item: T) => string;
+}
+
+function List&lt;T&gt;({ items, renderItem, keyExtractor }: ListProps&lt;T&gt;) {
+  return (
+    &lt;div&gt;
+      {items.map(item => (
+        &lt;div key={keyExtractor(item)}&gt;{renderItem(item)}&lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Event Handler Types</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">import { ChangeEvent, FormEvent, MouseEvent } from 'react';
+
+function CarForm() {
+  const handleSubmit = (e: FormEvent&lt;HTMLFormElement&gt;) => {
+    e.preventDefault();
+  };
+
+  const handleInputChange = (e: ChangeEvent&lt;HTMLInputElement&gt;) => {
+    console.log(e.target.value);
+  };
+
+  const handleClick = (e: MouseEvent&lt;HTMLButtonElement&gt;) => {
+    console.log('Clicked');
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input onChange={handleInputChange} /&gt;
+      &lt;button onClick={handleClick}&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Hook Types</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// useState with explicit type
+const [cars, setCars] = useState&lt;Car[]&gt;([]);
+const [selectedId, setSelectedId] = useState&lt;string | null&gt;(null);
+
+// Custom hook with TypeScript
+function useCars() {
+  const [cars, setCars] = useState&lt;Car[]&gt;([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState&lt;Error | null&gt;(null);
+
+  return { cars, loading, error };
+}
+
+// useRef types
+const inputRef = useRef&lt;HTMLInputElement&gt;(null);
+const timeoutRef = useRef&lt;NodeJS.Timeout | null&gt;(null);</code></pre>
+            </div>
+
+            <h3>API Response Types</h3>
+            <div class="code-example">
+                <pre><code class="language-typescript">// API response types
+interface ApiResponse&lt;T&gt; {
+  data: T;
+  error?: string;
+  message?: string;
+}
+
+interface PaginatedResponse&lt;T&gt; {
+  data: T[];
+  page: number;
+  totalPages: number;
+  total: number;
+}
+
+// Usage
+async function fetchCars(): Promise&lt;ApiResponse&lt;Car[]&gt;&gt; {
+  const response = await fetch('/api/cars');
+  return response.json();
+}
+
+async function fetchCarsPaginated(
+  page: number
+): Promise&lt;PaginatedResponse&lt;Car&gt;&gt; {
+  const response = await fetch(`/api/cars?page=${page}`);
+  return response.json();
+}</code></pre>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Interview Bank - Frontend React & Next.js Advanced Answers</p>
+        <p>Comprehensive coverage of React 18, Next.js 14, Performance, State Management, and Testing</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
