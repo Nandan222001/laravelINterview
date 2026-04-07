@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laravel Framework - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #e3342f 0%, #ff6b6b 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #e3342f;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #cc1f1a;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #e3342f;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #cc1f1a;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #e3342f;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #e3342f;
+        }
+        .topic-section h3 {
+            color: #cc1f1a;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #e3342f;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔴 Laravel Framework</h1>
+        <p>Comprehensive answers covering architecture, routing, Eloquent, authentication, and more</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#architecture">1. Laravel Architecture & MVC</a></li>
+                <li><a href="#routing">2. Routing</a></li>
+                <li><a href="#middleware">3. Middleware</a></li>
+                <li><a href="#controllers">4. Controllers</a></li>
+                <li><a href="#request-lifecycle">5. Request Lifecycle</a></li>
+                <li><a href="#eloquent">6. Eloquent ORM</a></li>
+                <li><a href="#migrations">7. Migrations</a></li>
+                <li><a href="#relationships">8. Eloquent Relationships</a></li>
+                <li><a href="#service-container">9. Service Container</a></li>
+                <li><a href="#service-providers">10. Service Providers</a></li>
+                <li><a href="#facades">11. Facades</a></li>
+                <li><a href="#authentication">12. Authentication</a></li>
+                <li><a href="#queues">13. Queues</a></li>
+                <li><a href="#events">14. Events & Listeners</a></li>
+                <li><a href="#caching">15. Caching</a></li>
+            </ul>
+        </div>
+
+        <!-- Architecture -->
+        <section id="architecture" class="topic-section">
+            <h2>1. Laravel Architecture & MVC</h2>
+            
+            <h3>MVC Pattern in Laravel</h3>
+            <p>Laravel follows the Model-View-Controller (MVC) architectural pattern, separating application logic into three interconnected components.</p>
+            
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Responsibility</th>
+                    <th>Location</th>
+                </tr>
+                <tr>
+                    <td><strong>Model</strong></td>
+                    <td>Data structure, business logic, database interactions</td>
+                    <td>app/Models/</td>
+                </tr>
+                <tr>
+                    <td><strong>View</strong></td>
+                    <td>Presentation layer, HTML templates</td>
+                    <td>resources/views/</td>
+                </tr>
+                <tr>
+                    <td><strong>Controller</strong></td>
+                    <td>Request handling, application logic coordination</td>
+                    <td>app/Http/Controllers/</td>
+                </tr>
+            </table>
+
+            <h3>Directory Structure</h3>
+            <div class="code-example">
+                <pre><code class="language-plaintext">laravel-app/
+├── app/
+│   ├── Console/           # Artisan commands
+│   ├── Exceptions/        # Exception handlers
+│   ├── Http/
+│   │   ├── Controllers/   # Application controllers
+│   │   ├── Middleware/    # HTTP middleware
+│   │   └── Requests/      # Form requests
+│   ├── Models/            # Eloquent models
+│   └── Providers/         # Service providers
+├── bootstrap/            # Framework bootstrap
+├── config/               # Configuration files
+├── database/
+│   ├── factories/        # Model factories
+│   ├── migrations/       # Database migrations
+│   └── seeders/          # Database seeders
+├── public/               # Public assets
+├── resources/
+│   ├── css/              # CSS files
+│   ├── js/               # JavaScript files
+│   └── views/            # Blade templates
+├── routes/
+│   ├── api.php           # API routes
+│   ├── web.php           # Web routes
+│   ├── console.php       # Console routes
+│   └── channels.php      # Broadcasting channels
+├── storage/              # Application storage
+└── tests/                # Automated tests</code></pre>
+            </div>
+
+            <h3>Service Container & Dependency Injection</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Services\UserService;
+use App\Repositories\UserRepository;
+
+class UserController extends Controller
+{
+    // Automatic dependency injection
+    public function __construct(
+        private UserService $userService,
+        private UserRepository $userRepository
+    ) {}
+    
+    public function index()
+    {
+        // Dependencies automatically resolved
+        $users = $this->userService->getAllActive();
+        return view('users.index', compact('users'));
+    }
+}
+
+// Service Provider binding
+class AppServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        // Bind interface to implementation
+        $this->app->bind(
+            \App\Contracts\PaymentGateway::class,
+            \App\Services\StripePaymentGateway::class
+        );
+        
+        // Singleton binding
+        $this->app->singleton(CacheManager::class, function ($app) {
+            return new CacheManager($app['config']['cache']);
+        });
+    }
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Key Principle:</strong> Laravel's architecture promotes separation of concerns, making code maintainable, testable, and following SOLID principles.
+            </div>
+        </section>
+
+        <!-- Routing -->
+        <section id="routing" class="topic-section">
+            <h2>2. Routing</h2>
+
+            <h3>Basic Routing</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// routes/web.php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+
+// Basic routes
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Route with parameters
+Route::get('/users/{id}', function ($id) {
+    return "User ID: {$id}";
+});
+
+// Optional parameters
+Route::get('/posts/{id?}', function ($id = null) {
+    return $id ? "Post {$id}" : "All posts";
+});
+
+// Named routes
+Route::get('/profile', [UserController::class, 'profile'])
+    ->name('profile');
+
+// Route with constraints
+Route::get('/user/{id}', function ($id) {
+    return "User {$id}";
+})->where('id', '[0-9]+');
+
+// Multiple constraints
+Route::get('/posts/{category}/{id}', function ($category, $id) {
+    return "Category: {$category}, ID: {$id}";
+})->where(['category' => '[a-z]+', 'id' => '[0-9]+']);</code></pre>
+            </div>
+
+            <h3>Route Groups</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Prefix grouping
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/users', [AdminController::class, 'users']);
+});
+
+// Middleware grouping
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/profile', [ProfileController::class, 'show']);
+});
+
+// Combined grouping
+Route::prefix('api/v1')
+    ->middleware('api')
+    ->name('api.v1.')
+    ->group(function () {
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('users.index');
+    });</code></pre>
+            </div>
+
+            <h3>Resource Routes</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Full resource controller
+Route::resource('posts', PostController::class);
+
+// Generates these routes:
+// GET       /posts              -> index()
+// GET       /posts/create       -> create()
+// POST      /posts              -> store()
+// GET       /posts/{post}       -> show()
+// GET       /posts/{post}/edit  -> edit()
+// PUT/PATCH /posts/{post}       -> update()
+// DELETE    /posts/{post}       -> destroy()
+
+// Partial resource
+Route::resource('photos', PhotoController::class)
+    ->only(['index', 'show']);
+
+// API resources (no create/edit)
+Route::apiResource('articles', ArticleController::class);</code></pre>
+            </div>
+
+            <h3>Route Model Binding</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Implicit binding (by ID)
+Route::get('/users/{user}', function (User $user) {
+    return $user->name;
+});
+
+// Custom key binding
+Route::get('/posts/{post:slug}', function (Post $post) {
+    return $post;
+});
+
+// Model binding in controller
+class PostController extends Controller
+{
+    public function show(Post $post)
+    {
+        // $post automatically resolved by ID
+        return view('posts.show', compact('post'));
+    }
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Always use named routes and route() helper for URL generation. This makes refactoring easier and prevents broken links.
+            </div>
+        </section>
+
+        <!-- Middleware -->
+        <section id="middleware" class="topic-section">
+            <h2>3. Middleware</h2>
+
+            <h3>Creating Middleware</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class CheckAge
+{
+    public function handle(Request $request, Closure $next, $minAge = 18)
+    {
+        if ($request->age < $minAge) {
+            return redirect('home');
+        }
+        
+        return $next($request);
+    }
+}
+
+// Before & After middleware
+class BeforeMiddleware
+{
+    public function handle(Request $request, Closure $next)
+    {
+        // Perform action before request
+        Log::info('Before: ' . $request->path());
+        
+        return $next($request);
+    }
+}
+
+class AfterMiddleware
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $response = $next($request);
+        
+        // Perform action after request
+        Log::info('After: ' . $request->path());
+        
+        return $response;
+    }
+}</code></pre>
+            </div>
+
+            <h3>Registering Middleware</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// app/Http/Kernel.php
+
+protected $middleware = [
+    // Global middleware (runs on every request)
+    \App\Http\Middleware\TrustProxies::class,
+    \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+];
+
+protected $middlewareGroups = [
+    'web' => [
+        \App\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \App\Http\Middleware\VerifyCsrfToken::class,
+    ],
+    
+    'api' => [
+        'throttle:api',
+        \Illuminate\Routing\Middleware\SubstituteBindings::class,
+    ],
+];
+
+protected $routeMiddleware = [
+    'auth' => \App\Http\Middleware\Authenticate::class,
+    'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+    'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+];</code></pre>
+            </div>
+
+            <h3>Applying Middleware</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// In routes
+Route::get('/dashboard', function () {
+    // ...
+})->middleware('auth');
+
+// Multiple middleware
+Route::get('/admin', function () {
+    // ...
+})->middleware(['auth', 'admin']);
+
+// In controller constructor
+class PostController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+        
+        // Only for specific methods
+        $this->middleware('auth')->only(['create', 'store']);
+        
+        // Except specific methods
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> Middleware order matters! Global middleware runs first, followed by group middleware, then route-specific middleware.
+            </div>
+        </section>
+
+        <!-- Controllers -->
+        <section id="controllers" class="topic-section">
+            <h2>4. Controllers</h2>
+
+            <h3>Basic Controller</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+    public function index()
+    {
+        $users = User::paginate(15);
+        return view('users.index', compact('users'));
+    }
+    
+    public function show(User $user)
+    {
+        return view('users.show', compact('user'));
+    }
+    
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+        ]);
+        
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+        ]);
+        
+        return redirect()->route('users.show', $user)
+            ->with('success', 'User created successfully');
+    }
+    
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+        ]);
+        
+        $user->update($validated);
+        
+        return redirect()->route('users.show', $user);
+    }
+    
+    public function destroy(User $user)
+    {
+        $user->delete();
+        
+        return redirect()->route('users.index');
+    }
+}</code></pre>
+            </div>
+
+            <h3>API Controller</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Resources\PostResource;
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class PostController extends Controller
+{
+    public function index()
+    {
+        $posts = Post::with('user')->paginate();
+        return PostResource::collection($posts);
+    }
+    
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ]);
+        
+        $post = $request->user()->posts()->create($validated);
+        
+        return new PostResource($post);
+    }
+    
+    public function show(Post $post)
+    {
+        return new PostResource($post->load('user', 'comments'));
+    }
+    
+    public function update(Request $request, Post $post)
+    {
+        $this->authorize('update', $post);
+        $post->update($request->validated());
+        return new PostResource($post);
+    }
+    
+    public function destroy(Post $post)
+    {
+        $this->authorize('delete', $post);
+        $post->delete();
+        return response()->json(null, 204);
+    }
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Keep controllers thin. Move business logic to services, queries to repositories, and validations to form requests.
+            </div>
+        </section>
+
+        <!-- Request Lifecycle -->
+        <section id="request-lifecycle" class="topic-section">
+            <h2>5. Request Lifecycle</h2>
+
+            <h3>Complete Request Flow</h3>
+            <div class="code-example">
+                <pre><code class="language-plaintext">1. Entry Point (public/index.php)
+   ↓
+2. Bootstrap (bootstrap/app.php)
+   - Register service providers
+   - Load environment variables
+   ↓
+3. HTTP Kernel (app/Http/Kernel.php)
+   - Global middleware execution
+   - Route middleware groups
+   ↓
+4. Service Providers (boot & register)
+   - Database connections
+   - View composers
+   ↓
+5. Router
+   - Route matching
+   - Parameter binding
+   ↓
+6. Controller/Closure
+   - Dependency injection
+   - Business logic
+   ↓
+7. Middleware (after)
+   - Response modification
+   ↓
+8. Response
+   - Send to browser</code></pre>
+            </div>
+
+            <h3>Service Provider Lifecycle</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    // 1. REGISTER: Register bindings
+    public function register()
+    {
+        $this->app->singleton(PaymentGateway::class, function ($app) {
+            return new StripeGateway(
+                config('services.stripe.key')
+            );
+        });
+    }
+    
+    // 2. BOOT: Bootstrap services
+    public function boot()
+    {
+        // Load routes
+        $this->loadRoutesFrom(__DIR__.'/../../routes/api.php');
+        
+        // Load views
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'package');
+        
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        
+        // View composers
+        view()->composer('layouts.app', function ($view) {
+            $view->with('appName', config('app.name'));
+        });
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Eloquent ORM -->
+        <section id="eloquent" class="topic-section">
+            <h2>6. Eloquent ORM</h2>
+
+            <h3>Defining Models</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Post extends Model
+{
+    use SoftDeletes;
+    
+    protected $table = 'posts';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
+    
+    protected $fillable = [
+        'title',
+        'content',
+        'user_id',
+        'published_at',
+    ];
+    
+    protected $hidden = ['deleted_at'];
+    
+    protected $casts = [
+        'published_at' => 'datetime',
+        'is_featured' => 'boolean',
+        'metadata' => 'array',
+    ];
+    
+    protected $attributes = [
+        'views_count' => 0,
+    ];
+}</code></pre>
+            </div>
+
+            <h3>Query Builder</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Retrieving models
+$users = User::all();
+$user = User::find(1);
+$user = User::findOrFail(1);
+
+// Where clauses
+$users = User::where('active', true)->get();
+$users = User::where('votes', '>', 100)->get();
+
+// Multiple conditions
+$users = User::where('active', true)
+    ->where('votes', '>', 100)
+    ->get();
+
+// Or conditions
+$users = User::where('active', true)
+    ->orWhere('votes', '>', 100)
+    ->get();
+
+// Where In
+$users = User::whereIn('id', [1, 2, 3])->get();
+
+// Where Null
+$users = User::whereNull('email_verified_at')->get();
+
+// Ordering
+$users = User::orderBy('name', 'asc')->get();
+$users = User::latest()->get();
+$users = User::oldest()->get();
+
+// Pagination
+$users = User::paginate(15);
+$users = User::simplePaginate(15);</code></pre>
+            </div>
+
+            <h3>Accessors & Mutators</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    // Modern accessor (Laravel 9+)
+    protected function firstName(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => ucfirst($value),
+            set: fn ($value) => strtolower($value),
+        );
+    }
+    
+    // Read-only accessor
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => "{$this->first_name} {$this->last_name}"
+        );
+    }
+}</code></pre>
+            </div>
+
+            <h3>Query Scopes</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
+class Post extends Model
+{
+    // Local scope
+    public function scopePublished(Builder $query): void
+    {
+        $query->whereNotNull('published_at');
+    }
+    
+    public function scopePopular(Builder $query): void
+    {
+        $query->where('views', '>', 1000);
+    }
+    
+    // Scope with parameters
+    public function scopeOfType(Builder $query, string $type): void
+    {
+        $query->where('type', $type);
+    }
+}
+
+// Usage
+$posts = Post::published()->popular()->get();
+$posts = Post::ofType('article')->get();</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Performance Tip:</strong> Use eager loading to prevent N+1 queries. Always load relationships when you know you'll need them.
+            </div>
+        </section>
+
+        <!-- Migrations -->
+        <section id="migrations" class="topic-section">
+            <h2>7. Migrations</h2>
+
+            <h3>Creating Migrations</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('uuid')->unique();
+            
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->text('content');
+            $table->text('excerpt')->nullable();
+            
+            $table->integer('views')->default(0);
+            $table->boolean('is_published')->default(false);
+            
+            $table->timestamp('published_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+            
+            $table->json('metadata')->nullable();
+            
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+            
+            $table->index('slug');
+            $table->fullText(['title', 'content']);
+        });
+    }
+    
+    public function down(): void
+    {
+        Schema::dropIfExists('posts');
+    }
+};</code></pre>
+            </div>
+
+            <h3>Column Types</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Numeric
+$table->id();
+$table->bigInteger('votes');
+$table->integer('votes');
+$table->decimal('amount', 8, 2);
+$table->unsignedBigInteger('votes');
+
+// String
+$table->string('name', 100);
+$table->text('description');
+$table->char('code', 4);
+
+// Date/Time
+$table->date('created_date');
+$table->dateTime('created_at');
+$table->timestamp('added_at');
+$table->timestamps();
+$table->softDeletes();
+
+// Special
+$table->boolean('confirmed');
+$table->json('options');
+$table->uuid('id');
+$table->enum('status', ['pending', 'active']);
+
+// Modifiers
+$table->string('email')->nullable();
+$table->string('name')->default('guest');
+$table->integer('votes')->unsigned();
+$table->timestamp('created_at')->useCurrent();</code></pre>
+            </div>
+
+            <h3>Migration Commands</h3>
+            <div class="code-example">
+                <pre><code class="language-bash"># Run migrations
+php artisan migrate
+
+# Rollback last batch
+php artisan migrate:rollback
+
+# Reset all migrations
+php artisan migrate:reset
+
+# Rollback and re-run all
+php artisan migrate:refresh
+
+# Drop all tables and re-run
+php artisan migrate:fresh
+
+# Create migration
+php artisan make:migration create_posts_table</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Production Warning:</strong> Always backup your database before running migrations in production.
+            </div>
+        </section>
+
+        <!-- Relationships -->
+        <section id="relationships" class="topic-section">
+            <h2>8. Eloquent Relationships</h2>
+
+            <h3>One-to-One</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+class User extends Model
+{
+    public function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
+    }
+}
+
+class Profile extends Model
+{
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+}
+
+// Usage
+$user = User::find(1);
+$profile = $user->profile;
+
+// Create related model
+$user->profile()->create([
+    'bio' => 'Developer',
+]);</code></pre>
+            </div>
+
+            <h3>One-to-Many</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+class User extends Model
+{
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+}
+
+class Post extends Model
+{
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+}
+
+// Usage
+$user = User::find(1);
+$posts = $user->posts;
+
+// Create related models
+$user->posts()->create([
+    'title' => 'New Post',
+    'content' => 'Content here',
+]);</code></pre>
+            </div>
+
+            <h3>Many-to-Many</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+class User extends Model
+{
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class)
+            ->withPivot('expires_at')
+            ->withTimestamps();
+    }
+}
+
+class Role extends Model
+{
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+}
+
+// Usage
+$user = User::find(1);
+$roles = $user->roles;
+
+// Attach relationships
+$user->roles()->attach($roleId);
+$user->roles()->attach([1, 2, 3]);
+
+// Detach relationships
+$user->roles()->detach($roleId);
+$user->roles()->detach(); // Detach all
+
+// Sync relationships
+$user->roles()->sync([1, 2, 3]);</code></pre>
+            </div>
+
+            <h3>Eager Loading</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Eager load relationships
+$users = User::with('posts')->get();
+$users = User::with(['posts', 'profile'])->get();
+
+// Nested eager loading
+$users = User::with('posts.comments')->get();
+
+// Constrain eager loads
+$users = User::with(['posts' => function ($query) {
+    $query->where('published', true)
+        ->orderBy('created_at', 'desc');
+}])->get();
+
+// Lazy eager loading
+$users = User::all();
+$users->load('posts');
+
+// Count relationships
+$users = User::withCount('posts')->get();
+foreach ($users as $user) {
+    echo $user->posts_count;
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Service Container -->
+        <section id="service-container" class="topic-section">
+            <h2>9. Service Container</h2>
+
+            <h3>Binding Services</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// In Service Provider
+class AppServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        // Simple binding
+        $this->app->bind('payment', function ($app) {
+            return new PaymentService();
+        });
+        
+        // Singleton binding
+        $this->app->singleton(PaymentService::class, function ($app) {
+            return new PaymentService(
+                config('services.stripe.key')
+            );
+        });
+        
+        // Interface to implementation
+        $this->app->bind(
+            PaymentInterface::class,
+            StripePayment::class
+        );
+        
+        // Contextual binding
+        $this->app->when(UserController::class)
+            ->needs(PaymentInterface::class)
+            ->give(StripePayment::class);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Resolving from Container</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Using app() helper
+$payment = app(PaymentService::class);
+
+// Using make
+$payment = app()->make(PaymentService::class);
+
+// Using resolve helper
+$payment = resolve(PaymentService::class);
+
+// Automatic injection in controllers
+class PaymentController extends Controller
+{
+    public function __construct(private PaymentService $payment)
+    {
+        // $payment automatically resolved
+    }
+    
+    public function process(Request $request, PaymentService $payment)
+    {
+        // Method injection also works
+        return $payment->process($request->all());
+    }
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Service Container:</strong> The container automatically resolves dependencies, making dependency injection seamless throughout your application.
+            </div>
+        </section>
+
+        <!-- Service Providers -->
+        <section id="service-providers" class="topic-section">
+            <h2>10. Service Providers</h2>
+
+            <h3>Creating Service Providers</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class PaymentServiceProvider extends ServiceProvider
+{
+    // Register bindings
+    public function register()
+    {
+        $this->app->singleton(PaymentGateway::class, function ($app) {
+            return new StripeGateway(
+                config('services.stripe.key')
+            );
+        });
+        
+        // Merge configuration
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/payment.php',
+            'payment'
+        );
+    }
+    
+    // Bootstrap services
+    public function boot()
+    {
+        // Publish configuration
+        $this->publishes([
+            __DIR__.'/../../config/payment.php' => config_path('payment.php'),
+        ], 'config');
+        
+        // Load routes
+        $this->loadRoutesFrom(__DIR__.'/../../routes/payment.php');
+        
+        // Load views
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'payment');
+        
+        // Load migrations
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+    }
+}</code></pre>
+            </div>
+
+            <h3>Registering Providers</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// config/app.php
+'providers' => [
+    // Laravel Framework Providers...
+    Illuminate\Auth\AuthServiceProvider::class,
+    Illuminate\Broadcasting\BroadcastServiceProvider::class,
+    
+    // Package Service Providers...
+    Laravel\Sanctum\SanctumServiceProvider::class,
+    
+    // Application Service Providers...
+    App\Providers\AppServiceProvider::class,
+    App\Providers\AuthServiceProvider::class,
+    App\Providers\EventServiceProvider::class,
+    App\Providers\PaymentServiceProvider::class,
+];</code></pre>
+            </div>
+        </section>
+
+        <!-- Facades -->
+        <section id="facades" class="topic-section">
+            <h2>11. Facades</h2>
+
+            <h3>Using Facades</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
+// Cache facade
+Cache::put('key', 'value', 600);
+$value = Cache::get('key');
+
+// DB facade
+$users = DB::table('users')->get();
+DB::insert('insert into users (name) values (?)', ['John']);
+
+// Mail facade
+Mail::to($user)->send(new WelcomeEmail());</code></pre>
+            </div>
+
+            <h3>Creating Custom Facades</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Services;
+
+class PaymentService
+{
+    public function process($amount)
+    {
+        return "Processing payment of {$amount}";
+    }
+}
+
+// Create facade
+namespace App\Facades;
+
+use Illuminate\Support\Facades\Facade;
+
+class Payment extends Facade
+{
+    protected static function getFacadeAccessor()
+    {
+        return 'payment';
+    }
+}
+
+// Bind in service provider
+$this->app->bind('payment', function () {
+    return new PaymentService();
+});
+
+// Usage
+use App\Facades\Payment;
+
+Payment::process(100);</code></pre>
+            </div>
+
+            <h3>Common Facades</h3>
+            <table>
+                <tr>
+                    <th>Facade</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>Cache</td>
+                    <td>Caching operations</td>
+                </tr>
+                <tr>
+                    <td>DB</td>
+                    <td>Database operations</td>
+                </tr>
+                <tr>
+                    <td>Mail</td>
+                    <td>Sending emails</td>
+                </tr>
+                <tr>
+                    <td>Storage</td>
+                    <td>File storage</td>
+                </tr>
+                <tr>
+                    <td>Queue</td>
+                    <td>Queue operations</td>
+                </tr>
+                <tr>
+                    <td>Auth</td>
+                    <td>Authentication</td>
+                </tr>
+                <tr>
+                    <td>Route</td>
+                    <td>Routing</td>
+                </tr>
+                <tr>
+                    <td>Log</td>
+                    <td>Logging</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Authentication -->
+        <section id="authentication" class="topic-section">
+            <h2>12. Authentication (Sanctum & Passport)</h2>
+
+            <h3>Laravel Sanctum (SPA & API Tokens)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Install Sanctum
+// composer require laravel/sanctum
+// php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+// php artisan migrate
+
+// User model
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens;
+}
+
+// Create token
+$token = $user->createToken('auth-token')->plainTextToken;
+
+// Create token with abilities
+$token = $user->createToken('auth-token', ['post:create', 'post:update'])
+    ->plainTextToken;
+
+// Login endpoint
+class AuthController extends Controller
+{
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        
+        if (!Auth::attempt($credentials)) {
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+        
+        $user = Auth::user();
+        $token = $user->createToken('auth-token')->plainTextToken;
+        
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ]);
+    }
+    
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
+    }
+}
+
+// Protect routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    
+    Route::post('/posts', [PostController::class, 'store']);
+});</code></pre>
+            </div>
+
+            <h3>Laravel Passport (OAuth2)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Install Passport
+// composer require laravel/passport
+// php artisan migrate
+// php artisan passport:install
+
+// User model
+use Laravel\Passport\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens;
+}
+
+// AuthServiceProvider
+use Laravel\Passport\Passport;
+
+public function boot()
+{
+    Passport::tokensExpireIn(now()->addDays(15));
+    Passport::refreshTokensExpireIn(now()->addDays(30));
+    Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+    
+    // Token scopes
+    Passport::tokensCan([
+        'post-read' => 'Read posts',
+        'post-write' => 'Create and update posts',
+    ]);
+}
+
+// config/auth.php
+'guards' => [
+    'api' => [
+        'driver' => 'passport',
+        'provider' => 'users',
+    ],
+];
+
+// Protect routes
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});
+
+// Scope middleware
+Route::middleware(['auth:api', 'scope:post-write'])->group(function () {
+    Route::post('/posts', [PostController::class, 'store']);
+});</code></pre>
+            </div>
+
+            <h3>Authentication Guards</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Check authentication
+if (Auth::check()) {
+    // User is authenticated
+}
+
+// Get authenticated user
+$user = Auth::user();
+$user = auth()->user();
+$user = request()->user();
+
+// Authenticate user
+Auth::login($user);
+Auth::loginUsingId(1);
+
+// Logout
+Auth::logout();
+
+// Attempt authentication
+if (Auth::attempt(['email' => $email, 'password' => $password])) {
+    // Authentication passed
+}
+
+// Remember me
+Auth::attempt($credentials, true);
+
+// Guard specific operations
+Auth::guard('admin')->attempt($credentials);
+$admin = Auth::guard('admin')->user();</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Choosing Between Sanctum & Passport:</strong> Use Sanctum for SPA authentication and simple API tokens. Use Passport for full OAuth2 server implementation with third-party integrations.
+            </div>
+        </section>
+
+        <!-- Queues -->
+        <section id="queues" class="topic-section">
+            <h2>13. Queues</h2>
+
+            <h3>Creating Jobs</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+
+class ProcessOrder implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    
+    public $tries = 3;
+    public $timeout = 120;
+    public $maxExceptions = 3;
+    
+    public function __construct(
+        public Order $order
+    ) {}
+    
+    public function handle(PaymentService $payment)
+    {
+        // Process the order
+        $payment->process($this->order);
+    }
+    
+    public function failed(Throwable $exception)
+    {
+        // Handle job failure
+        Log::error('Order processing failed', [
+            'order_id' => $this->order->id,
+            'error' => $exception->getMessage(),
+        ]);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Dispatching Jobs</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Dispatch immediately
+ProcessOrder::dispatch($order);
+
+// Dispatch to specific queue
+ProcessOrder::dispatch($order)->onQueue('orders');
+
+// Delayed dispatch
+ProcessOrder::dispatch($order)->delay(now()->addMinutes(5));
+
+// Dispatch to specific connection
+ProcessOrder::dispatch($order)->onConnection('redis');
+
+// Dispatch conditionally
+ProcessOrder::dispatchIf($order->isPaid(), $order);
+ProcessOrder::dispatchUnless($order->isCancelled(), $order);
+
+// Dispatch after response
+ProcessOrder::dispatchAfterResponse($order);
+
+// Dispatch synchronously
+ProcessOrder::dispatchSync($order);
+
+// Chain jobs
+ProcessOrder::withChain([
+    new SendOrderConfirmation($order),
+    new UpdateInventory($order),
+])->dispatch($order);</code></pre>
+            </div>
+
+            <h3>Queue Configuration</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// config/queue.php
+'connections' => [
+    'database' => [
+        'driver' => 'database',
+        'table' => 'jobs',
+        'queue' => 'default',
+        'retry_after' => 90,
+    ],
+    
+    'redis' => [
+        'driver' => 'redis',
+        'connection' => 'default',
+        'queue' => env('REDIS_QUEUE', 'default'),
+        'retry_after' => 90,
+        'block_for' => null,
+    ],
+];
+
+// Running queue workers
+// php artisan queue:work
+// php artisan queue:work --queue=high,default
+// php artisan queue:work --tries=3
+// php artisan queue:work --timeout=60
+
+// Process one job
+// php artisan queue:work --once
+
+// Restart workers
+// php artisan queue:restart
+
+// Failed jobs
+// php artisan queue:failed
+// php artisan queue:retry all
+// php artisan queue:retry 5</code></pre>
+            </div>
+
+            <h3>Job Batching</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+use Illuminate\Bus\Batch;
+use Illuminate\Support\Facades\Bus;
+
+$batch = Bus::batch([
+    new ProcessOrder($order1),
+    new ProcessOrder($order2),
+    new ProcessOrder($order3),
+])->then(function (Batch $batch) {
+    // All jobs completed successfully
+})->catch(function (Batch $batch, Throwable $e) {
+    // First batch job failure detected
+})->finally(function (Batch $batch) {
+    // Batch has finished executing
+})->dispatch();
+
+// Check batch status
+$batch = Bus::findBatch($batchId);
+$batch->finished(); // All jobs finished
+$batch->cancelled(); // Batch cancelled
+$batch->progress(); // Completion percentage</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Use queues for time-consuming tasks like sending emails, processing images, or API calls to improve response times.
+            </div>
+        </section>
+
+        <!-- Events -->
+        <section id="events" class="topic-section">
+            <h2>14. Events & Listeners</h2>
+
+            <h3>Creating Events</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Events;
+
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class OrderShipped
+{
+    use Dispatchable, SerializesModels;
+    
+    public function __construct(
+        public Order $order
+    ) {}
+}</code></pre>
+            </div>
+
+            <h3>Creating Listeners</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Listeners;
+
+use App\Events\OrderShipped;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class SendShipmentNotification implements ShouldQueue
+{
+    public function handle(OrderShipped $event)
+    {
+        // Send notification to customer
+        Mail::to($event->order->customer)
+            ->send(new OrderShippedMail($event->order));
+    }
+    
+    public function failed(OrderShipped $event, Throwable $exception)
+    {
+        // Handle listener failure
+    }
+}</code></pre>
+            </div>
+
+            <h3>Registering Events</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// app/Providers/EventServiceProvider.php
+
+protected $listen = [
+    OrderShipped::class => [
+        SendShipmentNotification::class,
+        UpdateInventory::class,
+        LogShipment::class,
+    ],
+    
+    UserRegistered::class => [
+        SendWelcomeEmail::class,
+        CreateUserProfile::class,
+    ],
+];
+
+// Auto-discovery
+public function shouldDiscoverEvents()
+{
+    return true;
+}</code></pre>
+            </div>
+
+            <h3>Dispatching Events</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Dispatch event
+event(new OrderShipped($order));
+
+// Using facade
+Event::dispatch(new OrderShipped($order));
+
+// Model events
+class Order extends Model
+{
+    protected static function booted()
+    {
+        static::created(function ($order) {
+            event(new OrderCreated($order));
+        });
+        
+        static::updated(function ($order) {
+            event(new OrderUpdated($order));
+        });
+    }
+}</code></pre>
+            </div>
+
+            <h3>Event Subscribers</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Listeners;
+
+use Illuminate\Events\Dispatcher;
+
+class UserEventSubscriber
+{
+    public function handleUserLogin($event) {}
+    
+    public function handleUserLogout($event) {}
+    
+    public function subscribe(Dispatcher $events)
+    {
+        $events->listen(
+            UserLogin::class,
+            [UserEventSubscriber::class, 'handleUserLogin']
+        );
+        
+        $events->listen(
+            UserLogout::class,
+            [UserEventSubscriber::class, 'handleUserLogout']
+        );
+    }
+}
+
+// Register subscriber
+protected $subscribe = [
+    UserEventSubscriber::class,
+];</code></pre>
+            </div>
+        </section>
+
+        <!-- Caching -->
+        <section id="caching" class="topic-section">
+            <h2>15. Caching</h2>
+
+            <h3>Basic Cache Operations</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+use Illuminate\Support\Facades\Cache;
+
+// Store item
+Cache::put('key', 'value', 600); // 600 seconds
+Cache::put('key', 'value', now()->addMinutes(10));
+
+// Store permanently
+Cache::forever('key', 'value');
+
+// Store if not exists
+Cache::add('key', 'value', 600);
+
+// Retrieve item
+$value = Cache::get('key');
+$value = Cache::get('key', 'default');
+
+// Retrieve and delete
+$value = Cache::pull('key');
+
+// Check existence
+if (Cache::has('key')) {
+    // Key exists
+}
+
+// Delete item
+Cache::forget('key');
+
+// Clear all cache
+Cache::flush();</code></pre>
+            </div>
+
+            <h3>Cache Helpers</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Remember: get or store
+$users = Cache::remember('users', 600, function () {
+    return User::all();
+});
+
+// Remember forever
+$settings = Cache::rememberForever('settings', function () {
+    return Settings::all();
+});
+
+// Increment/Decrement
+Cache::increment('views');
+Cache::increment('views', 5);
+Cache::decrement('views');
+Cache::decrement('views', 2);</code></pre>
+            </div>
+
+            <h3>Cache Tags (Redis/Memcached)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Store with tags
+Cache::tags(['users', 'admins'])->put('john', $user, 600);
+
+// Retrieve with tags
+$user = Cache::tags(['users', 'admins'])->get('john');
+
+// Flush tagged items
+Cache::tags(['users'])->flush();
+Cache::tags(['users', 'admins'])->flush();</code></pre>
+            </div>
+
+            <h3>Cache Drivers</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// config/cache.php
+'default' => env('CACHE_DRIVER', 'file'),
+
+'stores' => [
+    'file' => [
+        'driver' => 'file',
+        'path' => storage_path('framework/cache/data'),
+    ],
+    
+    'redis' => [
+        'driver' => 'redis',
+        'connection' => 'cache',
+    ],
+    
+    'memcached' => [
+        'driver' => 'memcached',
+        'servers' => [
+            [
+                'host' => '127.0.0.1',
+                'port' => 11211,
+                'weight' => 100,
+            ],
+        ],
+    ],
+];
+
+// Use specific store
+Cache::store('redis')->put('key', 'value', 600);
+$value = Cache::store('redis')->get('key');</code></pre>
+            </div>
+
+            <h3>Query Result Caching</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Cache query results
+$users = Cache::remember('users.all', 3600, function () {
+    return User::all();
+});
+
+// Cache specific query
+$activeUsers = Cache::remember('users.active', 3600, function () {
+    return User::where('active', true)->get();
+});
+
+// Model caching pattern
+class User extends Model
+{
+    public static function cached($id)
+    {
+        return Cache::remember("user.{$id}", 3600, function () use ($id) {
+            return static::find($id);
+        });
+    }
+}</code></pre>
+            </div>
+
+            <h3>Cache Events</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Listen to cache events
+use Illuminate\Cache\Events\CacheHit;
+use Illuminate\Cache\Events\CacheMissed;
+use Illuminate\Cache\Events\KeyWritten;
+use Illuminate\Cache\Events\KeyForgotten;
+
+Event::listen(CacheHit::class, function ($event) {
+    // $event->key
+    // $event->value
+});
+
+Event::listen(CacheMissed::class, function ($event) {
+    // $event->key
+});
+
+Event::listen(KeyWritten::class, function ($event) {
+    // $event->key
+    // $event->value
+    // $event->seconds
+});</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Caching Strategy:</strong> Cache database queries, API responses, and computed values. Use cache tags for organized cache management. Always set appropriate expiration times.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Laravel Interview Bank - Comprehensive Framework Guide</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">Master Laravel's core concepts with detailed examples and best practices</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
