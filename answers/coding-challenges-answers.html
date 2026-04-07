@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenges - Step-by-Step Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #764ba2;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .topic-section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .step-box {
+            background: #f5f5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .step-box h5 {
+            color: #9c27b0;
+            margin-bottom: 0.5rem;
+        }
+        .output-box {
+            background: #263238;
+            color: #aed581;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>💻 Coding Challenges - Step-by-Step Solutions</h1>
+        <p>Comprehensive solutions to common programming problems</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#palindrome">1. Palindrome Check</a></li>
+                <li><a href="#reverse-string">2. Reverse String</a></li>
+                <li><a href="#char-frequency">3. Character Frequency</a></li>
+                <li><a href="#array-sorting">4. Array Sorting</a></li>
+                <li><a href="#find-duplicates">5. Finding Duplicates</a></li>
+                <li><a href="#second-highest">6. Second Highest Number</a></li>
+                <li><a href="#factorial">7. Factorial Calculation</a></li>
+                <li><a href="#prime-numbers">8. Prime Number Check</a></li>
+                <li><a href="#fibonacci">9. Fibonacci Sequence</a></li>
+                <li><a href="#output-prediction">10. Output Prediction Problems</a></li>
+            </ul>
+        </div>
+
+        <!-- Palindrome Check -->
+        <section id="palindrome" class="topic-section">
+            <h2>1. Palindrome Check</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Write a function to check if a given string is a palindrome (reads the same forward and backward), ignoring spaces, punctuation, and case.</p>
+            
+            <h3>Step-by-Step Solution</h3>
+            
+            <div class="step-box">
+                <h5>Step 1: Clean the input string</h5>
+                <p>Remove spaces, punctuation, and convert to lowercase for comparison.</p>
+            </div>
+            
+            <div class="step-box">
+                <h5>Step 2: Compare characters</h5>
+                <p>Compare characters from both ends moving towards the center.</p>
+            </div>
+            
+            <div class="step-box">
+                <h5>Step 3: Return result</h5>
+                <p>If all characters match, it's a palindrome.</p>
+            </div>
+
+            <h4>Solution in PHP</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Method 1: Using string reversal
+function isPalindrome($str) {
+    // Remove non-alphanumeric characters and convert to lowercase
+    $cleaned = preg_replace('/[^a-zA-Z0-9]/', '', strtolower($str));
+    
+    // Compare with reversed string
+    return $cleaned === strrev($cleaned);
+}
+
+// Method 2: Two-pointer approach
+function isPalindrome2($str) {
+    $cleaned = preg_replace('/[^a-zA-Z0-9]/', '', strtolower($str));
+    $left = 0;
+    $right = strlen($cleaned) - 1;
+    
+    while ($left < $right) {
+        if ($cleaned[$left] !== $cleaned[$right]) {
+            return false;
+        }
+        $left++;
+        $right--;
+    }
+    
+    return true;
+}
+
+// Test cases
+echo isPalindrome("A man, a plan, a canal: Panama") ? "true" : "false"; // true
+echo isPalindrome("race a car") ? "true" : "false"; // false
+echo isPalindrome("Was it a car or a cat I saw?") ? "true" : "false"; // true
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Method 1: Using string reversal
+function isPalindrome(str) {
+    // Remove non-alphanumeric characters and convert to lowercase
+    const cleaned = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+    
+    // Compare with reversed string
+    return cleaned === cleaned.split('').reverse().join('');
+}
+
+// Method 2: Two-pointer approach
+function isPalindrome2(str) {
+    const cleaned = str.toLowerCase().replace(/[^a-z0-9]/g, '');
+    let left = 0;
+    let right = cleaned.length - 1;
+    
+    while (left < right) {
+        if (cleaned[left] !== cleaned[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    
+    return true;
+}
+
+// Test cases
+console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
+console.log(isPalindrome("race a car")); // false
+console.log(isPalindrome("Was it a car or a cat I saw?")); // true</code></pre>
+            </div>
+
+            <div class="output-box">
+                <strong>Output:</strong><br>
+true<br>
+false<br>
+true
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Time Complexity:</strong> O(n) where n is the length of the string. <br>
+                <strong>Space Complexity:</strong> O(n) for method 1 (due to string reversal), O(1) for method 2.
+            </div>
+        </section>
+
+        <!-- Reverse String -->
+        <section id="reverse-string" class="topic-section">
+            <h2>2. Reverse String</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Write a function to reverse a string using different approaches.</p>
+            
+            <h3>Step-by-Step Solution</h3>
+            
+            <div class="step-box">
+                <h5>Step 1: Choose an approach</h5>
+                <p>Built-in functions, iteration, or recursion.</p>
+            </div>
+            
+            <div class="step-box">
+                <h5>Step 2: Implement the reversal</h5>
+                <p>Swap characters or build reversed string.</p>
+            </div>
+
+            <h4>Solution in PHP</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Method 1: Built-in function
+function reverseString1($str) {
+    return strrev($str);
+}
+
+// Method 2: Loop iteration
+function reverseString2($str) {
+    $reversed = '';
+    for ($i = strlen($str) - 1; $i >= 0; $i--) {
+        $reversed .= $str[$i];
+    }
+    return $reversed;
+}
+
+// Method 3: Recursive approach
+function reverseString3($str) {
+    if (strlen($str) <= 1) {
+        return $str;
+    }
+    return reverseString3(substr($str, 1)) . $str[0];
+}
+
+// Method 4: Array manipulation
+function reverseString4($str) {
+    $arr = str_split($str);
+    $reversed = array_reverse($arr);
+    return implode('', $reversed);
+}
+
+// Test
+$text = "Hello, World!";
+echo reverseString1($text); // !dlroW ,olleH
+echo reverseString2($text); // !dlroW ,olleH
+echo reverseString3($text); // !dlroW ,olleH
+echo reverseString4($text); // !dlroW ,olleH
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Method 1: Array reverse
+function reverseString1(str) {
+    return str.split('').reverse().join('');
+}
+
+// Method 2: Loop iteration
+function reverseString2(str) {
+    let reversed = '';
+    for (let i = str.length - 1; i >= 0; i--) {
+        reversed += str[i];
+    }
+    return reversed;
+}
+
+// Method 3: Reduce method
+function reverseString3(str) {
+    return str.split('').reduce((reversed, char) => char + reversed, '');
+}
+
+// Method 4: Recursive approach
+function reverseString4(str) {
+    if (str.length <= 1) return str;
+    return reverseString4(str.slice(1)) + str[0];
+}
+
+// Method 5: For...of loop
+function reverseString5(str) {
+    let reversed = '';
+    for (let char of str) {
+        reversed = char + reversed;
+    }
+    return reversed;
+}
+
+// Test
+const text = "Hello, World!";
+console.log(reverseString1(text)); // !dlroW ,olleH
+console.log(reverseString2(text)); // !dlroW ,olleH
+console.log(reverseString3(text)); // !dlroW ,olleH</code></pre>
+            </div>
+
+            <div class="output-box">
+                <strong>Output:</strong><br>
+!dlroW ,olleH
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Performance:</strong> Built-in functions are generally fastest. Recursive approach has higher memory overhead due to call stack.
+            </div>
+        </section>
+
+        <!-- Character Frequency -->
+        <section id="char-frequency" class="topic-section">
+            <h2>3. Character Frequency Counter</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Count the frequency of each character in a string and display the results.</p>
+            
+            <h3>Step-by-Step Solution</h3>
+            
+            <div class="step-box">
+                <h5>Step 1: Initialize a counter</h5>
+                <p>Use an associative array/object to store character counts.</p>
+            </div>
+            
+            <div class="step-box">
+                <h5>Step 2: Iterate through the string</h5>
+                <p>For each character, increment its count in the counter.</p>
+            </div>
+            
+            <div class="step-box">
+                <h5>Step 3: Return or display results</h5>
+                <p>Show the frequency of each character.</p>
+            </div>
+
+            <h4>Solution in PHP</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Method 1: Using array
+function charFrequency($str) {
+    $frequency = [];
+    
+    for ($i = 0; $i < strlen($str); $i++) {
+        $char = $str[$i];
+        if (isset($frequency[$char])) {
+            $frequency[$char]++;
+        } else {
+            $frequency[$char] = 1;
+        }
+    }
+    
+    return $frequency;
+}
+
+// Method 2: Using count_chars
+function charFrequency2($str) {
+    $result = [];
+    $counts = count_chars($str, 1); // Returns array with byte-value as key
+    
+    foreach ($counts as $byte => $count) {
+        $result[chr($byte)] = $count;
+    }
+    
+    return $result;
+}
+
+// Method 3: Case-insensitive with filtering
+function charFrequency3($str) {
+    $str = strtolower($str);
+    $frequency = [];
+    
+    // Only count letters and numbers
+    for ($i = 0; $i < strlen($str); $i++) {
+        $char = $str[$i];
+        if (ctype_alnum($char)) {
+            $frequency[$char] = ($frequency[$char] ?? 0) + 1;
+        }
+    }
+    
+    return $frequency;
+}
+
+// Test
+$text = "Hello World";
+$freq = charFrequency($text);
+
+foreach ($freq as $char => $count) {
+    echo "'$char': $count\n";
+}
+
+// Output:
+// 'H': 1
+// 'e': 1
+// 'l': 3
+// 'o': 2
+// ' ': 1
+// 'W': 1
+// 'r': 1
+// 'd': 1
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Method 1: Using object
+function charFrequency(str) {
+    const frequency = {};
+    
+    for (let char of str) {
+        frequency[char] = (frequency[char] || 0) + 1;
+    }
+    
+    return frequency;
+}
+
+// Method 2: Using Map
+function charFrequency2(str) {
+    const frequency = new Map();
+    
+    for (let char of str) {
+        frequency.set(char, (frequency.get(char) || 0) + 1);
+    }
+    
+    return frequency;
+}
+
+// Method 3: Using reduce
+function charFrequency3(str) {
+    return str.split('').reduce((freq, char) => {
+        freq[char] = (freq[char] || 0) + 1;
+        return freq;
+    }, {});
+}
+
+// Method 4: Case-insensitive, letters only
+function charFrequency4(str) {
+    const frequency = {};
+    const cleaned = str.toLowerCase().replace(/[^a-z]/g, '');
+    
+    for (let char of cleaned) {
+        frequency[char] = (frequency[char] || 0) + 1;
+    }
+    
+    return frequency;
+}
+
+// Test
+const text = "Hello World";
+const freq = charFrequency(text);
+
+for (let [char, count] of Object.entries(freq)) {
+    console.log(`'${char}': ${count}`);
+}
+
+// Output:
+// 'H': 1
+// 'e': 1
+// 'l': 3
+// 'o': 2
+// ' ': 1
+// 'W': 1
+// 'r': 1
+// 'd': 1</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Use Case:</strong> Character frequency is useful for anagram detection, cryptography, and text analysis.
+            </div>
+        </section>
+
+        <!-- Array Sorting -->
+        <section id="array-sorting" class="topic-section">
+            <h2>4. Array Sorting</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Implement different sorting algorithms to sort an array in ascending order.</p>
+            
+            <h3>Step-by-Step Solution</h3>
+
+            <h4>Bubble Sort</h4>
+            <div class="step-box">
+                <h5>Algorithm Steps:</h5>
+                <ol>
+                    <li>Compare adjacent elements</li>
+                    <li>Swap if they're in wrong order</li>
+                    <li>Repeat until no swaps needed</li>
+                </ol>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Bubble Sort
+function bubbleSort($arr) {
+    $n = count($arr);
+    
+    for ($i = 0; $i < $n - 1; $i++) {
+        $swapped = false;
+        
+        for ($j = 0; $j < $n - $i - 1; $j++) {
+            if ($arr[$j] > $arr[$j + 1]) {
+                // Swap elements
+                $temp = $arr[$j];
+                $arr[$j] = $arr[$j + 1];
+                $arr[$j + 1] = $temp;
+                $swapped = true;
+            }
+        }
+        
+        // If no swaps, array is sorted
+        if (!$swapped) break;
+    }
+    
+    return $arr;
+}
+
+// Selection Sort
+function selectionSort($arr) {
+    $n = count($arr);
+    
+    for ($i = 0; $i < $n - 1; $i++) {
+        $minIndex = $i;
+        
+        // Find minimum element in unsorted portion
+        for ($j = $i + 1; $j < $n; $j++) {
+            if ($arr[$j] < $arr[$minIndex]) {
+                $minIndex = $j;
+            }
+        }
+        
+        // Swap minimum with first unsorted element
+        if ($minIndex !== $i) {
+            $temp = $arr[$i];
+            $arr[$i] = $arr[$minIndex];
+            $arr[$minIndex] = $temp;
+        }
+    }
+    
+    return $arr;
+}
+
+// Insertion Sort
+function insertionSort($arr) {
+    $n = count($arr);
+    
+    for ($i = 1; $i < $n; $i++) {
+        $key = $arr[$i];
+        $j = $i - 1;
+        
+        // Move elements greater than key one position ahead
+        while ($j >= 0 && $arr[$j] > $key) {
+            $arr[$j + 1] = $arr[$j];
+            $j--;
+        }
+        
+        $arr[$j + 1] = $key;
+    }
+    
+    return $arr;
+}
+
+// Quick Sort
+function quickSort($arr) {
+    if (count($arr) <= 1) {
+        return $arr;
+    }
+    
+    $pivot = $arr[0];
+    $left = [];
+    $right = [];
+    
+    for ($i = 1; $i < count($arr); $i++) {
+        if ($arr[$i] < $pivot) {
+            $left[] = $arr[$i];
+        } else {
+            $right[] = $arr[$i];
+        }
+    }
+    
+    return array_merge(quickSort($left), [$pivot], quickSort($right));
+}
+
+// Test
+$numbers = [64, 34, 25, 12, 22, 11, 90];
+print_r(bubbleSort($numbers));
+// Output: [11, 12, 22, 25, 34, 64, 90]
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Bubble Sort
+function bubbleSort(arr) {
+    const n = arr.length;
+    
+    for (let i = 0; i < n - 1; i++) {
+        let swapped = false;
+        
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                swapped = true;
+            }
+        }
+        
+        if (!swapped) break;
+    }
+    
+    return arr;
+}
+
+// Quick Sort
+function quickSort(arr) {
+    if (arr.length <= 1) return arr;
+    
+    const pivot = arr[0];
+    const left = arr.slice(1).filter(x => x < pivot);
+    const right = arr.slice(1).filter(x => x >= pivot);
+    
+    return [...quickSort(left), pivot, ...quickSort(right)];
+}
+
+// Merge Sort
+function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+    
+    const mid = Math.floor(arr.length / 2);
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+    
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    const result = [];
+    let i = 0, j = 0;
+    
+    while (i < left.length && j < right.length) {
+        if (left[i] < right[j]) {
+            result.push(left[i++]);
+        } else {
+            result.push(right[j++]);
+        }
+    }
+    
+    return result.concat(left.slice(i)).concat(right.slice(j));
+}
+
+// Test
+const numbers = [64, 34, 25, 12, 22, 11, 90];
+console.log(bubbleSort([...numbers])); // [11, 12, 22, 25, 34, 64, 90]
+console.log(quickSort([...numbers]));  // [11, 12, 22, 25, 34, 64, 90]
+console.log(mergeSort([...numbers]));  // [11, 12, 22, 25, 34, 64, 90]</code></pre>
+            </div>
+
+            <h4>Sorting Complexity Comparison</h4>
+            <table>
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Best Case</th>
+                    <th>Average Case</th>
+                    <th>Worst Case</th>
+                    <th>Space</th>
+                </tr>
+                <tr>
+                    <td>Bubble Sort</td>
+                    <td>O(n)</td>
+                    <td>O(n²)</td>
+                    <td>O(n²)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Selection Sort</td>
+                    <td>O(n²)</td>
+                    <td>O(n²)</td>
+                    <td>O(n²)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Insertion Sort</td>
+                    <td>O(n)</td>
+                    <td>O(n²)</td>
+                    <td>O(n²)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td>Quick Sort</td>
+                    <td>O(n log n)</td>
+                    <td>O(n log n)</td>
+                    <td>O(n²)</td>
+                    <td>O(log n)</td>
+                </tr>
+                <tr>
+                    <td>Merge Sort</td>
+                    <td>O(n log n)</td>
+                    <td>O(n log n)</td>
+                    <td>O(n log n)</td>
+                    <td>O(n)</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Finding Duplicates -->
+        <section id="find-duplicates" class="topic-section">
+            <h2>5. Finding Duplicates in Array</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Find and return all duplicate elements in an array.</p>
+            
+            <h3>Step-by-Step Solution</h3>
+            
+            <div class="step-box">
+                <h5>Step 1: Track seen elements</h5>
+                <p>Use a hash table or set to track elements we've encountered.</p>
+            </div>
+            
+            <div class="step-box">
+                <h5>Step 2: Identify duplicates</h5>
+                <p>When we see an element again, it's a duplicate.</p>
+            </div>
+
+            <h4>Solution in PHP</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Method 1: Using array functions
+function findDuplicates1($arr) {
+    $counts = array_count_values($arr);
+    $duplicates = [];
+    
+    foreach ($counts as $value => $count) {
+        if ($count > 1) {
+            $duplicates[] = $value;
+        }
+    }
+    
+    return $duplicates;
+}
+
+// Method 2: Using hash map
+function findDuplicates2($arr) {
+    $seen = [];
+    $duplicates = [];
+    
+    foreach ($arr as $value) {
+        if (isset($seen[$value])) {
+            if (!in_array($value, $duplicates)) {
+                $duplicates[] = $value;
+            }
+        } else {
+            $seen[$value] = true;
+        }
+    }
+    
+    return $duplicates;
+}
+
+// Method 3: Find all occurrences
+function findAllDuplicates($arr) {
+    $result = [];
+    $counts = array_count_values($arr);
+    
+    foreach ($counts as $value => $count) {
+        if ($count > 1) {
+            $result[$value] = $count;
+        }
+    }
+    
+    return $result;
+}
+
+// Method 4: Remove duplicates
+function removeDuplicates($arr) {
+    return array_values(array_unique($arr));
+}
+
+// Test
+$numbers = [1, 2, 3, 2, 4, 5, 3, 6, 3];
+print_r(findDuplicates1($numbers)); // [2, 3]
+print_r(findAllDuplicates($numbers)); // [2 => 2, 3 => 3]
+print_r(removeDuplicates($numbers)); // [1, 2, 3, 4, 5, 6]
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Method 1: Using Set
+function findDuplicates1(arr) {
+    const seen = new Set();
+    const duplicates = new Set();
+    
+    for (let num of arr) {
+        if (seen.has(num)) {
+            duplicates.add(num);
+        } else {
+            seen.add(num);
+        }
+    }
+    
+    return Array.from(duplicates);
+}
+
+// Method 2: Using reduce
+function findDuplicates2(arr) {
+    const counts = arr.reduce((acc, num) => {
+        acc[num] = (acc[num] || 0) + 1;
+        return acc;
+    }, {});
+    
+    return Object.keys(counts)
+        .filter(key => counts[key] > 1)
+        .map(Number);
+}
+
+// Method 3: Using filter
+function findDuplicates3(arr) {
+    return arr.filter((item, index) => arr.indexOf(item) !== index)
+        .filter((item, index, self) => self.indexOf(item) === index);
+}
+
+// Method 4: Find with counts
+function findDuplicatesWithCount(arr) {
+    const counts = {};
+    
+    for (let num of arr) {
+        counts[num] = (counts[num] || 0) + 1;
+    }
+    
+    return Object.entries(counts)
+        .filter(([key, count]) => count > 1)
+        .map(([key, count]) => ({ value: Number(key), count }));
+}
+
+// Remove duplicates
+function removeDuplicates(arr) {
+    return [...new Set(arr)];
+}
+
+// Test
+const numbers = [1, 2, 3, 2, 4, 5, 3, 6, 3];
+console.log(findDuplicates1(numbers)); // [2, 3]
+console.log(findDuplicatesWithCount(numbers)); 
+// [{value: 2, count: 2}, {value: 3, count: 3}]
+console.log(removeDuplicates(numbers)); // [1, 2, 3, 4, 5, 6]</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Time Complexity:</strong> O(n) using hash tables/sets. O(n²) using nested loops.
+            </div>
+        </section>
+
+        <!-- Second Highest -->
+        <section id="second-highest" class="topic-section">
+            <h2>6. Find Second Highest Number</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Find the second largest number in an array of integers.</p>
+            
+            <h3>Step-by-Step Solution</h3>
+            
+            <div class="step-box">
+                <h5>Step 1: Handle edge cases</h5>
+                <p>Check if array has at least 2 elements.</p>
+            </div>
+            
+            <div class="step-box">
+                <h5>Step 2: Track two largest values</h5>
+                <p>Maintain first and second highest values while iterating.</p>
+            </div>
+
+            <h4>Solution in PHP</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Method 1: Sort and get second element
+function secondHighest1($arr) {
+    if (count($arr) < 2) {
+        return null;
+    }
+    
+    $unique = array_unique($arr);
+    rsort($unique);
+    
+    return $unique[1] ?? null;
+}
+
+// Method 2: Single pass O(n)
+function secondHighest2($arr) {
+    if (count($arr) < 2) {
+        return null;
+    }
+    
+    $first = $second = PHP_INT_MIN;
+    
+    foreach ($arr as $num) {
+        if ($num > $first) {
+            $second = $first;
+            $first = $num;
+        } elseif ($num > $second && $num !== $first) {
+            $second = $num;
+        }
+    }
+    
+    return $second === PHP_INT_MIN ? null : $second;
+}
+
+// Method 3: Using array functions
+function secondHighest3($arr) {
+    if (count($arr) < 2) {
+        return null;
+    }
+    
+    $unique = array_unique($arr);
+    sort($unique);
+    
+    return $unique[count($unique) - 2] ?? null;
+}
+
+// Method 4: Find top N elements
+function topN($arr, $n) {
+    $unique = array_unique($arr);
+    rsort($unique);
+    return array_slice($unique, 0, $n);
+}
+
+// Test
+$numbers = [10, 5, 20, 8, 20, 15, 12];
+echo secondHighest1($numbers); // 15
+echo secondHighest2($numbers); // 15
+print_r(topN($numbers, 3)); // [20, 15, 12]
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Method 1: Sort and get second
+function secondHighest1(arr) {
+    if (arr.length < 2) return null;
+    
+    const unique = [...new Set(arr)];
+    unique.sort((a, b) => b - a);
+    
+    return unique[1] ?? null;
+}
+
+// Method 2: Single pass O(n)
+function secondHighest2(arr) {
+    if (arr.length < 2) return null;
+    
+    let first = -Infinity;
+    let second = -Infinity;
+    
+    for (let num of arr) {
+        if (num > first) {
+            second = first;
+            first = num;
+        } else if (num > second && num !== first) {
+            second = num;
+        }
+    }
+    
+    return second === -Infinity ? null : second;
+}
+
+// Method 3: Using reduce
+function secondHighest3(arr) {
+    if (arr.length < 2) return null;
+    
+    const { first, second } = arr.reduce(
+        (acc, num) => {
+            if (num > acc.first) {
+                return { first: num, second: acc.first };
+            } else if (num > acc.second && num !== acc.first) {
+                return { ...acc, second: num };
+            }
+            return acc;
+        },
+        { first: -Infinity, second: -Infinity }
+    );
+    
+    return second === -Infinity ? null : second;
+}
+
+// Method 4: Find top N elements
+function topN(arr, n) {
+    const unique = [...new Set(arr)];
+    return unique.sort((a, b) => b - a).slice(0, n);
+}
+
+// Test
+const numbers = [10, 5, 20, 8, 20, 15, 12];
+console.log(secondHighest1(numbers)); // 15
+console.log(secondHighest2(numbers)); // 15
+console.log(topN(numbers, 3)); // [20, 15, 12]</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Optimal Approach:</strong> Single-pass solution (Method 2) with O(n) time and O(1) space complexity.
+            </div>
+        </section>
+
+        <!-- Factorial -->
+        <section id="factorial" class="topic-section">
+            <h2>7. Factorial Calculation</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Calculate the factorial of a number (n! = n × (n-1) × (n-2) × ... × 1).</p>
+            
+            <h3>Step-by-Step Solution</h3>
+            
+            <div class="step-box">
+                <h5>Understanding Factorial:</h5>
+                <ul>
+                    <li>5! = 5 × 4 × 3 × 2 × 1 = 120</li>
+                    <li>0! = 1 (by definition)</li>
+                    <li>1! = 1</li>
+                </ul>
+            </div>
+
+            <h4>Solution in PHP</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Method 1: Iterative approach
+function factorial1($n) {
+    if ($n < 0) {
+        return null; // Factorial not defined for negative numbers
+    }
+    
+    $result = 1;
+    for ($i = 2; $i <= $n; $i++) {
+        $result *= $i;
+    }
+    
+    return $result;
+}
+
+// Method 2: Recursive approach
+function factorial2($n) {
+    if ($n < 0) {
+        return null;
+    }
+    
+    if ($n === 0 || $n === 1) {
+        return 1;
+    }
+    
+    return $n * factorial2($n - 1);
+}
+
+// Method 3: Tail recursive (optimized)
+function factorial3($n, $accumulator = 1) {
+    if ($n < 0) {
+        return null;
+    }
+    
+    if ($n === 0 || $n === 1) {
+        return $accumulator;
+    }
+    
+    return factorial3($n - 1, $n * $accumulator);
+}
+
+// Method 4: Using array functions
+function factorial4($n) {
+    if ($n < 0) return null;
+    if ($n === 0 || $n === 1) return 1;
+    
+    return array_product(range(1, $n));
+}
+
+// Memoized version for performance
+class FactorialCalculator {
+    private static $cache = [0 => 1, 1 => 1];
+    
+    public static function calculate($n) {
+        if ($n < 0) return null;
+        
+        if (isset(self::$cache[$n])) {
+            return self::$cache[$n];
+        }
+        
+        self::$cache[$n] = $n * self::calculate($n - 1);
+        return self::$cache[$n];
+    }
+}
+
+// Test
+echo factorial1(5);  // 120
+echo factorial2(5);  // 120
+echo factorial3(5);  // 120
+echo factorial4(5);  // 120
+echo FactorialCalculator::calculate(5); // 120
+
+// Step-by-step for 5!
+// 5! = 5 × 4 × 3 × 2 × 1
+//    = 5 × 24
+//    = 5 × (4 × 6)
+//    = 5 × (4 × (3 × 2))
+//    = 5 × (4 × (3 × (2 × 1)))
+//    = 120
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Method 1: Iterative approach
+function factorial1(n) {
+    if (n < 0) return null;
+    
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    
+    return result;
+}
+
+// Method 2: Recursive approach
+function factorial2(n) {
+    if (n < 0) return null;
+    if (n === 0 || n === 1) return 1;
+    
+    return n * factorial2(n - 1);
+}
+
+// Method 3: Using reduce
+function factorial3(n) {
+    if (n < 0) return null;
+    if (n === 0 || n === 1) return 1;
+    
+    return Array.from({ length: n }, (_, i) => i + 1)
+        .reduce((acc, num) => acc * num, 1);
+}
+
+// Method 4: Memoized version
+const factorial4 = (() => {
+    const cache = { 0: 1, 1: 1 };
+    
+    return function factorial(n) {
+        if (n < 0) return null;
+        
+        if (n in cache) {
+            return cache[n];
+        }
+        
+        cache[n] = n * factorial(n - 1);
+        return cache[n];
+    };
+})();
+
+// Method 5: Tail recursive
+function factorial5(n, accumulator = 1) {
+    if (n < 0) return null;
+    if (n === 0 || n === 1) return accumulator;
+    
+    return factorial5(n - 1, n * accumulator);
+}
+
+// Test
+console.log(factorial1(5));  // 120
+console.log(factorial2(5));  // 120
+console.log(factorial3(5));  // 120
+console.log(factorial4(5));  // 120
+console.log(factorial5(5));  // 120
+
+// Visualizing 5!
+console.log('5! = 5 × 4 × 3 × 2 × 1 = 120');</code></pre>
+            </div>
+
+            <div class="output-box">
+                <strong>Example Calculations:</strong><br>
+0! = 1<br>
+1! = 1<br>
+2! = 2<br>
+3! = 6<br>
+4! = 24<br>
+5! = 120<br>
+6! = 720<br>
+10! = 3,628,800
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Note:</strong> Factorial grows very quickly. For large numbers, consider using BigInt (JavaScript) or bcmath (PHP) to avoid overflow.
+            </div>
+        </section>
+
+        <!-- Prime Numbers -->
+        <section id="prime-numbers" class="topic-section">
+            <h2>8. Prime Number Check</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Determine if a given number is prime (only divisible by 1 and itself).</p>
+            
+            <h3>Step-by-Step Solution</h3>
+            
+            <div class="step-box">
+                <h5>Step 1: Handle edge cases</h5>
+                <p>Numbers less than 2 are not prime. 2 is the only even prime.</p>
+            </div>
+            
+            <div class="step-box">
+                <h5>Step 2: Check divisibility</h5>
+                <p>Only need to check up to √n for divisors.</p>
+            </div>
+
+            <h4>Solution in PHP</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Method 1: Basic approach
+function isPrime1($n) {
+    if ($n < 2) {
+        return false;
+    }
+    
+    if ($n === 2) {
+        return true;
+    }
+    
+    if ($n % 2 === 0) {
+        return false;
+    }
+    
+    for ($i = 3; $i * $i <= $n; $i += 2) {
+        if ($n % $i === 0) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Method 2: Optimized approach
+function isPrime2($n) {
+    if ($n < 2) return false;
+    if ($n === 2 || $n === 3) return true;
+    if ($n % 2 === 0 || $n % 3 === 0) return false;
+    
+    // Check for divisors of form 6k ± 1
+    for ($i = 5; $i * $i <= $n; $i += 6) {
+        if ($n % $i === 0 || $n % ($i + 2) === 0) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Generate prime numbers up to n
+function generatePrimes($n) {
+    $primes = [];
+    
+    for ($i = 2; $i <= $n; $i++) {
+        if (isPrime2($i)) {
+            $primes[] = $i;
+        }
+    }
+    
+    return $primes;
+}
+
+// Sieve of Eratosthenes (most efficient for multiple primes)
+function sieveOfEratosthenes($n) {
+    $isPrime = array_fill(0, $n + 1, true);
+    $isPrime[0] = $isPrime[1] = false;
+    
+    for ($i = 2; $i * $i <= $n; $i++) {
+        if ($isPrime[$i]) {
+            for ($j = $i * $i; $j <= $n; $j += $i) {
+                $isPrime[$j] = false;
+            }
+        }
+    }
+    
+    $primes = [];
+    for ($i = 2; $i <= $n; $i++) {
+        if ($isPrime[$i]) {
+            $primes[] = $i;
+        }
+    }
+    
+    return $primes;
+}
+
+// Test
+echo isPrime1(17) ? "true" : "false";  // true
+echo isPrime1(20) ? "true" : "false";  // false
+
+print_r(generatePrimes(30));
+// [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+
+print_r(sieveOfEratosthenes(30));
+// [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Method 1: Basic approach
+function isPrime1(n) {
+    if (n < 2) return false;
+    if (n === 2) return true;
+    if (n % 2 === 0) return false;
+    
+    for (let i = 3; i * i <= n; i += 2) {
+        if (n % i === 0) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Method 2: Optimized approach
+function isPrime2(n) {
+    if (n < 2) return false;
+    if (n === 2 || n === 3) return true;
+    if (n % 2 === 0 || n % 3 === 0) return false;
+    
+    for (let i = 5; i * i <= n; i += 6) {
+        if (n % i === 0 || n % (i + 2) === 0) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Generate prime numbers up to n
+function generatePrimes(n) {
+    const primes = [];
+    
+    for (let i = 2; i <= n; i++) {
+        if (isPrime2(i)) {
+            primes.push(i);
+        }
+    }
+    
+    return primes;
+}
+
+// Sieve of Eratosthenes
+function sieveOfEratosthenes(n) {
+    const isPrime = Array(n + 1).fill(true);
+    isPrime[0] = isPrime[1] = false;
+    
+    for (let i = 2; i * i <= n; i++) {
+        if (isPrime[i]) {
+            for (let j = i * i; j <= n; j += i) {
+                isPrime[j] = false;
+            }
+        }
+    }
+    
+    return isPrime
+        .map((prime, index) => prime ? index : null)
+        .filter(num => num !== null);
+}
+
+// Get prime factors
+function getPrimeFactors(n) {
+    const factors = [];
+    
+    // Check for 2
+    while (n % 2 === 0) {
+        factors.push(2);
+        n = n / 2;
+    }
+    
+    // Check odd numbers
+    for (let i = 3; i * i <= n; i += 2) {
+        while (n % i === 0) {
+            factors.push(i);
+            n = n / i;
+        }
+    }
+    
+    // If n is still greater than 2, it's prime
+    if (n > 2) {
+        factors.push(n);
+    }
+    
+    return factors;
+}
+
+// Test
+console.log(isPrime1(17));  // true
+console.log(isPrime1(20));  // false
+
+console.log(generatePrimes(30));
+// [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+
+console.log(getPrimeFactors(60));
+// [2, 2, 3, 5]  (60 = 2² × 3 × 5)</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Optimization:</strong> Only check divisibility up to √n because if n = a × b, one of the factors must be ≤ √n.
+            </div>
+        </section>
+
+        <!-- Fibonacci -->
+        <section id="fibonacci" class="topic-section">
+            <h2>9. Fibonacci Sequence</h2>
+            
+            <h3>Problem Statement</h3>
+            <p>Generate Fibonacci sequence where each number is the sum of the two preceding ones: 0, 1, 1, 2, 3, 5, 8, 13...</p>
+            
+            <h3>Step-by-Step Solution</h3>
+            
+            <div class="step-box">
+                <h5>Understanding Fibonacci:</h5>
+                <ul>
+                    <li>F(0) = 0</li>
+                    <li>F(1) = 1</li>
+                    <li>F(n) = F(n-1) + F(n-2) for n > 1</li>
+                </ul>
+            </div>
+
+            <h4>Solution in PHP</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Method 1: Recursive (simple but inefficient)
+function fibonacci1($n) {
+    if ($n <= 1) {
+        return $n;
+    }
+    return fibonacci1($n - 1) + fibonacci1($n - 2);
+}
+
+// Method 2: Iterative (efficient)
+function fibonacci2($n) {
+    if ($n <= 1) {
+        return $n;
+    }
+    
+    $a = 0;
+    $b = 1;
+    
+    for ($i = 2; $i <= $n; $i++) {
+        $temp = $a + $b;
+        $a = $b;
+        $b = $temp;
+    }
+    
+    return $b;
+}
+
+// Method 3: Generate sequence
+function fibonacciSequence($count) {
+    if ($count <= 0) return [];
+    if ($count === 1) return [0];
+    
+    $sequence = [0, 1];
+    
+    for ($i = 2; $i < $count; $i++) {
+        $sequence[] = $sequence[$i - 1] + $sequence[$i - 2];
+    }
+    
+    return $sequence;
+}
+
+// Method 4: Memoized recursive
+class Fibonacci {
+    private static $cache = [0 => 0, 1 => 1];
+    
+    public static function calculate($n) {
+        if (isset(self::$cache[$n])) {
+            return self::$cache[$n];
+        }
+        
+        self::$cache[$n] = self::calculate($n - 1) + self::calculate($n - 2);
+        return self::$cache[$n];
+    }
+}
+
+// Method 5: Using generator (memory efficient)
+function fibonacciGenerator($count) {
+    $a = 0;
+    $b = 1;
+    
+    for ($i = 0; $i < $count; $i++) {
+        yield $a;
+        $temp = $a + $b;
+        $a = $b;
+        $b = $temp;
+    }
+}
+
+// Test
+echo fibonacci2(10);  // 55
+
+print_r(fibonacciSequence(10));
+// [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+foreach (fibonacciGenerator(10) as $fib) {
+    echo $fib . " ";
+}
+// 0 1 1 2 3 5 8 13 21 34
+?&gt;</code></pre>
+            </div>
+
+            <h4>Solution in JavaScript</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Method 1: Recursive (simple but inefficient)
+function fibonacci1(n) {
+    if (n <= 1) return n;
+    return fibonacci1(n - 1) + fibonacci1(n - 2);
+}
+
+// Method 2: Iterative (efficient)
+function fibonacci2(n) {
+    if (n <= 1) return n;
+    
+    let a = 0, b = 1;
+    
+    for (let i = 2; i <= n; i++) {
+        [a, b] = [b, a + b];
+    }
+    
+    return b;
+}
+
+// Method 3: Generate sequence
+function fibonacciSequence(count) {
+    if (count <= 0) return [];
+    if (count === 1) return [0];
+    
+    const sequence = [0, 1];
+    
+    for (let i = 2; i < count; i++) {
+        sequence.push(sequence[i - 1] + sequence[i - 2]);
+    }
+    
+    return sequence;
+}
+
+// Method 4: Memoized recursive
+const fibonacci3 = (() => {
+    const cache = { 0: 0, 1: 1 };
+    
+    return function fib(n) {
+        if (n in cache) {
+            return cache[n];
+        }
+        
+        cache[n] = fib(n - 1) + fib(n - 2);
+        return cache[n];
+    };
+})();
+
+// Method 5: Using generator
+function* fibonacciGenerator(count) {
+    let a = 0, b = 1;
+    
+    for (let i = 0; i < count; i++) {
+        yield a;
+        [a, b] = [b, a + b];
+    }
+}
+
+// Method 6: Using reduce
+function fibonacciReduce(n) {
+    if (n <= 1) return n;
+    
+    return Array(n - 1).fill(0).reduce(
+        (acc) => [...acc, acc[acc.length - 1] + acc[acc.length - 2]],
+        [0, 1]
+    )[n];
+}
+
+// Test
+console.log(fibonacci2(10));  // 55
+
+console.log(fibonacciSequence(10));
+// [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+console.log([...fibonacciGenerator(10)]);
+// [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</code></pre>
+            </div>
+
+            <div class="output-box">
+                <strong>Fibonacci Sequence (first 15 numbers):</strong><br>
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377
+            </div>
+
+            <h4>Performance Comparison</h4>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Time Complexity</th>
+                    <th>Space Complexity</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>Recursive</td>
+                    <td>O(2ⁿ)</td>
+                    <td>O(n)</td>
+                    <td>Exponential - very slow</td>
+                </tr>
+                <tr>
+                    <td>Memoized</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                    <td>Much faster with caching</td>
+                </tr>
+                <tr>
+                    <td>Iterative</td>
+                    <td>O(n)</td>
+                    <td>O(1)</td>
+                    <td>Best performance</td>
+                </tr>
+                <tr>
+                    <td>Generator</td>
+                    <td>O(n)</td>
+                    <td>O(1)</td>
+                    <td>Memory efficient</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Output Prediction -->
+        <section id="output-prediction" class="topic-section">
+            <h2>10. Output Prediction Problems</h2>
+            
+            <h3>Problem Type 1: Variable Scope and Hoisting</h3>
+            
+            <h4>PHP Example</h4>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Question 1: Variable scope
+$x = 10;
+
+function test1() {
+    echo $x;
+}
+
+test1();
+
+// Answer: Notice: Undefined variable: $x
+// Explanation: $x is not in function scope, need 'global $x' or pass as parameter
+
+// Question 2: Static variables
+function counter() {
+    static $count = 0;
+    $count++;
+    return $count;
+}
+
+echo counter(); // 1
+echo counter(); // 2
+echo counter(); // 3
+
+// Explanation: Static variable persists between function calls
+
+// Question 3: Reference vs Value
+$a = 5;
+$b = $a;
+$b = 10;
+echo $a; // 5 (value copy)
+
+$c = 5;
+$d = &$c;
+$d = 10;
+echo $c; // 10 (reference)
+
+// Question 4: String concatenation
+$str = "Hello";
+$str .= " World";
+echo $str; // "Hello World"
+
+// Question 5: Type juggling
+echo "5" + 3;     // 8 (string to int)
+echo "5" . 3;     // "53" (int to string)
+echo true + 1;    // 2 (true = 1)
+echo false + 1;   // 1 (false = 0)
+?&gt;</code></pre>
+            </div>
+
+            <h4>JavaScript Example</h4>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Question 1: Hoisting
+console.log(x); // undefined (not ReferenceError)
+var x = 5;
+
+// Explanation: var is hoisted but not initialized
+// Equivalent to:
+// var x;
+// console.log(x);
+// x = 5;
+
+// Question 2: let and const hoisting
+// console.log(y); // ReferenceError: Cannot access 'y' before initialization
+let y = 10;
+
+// Question 3: Closures
+function makeCounter() {
+    let count = 0;
+    return function() {
+        return ++count;
+    };
+}
+
+const counter = makeCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+
+// Question 4: setTimeout and loops
+for (var i = 0; i < 3; i++) {
+    setTimeout(() => console.log(i), 100);
+}
+// Output: 3, 3, 3
+// Explanation: var is function-scoped, all callbacks see final value
+
+for (let j = 0; j < 3; j++) {
+    setTimeout(() => console.log(j), 100);
+}
+// Output: 0, 1, 2
+// Explanation: let is block-scoped, each iteration has its own j
+
+// Question 5: this keyword
+const obj = {
+    name: 'Object',
+    regularFunc: function() {
+        console.log(this.name); // "Object"
+    },
+    arrowFunc: () => {
+        console.log(this.name); // undefined (inherits from outer scope)
+    }
+};
+
+obj.regularFunc();
+obj.arrowFunc();</code></pre>
+            </div>
+
+            <h3>Problem Type 2: Array and Object Operations</h3>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">// Question 1: Array methods
+const arr = [1, 2, 3, 4, 5];
+
+console.log(arr.map(x => x * 2));        // [2, 4, 6, 8, 10]
+console.log(arr.filter(x => x > 2));     // [3, 4, 5]
+console.log(arr.reduce((a, b) => a + b)); // 15
+
+// Question 2: Object reference
+const obj1 = { value: 10 };
+const obj2 = obj1;
+obj2.value = 20;
+console.log(obj1.value); // 20 (both reference same object)
+
+// Question 3: Spread operator
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1];
+arr2.push(4);
+console.log(arr1); // [1, 2, 3] (shallow copy)
+console.log(arr2); // [1, 2, 3, 4]
+
+// Question 4: Destructuring
+const [a, , c] = [1, 2, 3, 4];
+console.log(a); // 1
+console.log(c); // 3
+
+const { name, age = 25 } = { name: 'John' };
+console.log(name); // "John"
+console.log(age);  // 25 (default value)
+
+// Question 5: Array modification
+const numbers = [1, 2, 3];
+numbers.push(4);
+console.log(numbers); // [1, 2, 3, 4]
+
+const result = numbers.splice(1, 2);
+console.log(result);  // [2, 3] (removed elements)
+console.log(numbers); // [1, 4] (modified array)</code></pre>
+            </div>
+
+            <h3>Problem Type 3: Async Operations</h3>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">// Question 1: Promise order
+console.log('1');
+
+setTimeout(() => console.log('2'), 0);
+
+Promise.resolve().then(() => console.log('3'));
+
+console.log('4');
+
+// Output: 1, 4, 3, 2
+// Explanation:
+// - Synchronous code runs first: 1, 4
+// - Microtasks (Promises) run before macrotasks: 3
+// - Macrotasks (setTimeout) run last: 2
+
+// Question 2: Async/await
+async function test() {
+    console.log('A');
+    
+    await Promise.resolve();
+    
+    console.log('B');
+}
+
+console.log('C');
+test();
+console.log('D');
+
+// Output: C, A, D, B
+// Explanation:
+// - C is logged first (synchronous)
+// - test() is called, logs A
+// - await pauses execution
+// - D is logged (synchronous)
+// - B is logged when promise resolves
+
+// Question 3: Error handling
+async function fetchData() {
+    try {
+        throw new Error('Failed');
+    } catch (error) {
+        return 'Error caught';
+    }
+}
+
+fetchData().then(result => console.log(result)); // "Error caught"
+// Explanation: async functions return a Promise, caught errors become resolved values</code></pre>
+            </div>
+
+            <h3>Problem Type 4: Complex Logic</h3>
+            
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Question 1: Array modification during iteration
+$arr = [1, 2, 3, 4, 5];
+foreach ($arr as &$value) {
+    $value *= 2;
+}
+unset($value); // Important: break the reference
+print_r($arr); // [2, 4, 6, 8, 10]
+
+// Question 2: Nested function calls
+function outer() {
+    $x = 10;
+    
+    function inner() {
+        global $x; // This doesn't access outer's $x!
+        echo $x ?? 'undefined';
+    }
+    
+    inner();
+}
+
+// Question 3: String comparison
+$a = "01";
+$b = "1";
+var_dump($a == $b);  // bool(true) - type juggling
+var_dump($a === $b); // bool(false) - strict comparison
+
+// Question 4: Array keys
+$arr = [
+    1 => 'a',
+    '1' => 'b',
+    1.5 => 'c',
+    true => 'd'
+];
+print_r($arr);
+// Output: [1 => 'd']
+// Explanation: All keys convert to integer 1 and overwrite
+
+// Question 5: Ternary operator
+$x = 0;
+echo $x ? 'true' : 'false'; // "false"
+
+$y = "0";
+echo $y ? 'true' : 'false'; // "false" (non-empty string is normally true, but "0" is false)
+
+$z = "00";
+echo $z ? 'true' : 'false'; // "true"
+?&gt;</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Common Pitfalls:</strong>
+                <ul>
+                    <li>Confusing == with === (type coercion)</li>
+                    <li>Variable scope issues (global vs local)</li>
+                    <li>Reference vs value assignments</li>
+                    <li>Hoisting behavior differences (var vs let/const)</li>
+                    <li>Closure and context binding in callbacks</li>
+                    <li>Asynchronous execution order</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Tips for Output Prediction:</strong>
+                <ul>
+                    <li>Always trace variable scope carefully</li>
+                    <li>Remember type coercion rules</li>
+                    <li>Consider hoisting for var declarations</li>
+                    <li>Track reference vs value for objects/arrays</li>
+                    <li>Know the event loop and microtask queue</li>
+                    <li>Understand closure behavior</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Laravel Interview Bank - Coding Challenges Solutions</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">Comprehensive step-by-step solutions to common coding problems</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
