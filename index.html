@@ -377,6 +377,73 @@
             border-bottom: 3px solid #e3342f;
         }
 
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-section h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            background: #f8f8f8;
+        }
+
+        .cta-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-stat {
+            color: white;
+        }
+
+        .cta-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .cta-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
         @media (max-width: 1024px) {
             .main-wrapper {
                 flex-direction: column;
@@ -446,13 +513,14 @@
                     <nav id="main-nav">
                         <a href="#home">Home</a>
                         <a href="#topics">Topics</a>
+                        <a href="answers-index.html">Answers</a>
                         <a href="code-examples.html">Code Examples</a>
                         <a href="#about">About</a>
                     </nav>
                 </div>
                 <div class="search-bar">
-                    <input type="search" placeholder="Search interview questions, topics, or code examples..." aria-label="Search">
-                    <button type="button">Search</button>
+                    <input type="search" id="searchInput" placeholder="Search interview questions, topics, answers, or code examples..." aria-label="Search">
+                    <button type="button" id="searchBtn">Search</button>
                 </div>
             </div>
         </header>
@@ -463,6 +531,26 @@
                     <h2>Comprehensive Interview Question Bank</h2>
                     <p>A comprehensive collection of advanced interview questions and production-ready code for senior-level software engineering positions, covering full-stack development, cloud infrastructure, payment systems, and modern AI integration.</p>
                 </section>
+
+                <div class="cta-section">
+                    <h2>📚 Browse Interview Answers</h2>
+                    <p>Access detailed, comprehensive answers to thousands of interview questions across all major technology domains. From PHP and Laravel to Cloud Infrastructure and AI.</p>
+                    <a href="answers-index.html" class="cta-button">View All Answers →</a>
+                    <div class="cta-stats">
+                        <div class="cta-stat">
+                            <div class="cta-stat-value">2,600+</div>
+                            <div class="cta-stat-label">Detailed Answers</div>
+                        </div>
+                        <div class="cta-stat">
+                            <div class="cta-stat-value">13</div>
+                            <div class="cta-stat-label">Categories</div>
+                        </div>
+                        <div class="cta-stat">
+                            <div class="cta-stat-value">100%</div>
+                            <div class="cta-stat-label">Production Ready</div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="stats-overview">
                     <div class="stat-card">
@@ -872,21 +960,148 @@
             mainNav.classList.toggle('hidden');
         });
 
-        // Search functionality (basic placeholder)
-        const searchInput = document.querySelector('.search-bar input');
-        const searchButton = document.querySelector('.search-bar button');
+        // Enhanced search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchBtn');
+        const topicCards = document.querySelectorAll('.topic-card');
 
-        searchButton.addEventListener('click', () => {
-            const query = searchInput.value.trim();
-            if (query) {
-                console.log('Searching for:', query);
-                // Implement search logic here
+        // Search index for answers pages
+        const answersIndex = [
+            { title: 'PHP Core Fundamentals', url: 'answers/php-core-answers.html', keywords: 'php core fundamentals oop namespaces traits security performance php8' },
+            { title: 'Laravel Framework', url: 'answers/laravel-framework-answers.html', keywords: 'laravel eloquent middleware queues events authentication api testing' },
+            { title: 'Database & MySQL', url: 'answers/database-mysql-answers.html', keywords: 'database mysql postgresql indexing optimization transactions acid scaling' },
+            { title: 'API & Security', url: 'answers/api-security-answers.html', keywords: 'api security rest oauth jwt cors encryption owasp sql injection' },
+            { title: 'JavaScript & Frontend', url: 'answers/javascript-frontend-answers.html', keywords: 'javascript frontend react vue es6 async promises state management' },
+            { title: 'DevOps & Git', url: 'answers/devops-git-answers.html', keywords: 'devops git cicd docker deployment automation monitoring logging' },
+            { title: 'OOP & Design Patterns', url: 'answers/oop-design-patterns-answers.html', keywords: 'oop design patterns solid factory singleton observer strategy dependency injection' },
+            { title: 'Testing & Debugging', url: 'answers/testing-debugging-answers.html', keywords: 'testing debugging phpunit tdd unit integration coverage automation' },
+            { title: 'WordPress CMS', url: 'answers/cms-wordpress-answers.html', keywords: 'wordpress themes plugins hooks filters woocommerce rest api' },
+            { title: 'Magento & Drupal', url: 'answers/cms-magento-drupal-answers.html', keywords: 'magento drupal cms modules ecommerce architecture' },
+            { title: 'CodeIgniter', url: 'answers/codeigniter-answers.html', keywords: 'codeigniter mvc routing database validation sessions' },
+            { title: 'Cloud Infrastructure', url: 'answers/cloud-infrastructure-answers.html', keywords: 'cloud aws azure kubernetes serverless microservices load balancing' },
+            { title: 'Coding Challenges', url: 'answers/coding-challenges-answers.html', keywords: 'algorithms data structures problem solving optimization coding challenges' },
+            { title: 'All Answers', url: 'answers-index.html', keywords: 'answers index all categories browse search' }
+        ];
+
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            
+            if (!query) {
+                // Reset all cards to visible
+                topicCards.forEach(card => {
+                    card.style.display = 'block';
+                });
+                return;
             }
-        });
+
+            let foundInTopics = false;
+            let foundInAnswers = false;
+            let answerMatches = [];
+
+            // Search through topic cards on current page
+            topicCards.forEach(card => {
+                const cardTitle = card.querySelector('h3').textContent.toLowerCase();
+                const cardDescription = card.querySelector('.topic-description').textContent.toLowerCase();
+                const cardTopics = Array.from(card.querySelectorAll('.topic-stat-label, .topic-link'))
+                    .map(el => el.textContent.toLowerCase())
+                    .join(' ');
+
+                const matches = cardTitle.includes(query) || 
+                               cardDescription.includes(query) || 
+                               cardTopics.includes(query);
+
+                card.style.display = matches ? 'block' : 'none';
+                if (matches) foundInTopics = true;
+            });
+
+            // Search through answers index
+            answerMatches = answersIndex.filter(item => {
+                return item.title.toLowerCase().includes(query) || 
+                       item.keywords.includes(query);
+            });
+
+            foundInAnswers = answerMatches.length > 0;
+
+            // If no topic matches but found answers, show message and redirect option
+            if (!foundInTopics && foundInAnswers) {
+                console.log('Found in answers:', answerMatches);
+                
+                // Create and show suggestion
+                let existingSuggestion = document.getElementById('search-suggestion');
+                if (!existingSuggestion) {
+                    const suggestion = document.createElement('div');
+                    suggestion.id = 'search-suggestion';
+                    suggestion.style.cssText = `
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        padding: 2rem;
+                        border-radius: 12px;
+                        margin: 2rem 0;
+                        text-align: center;
+                        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+                    `;
+                    
+                    const mainContent = document.getElementById('main-content');
+                    const intro = mainContent.querySelector('.intro');
+                    intro.insertAdjacentElement('afterend', suggestion);
+                    existingSuggestion = suggestion;
+                }
+                
+                existingSuggestion.innerHTML = `
+                    <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">🎯 Found ${answerMatches.length} Answer${answerMatches.length > 1 ? 's' : ''} Matching "${query}"</h3>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.95;">Browse detailed answers in the answers section:</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        ${answerMatches.slice(0, 3).map(match => `
+                            <a href="${match.url}" style="
+                                background: white;
+                                color: #667eea;
+                                padding: 0.75rem 1.5rem;
+                                border-radius: 6px;
+                                text-decoration: none;
+                                font-weight: 600;
+                                transition: all 0.3s;
+                                display: inline-block;
+                            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                                ${match.title} →
+                            </a>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                // Remove suggestion if exists
+                const existingSuggestion = document.getElementById('search-suggestion');
+                if (existingSuggestion) {
+                    existingSuggestion.remove();
+                }
+            }
+
+            console.log('Searching for:', query);
+            console.log('Found in topics:', foundInTopics);
+            console.log('Found in answers:', foundInAnswers, answerMatches);
+        }
+
+        searchButton.addEventListener('click', performSearch);
 
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                searchButton.click();
+                performSearch();
+            }
+        });
+
+        // Real-time search with debounce
+        let searchTimeout;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(performSearch, 300);
+        });
+
+        // Clear search suggestion when input is cleared
+        searchInput.addEventListener('input', (e) => {
+            if (e.target.value.trim() === '') {
+                const existingSuggestion = document.getElementById('search-suggestion');
+                if (existingSuggestion) {
+                    existingSuggestion.remove();
+                }
             }
         });
     </script>
