@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Laravel - Payment Gateways, Webhooks & Security</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #764ba2;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .topic-section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        pre {
+            background: #282c34;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .inline-code {
+            background: #f0f0f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background: #f8f9fa;
+            color: #667eea;
+            font-weight: 600;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .badge-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .highlight-box h4 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Advanced Laravel Development</h1>
+        <p>Payment Gateways (Razorpay/Stripe), Webhooks, Idempotency, PCI DSS & Security Patterns</p>
+    </header>
+
+    <div class="container">
+        <a href="../answers-index.html" class="back-link">← Back to Answers Index</a>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#http-clients">HTTP Clients & API Integration</a></li>
+                <li><a href="#razorpay">Razorpay Payment Integration</a></li>
+                <li><a href="#stripe">Stripe Payment Integration</a></li>
+                <li><a href="#webhooks">Webhook Security & Verification</a></li>
+                <li><a href="#idempotency">Idempotency Implementation</a></li>
+                <li><a href="#pci-dss">PCI DSS Compliance</a></li>
+                <li><a href="#soap">SOAP API Integration</a></li>
+                <li><a href="#advanced-patterns">Advanced Security Patterns</a></li>
+            </ul>
+        </div>
+
+        <!-- HTTP Clients & API Integration -->
+        <section id="http-clients" class="topic-section">
+            <h2>HTTP Clients & API Integration</h2>
+            
+            <h3>cURL vs Guzzle vs Laravel HTTP</h3>
+            <p>Understanding the differences between HTTP client approaches is crucial for API integration:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>cURL</th>
+                        <th>Guzzle</th>
+                        <th>Laravel HTTP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Type</td>
+                        <td>PHP extension (C-based)</td>
+                        <td>PHP library</td>
+                        <td>Guzzle wrapper</td>
+                    </tr>
+                    <tr>
+                        <td>Syntax</td>
+                        <td>Procedural</td>
+                        <td>Object-oriented</td>
+                        <td>Fluent facade</td>
+                    </tr>
+                    <tr>
+                        <td>Promise Support</td>
+                        <td>❌ No</td>
+                        <td>✅ Yes (async)</td>
+                        <td>✅ Yes (pools)</td>
+                    </tr>
+                    <tr>
+                        <td>Testing</td>
+                        <td>❌ Difficult</td>
+                        <td>⚠️ Manual mocks</td>
+                        <td>✅ Http::fake()</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Guzzle Client with Connection Pooling</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Http;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\CurlMultiHandler;
+use GuzzleHttp\Pool;
+
+class PooledGuzzleClient
+{
+    private Client $client;
+    private int $maxConnections;
+    
+    public function __construct(int $maxConnections = 25)
+    {
+        $this->maxConnections = $maxConnections;
+        $this->client = $this->createClient();
+    }
+    
+    private function createClient(): Client
+    {
+        // Create handler with connection pooling
+        $handler = new CurlMultiHandler([
+            'max_handles' => $this->maxConnections,
+        ]);
+        
+        $stack = HandlerStack::create($handler);
+        
+        return new Client([
+            'handler' => $stack,
+            'timeout' => 30,
+            'connect_timeout' => 10,
+            'http_errors' => true,
+            'verify' => true,
+            'headers' => [
+                'User-Agent' => 'Laravel/'.app()->version(),
+                'Accept' => 'application/json',
+            ],
+            // Connection pooling settings
+            'curl' => [
+                CURLOPT_TCP_KEEPALIVE => 1,
+                CURLOPT_TCP_KEEPIDLE => 120,
+                CURLOPT_TCP_KEEPINTVL => 60,
+                CURLOPT_FORBID_REUSE => false,
+                CURLOPT_FRESH_CONNECT => false,
+            ],
+        ]);
+    }
+    
+    public function batchRequests(array $requests, int $concurrency = 10): array
+    {
+        $results = [];
+        $errors = [];
+        
+        $pool = new Pool($this->client, $requests, [
+            'concurrency' => $concurrency,
+            'fulfilled' => function ($response, $index) use (&$results) {
+                $results[$index] = [
+                    'status' => 'success',
+                    'data' => json_decode($response->getBody(), true),
+                    'status_code' => $response->getStatusCode(),
+                ];
+            },
+            'rejected' => function ($reason, $index) use (&$errors) {
+                $errors[$index] = [
+                    'status' => 'error',
+                    'message' => $reason->getMessage(),
+                ];
+                
+                Log::error('Batch request failed', [
+                    'index' => $index,
+                    'error' => $reason->getMessage(),
+                ]);
+            },
+        ]);
+        
+        $promise = $pool->promise();
+        $promise->wait();
+        
+        return [
+            'successful' => $results,
+            'failed' => $errors,
+        ];
+    }
+}</code></pre>
+
+            <h3>Circuit Breaker Pattern</h3>
+            <p>Prevent cascading failures when external services are down:</p>
+            
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Http;
+
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+
+class CircuitBreakerClient
+{
+    private Client $client;
+    private string $serviceName;
+    private int $failureThreshold;
+    private int $timeoutSeconds;
+    
+    public function __construct(
+        string $serviceName,
+        int $failureThreshold = 5,
+        int $timeoutSeconds = 60
+    ) {
+        $this->serviceName = $serviceName;
+        $this->failureThreshold = $failureThreshold;
+        $this->timeoutSeconds = $timeoutSeconds;
+        $this->client = new Client(['timeout' => 30]);
+    }
+    
+    public function request(string $method, string $url, array $options = []): mixed
+    {
+        $state = $this->getState();
+        
+        if ($state === 'open') {
+            throw new \RuntimeException("Circuit breaker is OPEN for {$this->serviceName}");
+        }
+        
+        try {
+            $response = $this->client->request($method, $url, $options);
+            $this->recordSuccess();
+            return $response;
+        } catch (\Exception $e) {
+            $this->recordFailure();
+            throw $e;
+        }
+    }
+    
+    private function getState(): string
+    {
+        $failures = Cache::get($this->getFailureKey(), 0);
+        $openUntil = Cache::get($this->getOpenKey());
+        
+        if ($openUntil && now()->lessThan($openUntil)) {
+            return 'open';
+        }
+        
+        if ($failures >= $this->failureThreshold) {
+            Cache::put($this->getOpenKey(), now()->addSeconds($this->timeoutSeconds));
+            Log::warning("Circuit breaker OPEN for {$this->serviceName}");
+            return 'open';
+        }
+        
+        return 'closed';
+    }
+    
+    private function recordSuccess(): void
+    {
+        Cache::forget($this->getFailureKey());
+        Cache::forget($this->getOpenKey());
+    }
+    
+    private function recordFailure(): void
+    {
+        $failures = Cache::increment($this->getFailureKey());
+        Cache::put($this->getFailureKey(), $failures, now()->addMinutes(5));
+    }
+    
+    private function getFailureKey(): string
+    {
+        return "circuit_breaker:{$this->serviceName}:failures";
+    }
+    
+    private function getOpenKey(): string
+    {
+        return "circuit_breaker:{$this->serviceName}:open_until";
+    }
+}</code></pre>
+        </section>
+
+        <!-- Razorpay Integration -->
+        <section id="razorpay" class="topic-section">
+            <h2>Razorpay Payment Integration</h2>
+            
+            <div class="highlight-box">
+                <h4>🔑 Key Concepts</h4>
+                <ul>
+                    <li><strong>Orders:</strong> Created on backend, amounts in paisa (multiply by 100)</li>
+                    <li><strong>Payments:</strong> Authorized by customer, captured by merchant</li>
+                    <li><strong>Webhooks:</strong> HMAC-SHA256 signature verification required</li>
+                    <li><strong>Refunds:</strong> Full or partial, processed within 5-7 business days</li>
+                </ul>
+            </div>
+
+            <h3>Complete Razorpay Service</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Payment;
+
+use Razorpay\Api\Api;
+use Razorpay\Api\Errors\Error as RazorpayError;
+use Illuminate\Support\Facades\Log;
+use App\Models\Payment;
+
+class RazorpayService
+{
+    private Api $api;
+    private string $keyId;
+    private string $keySecret;
+    
+    public function __construct()
+    {
+        $this->keyId = config('services.razorpay.key_id');
+        $this->keySecret = config('services.razorpay.key_secret');
+        $this->api = new Api($this->keyId, $this->keySecret);
+    }
+    
+    /**
+     * Create Razorpay order
+     */
+    public function createOrder(
+        float $amount,
+        string $currency = 'INR',
+        array $metadata = []
+    ): array {
+        try {
+            $orderData = [
+                'amount' => (int)($amount * 100), // Convert to paisa
+                'currency' => $currency,
+                'receipt' => 'rcpt_' . uniqid(),
+                'notes' => $metadata,
+            ];
+            
+            $razorpayOrder = $this->api->order->create($orderData);
+            
+            // Store in database
+            Payment::create([
+                'razorpay_order_id' => $razorpayOrder->id,
+                'amount' => $amount,
+                'currency' => $currency,
+                'status' => 'created',
+                'metadata' => $metadata,
+            ]);
+            
+            Log::info('Razorpay order created', [
+                'order_id' => $razorpayOrder->id,
+                'amount' => $amount,
+            ]);
+            
+            return [
+                'order_id' => $razorpayOrder->id,
+                'amount' => $amount,
+                'currency' => $currency,
+                'key_id' => $this->keyId,
+            ];
+        } catch (RazorpayError $e) {
+            Log::error('Razorpay order creation failed', [
+                'error' => $e->getMessage(),
+            ]);
+            throw new \Exception('Failed to create order: ' . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Verify payment signature
+     */
+    public function verifyPaymentSignature(
+        string $orderId,
+        string $paymentId,
+        string $signature
+    ): bool {
+        try {
+            $attributes = [
+                'razorpay_order_id' => $orderId,
+                'razorpay_payment_id' => $paymentId,
+                'razorpay_signature' => $signature,
+            ];
+            
+            $this->api->utility->verifyPaymentSignature($attributes);
+            
+            Payment::where('razorpay_order_id', $orderId)->update([
+                'razorpay_payment_id' => $paymentId,
+                'razorpay_signature' => $signature,
+                'status' => 'authorized',
+                'authorized_at' => now(),
+            ]);
+            
+            return true;
+        } catch (RazorpayError $e) {
+            Log::error('Signature verification failed', [
+                'order_id' => $orderId,
+                'error' => $e->getMessage(),
+            ]);
+            return false;
+        }
+    }
+    
+    /**
+     * Capture authorized payment
+     */
+    public function capturePayment(string $paymentId, ?float $amount = null): array
+    {
+        try {
+            $captureData = $amount ? ['amount' => (int)($amount * 100)] : [];
+            $payment = $this->api->payment->fetch($paymentId)->capture($captureData);
+            
+            Payment::where('razorpay_payment_id', $paymentId)->update([
+                'status' => 'captured',
+                'captured_at' => now(),
+            ]);
+            
+            return [
+                'id' => $payment->id,
+                'amount' => $payment->amount / 100,
+                'status' => $payment->status,
+            ];
+        } catch (RazorpayError $e) {
+            throw new \Exception('Capture failed: ' . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Refund payment
+     */
+    public function refundPayment(
+        string $paymentId,
+        ?float $amount = null,
+        array $notes = []
+    ): array {
+        try {
+            $refundData = ['notes' => $notes];
+            
+            if ($amount !== null) {
+                $refundData['amount'] = (int)($amount * 100);
+            }
+            
+            $refund = $this->api->payment->fetch($paymentId)->refund($refundData);
+            
+            Payment::where('razorpay_payment_id', $paymentId)->update([
+                'status' => 'refunded',
+                'refunded_at' => now(),
+            ]);
+            
+            return [
+                'refund_id' => $refund->id,
+                'amount' => $refund->amount / 100,
+                'status' => $refund->status,
+            ];
+        } catch (RazorpayError $e) {
+            throw new \Exception('Refund failed: ' . $e->getMessage());
+        }
+    }
+}
+
+// Configuration in config/services.php
+return [
+    'razorpay' => [
+        'key_id' => env('RAZORPAY_KEY_ID'),
+        'key_secret' => env('RAZORPAY_KEY_SECRET'),
+        'webhook_secret' => env('RAZORPAY_WEBHOOK_SECRET'),
+    ],
+];</code></pre>
+        </section>
+
+        <!-- Stripe Integration -->
+        <section id="stripe" class="topic-section">
+            <h2>Stripe Payment Integration</h2>
+            
+            <div class="highlight-box">
+                <h4>💳 Payment Intent Flow</h4>
+                <ol>
+                    <li>Create PaymentIntent on server (returns client_secret)</li>
+                    <li>Client confirms payment with payment method</li>
+                    <li>Stripe processes payment (may require 3D Secure)</li>
+                    <li>Webhook confirms payment success/failure</li>
+                    <li>Server updates order status</li>
+                </ol>
+            </div>
+
+            <h3>Complete Stripe Service</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Payment;
+
+use Stripe\StripeClient;
+use Stripe\Exception\ApiErrorException;
+use Illuminate\Support\Facades\Log;
+use App\Models\Payment;
+
+class StripeService
+{
+    private StripeClient $stripe;
+    
+    public function __construct()
+    {
+        $this->stripe = new StripeClient(config('services.stripe.secret'));
+    }
+    
+    /**
+     * Create Payment Intent
+     */
+    public function createPaymentIntent(
+        float $amount,
+        string $currency = 'usd',
+        array $metadata = [],
+        ?string $customerId = null
+    ): array {
+        try {
+            $params = [
+                'amount' => (int)($amount * 100), // Convert to cents
+                'currency' => strtolower($currency),
+                'metadata' => $metadata,
+                'automatic_payment_methods' => ['enabled' => true],
+            ];
+            
+            if ($customerId) {
+                $params['customer'] = $customerId;
+            }
+            
+            $intent = $this->stripe->paymentIntents->create($params);
+            
+            Payment::create([
+                'stripe_payment_intent_id' => $intent->id,
+                'amount' => $amount,
+                'currency' => $currency,
+                'status' => $intent->status,
+                'customer_id' => $customerId,
+                'metadata' => $metadata,
+            ]);
+            
+            Log::info('Stripe PaymentIntent created', [
+                'intent_id' => $intent->id,
+            ]);
+            
+            return [
+                'client_secret' => $intent->client_secret,
+                'payment_intent_id' => $intent->id,
+                'amount' => $amount,
+                'currency' => $currency,
+            ];
+        } catch (ApiErrorException $e) {
+            Log::error('PaymentIntent creation failed', [
+                'error' => $e->getMessage(),
+            ]);
+            throw new \Exception('Failed to create payment: ' . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Confirm Payment Intent
+     */
+    public function confirmPaymentIntent(
+        string $paymentIntentId,
+        ?string $paymentMethodId = null
+    ): array {
+        try {
+            $params = [];
+            
+            if ($paymentMethodId) {
+                $params['payment_method'] = $paymentMethodId;
+            }
+            
+            $intent = $this->stripe->paymentIntents->confirm($paymentIntentId, $params);
+            
+            Payment::where('stripe_payment_intent_id', $paymentIntentId)->update([
+                'status' => $intent->status,
+                'confirmed_at' => now(),
+            ]);
+            
+            return [
+                'payment_intent_id' => $intent->id,
+                'status' => $intent->status,
+                'requires_action' => $intent->status === 'requires_action',
+            ];
+        } catch (ApiErrorException $e) {
+            throw new \Exception('Confirmation failed: ' . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Create Refund
+     */
+    public function createRefund(
+        string $paymentIntentId,
+        ?float $amount = null
+    ): array {
+        try {
+            $params = ['payment_intent' => $paymentIntentId];
+            
+            if ($amount !== null) {
+                $params['amount'] = (int)($amount * 100);
+            }
+            
+            $refund = $this->stripe->refunds->create($params);
+            
+            Payment::where('stripe_payment_intent_id', $paymentIntentId)->update([
+                'status' => 'refunded',
+                'refunded_at' => now(),
+            ]);
+            
+            return [
+                'refund_id' => $refund->id,
+                'amount' => $refund->amount / 100,
+                'status' => $refund->status,
+            ];
+        } catch (ApiErrorException $e) {
+            throw new \Exception('Refund failed: ' . $e->getMessage());
+        }
+    }
+}
+
+// Configuration in config/services.php
+return [
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
+];</code></pre>
+        </section>
+
+        <!-- Webhooks -->
+        <section id="webhooks" class="topic-section">
+            <h2>Webhook Security & Verification</h2>
+            
+            <div class="highlight-box">
+                <h4>🔐 Security Best Practices</h4>
+                <ul>
+                    <li><strong>Always verify signatures</strong> - Never trust webhook payload without verification</li>
+                    <li><strong>Use HMAC-SHA256</strong> - Industry standard for webhook signatures</li>
+                    <li><strong>Constant-time comparison</strong> - Use hash_equals() to prevent timing attacks</li>
+                    <li><strong>IP whitelisting</strong> - Optional additional security layer</li>
+                    <li><strong>Idempotency</strong> - Handle duplicate webhook deliveries gracefully</li>
+                </ul>
+            </div>
+
+            <h3>Razorpay Webhook Verification</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class VerifyRazorpayWebhookSignature
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $signature = $request->header('X-Razorpay-Signature');
+        
+        if (!$signature) {
+            Log::warning('Razorpay webhook missing signature');
+            return response()->json(['error' => 'Signature required'], 401);
+        }
+        
+        $payload = $request->getContent();
+        $secret = config('services.razorpay.webhook_secret');
+        
+        // Generate expected signature using HMAC-SHA256
+        $expectedSignature = hash_hmac('sha256', $payload, $secret);
+        
+        // Constant-time comparison to prevent timing attacks
+        if (!hash_equals($expectedSignature, $signature)) {
+            Log::warning('Invalid webhook signature', [
+                'ip' => $request->ip(),
+            ]);
+            return response()->json(['error' => 'Invalid signature'], 401);
+        }
+        
+        return $next($request);
+    }
+}
+
+// Webhook Controller
+namespace App\Http\Controllers\Webhook;
+
+use Illuminate\Http\Request;
+use App\Models\Payment;
+
+class RazorpayWebhookController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('verify.razorpay.webhook');
+    }
+    
+    public function handle(Request $request)
+    {
+        $event = $request->input('event');
+        $payload = $request->input('payload');
+        
+        // Handle different event types
+        match($event) {
+            'payment.authorized' => $this->handlePaymentAuthorized($payload),
+            'payment.captured' => $this->handlePaymentCaptured($payload),
+            'payment.failed' => $this->handlePaymentFailed($payload),
+            'refund.processed' => $this->handleRefundProcessed($payload),
+            default => Log::info('Unhandled event', ['event' => $event]),
+        };
+        
+        return response()->json(['status' => 'success']);
+    }
+    
+    private function handlePaymentAuthorized(array $payload): void
+    {
+        $payment = $payload['payment']['entity'] ?? [];
+        
+        Payment::where('razorpay_payment_id', $payment['id'])->update([
+            'status' => 'authorized',
+            'authorized_at' => now(),
+        ]);
+    }
+    
+    private function handlePaymentCaptured(array $payload): void
+    {
+        $payment = $payload['payment']['entity'] ?? [];
+        
+        Payment::where('razorpay_payment_id', $payment['id'])->update([
+            'status' => 'captured',
+            'captured_at' => now(),
+        ]);
+    }
+    
+    private function handlePaymentFailed(array $payload): void
+    {
+        $payment = $payload['payment']['entity'] ?? [];
+        
+        Payment::where('razorpay_payment_id', $payment['id'])->update([
+            'status' => 'failed',
+        ]);
+    }
+    
+    private function handleRefundProcessed(array $payload): void
+    {
+        $refund = $payload['refund']['entity'] ?? [];
+        
+        Payment::where('razorpay_payment_id', $refund['payment_id'])->update([
+            'status' => 'refunded',
+            'refunded_at' => now(),
+        ]);
+    }
+}</code></pre>
+
+            <h3>Stripe Webhook Verification</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Stripe\Exception\SignatureVerificationException;
+use Stripe\Webhook;
+
+class VerifyStripeWebhookSignature
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $signature = $request->header('Stripe-Signature');
+        $secret = config('services.stripe.webhook_secret');
+        
+        try {
+            // Stripe SDK handles signature verification
+            $event = Webhook::constructEvent(
+                $request->getContent(),
+                $signature,
+                $secret
+            );
+            
+            $request->merge(['stripe_event' => $event]);
+            
+            return $next($request);
+        } catch (SignatureVerificationException $e) {
+            Log::error('Stripe webhook signature verification failed', [
+                'error' => $e->getMessage(),
+                'ip' => $request->ip(),
+            ]);
+            
+            return response()->json(['error' => 'Invalid signature'], 401);
+        }
+    }
+}
+
+// Webhook Controller
+namespace App\Http\Controllers\Webhook;
+
+use Illuminate\Http\Request;
+use App\Models\Payment;
+
+class StripeWebhookController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('verify.stripe.webhook');
+    }
+    
+    public function handle(Request $request)
+    {
+        $event = $request->input('stripe_event');
+        
+        match($event->type) {
+            'payment_intent.succeeded' => $this->handlePaymentSucceeded($event->data->object),
+            'payment_intent.payment_failed' => $this->handlePaymentFailed($event->data->object),
+            'charge.refunded' => $this->handleChargeRefunded($event->data->object),
+            default => Log::info('Unhandled Stripe event', ['type' => $event->type]),
+        };
+        
+        return response()->json(['status' => 'success']);
+    }
+    
+    private function handlePaymentSucceeded($paymentIntent): void
+    {
+        Payment::where('stripe_payment_intent_id', $paymentIntent->id)->update([
+            'status' => 'succeeded',
+            'succeeded_at' => now(),
+        ]);
+    }
+    
+    private function handlePaymentFailed($paymentIntent): void
+    {
+        Payment::where('stripe_payment_intent_id', $paymentIntent->id)->update([
+            'status' => 'failed',
+        ]);
+    }
+    
+    private function handleChargeRefunded($charge): void
+    {
+        Payment::where('stripe_payment_intent_id', $charge->payment_intent)->update([
+            'status' => 'refunded',
+            'refunded_at' => now(),
+        ]);
+    }
+}</code></pre>
+        </section>
+
+        <!-- Idempotency -->
+        <section id="idempotency" class="topic-section">
+            <h2>Idempotency Implementation</h2>
+            
+            <div class="highlight-box">
+                <h4>🔄 Why Idempotency Matters</h4>
+                <p>Idempotency ensures that performing the same operation multiple times has the same effect as performing it once. Critical for:</p>
+                <ul>
+                    <li>Preventing duplicate charges from network retries</li>
+                    <li>Handling webhook redelivery safely</li>
+                    <li>Enabling safe retry mechanisms</li>
+                    <li>Maintaining data consistency</li>
+                </ul>
+            </div>
+
+            <h3>HTTP Method Idempotency</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Idempotent</th>
+                        <th>Safe</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><span class="badge badge-success">✅ Yes</span></td>
+                        <td><span class="badge badge-success">✅ Yes</span></td>
+                        <td>Retrieve resources</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><span class="badge badge-danger">❌ No</span></td>
+                        <td><span class="badge badge-danger">❌ No</span></td>
+                        <td>Create resources (needs idempotency key)</td>
+                    </tr>
+                    <tr>
+                        <td>PUT</td>
+                        <td><span class="badge badge-success">✅ Yes</span></td>
+                        <td><span class="badge badge-danger">❌ No</span></td>
+                        <td>Replace resources</td>
+                    </tr>
+                    <tr>
+                        <td>PATCH</td>
+                        <td><span class="badge badge-warning">⚠️ Depends</span></td>
+                        <td><span class="badge badge-danger">❌ No</span></td>
+                        <td>Partial update</td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td><span class="badge badge-success">✅ Yes</span></td>
+                        <td><span class="badge badge-danger">❌ No</span></td>
+                        <td>Remove resources</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Idempotent API Controller</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Models\Order;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+
+class IdempotentApiController extends Controller
+{
+    /**
+     * POST with idempotency key
+     */
+    public function createOrder(Request $request)
+    {
+        $idempotencyKey = $request->header('Idempotency-Key');
+        
+        if (!$idempotencyKey) {
+            return response()->json([
+                'error' => 'Idempotency-Key header required'
+            ], 400);
+        }
+        
+        // Check cache for previous response
+        $cacheKey = "idempotency:{$idempotencyKey}";
+        $cached = Cache::get($cacheKey);
+        
+        if ($cached) {
+            return response()->json($cached['data'], $cached['status']);
+        }
+        
+        // Acquire lock to prevent concurrent requests
+        $lock = Cache::lock("idempotency:lock:{$idempotencyKey}", 10);
+        
+        try {
+            $lock->block(5);
+            
+            // Double-check cache after acquiring lock
+            if ($cached = Cache::get($cacheKey)) {
+                return response()->json($cached['data'], $cached['status']);
+            }
+            
+            // Process request
+            $order = DB::transaction(function () use ($request) {
+                return Order::create($request->validated());
+            });
+            
+            // Cache response for 24 hours
+            $response = [
+                'data' => $order,
+                'status' => 201,
+            ];
+            Cache::put($cacheKey, $response, now()->addHours(24));
+            
+            return response()->json($order, 201);
+        } finally {
+            $lock->release();
+        }
+    }
+    
+    /**
+     * PUT - naturally idempotent
+     */
+    public function updateOrder(Request $request, string $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update($request->validated());
+        return response()->json($order);
+    }
+    
+    /**
+     * DELETE - idempotent (deleting twice has same effect)
+     */
+    public function deleteOrder(string $id)
+    {
+        Order::find($id)?->delete();
+        return response()->json(null, 204);
+    }
+}</code></pre>
+
+            <h3>Razorpay with Idempotency</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Payment;
+
+use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+
+class IdempotentRazorpayService extends RazorpayService
+{
+    public function createOrderIdempotent(
+        string $idempotencyKey,
+        float $amount,
+        string $currency = 'INR',
+        array $metadata = []
+    ): array {
+        $cacheKey = "razorpay:idempotency:{$idempotencyKey}";
+        $lockKey = "razorpay:lock:{$idempotencyKey}";
+        
+        // Check cache
+        if ($cached = Cache::get($cacheKey)) {
+            return $cached;
+        }
+        
+        // Acquire lock
+        $lock = Cache::lock($lockKey, 10);
+        
+        try {
+            $lock->block(5);
+            
+            // Double-check after lock
+            if ($cached = Cache::get($cacheKey)) {
+                return $cached;
+            }
+            
+            // Check database
+            $existing = Payment::where('idempotency_key', $idempotencyKey)->first();
+            if ($existing) {
+                $result = $this->formatResponse($existing);
+                Cache::put($cacheKey, $result, now()->addHours(24));
+                return $result;
+            }
+            
+            // Create order
+            $result = DB::transaction(function () use ($idempotencyKey, $amount, $currency, $metadata) {
+                $orderData = [
+                    'amount' => (int)($amount * 100),
+                    'currency' => $currency,
+                    'receipt' => 'rcpt_' . uniqid(),
+                    'notes' => array_merge($metadata, [
+                        'idempotency_key' => $idempotencyKey,
+                    ]),
+                ];
+                
+                $razorpayOrder = $this->api->order->create($orderData);
+                
+                $payment = Payment::create([
+                    'idempotency_key' => $idempotencyKey,
+                    'razorpay_order_id' => $razorpayOrder->id,
+                    'amount' => $amount,
+                    'currency' => $currency,
+                    'status' => 'created',
+                    'metadata' => $metadata,
+                ]);
+                
+                return $this->formatResponse($payment);
+            });
+            
+            Cache::put($cacheKey, $result, now()->addHours(24));
+            return $result;
+        } finally {
+            $lock->release();
+        }
+    }
+    
+    private function formatResponse(Payment $payment): array
+    {
+        return [
+            'order_id' => $payment->razorpay_order_id,
+            'amount' => $payment->amount,
+            'currency' => $payment->currency,
+            'key_id' => $this->keyId,
+            'status' => $payment->status,
+        ];
+    }
+}</code></pre>
+
+            <h3>Stripe Native Idempotency</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Payment;
+
+use Stripe\StripeClient;
+use Illuminate\Support\Str;
+
+class IdempotentStripeService extends StripeService
+{
+    /**
+     * Stripe natively supports idempotency keys
+     */
+    public function createPaymentIntentIdempotent(
+        string $idempotencyKey,
+        float $amount,
+        string $currency = 'usd',
+        array $metadata = []
+    ): array {
+        try {
+            $params = [
+                'amount' => (int)($amount * 100),
+                'currency' => strtolower($currency),
+                'metadata' => $metadata,
+                'automatic_payment_methods' => ['enabled' => true],
+            ];
+            
+            // Stripe handles idempotency internally
+            $intent = $this->stripe->paymentIntents->create(
+                $params,
+                ['idempotency_key' => $idempotencyKey]
+            );
+            
+            return [
+                'client_secret' => $intent->client_secret,
+                'payment_intent_id' => $intent->id,
+                'amount' => $amount,
+                'currency' => $currency,
+            ];
+        } catch (\Exception $e) {
+            throw new \Exception('Payment creation failed: ' . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Generate UUID for idempotency key
+     */
+    public function generateIdempotencyKey(): string
+    {
+        return Str::uuid()->toString();
+    }
+}</code></pre>
+        </section>
+
+        <!-- PCI DSS Compliance -->
+        <section id="pci-dss" class="topic-section">
+            <h2>PCI DSS Compliance</h2>
+            
+            <div class="highlight-box">
+                <h4>⚠️ Critical Rules</h4>
+                <p><strong>NEVER STORE:</strong></p>
+                <ul>
+                    <li>❌ Full magnetic stripe data</li>
+                    <li>❌ CAV2/CVC2/CVV2/CID codes</li>
+                    <li>❌ PIN or PIN block</li>
+                    <li>❌ Full credit card numbers (store tokens instead)</li>
+                </ul>
+                <p><strong>ONLY STORE (if absolutely necessary):</strong></p>
+                <ul>
+                    <li>✅ Last 4 digits of card number</li>
+                    <li>✅ Card brand (Visa, Mastercard, etc.)</li>
+                    <li>✅ Expiration date</li>
+                    <li>✅ Payment gateway token</li>
+                </ul>
+            </div>
+
+            <h3>PCI Compliant Card Storage</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Payment;
+
+use Illuminate\Support\Facades\Crypt;
+
+/**
+ * PCI DSS Compliant Card Handling
+ * 
+ * NEVER STORE:
+ * - Full magnetic stripe data
+ * - CAV2/CVC2/CVV2/CID codes
+ * - PIN or PIN block
+ */
+class PciCompliantCardStorage
+{
+    /**
+     * Store only last 4 digits and token (RECOMMENDED)
+     */
+    public function tokenizeCard(array $cardData): array
+    {
+        // Use payment gateway tokenization
+        $token = $this->createTokenViaGateway($cardData);
+        
+        return [
+            'token' => $token,
+            'last_four' => substr($cardData['number'], -4),
+            'brand' => $this->detectCardBrand($cardData['number']),
+            'exp_month' => $cardData['exp_month'],
+            'exp_year' => $cardData['exp_year'],
+        ];
+    }
+    
+    private function createTokenViaGateway(array $cardData): string
+    {
+        // Use Stripe, Razorpay, etc. tokenization
+        // NEVER store raw card data in your database
+        
+        // Example with Stripe:
+        // $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+        // $token = $stripe->tokens->create(['card' => $cardData]);
+        // return $token->id;
+        
+        return 'tok_' . bin2hex(random_bytes(16));
+    }
+    
+    private function detectCardBrand(string $number): string
+    {
+        return match(true) {
+            preg_match('/^4/', $number) => 'visa',
+            preg_match('/^5[1-5]/', $number) => 'mastercard',
+            preg_match('/^3[47]/', $number) => 'amex',
+            preg_match('/^6(?:011|5)/', $number) => 'discover',
+            default => 'unknown',
+        };
+    }
+}</code></pre>
+
+            <h3>Database Schema (PCI Compliant)</h3>
+            <pre><code class="language-php"><?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+// COMPLIANT: Only store tokenized data
+Schema::create('payment_methods', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained();
+    $table->string('gateway_token'); // Tokenized by payment gateway
+    $table->string('last_four', 4);  // Only last 4 digits
+    $table->string('brand');         // visa, mastercard, etc.
+    $table->string('exp_month', 2);
+    $table->string('exp_year', 4);
+    $table->boolean('is_default')->default(false);
+    
+    // NEVER: $table->string('card_number');
+    // NEVER: $table->string('cvv');
+    // NEVER: $table->text('full_card_data');
+    
+    $table->timestamps();
+    $table->softDeletes();
+});</code></pre>
+
+            <h3>Tokenization Service</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Payment;
+
+use Illuminate\Support\Facades\DB;
+
+class PciTokenizationService
+{
+    /**
+     * Tokenize card via payment gateway
+     */
+    public function tokenize(array $cardData, string $gateway = 'stripe'): string
+    {
+        return match($gateway) {
+            'stripe' => $this->tokenizeWithStripe($cardData),
+            'razorpay' => $this->tokenizeWithRazorpay($cardData),
+            default => throw new \InvalidArgumentException('Unsupported gateway'),
+        };
+    }
+    
+    private function tokenizeWithStripe(array $cardData): string
+    {
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+        
+        $token = $stripe->tokens->create([
+            'card' => [
+                'number' => $cardData['number'],
+                'exp_month' => $cardData['exp_month'],
+                'exp_year' => $cardData['exp_year'],
+                'cvc' => $cardData['cvc'],
+            ],
+        ]);
+        
+        // Immediately discard raw card data
+        unset($cardData);
+        
+        return $token->id;
+    }
+    
+    private function tokenizeWithRazorpay(array $cardData): string
+    {
+        $api = new \Razorpay\Api\Api(
+            config('services.razorpay.key_id'),
+            config('services.razorpay.key_secret')
+        );
+        
+        $token = $api->token->create([
+            'card' => [
+                'number' => $cardData['number'],
+                'expiry_month' => $cardData['exp_month'],
+                'expiry_year' => $cardData['exp_year'],
+                'cvv' => $cardData['cvc'],
+            ],
+        ]);
+        
+        unset($cardData);
+        
+        return $token->id;
+    }
+    
+    /**
+     * Store tokenized card securely
+     */
+    public function storeToken(int $userId, string $token, array $metadata): int
+    {
+        return DB::table('payment_methods')->insertGetId([
+            'user_id' => $userId,
+            'gateway_token' => $token,
+            'last_four' => $metadata['last_four'],
+            'brand' => $metadata['brand'],
+            'exp_month' => $metadata['exp_month'],
+            'exp_year' => $metadata['exp_year'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+}</code></pre>
+
+            <h3>Secure API Key Management</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Security;
+
+class StripeKeyManager
+{
+    /**
+     * Validate Stripe key format
+     */
+    public function validateKeyFormat(string $key): bool
+    {
+        return preg_match('/^(pk|sk)_(test|live)_[a-zA-Z0-9]{24,}$/', $key) === 1;
+    }
+    
+    /**
+     * Check if test key
+     */
+    public function isTestKey(string $key): bool
+    {
+        return str_contains($key, '_test_');
+    }
+    
+    /**
+     * Mask key for logging
+     */
+    public function maskKey(string $key): string
+    {
+        return substr($key, 0, 8) . str_repeat('*', 20) . substr($key, -4);
+    }
+}
+
+// .env configuration (NEVER commit to git)
+// STRIPE_KEY=pk_live_xxxxxxxxxxxxxxxxxxxxx
+// STRIPE_SECRET=sk_live_xxxxxxxxxxxxxxxxxxxxx
+// STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxx
+
+// RAZORPAY_KEY_ID=rzp_live_xxxxxxxxxxxxx
+// RAZORPAY_KEY_SECRET=xxxxxxxxxxxxxxxxxxxxx
+// RAZORPAY_WEBHOOK_SECRET=xxxxxxxxxxxxxxxxxxxxx</code></pre>
+        </section>
+
+        <!-- SOAP Integration -->
+        <section id="soap" class="topic-section">
+            <h2>SOAP API Integration</h2>
+            
+            <h3>Complete SOAP Client Service</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Services\Soap;
+
+use SoapClient;
+use SoapFault;
+use Illuminate\Support\Facades\Log;
+
+class SoapClientService
+{
+    private ?SoapClient $client = null;
+    private string $wsdl;
+    private array $options;
+    
+    public function __construct(string $wsdl, array $options = [])
+    {
+        $this->wsdl = $wsdl;
+        $this->options = array_merge($this->getDefaultOptions(), $options);
+    }
+    
+    private function getDefaultOptions(): array
+    {
+        return [
+            'soap_version' => SOAP_1_2,
+            'trace' => true,
+            'exceptions' => true,
+            'cache_wsdl' => WSDL_CACHE_BOTH,
+            'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
+            'connection_timeout' => 30,
+            'user_agent' => 'Laravel/'.app()->version(),
+            'features' => SOAP_SINGLE_ELEMENT_ARRAYS,
+        ];
+    }
+    
+    public function getClient(): SoapClient
+    {
+        if ($this->client === null) {
+            try {
+                $this->client = new SoapClient($this->wsdl, $this->options);
+            } catch (SoapFault $e) {
+                Log::error('SOAP client initialization failed', [
+                    'wsdl' => $this->wsdl,
+                    'error' => $e->getMessage(),
+                ]);
+                throw $e;
+            }
+        }
+        
+        return $this->client;
+    }
+    
+    public function call(string $method, array $parameters = []): mixed
+    {
+        $startTime = microtime(true);
+        
+        try {
+            $client = $this->getClient();
+            $result = $client->__soapCall($method, $parameters);
+            
+            $duration = (microtime(true) - $startTime) * 1000;
+            
+            Log::info('SOAP call successful', [
+                'method' => $method,
+                'duration_ms' => round($duration, 2),
+            ]);
+            
+            return $result;
+        } catch (SoapFault $e) {
+            Log::error('SOAP call failed', [
+                'method' => $method,
+                'error' => $e->getMessage(),
+            ]);
+            throw $e;
+        }
+    }
+    
+    public function getFunctions(): array
+    {
+        return $this->getClient()->__getFunctions();
+    }
+    
+    public function getTypes(): array
+    {
+        return $this->getClient()->__getTypes();
+    }
+}</code></pre>
+        </section>
+
+        <!-- Advanced Security Patterns -->
+        <section id="advanced-patterns" class="topic-section">
+            <h2>Advanced Security Patterns</h2>
+            
+            <h3>Rate Limiting with Redis</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\RateLimiter;
+
+class ApiRateLimiter
+{
+    public function handle(Request $request, Closure $next, int $maxAttempts = 60)
+    {
+        $key = $this->resolveRequestKey($request);
+        
+        if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
+            $seconds = RateLimiter::availableIn($key);
+            
+            return response()->json([
+                'error' => 'Too many requests',
+                'retry_after' => $seconds,
+            ], 429, [
+                'X-RateLimit-Limit' => $maxAttempts,
+                'X-RateLimit-Remaining' => 0,
+                'Retry-After' => $seconds,
+            ]);
+        }
+        
+        RateLimiter::hit($key);
+        
+        $response = $next($request);
+        
+        $response->headers->set('X-RateLimit-Limit', $maxAttempts);
+        $response->headers->set('X-RateLimit-Remaining', 
+            RateLimiter::remaining($key, $maxAttempts));
+        
+        return $response;
+    }
+    
+    protected function resolveRequestKey(Request $request): string
+    {
+        if ($user = $request->user()) {
+            return 'rate-limit:user:' . $user->id;
+        }
+        
+        return 'rate-limit:ip:' . $request->ip();
+    }
+}</code></pre>
+
+            <h3>Request Signing for API Authentication</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+class VerifyApiSignature
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $apiKey = $request->header('X-API-Key');
+        $timestamp = $request->header('X-Timestamp');
+        $signature = $request->header('X-Signature');
+        
+        if (!$apiKey || !$timestamp || !$signature) {
+            return response()->json(['error' => 'Missing authentication headers'], 401);
+        }
+        
+        // Check timestamp to prevent replay attacks (5 minute window)
+        if (abs(time() - $timestamp) > 300) {
+            return response()->json(['error' => 'Request expired'], 401);
+        }
+        
+        // Get secret from API key
+        $secret = $this->getSecretForApiKey($apiKey);
+        if (!$secret) {
+            return response()->json(['error' => 'Invalid API key'], 401);
+        }
+        
+        // Generate expected signature
+        $payload = $request->getContent();
+        $expectedSignature = hash_hmac('sha256', $timestamp . $payload, $secret);
+        
+        // Constant-time comparison
+        if (!hash_equals($expectedSignature, $signature)) {
+            Log::warning('Invalid API signature', [
+                'api_key' => $apiKey,
+                'ip' => $request->ip(),
+            ]);
+            return response()->json(['error' => 'Invalid signature'], 401);
+        }
+        
+        return $next($request);
+    }
+    
+    private function getSecretForApiKey(string $apiKey): ?string
+    {
+        // Fetch from database or cache
+        return \App\Models\ApiKey::where('key', $apiKey)
+            ->where('is_active', true)
+            ->value('secret');
+    }
+}</code></pre>
+
+            <h3>Database Encryption for Sensitive Data</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
+
+class SecurePayment extends Model
+{
+    protected $fillable = [
+        'user_id',
+        'encrypted_data',
+        'last_four',
+        'status',
+    ];
+    
+    /**
+     * Encrypt sensitive data before saving
+     */
+    public function setEncryptedDataAttribute($value)
+    {
+        $this->attributes['encrypted_data'] = Crypt::encryptString(json_encode($value));
+    }
+    
+    /**
+     * Decrypt data when retrieving
+     */
+    public function getEncryptedDataAttribute($value)
+    {
+        return json_decode(Crypt::decryptString($value), true);
+    }
+    
+    /**
+     * Store sensitive payment metadata
+     */
+    public static function storeSensitiveData(int $userId, array $data): self
+    {
+        return self::create([
+            'user_id' => $userId,
+            'encrypted_data' => [
+                'payment_method' => $data['payment_method'] ?? null,
+                'billing_address' => $data['billing_address'] ?? null,
+                'metadata' => $data['metadata'] ?? [],
+            ],
+            'last_four' => $data['last_four'] ?? null,
+            'status' => 'pending',
+        ]);
+    }
+}</code></pre>
+
+            <h3>Security Headers Middleware</h3>
+            <pre><code class="language-php"><?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class SecurityHeaders
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $response = $next($request);
+        
+        $response->headers->set('X-Content-Type-Options', 'nosniff');
+        $response->headers->set('X-Frame-Options', 'DENY');
+        $response->headers->set('X-XSS-Protection', '1; mode=block');
+        $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
+        $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+        
+        // HSTS (only on HTTPS)
+        if ($request->secure()) {
+            $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+        }
+        
+        // Content Security Policy
+        $csp = [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' https://js.stripe.com",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data: https:",
+            "font-src 'self' data:",
+            "connect-src 'self' https://api.stripe.com https://api.razorpay.com",
+            "frame-src https://js.stripe.com",
+        ];
+        $response->headers->set('Content-Security-Policy', implode('; ', $csp));
+        
+        return $response;
+    }
+}</code></pre>
+        </section>
+
+        <div class="topic-section">
+            <h2>Summary & Best Practices</h2>
+            
+            <h3>Payment Gateway Integration Checklist</h3>
+            <ul>
+                <li>✅ Always verify webhook signatures (HMAC-SHA256)</li>
+                <li>✅ Implement idempotency for all payment operations</li>
+                <li>✅ Never store raw card data - use tokenization</li>
+                <li>✅ Use HTTPS for all payment-related endpoints</li>
+                <li>✅ Log all payment events for audit trail</li>
+                <li>✅ Implement proper error handling and user feedback</li>
+                <li>✅ Test with sandbox/test mode before production</li>
+                <li>✅ Set up monitoring and alerts for payment failures</li>
+                <li>✅ Handle 3D Secure/SCA requirements</li>
+                <li>✅ Implement proper retry mechanisms with backoff</li>
+            </ul>
+
+            <h3>Security Best Practices</h3>
+            <ul>
+                <li>🔒 Store API keys in environment variables, never in code</li>
+                <li>🔒 Rotate API keys and webhook secrets regularly</li>
+                <li>🔒 Use constant-time comparison for signature verification</li>
+                <li>🔒 Implement rate limiting on all API endpoints</li>
+                <li>🔒 Add security headers to all responses</li>
+                <li>🔒 Encrypt sensitive data at rest and in transit</li>
+                <li>🔒 Implement proper access control and authentication</li>
+                <li>🔒 Log security events and set up alerts</li>
+                <li>🔒 Regular security audits and dependency updates</li>
+                <li>🔒 Follow PCI DSS compliance requirements</li>
+            </ul>
+
+            <h3>Performance Optimization</h3>
+            <ul>
+                <li>⚡ Use connection pooling for HTTP clients</li>
+                <li>⚡ Implement caching with proper invalidation</li>
+                <li>⚡ Use async processing for webhooks (queues)</li>
+                <li>⚡ Circuit breaker pattern for external services</li>
+                <li>⚡ Database indexing on payment lookup fields</li>
+                <li>⚡ Monitor and optimize slow queries</li>
+                <li>⚡ Use Redis for rate limiting and caching</li>
+                <li>⚡ Batch operations where possible</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Advanced Laravel Development Guide | Payment Gateways & Security</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
