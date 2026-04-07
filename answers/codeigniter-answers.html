@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeIgniter Framework - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #ee4723 0%, #ff6b4a 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #ee4723;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #d63d1a;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #ee4723;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #d63d1a;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #ee4723;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #ee4723;
+        }
+        .topic-section h3 {
+            color: #d63d1a;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #ee4723;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔥 CodeIgniter Framework</h1>
+        <p>Comprehensive answers covering architecture, MVC, routing, database, and migration strategies</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#architecture">1. CodeIgniter Architecture</a></li>
+                <li><a href="#mvc-pattern">2. MVC Pattern in CodeIgniter</a></li>
+                <li><a href="#routing">3. Routing</a></li>
+                <li><a href="#controllers">4. Controllers</a></li>
+                <li><a href="#models">5. Models</a></li>
+                <li><a href="#views">6. Views</a></li>
+                <li><a href="#helpers-libraries">7. Helpers vs Libraries</a></li>
+                <li><a href="#hooks">8. Hooks</a></li>
+                <li><a href="#query-builder">9. Database Query Builder</a></li>
+                <li><a href="#sessions">10. Session Management</a></li>
+                <li><a href="#form-validation">11. Form Validation</a></li>
+                <li><a href="#file-upload">12. File Upload</a></li>
+                <li><a href="#migration-ci2-ci3">13. Migration CI2 to CI3</a></li>
+                <li><a href="#migration-ci3-ci4">14. Migration CI3 to CI4</a></li>
+            </ul>
+        </div>
+
+        <!-- Architecture -->
+        <section id="architecture" class="topic-section">
+            <h2>1. CodeIgniter Architecture</h2>
+            
+            <h3>Overview</h3>
+            <p>CodeIgniter is a lightweight PHP framework that follows the Model-View-Controller (MVC) architectural pattern. It's known for its small footprint, exceptional performance, and minimal configuration requirements.</p>
+            
+            <h3>Key Components</h3>
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Description</th>
+                    <th>Location (CI3)</th>
+                </tr>
+                <tr>
+                    <td><strong>Application</strong></td>
+                    <td>Contains your application code</td>
+                    <td>application/</td>
+                </tr>
+                <tr>
+                    <td><strong>System</strong></td>
+                    <td>CodeIgniter core files</td>
+                    <td>system/</td>
+                </tr>
+                <tr>
+                    <td><strong>Index.php</strong></td>
+                    <td>Front controller/entry point</td>
+                    <td>index.php</td>
+                </tr>
+            </table>
+
+            <h3>Directory Structure (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-plaintext">codeigniter/
+├── application/
+│   ├── config/          # Configuration files
+│   ├── controllers/     # Application controllers
+│   ├── models/          # Data models
+│   ├── views/           # View templates
+│   ├── libraries/       # Custom libraries
+│   ├── helpers/         # Helper functions
+│   ├── hooks/           # Hook files
+│   ├── language/        # Language files
+│   ├── core/            # Extend core classes
+│   └── cache/           # Cache files
+├── system/              # CI core framework
+├── user_guide/          # Documentation
+└── index.php            # Entry point</code></pre>
+            </div>
+
+            <h3>Directory Structure (CI4)</h3>
+            <div class="code-example">
+                <pre><code class="language-plaintext">codeigniter4/
+├── app/
+│   ├── Config/          # Configuration files
+│   ├── Controllers/     # Application controllers
+│   ├── Models/          # Data models
+│   ├── Views/           # View templates
+│   ├── Filters/         # HTTP filters (replaces hooks)
+│   ├── Libraries/       # Custom libraries
+│   ├── Helpers/         # Helper functions
+│   └── Database/        # Migrations & seeds
+├── public/              # Web root (index.php, assets)
+├── system/              # CI4 core framework
+├── writable/            # Cache, logs, uploads
+└── vendor/              # Composer dependencies</code></pre>
+            </div>
+
+            <h3>Application Flow</h3>
+            <div class="code-example">
+                <pre><code class="language-plaintext">1. index.php (Entry Point)
+   ↓
+2. CodeIgniter.php (Bootstrap)
+   ↓
+3. Router (Route Matching)
+   ↓
+4. Hooks (pre_controller)
+   ↓
+5. Controller (Load & Execute)
+   ↓
+6. Model (Database Operations)
+   ↓
+7. View (Render Template)
+   ↓
+8. Hooks (post_controller)
+   ↓
+9. Output (Send to Browser)</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Key Principle:</strong> CodeIgniter follows a "nearly zero configuration" philosophy, allowing developers to start building immediately with sensible defaults.
+            </div>
+        </section>
+
+        <!-- MVC Pattern -->
+        <section id="mvc-pattern" class="topic-section">
+            <h2>2. MVC Pattern in CodeIgniter</h2>
+
+            <h3>Understanding MVC</h3>
+            <p>MVC separates application logic into three interconnected components, promoting organized code and separation of concerns.</p>
+
+            <table>
+                <tr>
+                    <th>Layer</th>
+                    <th>Responsibility</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>Model</strong></td>
+                    <td>Data logic, database operations</td>
+                    <td>User_model.php</td>
+                </tr>
+                <tr>
+                    <td><strong>View</strong></td>
+                    <td>Presentation layer, HTML output</td>
+                    <td>user_list.php</td>
+                </tr>
+                <tr>
+                    <td><strong>Controller</strong></td>
+                    <td>Request handling, business logic</td>
+                    <td>Users.php</td>
+                </tr>
+            </table>
+
+            <h3>MVC Flow Example</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Controller: application/controllers/Users.php (CI3)
+class Users extends CI_Controller {
+    
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('user_model');
+    }
+    
+    public function index() {
+        // Get data from model
+        $data['users'] = $this->user_model->get_all_users();
+        
+        // Load view with data
+        $this->load->view('users/index', $data);
+    }
+    
+    public function show($id) {
+        $data['user'] = $this->user_model->get_user($id);
+        
+        if (empty($data['user'])) {
+            show_404();
+        }
+        
+        $this->load->view('users/show', $data);
+    }
+}
+
+// Model: application/models/User_model.php (CI3)
+class User_model extends CI_Model {
+    
+    public function get_all_users() {
+        return $this->db->get('users')->result();
+    }
+    
+    public function get_user($id) {
+        return $this->db->get_where('users', ['id' => $id])->row();
+    }
+    
+    public function create_user($data) {
+        return $this->db->insert('users', $data);
+    }
+    
+    public function update_user($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data);
+    }
+    
+    public function delete_user($id) {
+        return $this->db->delete('users', ['id' => $id]);
+    }
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Keep controllers thin by moving complex business logic to models or libraries. Controllers should orchestrate, not implement.
+            </div>
+        </section>
+
+        <!-- Routing -->
+        <section id="routing" class="topic-section">
+            <h2>3. Routing</h2>
+
+            <h3>URI Routing Basics</h3>
+            <p>CodeIgniter uses URI segments to determine which controller and method to call. The default pattern is:</p>
+            <div class="code-example">
+                <pre><code class="language-plaintext">example.com/controller/method/param1/param2/param3</code></pre>
+            </div>
+
+            <h3>Route Configuration (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// application/config/routes.php
+
+// Default controller
+$route['default_controller'] = 'welcome';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+
+// Basic routing
+$route['about'] = 'pages/about';
+$route['contact'] = 'pages/contact';
+
+// Wildcards (:num and :any)
+$route['product/(:num)'] = 'catalog/product_lookup/$1';
+$route['blog/(:any)'] = 'blog/post/$1';
+
+// Regular expressions
+$route['products/([a-z]+)/(:num)'] = 'catalog/product_lookup_by_name/$1/$2';
+
+// Multiple parameters
+$route['user/(:num)/post/(:num)'] = 'posts/show/$1/$2';
+
+// HTTP verb routing (CI3.x+)
+$route['api/users']['GET'] = 'api/users/index';
+$route['api/users']['POST'] = 'api/users/create';
+$route['api/users/(:num)']['GET'] = 'api/users/show/$1';
+$route['api/users/(:num)']['PUT'] = 'api/users/update/$1';
+$route['api/users/(:num)']['DELETE'] = 'api/users/delete/$1';</code></pre>
+            </div>
+
+            <h3>Route Configuration (CI4)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// app/Config/Routes.php
+
+namespace Config;
+
+$routes = Services::routes();
+
+$routes->setDefaultNamespace('App\\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+
+// Basic routes
+$routes->get('/', 'Home::index');
+$routes->get('about', 'Pages::about');
+
+// HTTP verb routes
+$routes->get('users', 'Users::index');
+$routes->get('users/(:num)', 'Users::show/$1');
+$routes->post('users', 'Users::create');
+$routes->put('users/(:num)', 'Users::update/$1');
+$routes->delete('users/(:num)', 'Users::delete/$1');
+
+// Route groups
+$routes->group('admin', ['filter' => 'auth'], function($routes) {
+    $routes->get('dashboard', 'Admin\\Dashboard::index');
+    $routes->get('users', 'Admin\\Users::index');
+});
+
+// Named routes
+$routes->get('profile', 'User::profile', ['as' => 'user_profile']);</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Pro Tip:</strong> In CI4, routes are processed in the order they are defined. Place more specific routes before general ones.
+            </div>
+        </section>
+
+        <!-- Controllers -->
+        <section id="controllers" class="topic-section">
+            <h2>4. Controllers</h2>
+
+            <h3>Basic Controller (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Blog extends CI_Controller {
+    
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('blog_model');
+        $this->load->helper(['url', 'form']);
+    }
+    
+    public function index() {
+        $data['posts'] = $this->blog_model->get_posts();
+        $data['title'] = 'Blog Posts';
+        
+        $this->load->view('templates/header', $data);
+        $this->load->view('blog/index', $data);
+        $this->load->view('templates/footer');
+    }
+    
+    public function view($slug = NULL) {
+        $data['post'] = $this->blog_model->get_posts($slug);
+        
+        if (empty($data['post'])) {
+            show_404();
+        }
+        
+        $data['title'] = $data['post']['title'];
+        $this->load->view('blog/view', $data);
+    }
+    
+    public function create() {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('text', 'Text', 'required');
+        
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('blog/create');
+        } else {
+            $this->blog_model->set_post();
+            redirect('blog');
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h3>Basic Controller (CI4)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace App\\Controllers;
+
+use App\\Models\\BlogModel;
+
+class Blog extends BaseController {
+    
+    protected $blogModel;
+    
+    public function __construct() {
+        $this->blogModel = new BlogModel();
+        helper(['url', 'form']);
+    }
+    
+    public function index() {
+        $data = [
+            'posts' => $this->blogModel->findAll(),
+            'title' => 'Blog Posts'
+        ];
+        
+        return view('templates/header', $data)
+             . view('blog/index', $data)
+             . view('templates/footer');
+    }
+    
+    public function show($slug = null) {
+        $post = $this->blogModel->where('slug', $slug)->first();
+        
+        if (!$post) {
+            throw \\CodeIgniter\\Exceptions\\PageNotFoundException::forPageNotFound();
+        }
+        
+        return view('blog/show', ['post' => $post]);
+    }
+    
+    public function create() {
+        if (!$this->validate([
+            'title' => 'required|min_length[3]',
+            'text'  => 'required'
+        ])) {
+            return view('blog/create', ['validation' => $this->validator]);
+        }
+        
+        $this->blogModel->save($this->request->getPost());
+        return redirect()->to('/blog');
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Security:</strong> Always validate and sanitize user input in controllers. Use form validation library to prevent SQL injection and XSS attacks.
+            </div>
+        </section>
+
+        <!-- Models -->
+        <section id="models" class="topic-section">
+            <h2>5. Models</h2>
+
+            <h3>Basic Model (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class User_model extends CI_Model {
+    
+    public function __construct() {
+        parent::__construct();
+        $this->load->database();
+    }
+    
+    public function get_users($limit = NULL) {
+        if ($limit) {
+            $this->db->limit($limit);
+        }
+        $query = $this->db->get('users');
+        return $query->result();
+    }
+    
+    public function get_user($id) {
+        $query = $this->db->get_where('users', ['id' => $id]);
+        return $query->row();
+    }
+    
+    public function create_user($data) {
+        return $this->db->insert('users', $data);
+    }
+    
+    public function update_user($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data);
+    }
+    
+    public function delete_user($id) {
+        return $this->db->delete('users', ['id' => $id]);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Model with Query Builder (CI4)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace App\\Models;
+
+use CodeIgniter\\Model;
+
+class UserModel extends Model {
+    
+    protected $table      = 'users';
+    protected $primaryKey = 'id';
+    protected $returnType = 'array';
+    protected $useSoftDeletes = true;
+    
+    protected $allowedFields = ['name', 'email', 'password', 'status'];
+    
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
+    
+    protected $validationRules = [
+        'name'  => 'required|min_length[3]',
+        'email' => 'required|valid_email|is_unique[users.email]'
+    ];
+    
+    public function getUserWithPosts($id) {
+        return $this->select('users.*, COUNT(posts.id) as post_count')
+                    ->join('posts', 'posts.user_id = users.id', 'left')
+                    ->where('users.id', $id)
+                    ->groupBy('users.id')
+                    ->first();
+    }
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Keep models focused on database operations. Complex business logic should be in libraries or services.
+            </div>
+        </section>
+
+        <!-- Views -->
+        <section id="views" class="topic-section">
+            <h2>6. Views</h2>
+
+            <h3>Loading Views (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Simple view
+$this->load->view('pages/home');
+
+// View with data
+$data['title'] = 'Home Page';
+$data['users'] = $this->user_model->get_users();
+$this->load->view('pages/home', $data);
+
+// Multiple views
+$this->load->view('templates/header', $data);
+$this->load->view('pages/home', $data);
+$this->load->view('templates/footer');</code></pre>
+            </div>
+
+            <h3>View Template Example</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;?php echo $title; ?&gt;&lt;/title&gt;
+    &lt;link rel="stylesheet" href="&lt;?php echo base_url('assets/css/style.css'); ?&gt;"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav&gt;
+        &lt;a href="&lt;?php echo site_url(); ?&gt;"&gt;Home&lt;/a&gt;
+        &lt;a href="&lt;?php echo site_url('about'); ?&gt;"&gt;About&lt;/a&gt;
+    &lt;/nav&gt;
+    
+    &lt;?php if ($this->session->flashdata('success')): ?&gt;
+        &lt;div class="alert"&gt;
+            &lt;?php echo $this->session->flashdata('success'); ?&gt;
+        &lt;/div&gt;
+    &lt;?php endif; ?&gt;
+    
+    &lt;main&gt;Content here&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <h3>Loading Views (CI4)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Simple view
+return view('pages/home');
+
+// View with data
+$data = ['title' => 'Home', 'users' => $users];
+return view('pages/home', $data);
+
+// Multiple views
+return view('templates/header', $data)
+     . view('pages/home', $data)
+     . view('templates/footer');</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Performance Tip:</strong> Use view caching for static or rarely-changing content to improve performance.
+            </div>
+        </section>
+
+        <!-- Helpers vs Libraries -->
+        <section id="helpers-libraries" class="topic-section">
+            <h2>7. Helpers vs Libraries</h2>
+
+            <h3>Key Differences</h3>
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Helpers</th>
+                    <th>Libraries</th>
+                </tr>
+                <tr>
+                    <td><strong>Structure</strong></td>
+                    <td>Procedural functions</td>
+                    <td>Object-oriented classes</td>
+                </tr>
+                <tr>
+                    <td><strong>Loading</strong></td>
+                    <td>$this->load->helper('name')</td>
+                    <td>$this->load->library('name')</td>
+                </tr>
+                <tr>
+                    <td><strong>Usage</strong></td>
+                    <td>Direct function calls</td>
+                    <td>Class methods via $this->name</td>
+                </tr>
+                <tr>
+                    <td><strong>State</strong></td>
+                    <td>Stateless</td>
+                    <td>Can maintain state</td>
+                </tr>
+            </table>
+
+            <h3>Creating Custom Helper</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// application/helpers/custom_helper.php
+
+if (!function_exists('format_phone')) {
+    function format_phone($phone) {
+        $phone = preg_replace('/[^0-9]/', '', $phone);
+        if (strlen($phone) == 10) {
+            return preg_replace('/([0-9]{3})([0-9]{3})([0-9]{4})/', '($1) $2-$3', $phone);
+        }
+        return $phone;
+    }
+}
+
+if (!function_exists('time_ago')) {
+    function time_ago($timestamp) {
+        $time = time() - strtotime($timestamp);
+        if ($time < 60) return 'just now';
+        if ($time < 3600) return floor($time / 60) . ' minutes ago';
+        return floor($time / 3600) . ' hours ago';
+    }
+}</code></pre>
+            </div>
+
+            <h3>Creating Custom Library</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// application/libraries/Payment.php
+
+class Payment {
+    
+    protected $CI;
+    protected $api_key;
+    
+    public function __construct($config = array()) {
+        $this->CI =& get_instance();
+        $this->api_key = $config['api_key'] ?? '';
+    }
+    
+    public function process_payment($amount, $card_data) {
+        // Payment processing logic
+        return $this->_call_api('charge', [
+            'amount' => $amount,
+            'card' => $card_data
+        ]);
+    }
+    
+    private function _call_api($endpoint, $data) {
+        // API call implementation
+        return json_decode($response);
+    }
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Use helpers for simple utility functions. Use libraries for complex functionality requiring state or configuration.
+            </div>
+        </section>
+
+        <!-- Hooks -->
+        <section id="hooks" class="topic-section">
+            <h2>8. Hooks</h2>
+
+            <h3>What are Hooks?</h3>
+            <p>Hooks allow you to tap into and modify the framework's inner workings without hacking core files. They execute custom scripts at various points in the execution process.</p>
+
+            <h3>Hook Points</h3>
+            <table>
+                <tr>
+                    <th>Hook Point</th>
+                    <th>When It Executes</th>
+                </tr>
+                <tr>
+                    <td>pre_system</td>
+                    <td>Very early, before system execution</td>
+                </tr>
+                <tr>
+                    <td>pre_controller</td>
+                    <td>Before controller is called</td>
+                </tr>
+                <tr>
+                    <td>post_controller_constructor</td>
+                    <td>After controller instantiation</td>
+                </tr>
+                <tr>
+                    <td>post_controller</td>
+                    <td>After controller execution</td>
+                </tr>
+                <tr>
+                    <td>post_system</td>
+                    <td>After final page sent to browser</td>
+                </tr>
+            </table>
+
+            <h3>Enabling and Defining Hooks (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// application/config/config.php
+$config['enable_hooks'] = TRUE;
+
+// application/config/hooks.php
+$hook['post_controller'] = array(
+    'class'    => 'Logger',
+    'function' => 'log_activity',
+    'filename' => 'Logger.php',
+    'filepath' => 'hooks'
+);</code></pre>
+            </div>
+
+            <h3>Hook Class Example</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// application/hooks/Logger.php
+
+class Logger {
+    public function log_activity() {
+        $CI =& get_instance();
+        
+        $data = array(
+            'uri'       => $CI->uri->uri_string(),
+            'method'    => $CI->input->method(),
+            'ip'        => $CI->input->ip_address(),
+            'timestamp' => date('Y-m-d H:i:s')
+        );
+        
+        $CI->db->insert('activity_log', $data);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Filters in CI4 (Replaces Hooks)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+namespace App\\Filters;
+
+use CodeIgniter\\Filters\\FilterInterface;
+
+class AuthFilter implements FilterInterface {
+    
+    public function before($request, $arguments = null) {
+        if (!session()->get('logged_in')) {
+            return redirect()->to('/login');
+        }
+    }
+    
+    public function after($request, $response, $arguments = null) {
+        // After controller execution
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> CI4 uses Filters instead of Hooks. Filters provide better organization and more flexibility.
+            </div>
+        </section>
+
+        <!-- Query Builder -->
+        <section id="query-builder" class="topic-section">
+            <h2>9. Database Query Builder</h2>
+
+            <h3>SELECT Queries</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Get all records
+$query = $this->db->get('users');
+$users = $query->result();
+
+// Select specific fields
+$this->db->select('name, email');
+$this->db->from('users');
+$query = $this->db->get();
+
+// Where clauses
+$this->db->where('status', 'active');
+$this->db->where('age >', 18);
+$this->db->where_in('id', [1, 2, 3]);
+
+// LIKE
+$this->db->like('name', 'john');
+
+// JOIN
+$this->db->select('users.*, profiles.bio');
+$this->db->from('users');
+$this->db->join('profiles', 'profiles.user_id = users.id', 'left');
+
+// ORDER BY and LIMIT
+$this->db->order_by('created_at', 'DESC');
+$this->db->limit(10);</code></pre>
+            </div>
+
+            <h3>INSERT, UPDATE, DELETE</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// INSERT
+$data = array(
+    'name' => 'John Doe',
+    'email' => 'john@example.com'
+);
+$this->db->insert('users', $data);
+$insert_id = $this->db->insert_id();
+
+// UPDATE
+$data = array('name' => 'Jane Doe');
+$this->db->where('id', 1);
+$this->db->update('users', $data);
+
+// DELETE
+$this->db->delete('users', array('id' => 1));
+
+// Batch operations
+$this->db->insert_batch('users', $batch_data);
+$this->db->update_batch('users', $batch_data, 'id');</code></pre>
+            </div>
+
+            <h3>Transactions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$this->db->trans_start();
+
+$this->db->insert('users', $user_data);
+$user_id = $this->db->insert_id();
+
+$profile_data['user_id'] = $user_id;
+$this->db->insert('profiles', $profile_data);
+
+$this->db->trans_complete();
+
+if ($this->db->trans_status() === FALSE) {
+    // Transaction failed
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Use query builder for better security and database portability. Query builder automatically escapes values.
+            </div>
+        </section>
+
+        <!-- Sessions -->
+        <section id="sessions" class="topic-section">
+            <h2>10. Session Management</h2>
+
+            <h3>Session Configuration (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// application/config/config.php
+
+$config['sess_driver'] = 'files'; // files, database, redis, memcached
+$config['sess_cookie_name'] = 'ci_session';
+$config['sess_expiration'] = 7200; // 2 hours
+$config['sess_save_path'] = NULL;
+$config['sess_match_ip'] = FALSE;
+$config['sess_time_to_update'] = 300;</code></pre>
+            </div>
+
+            <h3>Using Sessions (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Load session library
+$this->load->library('session');
+
+// Set session data
+$this->session->set_userdata('username', 'johndoe');
+$data = array(
+    'username' => 'johndoe',
+    'email'    => 'john@example.com',
+    'logged_in' => TRUE
+);
+$this->session->set_userdata($data);
+
+// Get session data
+$username = $this->session->userdata('username');
+
+// Check if session exists
+if ($this->session->has_userdata('username')) {
+    echo 'Username is set';
+}
+
+// Remove session data
+$this->session->unset_userdata('username');
+
+// Destroy session
+$this->session->sess_destroy();
+
+// Flashdata (available only for next request)
+$this->session->set_flashdata('message', 'Success');
+$message = $this->session->flashdata('message');</code></pre>
+            </div>
+
+            <h3>Using Sessions (CI4)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+$session = session();
+
+// Set data
+$session->set('username', 'johndoe');
+$session->set([
+    'username' => 'johndoe',
+    'logged_in' => true
+]);
+
+// Get data
+$username = $session->get('username');
+
+// Remove data
+$session->remove('username');
+
+// Destroy session
+$session->destroy();
+
+// Flashdata
+$session->setFlashdata('message', 'Success');
+$message = $session->getFlashdata('message');</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Security Tip:</strong> Use database or Redis sessions for better security and scalability in production environments.
+            </div>
+        </section>
+
+        <!-- Form Validation -->
+        <section id="form-validation" class="topic-section">
+            <h2>11. Form Validation</h2>
+
+            <h3>Form Validation (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Load validation library
+$this->load->library('form_validation');
+
+// Set validation rules
+$this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[12]');
+$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+$this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+$this->form_validation->set_rules('passconf', 'Password Confirmation', 'required|matches[password]');
+
+// Run validation
+if ($this->form_validation->run() == FALSE) {
+    // Validation failed
+    $this->load->view('signup_form');
+} else {
+    // Validation passed
+    $this->load->view('success');
+}</code></pre>
+            </div>
+
+            <h3>Validation Rules</h3>
+            <table>
+                <tr>
+                    <th>Rule</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>required</td>
+                    <td>Field must contain a value</td>
+                </tr>
+                <tr>
+                    <td>min_length[n]</td>
+                    <td>Minimum length</td>
+                </tr>
+                <tr>
+                    <td>max_length[n]</td>
+                    <td>Maximum length</td>
+                </tr>
+                <tr>
+                    <td>valid_email</td>
+                    <td>Valid email address</td>
+                </tr>
+                <tr>
+                    <td>alpha</td>
+                    <td>Alphabetic characters only</td>
+                </tr>
+                <tr>
+                    <td>numeric</td>
+                    <td>Numeric characters only</td>
+                </tr>
+                <tr>
+                    <td>is_unique[table.field]</td>
+                    <td>Value is unique in database</td>
+                </tr>
+                <tr>
+                    <td>matches[field]</td>
+                    <td>Matches another field</td>
+                </tr>
+            </table>
+
+            <h3>Form Validation (CI4)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// In controller
+if (!$this->validate([
+    'username' => 'required|min_length[5]|max_length[12]',
+    'email'    => 'required|valid_email|is_unique[users.email]',
+    'password' => 'required|min_length[8]'
+])) {
+    return view('signup_form', ['validation' => $this->validator]);
+}
+
+// In view, display errors
+&lt;?= \\Config\\Services::validation()->listErrors() ?></code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Always validate on server-side even if you have client-side validation. Never trust user input.
+            </div>
+        </section>
+
+        <!-- File Upload -->
+        <section id="file-upload" class="topic-section">
+            <h2>12. File Upload</h2>
+
+            <h3>File Upload (CI3)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Controller
+public function do_upload() {
+    $config['upload_path']   = './uploads/';
+    $config['allowed_types'] = 'gif|jpg|png|jpeg';
+    $config['max_size']      = 2048; // 2MB
+    $config['max_width']     = 1920;
+    $config['max_height']    = 1080;
+    $config['encrypt_name']  = TRUE; // Randomize filename
+    
+    $this->load->library('upload', $config);
+    
+    if (!$this->upload->do_upload('userfile')) {
+        $error = $this->upload->display_errors();
+        $this->load->view('upload_form', ['error' => $error]);
+    } else {
+        $data = $this->upload->data();
+        $this->load->view('upload_success', $data);
+    }
+}</code></pre>
+            </div>
+
+            <h3>File Upload (CI4)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// Controller
+public function upload() {
+    $validation = \\Config\\Services::validation();
+    
+    $validation->setRules([
+        'userfile' => [
+            'label' => 'Image File',
+            'rules' => 'uploaded[userfile]|max_size[userfile,2048]|is_image[userfile]'
+        ]
+    ]);
+    
+    if (!$validation->run()) {
+        return view('upload_form', ['errors' => $validation->getErrors()]);
+    }
+    
+    $file = $this->request->getFile('userfile');
+    
+    if ($file->isValid() && !$file->hasMoved()) {
+        $newName = $file->getRandomName();
+        $file->move('./uploads/', $newName);
+        
+        return view('upload_success', ['file' => $newName]);
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Security:</strong> Always validate file types and sizes. Never trust user-supplied filenames. Store uploads outside web root when possible.
+            </div>
+        </section>
+
+        <!-- Migration CI2 to CI3 -->
+        <section id="migration-ci2-ci3" class="topic-section">
+            <h2>13. Migration from CI2 to CI3</h2>
+
+            <h3>Major Changes</h3>
+            <table>
+                <tr>
+                    <th>Change</th>
+                    <th>CI2</th>
+                    <th>CI3</th>
+                </tr>
+                <tr>
+                    <td>File Names</td>
+                    <td>lowercase.php</td>
+                    <td>Ucfirst.php (PSR-4)</td>
+                </tr>
+                <tr>
+                    <td>Class Names</td>
+                    <td>Lowercase</td>
+                    <td>Ucfirst</td>
+                </tr>
+                <tr>
+                    <td>Database Driver</td>
+                    <td>mysql</td>
+                    <td>mysqli (deprecated mysql)</td>
+                </tr>
+                <tr>
+                    <td>Security</td>
+                    <td>xss_clean()</td>
+                    <td>Deprecated, use htmlspecialchars()</td>
+                </tr>
+            </table>
+
+            <h3>Step-by-Step Migration</h3>
+            <ol>
+                <li><strong>Backup everything:</strong> Database and application files</li>
+                <li><strong>Check PHP version:</strong> CI3 requires PHP 5.3.7+</li>
+                <li><strong>Update database driver:</strong> Change 'mysql' to 'mysqli'</li>
+                <li><strong>Rename files:</strong> Controllers, models, libraries to Ucfirst</li>
+                <li><strong>Update class names:</strong> Match file names</li>
+                <li><strong>Update database configuration:</strong> New structure in database.php</li>
+                <li><strong>Replace deprecated functions:</strong></li>
+            </ol>
+
+            <h3>Deprecated Functions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// CI2: XSS Clean
+$clean = $this->security->xss_clean($data);
+
+// CI3: Use PHP's htmlspecialchars instead
+$clean = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+
+// CI2: SHA1
+$hash = sha1($password);
+
+// CI3: Use password_hash
+$hash = password_hash($password, PASSWORD_DEFAULT);</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Migration Tip:</strong> Test thoroughly after migration. Focus on database queries, session handling, and security functions.
+            </div>
+        </section>
+
+        <!-- Migration CI3 to CI4 -->
+        <section id="migration-ci3-ci4" class="topic-section">
+            <h2>14. Migration from CI3 to CI4</h2>
+
+            <h3>Major Architectural Changes</h3>
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>CI3</th>
+                    <th>CI4</th>
+                </tr>
+                <tr>
+                    <td>PHP Version</td>
+                    <td>5.3.7+</td>
+                    <td>7.4+ (8.0+ recommended)</td>
+                </tr>
+                <tr>
+                    <td>Directory Structure</td>
+                    <td>application/</td>
+                    <td>app/</td>
+                </tr>
+                <tr>
+                    <td>Namespace</td>
+                    <td>Not required</td>
+                    <td>Required (PSR-4)</td>
+                </tr>
+                <tr>
+                    <td>Autoloading</td>
+                    <td>Manual loading</td>
+                    <td>Composer autoloader</td>
+                </tr>
+                <tr>
+                    <td>Models</td>
+                    <td>Basic</td>
+                    <td>Feature-rich with validation</td>
+                </tr>
+                <tr>
+                    <td>Hooks</td>
+                    <td>Hooks system</td>
+                    <td>Filters (before/after)</td>
+                </tr>
+            </table>
+
+            <h3>Step-by-Step Migration Strategy</h3>
+            <ol>
+                <li><strong>Fresh Install:</strong> Install CI4 in a new directory</li>
+                <li><strong>Update PHP:</strong> Ensure PHP 7.4+ is available</li>
+                <li><strong>Migrate Configuration:</strong> Port settings to new config files</li>
+                <li><strong>Add Namespaces:</strong> Add namespace declarations to all classes</li>
+                <li><strong>Migrate Controllers:</strong> Update to use CI4 syntax</li>
+                <li><strong>Migrate Models:</strong> Extend CodeIgniter\\Model</li>
+                <li><strong>Update Routes:</strong> Use new routing syntax</li>
+                <li><strong>Migrate Views:</strong> Minimal changes required</li>
+                <li><strong>Convert Hooks to Filters:</strong> Rewrite hook logic</li>
+                <li><strong>Update Database Queries:</strong> Use new query builder syntax</li>
+                <li><strong>Test Thoroughly:</strong> Test all functionality</li>
+            </ol>
+
+            <h3>Controller Migration</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// CI3: application/controllers/Users.php
+class Users extends CI_Controller {
+    public function index() {
+        $this->load->model('user_model');
+        $data['users'] = $this->user_model->get_users();
+        $this->load->view('users/index', $data);
+    }
+}
+
+// CI4: app/Controllers/Users.php
+namespace App\\Controllers;
+
+use App\\Models\\UserModel;
+
+class Users extends BaseController {
+    public function index() {
+        $model = new UserModel();
+        $data['users'] = $model->findAll();
+        return view('users/index', $data);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Model Migration</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// CI3: application/models/User_model.php
+class User_model extends CI_Model {
+    public function get_users() {
+        return $this->db->get('users')->result();
+    }
+}
+
+// CI4: app/Models/UserModel.php
+namespace App\\Models;
+
+use CodeIgniter\\Model;
+
+class UserModel extends Model {
+    protected $table = 'users';
+    protected $allowedFields = ['name', 'email'];
+    protected $returnType = 'array';
+    
+    // findAll() is built-in
+}</code></pre>
+            </div>
+
+            <h3>Route Migration</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+// CI3: application/config/routes.php
+$route['default_controller'] = 'welcome';
+$route['users'] = 'users/index';
+$route['users/(:num)'] = 'users/show/$1';
+
+// CI4: app/Config/Routes.php
+$routes->setDefaultController('Home');
+$routes->get('/', 'Home::index');
+$routes->get('users', 'Users::index');
+$routes->get('users/(:num)', 'Users::show/$1');</code></pre>
+            </div>
+
+            <h3>Key Differences Summary</h3>
+            <ul>
+                <li><strong>Namespaces:</strong> Required in CI4, optional in CI3</li>
+                <li><strong>Autoloading:</strong> Composer-based in CI4</li>
+                <li><strong>View Rendering:</strong> return view() instead of $this->load->view()</li>
+                <li><strong>Models:</strong> Much more powerful with built-in features</li>
+                <li><strong>Request/Response:</strong> Proper HTTP message interfaces</li>
+                <li><strong>Filters:</strong> Replace hooks with better architecture</li>
+                <li><strong>Environment:</strong> Better .env file support</li>
+                <li><strong>CLI:</strong> Improved command-line tools</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> CI4 is a complete rewrite, not a drop-in replacement. Plan for significant refactoring time and thorough testing.
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Migrate incrementally. Start with models and controllers, test thoroughly, then move to more complex features. Consider keeping CI3 and CI4 running in parallel during migration.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Created for CodeIgniter interview preparation | Covers CI2, CI3, and CI4</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
