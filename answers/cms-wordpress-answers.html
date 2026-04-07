@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordPress CMS - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #21759b 0%, #0073aa 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #21759b;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #1e6a8d;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #21759b;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #0073aa;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #21759b;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #21759b;
+        }
+        .topic-section h3 {
+            color: #0073aa;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #21759b;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📝 WordPress CMS</h1>
+        <p>Comprehensive answers covering architecture, themes, plugins, hooks, custom post types, and more</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#architecture">1. WordPress Architecture</a></li>
+                <li><a href="#theme-development">2. Theme Development</a></li>
+                <li><a href="#plugin-development">3. Plugin Development</a></li>
+                <li><a href="#hooks">4. Hooks (Actions & Filters)</a></li>
+                <li><a href="#custom-post-types">5. Custom Post Types</a></li>
+                <li><a href="#taxonomy">6. Taxonomy</a></li>
+                <li><a href="#template-hierarchy">7. Template Hierarchy</a></li>
+                <li><a href="#rest-api">8. WordPress REST API</a></li>
+                <li><a href="#database">9. Database Structure</a></li>
+                <li><a href="#security">10. Security Best Practices</a></li>
+                <li><a href="#optimization">11. Performance Optimization</a></li>
+                <li><a href="#multisite">12. WordPress Multisite</a></li>
+                <li><a href="#child-themes">13. Child Themes</a></li>
+                <li><a href="#enqueuing">14. Enqueuing Scripts & Styles</a></li>
+            </ul>
+        </div>
+
+        <section id="architecture" class="topic-section">
+            <h2>1. WordPress Architecture</h2>
+            
+            <h3>Core Architecture Components</h3>
+            <p>WordPress follows a layered architecture with clear separation between core, themes, and plugins.</p>
+            
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Purpose</th>
+                    <th>Location</th>
+                </tr>
+                <tr>
+                    <td><strong>Core</strong></td>
+                    <td>WordPress core files - should not be modified</td>
+                    <td>wp-admin/, wp-includes/</td>
+                </tr>
+                <tr>
+                    <td><strong>Themes</strong></td>
+                    <td>Presentation layer and templates</td>
+                    <td>wp-content/themes/</td>
+                </tr>
+                <tr>
+                    <td><strong>Plugins</strong></td>
+                    <td>Extended functionality</td>
+                    <td>wp-content/plugins/</td>
+                </tr>
+                <tr>
+                    <td><strong>Uploads</strong></td>
+                    <td>Media and uploaded files</td>
+                    <td>wp-content/uploads/</td>
+                </tr>
+            </table>
+
+            <h3>Directory Structure</h3>
+            <div class="code-example">
+                <pre><code>wordpress/
+├── wp-admin/              # Administration area
+├── wp-includes/           # Core library files
+├── wp-content/
+│   ├── themes/            # Theme files
+│   ├── plugins/           # Plugin files
+│   ├── uploads/           # Media uploads
+│   └── mu-plugins/        # Must-use plugins
+├── wp-config.php          # Configuration file
+├── index.php              # Entry point
+└── .htaccess              # Apache configuration</code></pre>
+            </div>
+
+            <h3>wp-config.php Configuration</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Database configuration
+define('DB_NAME', 'database_name');
+define('DB_USER', 'database_user');
+define('DB_PASSWORD', 'database_password');
+define('DB_HOST', 'localhost');
+define('DB_CHARSET', 'utf8mb4');
+define('DB_COLLATE', '');
+
+// Authentication unique keys and salts
+define('AUTH_KEY',         'put your unique phrase here');
+define('SECURE_AUTH_KEY',  'put your unique phrase here');
+define('LOGGED_IN_KEY',    'put your unique phrase here');
+define('NONCE_KEY',        'put your unique phrase here');
+
+// Database table prefix
+$table_prefix = 'wp_';
+
+// WordPress debugging mode
+define('WP_DEBUG', false);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
+
+// Memory limits
+define('WP_MEMORY_LIMIT', '256M');
+define('WP_MAX_MEMORY_LIMIT', '512M');
+
+// Disable file editing
+define('DISALLOW_FILE_EDIT', true);</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Key Principle:</strong> WordPress uses a hook-based architecture allowing themes and plugins to modify core behavior without editing core files.
+            </div>
+        </section>
+
+        <section id="theme-development" class="topic-section">
+            <h2>2. Theme Development</h2>
+
+            <h3>Required Theme Files</h3>
+            <p>A WordPress theme requires at minimum two files:</p>
+            
+            <h4>style.css</h4>
+            <div class="code-example">
+                <pre><code class="language-css">/*
+Theme Name: My Awesome Theme
+Theme URI: https://example.com/my-theme
+Author: Your Name
+Author URI: https://example.com
+Description: A custom WordPress theme
+Version: 1.0.0
+License: GNU General Public License v2 or later
+Text Domain: my-theme
+Tags: blog, custom-menu, featured-images
+*/</code></pre>
+            </div>
+
+            <h3>functions.php - Theme Setup</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function mytheme_setup() {
+    add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+    add_theme_support('custom-logo');
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+    ));
+    
+    register_nav_menus(array(
+        'primary' => __('Primary Menu', 'my-theme'),
+        'footer'  => __('Footer Menu', 'my-theme'),
+    ));
+}
+add_action('after_setup_theme', 'mytheme_setup');</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Always use WordPress template tags and functions instead of direct database queries.
+            </div>
+        </section>
+
+        <section id="plugin-development" class="topic-section">
+            <h2>3. Plugin Development</h2>
+
+            <h3>Basic Plugin Structure</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+/**
+ * Plugin Name: My Custom Plugin
+ * Description: A custom WordPress plugin
+ * Version: 1.0.0
+ * Author: Your Name
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+define('MY_PLUGIN_VERSION', '1.0.0');
+define('MY_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('MY_PLUGIN_URL', plugin_dir_url(__FILE__));
+
+register_activation_hook(__FILE__, 'my_plugin_activate');
+function my_plugin_activate() {
+    // Activation code
+}
+
+register_deactivation_hook(__FILE__, 'my_plugin_deactivate');
+function my_plugin_deactivate() {
+    // Deactivation code
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Security:</strong> Always sanitize input, escape output, and validate all user actions.
+            </div>
+        </section>
+
+        <section id="hooks" class="topic-section">
+            <h2>4. Hooks (Actions & Filters)</h2>
+
+            <h3>Action Hooks</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function my_custom_function() {
+    echo '&lt;p>Custom content&lt;/p>';
+}
+add_action('wp_footer', 'my_custom_function');
+
+// Common actions
+add_action('init', 'my_init_function');
+add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
+add_action('save_post', 'my_save_post_function');
+add_action('admin_menu', 'my_admin_menu');</code></pre>
+            </div>
+
+            <h3>Filter Hooks</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function modify_title($title) {
+    return $title . ' - Modified';
+}
+add_filter('the_title', 'modify_title');
+
+function custom_excerpt_length($length) {
+    return 50;
+}
+add_filter('excerpt_length', 'custom_excerpt_length');</code></pre>
+            </div>
+        </section>
+
+        <section id="custom-post-types" class="topic-section">
+            <h2>5. Custom Post Types</h2>
+
+            <h3>Registering Custom Post Types</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function register_book_post_type() {
+    $args = array(
+        'labels' => array(
+            'name' => 'Books',
+            'singular_name' => 'Book',
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'menu_icon' => 'dashicons-book',
+        'supports' => array('title', 'editor', 'thumbnail'),
+        'show_in_rest' => true,
+    );
+    
+    register_post_type('book', $args);
+}
+add_action('init', 'register_book_post_type');</code></pre>
+            </div>
+        </section>
+
+        <section id="taxonomy" class="topic-section">
+            <h2>6. Taxonomy</h2>
+
+            <h3>Registering Custom Taxonomies</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function register_genre_taxonomy() {
+    $args = array(
+        'hierarchical' => true,
+        'labels' => array(
+            'name' => 'Genres',
+            'singular_name' => 'Genre',
+        ),
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'genre'),
+    );
+    
+    register_taxonomy('genre', array('book'), $args);
+}
+add_action('init', 'register_genre_taxonomy');</code></pre>
+            </div>
+        </section>
+
+        <section id="template-hierarchy" class="topic-section">
+            <h2>7. Template Hierarchy</h2>
+
+            <h3>Template Loading Order</h3>
+            <div class="code-example">
+                <pre><code>Single Post:
+1. single-{post-type}-{slug}.php
+2. single-{post-type}.php
+3. single.php
+4. singular.php
+5. index.php
+
+Page:
+1. page-{slug}.php
+2. page-{id}.php
+3. page.php
+4. singular.php
+5. index.php</code></pre>
+            </div>
+        </section>
+
+        <section id="rest-api" class="topic-section">
+            <h2>8. WordPress REST API</h2>
+
+            <h3>Default Endpoints</h3>
+            <div class="code-example">
+                <pre><code>GET /wp-json/wp/v2/posts
+GET /wp-json/wp/v2/posts/{id}
+POST /wp-json/wp/v2/posts
+PUT /wp-json/wp/v2/posts/{id}
+DELETE /wp-json/wp/v2/posts/{id}</code></pre>
+            </div>
+
+            <h3>Custom REST Endpoint</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+add_action('rest_api_init', function () {
+    register_rest_route('myplugin/v1', '/books', array(
+        'methods' => 'GET',
+        'callback' => 'get_books',
+        'permission_callback' => '__return_true'
+    ));
+});
+
+function get_books() {
+    $books = get_posts(array('post_type' => 'book'));
+    return rest_ensure_response($books);
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="database" class="topic-section">
+            <h2>9. Database Structure</h2>
+
+            <h3>Core Database Tables</h3>
+            <table>
+                <tr>
+                    <th>Table</th>
+                    <th>Purpose</th>
+                </tr>
+                <tr>
+                    <td>wp_posts</td>
+                    <td>Posts, pages, custom post types</td>
+                </tr>
+                <tr>
+                    <td>wp_postmeta</td>
+                    <td>Post metadata</td>
+                </tr>
+                <tr>
+                    <td>wp_users</td>
+                    <td>User data</td>
+                </tr>
+                <tr>
+                    <td>wp_usermeta</td>
+                    <td>User metadata</td>
+                </tr>
+                <tr>
+                    <td>wp_terms</td>
+                    <td>Categories, tags, taxonomies</td>
+                </tr>
+                <tr>
+                    <td>wp_term_taxonomy</td>
+                    <td>Taxonomy associations</td>
+                </tr>
+                <tr>
+                    <td>wp_term_relationships</td>
+                    <td>Post-term relationships</td>
+                </tr>
+                <tr>
+                    <td>wp_comments</td>
+                    <td>Comments data</td>
+                </tr>
+                <tr>
+                    <td>wp_options</td>
+                    <td>Site settings and options</td>
+                </tr>
+            </table>
+
+            <h3>Using $wpdb</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+global $wpdb;
+
+// Get results
+$results = $wpdb->get_results("SELECT * FROM {$wpdb->posts} WHERE post_type = 'book'");
+
+// Get single row
+$post = $wpdb->get_row("SELECT * FROM {$wpdb->posts} WHERE ID = 1");
+
+// Get single value
+$count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->posts}");
+
+// Insert data
+$wpdb->insert(
+    $wpdb->prefix . 'my_table',
+    array('name' => 'John', 'email' => 'john@example.com'),
+    array('%s', '%s')
+);</code></pre>
+            </div>
+        </section>
+
+        <section id="security" class="topic-section">
+            <h2>10. Security Best Practices</h2>
+
+            <h3>Sanitization and Validation</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Sanitize text input
+$clean_text = sanitize_text_field($_POST['field']);
+
+// Sanitize email
+$clean_email = sanitize_email($_POST['email']);
+
+// Sanitize URL
+$clean_url = esc_url($_POST['url']);
+
+// Sanitize HTML
+$clean_html = wp_kses_post($_POST['content']);
+
+// Escape output
+echo esc_html($user_input);
+echo esc_attr($attribute);
+echo esc_url($url);
+echo esc_js($javascript);</code></pre>
+            </div>
+
+            <h3>Nonces</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Create nonce
+wp_nonce_field('my_action', 'my_nonce');
+
+// Verify nonce
+if (!isset($_POST['my_nonce']) || !wp_verify_nonce($_POST['my_nonce'], 'my_action')) {
+    die('Security check failed');
+}</code></pre>
+            </div>
+
+            <h3>User Capabilities</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Check capabilities
+if (current_user_can('manage_options')) {
+    // Admin only code
+}
+
+if (current_user_can('edit_posts')) {
+    // Editor/Author code
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="optimization" class="topic-section">
+            <h2>11. Performance Optimization</h2>
+
+            <h3>Caching</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Transient API
+set_transient('my_data', $data, 12 * HOUR_IN_SECONDS);
+$data = get_transient('my_data');
+delete_transient('my_data');
+
+// Object caching
+wp_cache_set('key', $data, 'group', 3600);
+$data = wp_cache_get('key', 'group');
+wp_cache_delete('key', 'group');</code></pre>
+            </div>
+
+            <h3>Database Query Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Use WP_Query efficiently
+$args = array(
+    'post_type' => 'post',
+    'posts_per_page' => 10,
+    'no_found_rows' => true,  // Skip pagination count
+    'update_post_meta_cache' => false,  // Skip if not needed
+    'update_post_term_cache' => false,  // Skip if not needed
+);
+
+// Cache query results
+$cache_key = 'recent_posts_' . md5(serialize($args));
+$posts = wp_cache_get($cache_key);
+if (false === $posts) {
+    $query = new WP_Query($args);
+    $posts = $query->posts;
+    wp_cache_set($cache_key, $posts, '', 3600);
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="multisite" class="topic-section">
+            <h2>12. WordPress Multisite</h2>
+
+            <h3>Enable Multisite</h3>
+            <div class="code-example">
+                <pre><code class="language-php">// Add to wp-config.php
+define('WP_ALLOW_MULTISITE', true);
+
+// After network setup
+define('MULTISITE', true);
+define('SUBDOMAIN_INSTALL', false);
+define('DOMAIN_CURRENT_SITE', 'example.com');
+define('PATH_CURRENT_SITE', '/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);</code></pre>
+            </div>
+
+            <h3>Multisite Functions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Switch to another site
+switch_to_blog(2);
+// Do something
+restore_current_blog();
+
+// Get all sites
+$sites = get_sites();
+
+// Check if multisite
+if (is_multisite()) {
+    // Multisite specific code
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="child-themes" class="topic-section">
+            <h2>13. Child Themes</h2>
+
+            <h3>Creating a Child Theme</h3>
+            <div class="code-example">
+                <pre><code class="language-css">/* style.css */
+/*
+Theme Name: My Child Theme
+Template: parent-theme-folder
+Version: 1.0.0
+*/</code></pre>
+            </div>
+
+            <h3>functions.php</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function my_child_theme_enqueue_styles() {
+    wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
+    wp_enqueue_style('child-style',
+        get_stylesheet_directory_uri() . '/style.css',
+        array('parent-style')
+    );
+}
+add_action('wp_enqueue_scripts', 'my_child_theme_enqueue_styles');</code></pre>
+            </div>
+        </section>
+
+        <section id="enqueuing" class="topic-section">
+            <h2>14. Enqueuing Scripts & Styles</h2>
+
+            <h3>Enqueue Styles</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function mytheme_enqueue_styles() {
+    wp_enqueue_style('main-style', get_stylesheet_uri());
+    
+    wp_enqueue_style(
+        'custom-style',
+        get_template_directory_uri() . '/css/custom.css',
+        array('main-style'),
+        '1.0.0',
+        'all'
+    );
+}
+add_action('wp_enqueue_scripts', 'mytheme_enqueue_styles');</code></pre>
+            </div>
+
+            <h3>Enqueue Scripts</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+function mytheme_enqueue_scripts() {
+    wp_enqueue_script(
+        'custom-script',
+        get_template_directory_uri() . '/js/custom.js',
+        array('jquery'),
+        '1.0.0',
+        true  // Load in footer
+    );
+    
+    // Localize script
+    wp_localize_script('custom-script', 'myAjax', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('my-nonce')
+    ));
+}
+add_action('wp_enqueue_scripts', 'mytheme_enqueue_scripts');</code></pre>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>📚 WordPress CMS Comprehensive Guide | All code examples follow WordPress coding standards</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
