@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOP & Design Patterns - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #764ba2;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .topic-section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎯 OOP & Design Patterns</h1>
+        <p>Comprehensive guide to Object-Oriented Programming principles and design patterns</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#encapsulation">1. Encapsulation</a></li>
+                <li><a href="#abstraction">2. Abstraction</a></li>
+                <li><a href="#inheritance">3. Inheritance</a></li>
+                <li><a href="#polymorphism">4. Polymorphism</a></li>
+                <li><a href="#solid-single-responsibility">5. SOLID: Single Responsibility</a></li>
+                <li><a href="#solid-open-closed">6. SOLID: Open/Closed</a></li>
+                <li><a href="#solid-liskov">7. SOLID: Liskov Substitution</a></li>
+                <li><a href="#solid-interface-segregation">8. SOLID: Interface Segregation</a></li>
+                <li><a href="#solid-dependency-inversion">9. SOLID: Dependency Inversion</a></li>
+                <li><a href="#singleton">10. Singleton Pattern</a></li>
+                <li><a href="#factory">11. Factory Pattern</a></li>
+                <li><a href="#repository">12. Repository Pattern</a></li>
+                <li><a href="#observer">13. Observer Pattern</a></li>
+                <li><a href="#abstract-vs-interface">14. Abstract Classes vs Interfaces</a></li>
+                <li><a href="#overloading-overriding">15. Method Overloading & Overriding</a></li>
+                <li><a href="#static">16. Static Methods & Classes</a></li>
+                <li><a href="#final">17. Final Keyword</a></li>
+                <li><a href="#dependency-injection">18. Dependency Injection</a></li>
+            </ul>
+        </div>
+
+        <section id="encapsulation" class="topic-section">
+            <h2>1. Encapsulation</h2>
+            
+            <h3>What is Encapsulation?</h3>
+            <p>Encapsulation is the bundling of data (properties) and methods that operate on that data within a single unit (class), while restricting direct access to some components. It's about hiding internal implementation details and exposing only what's necessary through a public interface.</p>
+            
+            <h3>Key Benefits</h3>
+            <ul>
+                <li><strong>Data Protection:</strong> Prevents unauthorized or unintended access to internal state</li>
+                <li><strong>Flexibility:</strong> Internal implementation can change without affecting external code</li>
+                <li><strong>Maintainability:</strong> Reduces coupling between components</li>
+                <li><strong>Validation:</strong> Control how data is accessed and modified</li>
+            </ul>
+
+            <h3>Implementation Example</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class BankAccount {
+    private float $balance;
+    private string $accountNumber;
+    private array $transactionHistory = [];
+    
+    public function __construct(string $accountNumber, float $initialBalance = 0) {
+        $this->accountNumber = $accountNumber;
+        $this->balance = $initialBalance;
+        $this->logTransaction('Account opened', $initialBalance);
+    }
+    
+    public function deposit(float $amount): void {
+        if ($amount <= 0) {
+            throw new InvalidArgumentException("Deposit amount must be positive");
+        }
+        
+        $this->balance += $amount;
+        $this->logTransaction('Deposit', $amount);
+    }
+    
+    public function withdraw(float $amount): void {
+        if ($amount <= 0) {
+            throw new InvalidArgumentException("Withdrawal amount must be positive");
+        }
+        
+        if ($amount > $this->balance) {
+            throw new RuntimeException("Insufficient funds");
+        }
+        
+        $this->balance -= $amount;
+        $this->logTransaction('Withdrawal', -$amount);
+    }
+    
+    public function getBalance(): float {
+        return $this->balance;
+    }
+    
+    public function getAccountNumber(): string {
+        return $this->accountNumber;
+    }
+    
+    public function getTransactionHistory(): array {
+        return $this->transactionHistory;
+    }
+    
+    private function logTransaction(string $type, float $amount): void {
+        $this->transactionHistory[] = [
+            'type' => $type,
+            'amount' => $amount,
+            'balance' => $this->balance,
+            'timestamp' => new DateTime()
+        ];
+    }
+}
+
+$account = new BankAccount('ACC-12345', 1000);
+$account->deposit(500);
+$account->withdraw(200);
+echo "Balance: $" . $account->getBalance();
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Always use private or protected for properties and expose public methods (getters/setters) only when necessary. This gives you control over data access and validation.
+            </div>
+        </section>
+
+        <section id="abstraction" class="topic-section">
+            <h2>2. Abstraction</h2>
+            
+            <h3>What is Abstraction?</h3>
+            <p>Abstraction is the process of hiding complex implementation details and showing only essential features of an object. It focuses on what an object does rather than how it does it.</p>
+            
+            <h3>Abstract Classes</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+abstract class PaymentGateway {
+    protected string $apiKey;
+    protected bool $testMode;
+    
+    public function __construct(string $apiKey, bool $testMode = false) {
+        $this->apiKey = $apiKey;
+        $this->testMode = $testMode;
+    }
+    
+    abstract public function processPayment(float $amount, array $data): array;
+    abstract public function refund(string $transactionId, float $amount): array;
+    abstract public function validateCredentials(): bool;
+    
+    public function log(string $message): void {
+        $mode = $this->testMode ? 'TEST' : 'LIVE';
+        error_log("[$mode] " . static::class . ": $message");
+    }
+    
+    protected function generateTransactionId(): string {
+        return uniqid('txn_', true);
+    }
+}
+
+class StripeGateway extends PaymentGateway {
+    public function processPayment(float $amount, array $data): array {
+        $this->log("Processing payment of $$amount via Stripe");
+        
+        return [
+            'success' => true,
+            'transaction_id' => $this->generateTransactionId(),
+            'amount' => $amount,
+            'gateway' => 'stripe'
+        ];
+    }
+    
+    public function refund(string $transactionId, float $amount): array {
+        $this->log("Refunding $$amount for transaction $transactionId");
+        
+        return [
+            'success' => true,
+            'refund_id' => $this->generateTransactionId(),
+            'amount' => $amount
+        ];
+    }
+    
+    public function validateCredentials(): bool {
+        return strlen($this->apiKey) > 0 && str_starts_with($this->apiKey, 'sk_');
+    }
+}
+
+function makePayment(PaymentGateway $gateway, float $amount, array $data): void {
+    if (!$gateway->validateCredentials()) {
+        throw new Exception("Invalid gateway credentials");
+    }
+    
+    $result = $gateway->processPayment($amount, $data);
+    
+    if ($result['success']) {
+        echo "Payment successful: {$result['transaction_id']}\n";
+    }
+}
+
+$stripe = new StripeGateway('sk_test_123', true);
+makePayment($stripe, 100.00, ['card' => '4242424242424242']);
+?&gt;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Key Takeaway:</strong> Abstraction allows you to define a contract (what must be done) without specifying the implementation (how it's done). This makes your code flexible and easier to extend.
+            </div>
+        </section>
+
+        <section id="inheritance" class="topic-section">
+            <h2>3. Inheritance</h2>
+            
+            <h3>What is Inheritance?</h3>
+            <p>Inheritance is a mechanism where a new class (child/derived) inherits properties and methods from an existing class (parent/base). It promotes code reuse and establishes a relationship between classes.</p>
+            
+            <h3>Basic Inheritance</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Employee {
+    protected string $name;
+    protected string $email;
+    protected float $salary;
+    
+    public function __construct(string $name, string $email, float $salary) {
+        $this->name = $name;
+        $this->email = $email;
+        $this->salary = $salary;
+    }
+    
+    public function getName(): string {
+        return $this->name;
+    }
+    
+    public function getSalary(): float {
+        return $this->salary;
+    }
+    
+    public function calculateBonus(): float {
+        return $this->salary * 0.05;
+    }
+}
+
+class Manager extends Employee {
+    private array $team = [];
+    private string $department;
+    
+    public function __construct(string $name, string $email, float $salary, string $department) {
+        parent::__construct($name, $email, $salary);
+        $this->department = $department;
+    }
+    
+    public function addTeamMember(Employee $employee): void {
+        $this->team[] = $employee;
+    }
+    
+    public function getTeamSize(): int {
+        return count($this->team);
+    }
+    
+    public function calculateBonus(): float {
+        $baseBonus = parent::calculateBonus();
+        $teamBonus = $this->getTeamSize() * 500;
+        return $baseBonus + $teamBonus;
+    }
+}
+
+$employee = new Employee('John Doe', 'john@example.com', 50000);
+echo "Employee bonus: $" . $employee->calculateBonus() . "\n";
+
+$manager = new Manager('Jane Smith', 'jane@example.com', 80000, 'Engineering');
+$manager->addTeamMember($employee);
+echo "Manager bonus: $" . $manager->calculateBonus() . "\n";
+?&gt;</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Caution:</strong> Favor composition over inheritance when possible. Deep inheritance hierarchies can become difficult to maintain. Use inheritance when there's a true "is-a" relationship.
+            </div>
+        </section>
+
+        <section id="polymorphism" class="topic-section">
+            <h2>4. Polymorphism</h2>
+            
+            <h3>What is Polymorphism?</h3>
+            <p>Polymorphism means "many forms". It allows objects of different classes to be treated as objects of a common parent class or interface. The same method call can produce different behaviors depending on the object type.</p>
+            
+            <h3>Interface-Based Polymorphism</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface Shape {
+    public function calculateArea(): float;
+    public function calculatePerimeter(): float;
+    public function getName(): string;
+}
+
+class Circle implements Shape {
+    private float $radius;
+    
+    public function __construct(float $radius) {
+        $this->radius = $radius;
+    }
+    
+    public function calculateArea(): float {
+        return pi() * $this->radius ** 2;
+    }
+    
+    public function calculatePerimeter(): float {
+        return 2 * pi() * $this->radius;
+    }
+    
+    public function getName(): string {
+        return "Circle";
+    }
+}
+
+class Rectangle implements Shape {
+    private float $width;
+    private float $height;
+    
+    public function __construct(float $width, float $height) {
+        $this->width = $width;
+        $this->height = $height;
+    }
+    
+    public function calculateArea(): float {
+        return $this->width * $this->height;
+    }
+    
+    public function calculatePerimeter(): float {
+        return 2 * ($this->width + $this->height);
+    }
+    
+    public function getName(): string {
+        return "Rectangle";
+    }
+}
+
+function printShapeInfo(Shape $shape): void {
+    echo "Shape: {$shape->getName()}\n";
+    echo "Area: " . number_format($shape->calculateArea(), 2) . "\n";
+    echo "Perimeter: " . number_format($shape->calculatePerimeter(), 2) . "\n";
+}
+
+function calculateTotalArea(array $shapes): float {
+    $total = 0;
+    foreach ($shapes as $shape) {
+        if ($shape instanceof Shape) {
+            $total += $shape->calculateArea();
+        }
+    }
+    return $total;
+}
+
+$shapes = [
+    new Circle(5),
+    new Rectangle(10, 5)
+];
+
+foreach ($shapes as $shape) {
+    printShapeInfo($shape);
+}
+
+echo "Total area: " . calculateTotalArea($shapes) . "\n";
+?&gt;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Key Benefit:</strong> Polymorphism allows you to write code that works with interfaces rather than concrete implementations, making your code more flexible and extensible.
+            </div>
+        </section>
+
+        <section id="solid-single-responsibility" class="topic-section">
+            <h2>5. SOLID: Single Responsibility Principle (SRP)</h2>
+            
+            <h3>What is SRP?</h3>
+            <p>A class should have only one reason to change, meaning it should have only one job or responsibility. Each class should focus on doing one thing well.</p>
+            
+            <h3>Good Example: Single Responsibility</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class User {
+    private string $name;
+    private string $email;
+    
+    public function __construct(string $name, string $email) {
+        $this->name = $name;
+        $this->email = $email;
+    }
+    
+    public function getName(): string {
+        return $this->name;
+    }
+    
+    public function getEmail(): string {
+        return $this->email;
+    }
+}
+
+class UserRepository {
+    private PDO $connection;
+    
+    public function __construct(PDO $connection) {
+        $this->connection = $connection;
+    }
+    
+    public function save(User $user): void {
+        $stmt = $this->connection->prepare(
+            'INSERT INTO users (name, email) VALUES (?, ?)'
+        );
+        $stmt->execute([$user->getName(), $user->getEmail()]);
+    }
+    
+    public function findByEmail(string $email): ?User {
+        $stmt = $this->connection->prepare('SELECT * FROM users WHERE email = ?');
+        $stmt->execute([$email]);
+        $data = $stmt->fetch();
+        
+        return $data ? new User($data['name'], $data['email']) : null;
+    }
+}
+
+class UserValidator {
+    public function validate(User $user): bool {
+        return $this->isValidEmail($user->getEmail()) && 
+               $this->isValidName($user->getName());
+    }
+    
+    private function isValidEmail(string $email): bool {
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+    
+    private function isValidName(string $name): bool {
+        return !empty($name) && strlen($name) >= 2;
+    }
+}
+
+class EmailService {
+    private string $smtpHost;
+    
+    public function __construct(string $smtpHost) {
+        $this->smtpHost = $smtpHost;
+    }
+    
+    public function sendWelcomeEmail(User $user): void {
+        $to = $user->getEmail();
+        $subject = 'Welcome!';
+        $message = "Hello {$user->getName()}, welcome to our application!";
+        
+        mail($to, $subject, $message);
+    }
+}
+
+$pdo = new PDO('mysql:host=localhost;dbname=app', 'root', 'password');
+$user = new User('John Doe', 'john@example.com');
+
+$validator = new UserValidator();
+if ($validator->validate($user)) {
+    $repository = new UserRepository($pdo);
+    $repository->save($user);
+    
+    $emailService = new EmailService('smtp.example.com');
+    $emailService->sendWelcomeEmail($user);
+}
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Benefits of SRP:</strong>
+                <ul>
+                    <li>Easier to understand and maintain</li>
+                    <li>Easier to test (each class has focused tests)</li>
+                    <li>Reduces coupling between components</li>
+                    <li>Changes to one responsibility don't affect others</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="solid-open-closed" class="topic-section">
+            <h2>6. SOLID: Open/Closed Principle (OCP)</h2>
+            
+            <h3>What is OCP?</h3>
+            <p>Software entities should be open for extension but closed for modification. You should be able to add new functionality without changing existing code.</p>
+            
+            <h3>Good Example: Follows OCP</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface DiscountStrategy {
+    public function calculate(float $amount): float;
+    public function getName(): string;
+}
+
+class PercentageDiscount implements DiscountStrategy {
+    private float $percentage;
+    
+    public function __construct(float $percentage) {
+        $this->percentage = $percentage;
+    }
+    
+    public function calculate(float $amount): float {
+        return $amount * ($this->percentage / 100);
+    }
+    
+    public function getName(): string {
+        return "Percentage Discount ({$this->percentage}%)";
+    }
+}
+
+class FixedDiscount implements DiscountStrategy {
+    private float $discount;
+    
+    public function __construct(float $discount) {
+        $this->discount = $discount;
+    }
+    
+    public function calculate(float $amount): float {
+        return min($this->discount, $amount);
+    }
+    
+    public function getName(): string {
+        return "Fixed Discount ($" . $this->discount . ")";
+    }
+}
+
+class LoyaltyDiscount implements DiscountStrategy {
+    private int $yearsAsCustomer;
+    
+    public function __construct(int $yearsAsCustomer) {
+        $this->yearsAsCustomer = $yearsAsCustomer;
+    }
+    
+    public function calculate(float $amount): float {
+        $discountPercent = min($this->yearsAsCustomer * 2, 20);
+        return $amount * ($discountPercent / 100);
+    }
+    
+    public function getName(): string {
+        return "Loyalty Discount";
+    }
+}
+
+class Order {
+    private float $amount;
+    private ?DiscountStrategy $discount = null;
+    
+    public function __construct(float $amount) {
+        $this->amount = $amount;
+    }
+    
+    public function applyDiscount(DiscountStrategy $discount): void {
+        $this->discount = $discount;
+    }
+    
+    public function getTotal(): float {
+        $discount = $this->discount ? $this->discount->calculate($this->amount) : 0;
+        return max(0, $this->amount - $discount);
+    }
+}
+
+$order = new Order(100);
+$order->applyDiscount(new PercentageDiscount(15));
+echo "Total: $" . $order->getTotal() . "\n";
+
+$order->applyDiscount(new LoyaltyDiscount(5));
+echo "Total: $" . $order->getTotal() . "\n";
+?&gt;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Key Benefit:</strong> By using interfaces and polymorphism, you can add new functionality by creating new classes instead of modifying existing ones, reducing the risk of introducing bugs.
+            </div>
+        </section>
+
+        <section id="solid-liskov" class="topic-section">
+            <h2>7. SOLID: Liskov Substitution Principle (LSP)</h2>
+            
+            <h3>What is LSP?</h3>
+            <p>Objects of a superclass should be replaceable with objects of a subclass without breaking the application. Subclasses should extend parent behavior, not replace or remove it.</p>
+            
+            <h3>Good Example: Follows LSP</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface Shape {
+    public function getArea(): float;
+    public function getPerimeter(): float;
+}
+
+class Rectangle implements Shape {
+    private float $width;
+    private float $height;
+    
+    public function __construct(float $width, float $height) {
+        $this->width = $width;
+        $this->height = $height;
+    }
+    
+    public function getArea(): float {
+        return $this->width * $this->height;
+    }
+    
+    public function getPerimeter(): float {
+        return 2 * ($this->width + $this->height);
+    }
+}
+
+class Square implements Shape {
+    private float $side;
+    
+    public function __construct(float $side) {
+        $this->side = $side;
+    }
+    
+    public function getArea(): float {
+        return $this->side ** 2;
+    }
+    
+    public function getPerimeter(): float {
+        return 4 * $this->side;
+    }
+}
+
+function calculateTotalArea(array $shapes): float {
+    $total = 0;
+    foreach ($shapes as $shape) {
+        if ($shape instanceof Shape) {
+            $total += $shape->getArea();
+        }
+    }
+    return $total;
+}
+
+$shapes = [
+    new Rectangle(5, 10),
+    new Square(5)
+];
+
+echo "Total area: " . calculateTotalArea($shapes) . "\n";
+?&gt;</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Remember:</strong> If a subclass can't properly implement all methods of its parent, the inheritance relationship is likely wrong. Use interfaces to separate capabilities.
+            </div>
+        </section>
+
+        <section id="solid-interface-segregation" class="topic-section">
+            <h2>8. SOLID: Interface Segregation Principle (ISP)</h2>
+            
+            <h3>What is ISP?</h3>
+            <p>Clients should not be forced to depend on interfaces they don't use. It's better to have many specific interfaces than one general-purpose interface.</p>
+            
+            <h3>Good Example: Segregated Interfaces</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface Workable {
+    public function work(): void;
+}
+
+interface Eatable {
+    public function eat(): void;
+}
+
+interface Sleepable {
+    public function sleep(): void;
+}
+
+interface Payable {
+    public function getSalary(): float;
+    public function receivePayment(float $amount): void;
+}
+
+class HumanWorker implements Workable, Eatable, Sleepable, Payable {
+    private float $salary;
+    
+    public function __construct(float $salary) {
+        $this->salary = $salary;
+    }
+    
+    public function work(): void {
+        echo "Human working...\n";
+    }
+    
+    public function eat(): void {
+        echo "Human eating...\n";
+    }
+    
+    public function sleep(): void {
+        echo "Human sleeping...\n";
+    }
+    
+    public function getSalary(): float {
+        return $this->salary;
+    }
+    
+    public function receivePayment(float $amount): void {
+        echo "Received payment: $$amount\n";
+    }
+}
+
+class RobotWorker implements Workable {
+    public function work(): void {
+        echo "Robot working 24/7...\n";
+    }
+}
+
+class WorkManager {
+    public function manageWork(Workable $worker): void {
+        $worker->work();
+    }
+    
+    public function processPayroll(Payable $worker): void {
+        $salary = $worker->getSalary();
+        $worker->receivePayment($salary);
+    }
+    
+    public function scheduleBreak(Eatable $worker): void {
+        $worker->eat();
+    }
+}
+
+$human = new HumanWorker(5000);
+$robot = new RobotWorker();
+
+$manager = new WorkManager();
+$manager->manageWork($human);
+$manager->manageWork($robot);
+$manager->processPayroll($human);
+$manager->scheduleBreak($human);
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <section id="solid-dependency-inversion" class="topic-section">
+            <h2>9. SOLID: Dependency Inversion Principle (DIP)</h2>
+            
+            <h3>What is DIP?</h3>
+            <p>High-level modules should not depend on low-level modules. Both should depend on abstractions (interfaces).</p>
+            
+            <h3>Good Example: Depend on Abstractions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface DatabaseInterface {
+    public function connect(): void;
+    public function query(string $sql): array;
+    public function execute(string $sql): bool;
+}
+
+class MySQLDatabase implements DatabaseInterface {
+    private string $host;
+    
+    public function __construct(string $host) {
+        $this->host = $host;
+    }
+    
+    public function connect(): void {
+        echo "Connecting to MySQL at {$this->host}...\n";
+    }
+    
+    public function query(string $sql): array {
+        echo "Executing MySQL query: $sql\n";
+        return [];
+    }
+    
+    public function execute(string $sql): bool {
+        echo "Executing MySQL statement: $sql\n";
+        return true;
+    }
+}
+
+class PostgreSQLDatabase implements DatabaseInterface {
+    private string $connectionString;
+    
+    public function __construct(string $connectionString) {
+        $this->connectionString = $connectionString;
+    }
+    
+    public function connect(): void {
+        echo "Connecting to PostgreSQL...\n";
+    }
+    
+    public function query(string $sql): array {
+        echo "Executing PostgreSQL query: $sql\n";
+        return [];
+    }
+    
+    public function execute(string $sql): bool {
+        echo "Executing PostgreSQL statement: $sql\n";
+        return true;
+    }
+}
+
+class UserRepository {
+    private DatabaseInterface $database;
+    
+    public function __construct(DatabaseInterface $database) {
+        $this->database = $database;
+    }
+    
+    public function findAll(): array {
+        return $this->database->query('SELECT * FROM users');
+    }
+    
+    public function create(array $data): bool {
+        $sql = "INSERT INTO users (name, email) VALUES ('{$data['name']}', '{$data['email']}')";
+        return $this->database->execute($sql);
+    }
+}
+
+$mysqlDb = new MySQLDatabase('localhost');
+$postgresDb = new PostgreSQLDatabase('postgresql://localhost/myapp');
+
+$userRepo1 = new UserRepository($mysqlDb);
+$userRepo2 = new UserRepository($postgresDb);
+
+$userRepo1->findAll();
+$userRepo2->findAll();
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <section id="singleton" class="topic-section">
+            <h2>10. Singleton Pattern</h2>
+            
+            <h3>What is Singleton?</h3>
+            <p>The Singleton pattern ensures that a class has only one instance and provides a global point of access to it.</p>
+            
+            <h3>Implementation</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Database {
+    private static ?Database $instance = null;
+    private PDO $connection;
+    
+    private function __construct() {
+        $this->connection = new PDO(
+            'mysql:host=localhost;dbname=myapp',
+            'root',
+            'password'
+        );
+    }
+    
+    private function __clone() {}
+    
+    public function __wakeup() {
+        throw new Exception("Cannot unserialize singleton");
+    }
+    
+    public static function getInstance(): Database {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    public function getConnection(): PDO {
+        return $this->connection;
+    }
+    
+    public function query(string $sql): array {
+        $stmt = $this->connection->query($sql);
+        return $stmt->fetchAll();
+    }
+}
+
+$db1 = Database::getInstance();
+$db2 = Database::getInstance();
+
+var_dump($db1 === $db2);
+
+class Config {
+    private static ?Config $instance = null;
+    private array $settings = [];
+    
+    private function __construct() {
+        $this->settings = [
+            'app_name' => 'My Application',
+            'debug' => true,
+            'timezone' => 'UTC'
+        ];
+    }
+    
+    public static function getInstance(): Config {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    public function get(string $key, $default = null) {
+        return $this->settings[$key] ?? $default;
+    }
+    
+    public function set(string $key, $value): void {
+        $this->settings[$key] = $value;
+    }
+}
+
+$config = Config::getInstance();
+echo $config->get('app_name');
+?&gt;</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Caution:</strong> Singletons can make testing difficult and introduce global state. Consider using dependency injection instead when possible.
+            </div>
+        </section>
+
+        <section id="factory" class="topic-section">
+            <h2>11. Factory Pattern</h2>
+            
+            <h3>What is Factory Pattern?</h3>
+            <p>The Factory pattern provides an interface for creating objects without specifying their exact classes. It encapsulates object creation logic.</p>
+            
+            <h3>Simple Factory</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface PaymentMethod {
+    public function process(float $amount): array;
+}
+
+class CreditCardPayment implements PaymentMethod {
+    public function process(float $amount): array {
+        return [
+            'status' => 'success',
+            'method' => 'credit_card',
+            'amount' => $amount
+        ];
+    }
+}
+
+class PayPalPayment implements PaymentMethod {
+    public function process(float $amount): array {
+        return [
+            'status' => 'success',
+            'method' => 'paypal',
+            'amount' => $amount
+        ];
+    }
+}
+
+class BankTransferPayment implements PaymentMethod {
+    public function process(float $amount): array {
+        return [
+            'status' => 'pending',
+            'method' => 'bank_transfer',
+            'amount' => $amount
+        ];
+    }
+}
+
+class PaymentFactory {
+    public static function create(string $type): PaymentMethod {
+        return match($type) {
+            'credit_card' => new CreditCardPayment(),
+            'paypal' => new PayPalPayment(),
+            'bank_transfer' => new BankTransferPayment(),
+            default => throw new InvalidArgumentException("Unknown payment type: $type")
+        };
+    }
+}
+
+$payment = PaymentFactory::create('credit_card');
+$result = $payment->process(100.00);
+print_r($result);
+
+$payment = PaymentFactory::create('paypal');
+$result = $payment->process(50.00);
+print_r($result);
+?&gt;</code></pre>
+            </div>
+
+            <h3>Factory Method Pattern</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface Logger {
+    public function log(string $message): void;
+}
+
+class FileLogger implements Logger {
+    private string $filename;
+    
+    public function __construct(string $filename) {
+        $this->filename = $filename;
+    }
+    
+    public function log(string $message): void {
+        file_put_contents($this->filename, $message . "\n", FILE_APPEND);
+    }
+}
+
+class DatabaseLogger implements Logger {
+    private PDO $connection;
+    
+    public function __construct(PDO $connection) {
+        $this->connection = $connection;
+    }
+    
+    public function log(string $message): void {
+        $stmt = $this->connection->prepare(
+            "INSERT INTO logs (message, created_at) VALUES (?, NOW())"
+        );
+        $stmt->execute([$message]);
+    }
+}
+
+abstract class Application {
+    abstract protected function createLogger(): Logger;
+    
+    public function run(): void {
+        $logger = $this->createLogger();
+        $logger->log('Application started');
+    }
+}
+
+class FileBasedApp extends Application {
+    protected function createLogger(): Logger {
+        return new FileLogger('/var/log/app.log');
+    }
+}
+
+class DatabaseApp extends Application {
+    protected function createLogger(): Logger {
+        $pdo = new PDO('mysql:host=localhost;dbname=app', 'root', 'pass');
+        return new DatabaseLogger($pdo);
+    }
+}
+
+$app = new FileBasedApp();
+$app->run();
+
+$app = new DatabaseApp();
+$app->run();
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <section id="repository" class="topic-section">
+            <h2>12. Repository Pattern</h2>
+            
+            <h3>What is Repository Pattern?</h3>
+            <p>The Repository pattern mediates between the domain and data mapping layers, acting like an in-memory collection of domain objects. It provides a collection-like interface for accessing domain objects.</p>
+            
+            <h3>Implementation</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface UserRepositoryInterface {
+    public function find(int $id): ?User;
+    public function findAll(): array;
+    public function findByEmail(string $email): ?User;
+    public function save(User $user): void;
+    public function delete(int $id): void;
+}
+
+class User {
+    private ?int $id;
+    private string $name;
+    private string $email;
+    
+    public function __construct(?int $id, string $name, string $email) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->email = $email;
+    }
+    
+    public function getId(): ?int {
+        return $this->id;
+    }
+    
+    public function getName(): string {
+        return $this->name;
+    }
+    
+    public function getEmail(): string {
+        return $this->email;
+    }
+}
+
+class DatabaseUserRepository implements UserRepositoryInterface {
+    private PDO $connection;
+    
+    public function __construct(PDO $connection) {
+        $this->connection = $connection;
+    }
+    
+    public function find(int $id): ?User {
+        $stmt = $this->connection->prepare('SELECT * FROM users WHERE id = ?');
+        $stmt->execute([$id]);
+        $data = $stmt->fetch();
+        
+        return $data ? new User($data['id'], $data['name'], $data['email']) : null;
+    }
+    
+    public function findAll(): array {
+        $stmt = $this->connection->query('SELECT * FROM users');
+        $users = [];
+        
+        while ($data = $stmt->fetch()) {
+            $users[] = new User($data['id'], $data['name'], $data['email']);
+        }
+        
+        return $users;
+    }
+    
+    public function findByEmail(string $email): ?User {
+        $stmt = $this->connection->prepare('SELECT * FROM users WHERE email = ?');
+        $stmt->execute([$email]);
+        $data = $stmt->fetch();
+        
+        return $data ? new User($data['id'], $data['name'], $data['email']) : null;
+    }
+    
+    public function save(User $user): void {
+        if ($user->getId()) {
+            $stmt = $this->connection->prepare(
+                'UPDATE users SET name = ?, email = ? WHERE id = ?'
+            );
+            $stmt->execute([$user->getName(), $user->getEmail(), $user->getId()]);
+        } else {
+            $stmt = $this->connection->prepare(
+                'INSERT INTO users (name, email) VALUES (?, ?)'
+            );
+            $stmt->execute([$user->getName(), $user->getEmail()]);
+        }
+    }
+    
+    public function delete(int $id): void {
+        $stmt = $this->connection->prepare('DELETE FROM users WHERE id = ?');
+        $stmt->execute([$id]);
+    }
+}
+
+class InMemoryUserRepository implements UserRepositoryInterface {
+    private array $users = [];
+    private int $nextId = 1;
+    
+    public function find(int $id): ?User {
+        return $this->users[$id] ?? null;
+    }
+    
+    public function findAll(): array {
+        return array_values($this->users);
+    }
+    
+    public function findByEmail(string $email): ?User {
+        foreach ($this->users as $user) {
+            if ($user->getEmail() === $email) {
+                return $user;
+            }
+        }
+        return null;
+    }
+    
+    public function save(User $user): void {
+        if ($user->getId()) {
+            $this->users[$user->getId()] = $user;
+        } else {
+            $id = $this->nextId++;
+            $this->users[$id] = new User($id, $user->getName(), $user->getEmail());
+        }
+    }
+    
+    public function delete(int $id): void {
+        unset($this->users[$id]);
+    }
+}
+
+$pdo = new PDO('mysql:host=localhost;dbname=app', 'root', 'pass');
+$repository = new DatabaseUserRepository($pdo);
+
+$user = $repository->find(1);
+$allUsers = $repository->findAll();
+$userByEmail = $repository->findByEmail('john@example.com');
+
+$newUser = new User(null, 'Jane Doe', 'jane@example.com');
+$repository->save($newUser);
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Benefits:</strong> The Repository pattern provides a clean separation between domain and data layers, makes testing easier (use in-memory repository), and allows easy switching of data sources.
+            </div>
+        </section>
+
+        <section id="observer" class="topic-section">
+            <h2>13. Observer Pattern</h2>
+            
+            <h3>What is Observer Pattern?</h3>
+            <p>The Observer pattern defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.</p>
+            
+            <h3>Implementation</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface Observer {
+    public function update(string $event, array $data): void;
+}
+
+interface Subject {
+    public function attach(Observer $observer): void;
+    public function detach(Observer $observer): void;
+    public function notify(string $event, array $data): void;
+}
+
+class User implements Subject {
+    private array $observers = [];
+    private string $name;
+    private string $email;
+    
+    public function __construct(string $name, string $email) {
+        $this->name = $name;
+        $this->email = $email;
+    }
+    
+    public function attach(Observer $observer): void {
+        $this->observers[] = $observer;
+    }
+    
+    public function detach(Observer $observer): void {
+        $key = array_search($observer, $this->observers, true);
+        if ($key !== false) {
+            unset($this->observers[$key]);
+        }
+    }
+    
+    public function notify(string $event, array $data): void {
+        foreach ($this->observers as $observer) {
+            $observer->update($event, $data);
+        }
+    }
+    
+    public function updateEmail(string $newEmail): void {
+        $oldEmail = $this->email;
+        $this->email = $newEmail;
+        
+        $this->notify('email_changed', [
+            'user' => $this->name,
+            'old_email' => $oldEmail,
+            'new_email' => $newEmail
+        ]);
+    }
+    
+    public function register(): void {
+        $this->notify('user_registered', [
+            'name' => $this->name,
+            'email' => $this->email
+        ]);
+    }
+}
+
+class EmailNotifier implements Observer {
+    public function update(string $event, array $data): void {
+        if ($event === 'user_registered') {
+            echo "Sending welcome email to {$data['email']}\n";
+        } elseif ($event === 'email_changed') {
+            echo "Sending confirmation email to {$data['new_email']}\n";
+        }
+    }
+}
+
+class LoggerObserver implements Observer {
+    public function update(string $event, array $data): void {
+        $message = date('Y-m-d H:i:s') . " - Event: $event - Data: " . json_encode($data);
+        echo "Logging: $message\n";
+    }
+}
+
+class SlackNotifier implements Observer {
+    public function update(string $event, array $data): void {
+        if ($event === 'user_registered') {
+            echo "Slack: New user registered - {$data['name']}\n";
+        }
+    }
+}
+
+$user = new User('John Doe', 'john@example.com');
+
+$user->attach(new EmailNotifier());
+$user->attach(new LoggerObserver());
+$user->attach(new SlackNotifier());
+
+$user->register();
+$user->updateEmail('newemail@example.com');
+?&gt;</code></pre>
+            </div>
+
+            <h3>Laravel Events Example</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class OrderPlaced {
+    public Order $order;
+    
+    public function __construct(Order $order) {
+        $this->order = $order;
+    }
+}
+
+class SendOrderConfirmationEmail {
+    public function handle(OrderPlaced $event): void {
+        $order = $event->order;
+        echo "Sending order confirmation to {$order->customer->email}\n";
+    }
+}
+
+class UpdateInventory {
+    public function handle(OrderPlaced $event): void {
+        $order = $event->order;
+        echo "Updating inventory for order #{$order->id}\n";
+    }
+}
+
+class NotifyWarehouse {
+    public function handle(OrderPlaced $event): void {
+        $order = $event->order;
+        echo "Notifying warehouse about order #{$order->id}\n";
+    }
+}
+
+event(new OrderPlaced($order));
+?&gt;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Use Cases:</strong> Event systems, notification systems, logging, UI updates, publish-subscribe patterns.
+            </div>
+        </section>
+
+        <section id="abstract-vs-interface" class="topic-section">
+            <h2>14. Abstract Classes vs Interfaces</h2>
+            
+            <h3>Key Differences</h3>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Abstract Class</th>
+                    <th>Interface</th>
+                </tr>
+                <tr>
+                    <td>Methods</td>
+                    <td>Can have abstract and concrete methods</td>
+                    <td>Only method signatures (PHP 8+ allows default implementations)</td>
+                </tr>
+                <tr>
+                    <td>Properties</td>
+                    <td>Can have properties</td>
+                    <td>Cannot have properties (only constants)</td>
+                </tr>
+                <tr>
+                    <td>Inheritance</td>
+                    <td>Single inheritance only</td>
+                    <td>Multiple implementation allowed</td>
+                </tr>
+                <tr>
+                    <td>Access Modifiers</td>
+                    <td>Can use public, protected, private</td>
+                    <td>All methods are public</td>
+                </tr>
+                <tr>
+                    <td>Constructor</td>
+                    <td>Can have constructor</td>
+                    <td>Cannot have constructor</td>
+                </tr>
+                <tr>
+                    <td>Purpose</td>
+                    <td>Share code among related classes</td>
+                    <td>Define a contract for unrelated classes</td>
+                </tr>
+            </table>
+
+            <h3>When to Use Abstract Classes</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+abstract class Vehicle {
+    protected string $brand;
+    protected int $year;
+    protected float $price;
+    
+    public function __construct(string $brand, int $year, float $price) {
+        $this->brand = $brand;
+        $this->year = $year;
+        $this->price = $price;
+    }
+    
+    abstract public function start(): void;
+    abstract public function stop(): void;
+    
+    public function getInfo(): string {
+        return "{$this->year} {$this->brand} - $" . number_format($this->price, 2);
+    }
+    
+    public function calculateDepreciation(int $years): float {
+        return $this->price * (0.85 ** $years);
+    }
+}
+
+class Car extends Vehicle {
+    private int $doors;
+    
+    public function __construct(string $brand, int $year, float $price, int $doors) {
+        parent::__construct($brand, $year, $price);
+        $this->doors = $doors;
+    }
+    
+    public function start(): void {
+        echo "Car engine started\n";
+    }
+    
+    public function stop(): void {
+        echo "Car engine stopped\n";
+    }
+}
+
+class Motorcycle extends Vehicle {
+    private string $type;
+    
+    public function __construct(string $brand, int $year, float $price, string $type) {
+        parent::__construct($brand, $year, $price);
+        $this->type = $type;
+    }
+    
+    public function start(): void {
+        echo "Motorcycle engine started\n";
+    }
+    
+    public function stop(): void {
+        echo "Motorcycle engine stopped\n";
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>When to Use Interfaces</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface Flyable {
+    public function fly(): void;
+    public function land(): void;
+}
+
+interface Swimmable {
+    public function swim(): void;
+}
+
+interface Walkable {
+    public function walk(): void;
+}
+
+class Duck implements Flyable, Swimmable, Walkable {
+    public function fly(): void {
+        echo "Duck flying\n";
+    }
+    
+    public function land(): void {
+        echo "Duck landing\n";
+    }
+    
+    public function swim(): void {
+        echo "Duck swimming\n";
+    }
+    
+    public function walk(): void {
+        echo "Duck walking\n";
+    }
+}
+
+class Fish implements Swimmable {
+    public function swim(): void {
+        echo "Fish swimming\n";
+    }
+}
+
+class Airplane implements Flyable {
+    public function fly(): void {
+        echo "Airplane flying\n";
+    }
+    
+    public function land(): void {
+        echo "Airplane landing\n";
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Rule of Thumb:</strong> Use abstract classes when you want to share code among closely related classes. Use interfaces to define contracts that can be implemented by unrelated classes.
+            </div>
+        </section>
+
+        <section id="overloading-overriding" class="topic-section">
+            <h2>15. Method Overloading & Overriding</h2>
+            
+            <h3>Method Overriding</h3>
+            <p>Method overriding occurs when a child class provides a specific implementation of a method that is already defined in its parent class.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Animal {
+    protected string $name;
+    
+    public function __construct(string $name) {
+        $this->name = $name;
+    }
+    
+    public function makeSound(): string {
+        return "Some generic sound";
+    }
+    
+    public function getInfo(): string {
+        return "Animal: {$this->name}";
+    }
+}
+
+class Dog extends Animal {
+    private string $breed;
+    
+    public function __construct(string $name, string $breed) {
+        parent::__construct($name);
+        $this->breed = $breed;
+    }
+    
+    public function makeSound(): string {
+        return "Woof! Woof!";
+    }
+    
+    public function getInfo(): string {
+        return parent::getInfo() . ", Breed: {$this->breed}";
+    }
+}
+
+class Cat extends Animal {
+    public function makeSound(): string {
+        return "Meow!";
+    }
+}
+
+$dog = new Dog("Buddy", "Golden Retriever");
+echo $dog->makeSound();
+echo $dog->getInfo();
+
+$cat = new Cat("Whiskers");
+echo $cat->makeSound();
+?&gt;</code></pre>
+            </div>
+
+            <h3>Method Overloading (Magic Methods)</h3>
+            <p>PHP doesn't support traditional method overloading, but you can simulate it using magic methods like __call():</p>
+            
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Calculator {
+    public function __call(string $method, array $arguments) {
+        if ($method === 'add') {
+            return $this->handleAdd($arguments);
+        }
+        
+        throw new BadMethodCallException("Method $method does not exist");
+    }
+    
+    private function handleAdd(array $arguments): float {
+        $count = count($arguments);
+        
+        if ($count === 2) {
+            return $arguments[0] + $arguments[1];
+        } elseif ($count === 3) {
+            return $arguments[0] + $arguments[1] + $arguments[2];
+        }
+        
+        return array_sum($arguments);
+    }
+}
+
+$calc = new Calculator();
+echo $calc->add(5, 3);
+echo $calc->add(5, 3, 2);
+echo $calc->add(1, 2, 3, 4, 5);
+
+class FlexibleMethod {
+    public function process(...$args) {
+        $count = count($args);
+        
+        if ($count === 1 && is_string($args[0])) {
+            return $this->processString($args[0]);
+        } elseif ($count === 1 && is_array($args[0])) {
+            return $this->processArray($args[0]);
+        } elseif ($count === 2) {
+            return $this->processTwoArgs($args[0], $args[1]);
+        }
+        
+        throw new InvalidArgumentException("Invalid arguments");
+    }
+    
+    private function processString(string $value): string {
+        return strtoupper($value);
+    }
+    
+    private function processArray(array $value): int {
+        return count($value);
+    }
+    
+    private function processTwoArgs($first, $second): string {
+        return "$first and $second";
+    }
+}
+
+$obj = new FlexibleMethod();
+echo $obj->process("hello");
+echo $obj->process([1, 2, 3]);
+echo $obj->process("foo", "bar");
+?&gt;</code></pre>
+            </div>
+        </section>
+
+        <section id="static" class="topic-section">
+            <h2>16. Static Methods & Classes</h2>
+            
+            <h3>Static Properties and Methods</h3>
+            <p>Static members belong to the class itself rather than to instances of the class. They can be accessed without creating an object.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Counter {
+    private static int $count = 0;
+    private static array $instances = [];
+    
+    public static function increment(): void {
+        self::$count++;
+    }
+    
+    public static function getCount(): int {
+        return self::$count;
+    }
+    
+    public static function reset(): void {
+        self::$count = 0;
+    }
+}
+
+Counter::increment();
+Counter::increment();
+Counter::increment();
+echo Counter::getCount();
+
+class MathHelper {
+    public const PI = 3.14159;
+    
+    public static function square(float $number): float {
+        return $number ** 2;
+    }
+    
+    public static function cube(float $number): float {
+        return $number ** 3;
+    }
+    
+    public static function factorial(int $n): int {
+        if ($n <= 1) return 1;
+        return $n * self::factorial($n - 1);
+    }
+}
+
+echo MathHelper::square(5);
+echo MathHelper::cube(3);
+echo MathHelper::factorial(5);
+echo MathHelper::PI;
+
+class Database {
+    private static ?self $instance = null;
+    private PDO $connection;
+    
+    private function __construct() {
+        $this->connection = new PDO(
+            'mysql:host=localhost;dbname=app',
+            'root',
+            'password'
+        );
+    }
+    
+    public static function getInstance(): self {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    public function query(string $sql): array {
+        $stmt = $this->connection->query($sql);
+        return $stmt->fetchAll();
+    }
+}
+
+$db = Database::getInstance();
+$results = $db->query('SELECT * FROM users');
+?&gt;</code></pre>
+            </div>
+
+            <h3>Late Static Binding</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class ParentClass {
+    protected static string $name = 'Parent';
+    
+    public static function getName(): string {
+        return self::$name;
+    }
+    
+    public static function getNameLate(): string {
+        return static::$name;
+    }
+    
+    public static function test(): void {
+        echo "self: " . self::getName() . "\n";
+        echo "static: " . static::getNameLate() . "\n";
+    }
+}
+
+class ChildClass extends ParentClass {
+    protected static string $name = 'Child';
+}
+
+ParentClass::test();
+ChildClass::test();
+?&gt;</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ When to Use Static:</strong> Use static methods for utility functions that don't need instance state. Avoid overusing static as it can make testing difficult and create tight coupling.
+            </div>
+        </section>
+
+        <section id="final" class="topic-section">
+            <h2>17. Final Keyword</h2>
+            
+            <h3>What is Final?</h3>
+            <p>The final keyword prevents a class from being extended or a method from being overridden.</p>
+            
+            <h3>Final Classes</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+final class SecurityManager {
+    private string $encryptionKey;
+    
+    public function __construct(string $encryptionKey) {
+        $this->encryptionKey = $encryptionKey;
+    }
+    
+    public function encrypt(string $data): string {
+        return base64_encode($data);
+    }
+    
+    public function decrypt(string $data): string {
+        return base64_decode($data);
+    }
+}
+
+final class ImmutableValue {
+    private $value;
+    
+    public function __construct($value) {
+        $this->value = $value;
+    }
+    
+    public function getValue() {
+        return $this->value;
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <h3>Final Methods</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class BaseController {
+    final public function execute(): void {
+        $this->beforeAction();
+        $this->action();
+        $this->afterAction();
+    }
+    
+    protected function beforeAction(): void {
+        echo "Before action\n";
+    }
+    
+    protected function action(): void {
+        echo "Main action\n";
+    }
+    
+    protected function afterAction(): void {
+        echo "After action\n";
+    }
+}
+
+class UserController extends BaseController {
+    protected function action(): void {
+        echo "User-specific action\n";
+    }
+}
+
+$controller = new UserController();
+$controller->execute();
+
+class PaymentProcessor {
+    final public function processPayment(float $amount): array {
+        $this->validateAmount($amount);
+        $this->logTransaction($amount);
+        
+        return $this->executePayment($amount);
+    }
+    
+    protected function validateAmount(float $amount): void {
+        if ($amount <= 0) {
+            throw new InvalidArgumentException("Amount must be positive");
+        }
+    }
+    
+    protected function logTransaction(float $amount): void {
+        echo "Processing payment of $$amount\n";
+    }
+    
+    protected function executePayment(float $amount): array {
+        return ['status' => 'success', 'amount' => $amount];
+    }
+}
+
+class CreditCardProcessor extends PaymentProcessor {
+    protected function executePayment(float $amount): array {
+        echo "Processing via credit card\n";
+        return parent::executePayment($amount);
+    }
+}
+?&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 When to Use Final:</strong>
+                <ul>
+                    <li>Security-critical classes that shouldn't be extended</li>
+                    <li>Methods that must maintain specific behavior</li>
+                    <li>Template methods that define a workflow</li>
+                    <li>Value objects that should remain immutable</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="dependency-injection" class="topic-section">
+            <h2>18. Dependency Injection</h2>
+            
+            <h3>What is Dependency Injection?</h3>
+            <p>Dependency Injection (DI) is a design pattern where an object receives its dependencies from external sources rather than creating them itself. This promotes loose coupling and easier testing.</p>
+            
+            <h3>Constructor Injection</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+interface LoggerInterface {
+    public function log(string $message): void;
+}
+
+class FileLogger implements LoggerInterface {
+    private string $filename;
+    
+    public function __construct(string $filename) {
+        $this->filename = $filename;
+    }
+    
+    public function log(string $message): void {
+        file_put_contents($this->filename, $message . "\n", FILE_APPEND);
+    }
+}
+
+interface EmailServiceInterface {
+    public function send(string $to, string $subject, string $body): bool;
+}
+
+class SmtpEmailService implements EmailServiceInterface {
+    private string $smtpHost;
+    
+    public function __construct(string $smtpHost) {
+        $this->smtpHost = $smtpHost;
+    }
+    
+    public function send(string $to, string $subject, string $body): bool {
+        echo "Sending email via {$this->smtpHost} to $to\n";
+        return true;
+    }
+}
+
+class UserService {
+    private UserRepositoryInterface $repository;
+    private LoggerInterface $logger;
+    private EmailServiceInterface $emailService;
+    
+    public function __construct(
+        UserRepositoryInterface $repository,
+        LoggerInterface $logger,
+        EmailServiceInterface $emailService
+    ) {
+        $this->repository = $repository;
+        $this->logger = $logger;
+        $this->emailService = $emailService;
+    }
+    
+    public function createUser(string $name, string $email): User {
+        $this->logger->log("Creating user: $email");
+        
+        $user = new User(null, $name, $email);
+        $this->repository->save($user);
+        
+        $this->emailService->send(
+            $email,
+            'Welcome!',
+            "Welcome to our application, $name!"
+        );
+        
+        $this->logger->log("User created successfully: $email");
+        
+        return $user;
+    }
+}
+
+$logger = new FileLogger('/var/log/app.log');
+$emailService = new SmtpEmailService('smtp.example.com');
+$repository = new DatabaseUserRepository($pdo);
+
+$userService = new UserService($repository, $logger, $emailService);
+$user = $userService->createUser('John Doe', 'john@example.com');
+?&gt;</code></pre>
+            </div>
+
+            <h3>Setter Injection</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class NotificationService {
+    private ?LoggerInterface $logger = null;
+    private ?CacheInterface $cache = null;
+    
+    public function setLogger(LoggerInterface $logger): void {
+        $this->logger = $logger;
+    }
+    
+    public function setCache(CacheInterface $cache): void {
+        $this->cache = $cache;
+    }
+    
+    public function notify(string $userId, string $message): void {
+        if ($this->cache && $this->cache->has("notification:$userId")) {
+            echo "Skipping duplicate notification\n";
+            return;
+        }
+        
+        echo "Sending notification to user $userId: $message\n";
+        
+        if ($this->cache) {
+            $this->cache->set("notification:$userId", true, 3600);
+        }
+        
+        if ($this->logger) {
+            $this->logger->log("Notification sent to user $userId");
+        }
+    }
+}
+
+$service = new NotificationService();
+$service->setLogger(new FileLogger('/var/log/notifications.log'));
+$service->setCache(new RedisCache());
+$service->notify('user-123', 'You have a new message');
+?&gt;</code></pre>
+            </div>
+
+            <h3>Service Container (DI Container)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+class Container {
+    private array $bindings = [];
+    private array $instances = [];
+    
+    public function bind(string $abstract, callable $concrete): void {
+        $this->bindings[$abstract] = $concrete;
+    }
+    
+    public function singleton(string $abstract, callable $concrete): void {
+        $this->bindings[$abstract] = function() use ($abstract, $concrete) {
+            if (!isset($this->instances[$abstract])) {
+                $this->instances[$abstract] = $concrete($this);
+            }
+            return $this->instances[$abstract];
+        };
+    }
+    
+    public function make(string $abstract) {
+        if (isset($this->bindings[$abstract])) {
+            return $this->bindings[$abstract]($this);
+        }
+        
+        throw new Exception("No binding found for $abstract");
+    }
+}
+
+$container = new Container();
+
+$container->bind(LoggerInterface::class, function($container) {
+    return new FileLogger('/var/log/app.log');
+});
+
+$container->bind(EmailServiceInterface::class, function($container) {
+    return new SmtpEmailService('smtp.example.com');
+});
+
+$container->singleton(DatabaseInterface::class, function($container) {
+    return new MySQLDatabase('localhost', 'myapp');
+});
+
+$container->bind(UserRepositoryInterface::class, function($container) {
+    return new DatabaseUserRepository(
+        $container->make(DatabaseInterface::class)
+    );
+});
+
+$container->bind(UserService::class, function($container) {
+    return new UserService(
+        $container->make(UserRepositoryInterface::class),
+        $container->make(LoggerInterface::class),
+        $container->make(EmailServiceInterface::class)
+    );
+});
+
+$userService = $container->make(UserService::class);
+?&gt;</code></pre>
+            </div>
+
+            <h3>Laravel Service Container Example</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+app()->bind(LoggerInterface::class, FileLogger::class);
+app()->singleton(DatabaseInterface::class, MySQLDatabase::class);
+
+class UserController {
+    private UserService $userService;
+    
+    public function __construct(UserService $userService) {
+        $this->userService = $userService;
+    }
+    
+    public function store(Request $request) {
+        $user = $this->userService->createUser(
+            $request->input('name'),
+            $request->input('email')
+        );
+        
+        return response()->json($user);
+    }
+}
+
+Route::post('/users', [UserController::class, 'store']);
+?&gt;</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Benefits of Dependency Injection:</strong>
+                <ul>
+                    <li>Loose coupling between components</li>
+                    <li>Easier to test (can inject mock dependencies)</li>
+                    <li>Better code reusability and maintainability</li>
+                    <li>Clearer dependencies and relationships</li>
+                    <li>Easier to swap implementations</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Laravel Interview Bank - OOP & Design Patterns</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">Comprehensive guide covering essential OOP principles and design patterns</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
