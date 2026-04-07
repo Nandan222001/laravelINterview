@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing & Debugging - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #5568d3;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .topic-section h3 {
+            color: #5568d3;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🧪 Testing & Debugging</h1>
+        <p>Comprehensive guide to testing strategies, PHPUnit, debugging techniques, and code optimization</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#testing-approaches">1. Testing Approaches</a></li>
+                <li><a href="#unit-testing">2. Unit Testing</a></li>
+                <li><a href="#integration-testing">3. Integration Testing</a></li>
+                <li><a href="#feature-testing">4. Feature Testing</a></li>
+                <li><a href="#phpunit">5. PHPUnit Framework</a></li>
+                <li><a href="#test-doubles">6. Test Doubles & Mocking</a></li>
+                <li><a href="#debugging-techniques">7. Debugging Techniques</a></li>
+                <li><a href="#debugging-tools">8. Debugging Tools</a></li>
+                <li><a href="#code-review">9. Code Review Practices</a></li>
+                <li><a href="#error-handling">10. Error Handling</a></li>
+                <li><a href="#logging">11. Logging Strategies</a></li>
+                <li><a href="#monitoring">12. Monitoring & Observability</a></li>
+                <li><a href="#performance-profiling">13. Performance Profiling</a></li>
+                <li><a href="#optimization">14. Code Optimization</a></li>
+            </ul>
+        </div>
+
+        <!-- Testing Approaches -->
+        <section id="testing-approaches" class="topic-section">
+            <h2>1. Testing Approaches</h2>
+            
+            <h3>Testing Pyramid</h3>
+            <p>The testing pyramid represents the ideal distribution of different test types in your application.</p>
+            
+            <table>
+                <tr>
+                    <th>Test Type</th>
+                    <th>Purpose</th>
+                    <th>Speed</th>
+                    <th>Coverage</th>
+                </tr>
+                <tr>
+                    <td><strong>Unit Tests</strong></td>
+                    <td>Test individual components in isolation</td>
+                    <td>Fast (milliseconds)</td>
+                    <td>70-80% of tests</td>
+                </tr>
+                <tr>
+                    <td><strong>Integration Tests</strong></td>
+                    <td>Test interaction between components</td>
+                    <td>Medium (seconds)</td>
+                    <td>15-20% of tests</td>
+                </tr>
+                <tr>
+                    <td><strong>Feature/E2E Tests</strong></td>
+                    <td>Test complete user workflows</td>
+                    <td>Slow (seconds to minutes)</td>
+                    <td>5-10% of tests</td>
+                </tr>
+            </table>
+
+            <h3>Test-Driven Development (TDD)</h3>
+            <div class="code-example">
+                <pre><code class="language-plaintext">TDD Cycle (Red-Green-Refactor):
+
+1. RED: Write a failing test
+   - Define the expected behavior
+   - Test should fail (no implementation yet)
+
+2. GREEN: Write minimal code to pass
+   - Implement just enough to make test pass
+   - Don't worry about perfection
+
+3. REFACTOR: Improve the code
+   - Clean up implementation
+   - Ensure tests still pass
+   - Optimize and follow best practices
+
+4. REPEAT: Continue the cycle</code></pre>
+            </div>
+
+            <h3>Testing Best Practices</h3>
+            <ul>
+                <li><strong>AAA Pattern:</strong> Arrange (setup), Act (execute), Assert (verify)</li>
+                <li><strong>Test Independence:</strong> Each test should run independently without relying on others</li>
+                <li><strong>Single Responsibility:</strong> Each test should verify one specific behavior</li>
+                <li><strong>Clear Naming:</strong> Test names should describe what they test and expected outcome</li>
+                <li><strong>Fast Execution:</strong> Tests should run quickly to encourage frequent execution</li>
+                <li><strong>Deterministic:</strong> Tests should produce consistent results (no flaky tests)</li>
+                <li><strong>Maintainable:</strong> Tests should be easy to understand and update</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>💡 Coverage Goal:</strong> Aim for 80%+ code coverage, but focus on testing critical paths and business logic rather than achieving 100% coverage.
+            </div>
+        </section>
+
+        <!-- Unit Testing -->
+        <section id="unit-testing" class="topic-section">
+            <h2>2. Unit Testing</h2>
+
+            <h3>Basic Unit Test Structure</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace Tests\Unit;
+
+use PHPUnit\Framework\TestCase;
+use App\Services\PriceCalculator;
+
+class PriceCalculatorTest extends TestCase
+{
+    /** @test */
+    public function it_calculates_price_with_tax()
+    {
+        // Arrange
+        $calculator = new PriceCalculator();
+        $basePrice = 100;
+        $taxRate = 0.10;
+        
+        // Act
+        $finalPrice = $calculator->calculateWithTax($basePrice, $taxRate);
+        
+        // Assert
+        $this->assertEquals(110, $finalPrice);
+    }
+    
+    /** @test */
+    public function it_applies_discount_correctly()
+    {
+        $calculator = new PriceCalculator();
+        
+        $result = $calculator->applyDiscount(100, 20);
+        
+        $this->assertEquals(80, $result);
+    }
+    
+    /** @test */
+    public function it_throws_exception_for_invalid_discount()
+    {
+        $calculator = new PriceCalculator();
+        
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Discount cannot exceed 100%');
+        
+        $calculator->applyDiscount(100, 150);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Data Providers</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace Tests\Unit;
+
+use PHPUnit\Framework\TestCase;
+
+class ValidationTest extends TestCase
+{
+    /**
+     * @test
+     * @dataProvider validEmailProvider
+     */
+    public function it_validates_email_addresses($email, $expected)
+    {
+        $validator = new EmailValidator();
+        
+        $result = $validator->isValid($email);
+        
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function validEmailProvider(): array
+    {
+        return [
+            'valid email' => ['user@example.com', true],
+            'valid with subdomain' => ['user@mail.example.com', true],
+            'invalid no at symbol' => ['userexample.com', false],
+            'invalid no domain' => ['user@', false],
+            'invalid no username' => ['@example.com', false],
+            'empty string' => ['', false],
+        ];
+    }
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Use data providers to test multiple scenarios without duplicating test code. This makes tests more maintainable and comprehensive.
+            </div>
+        </section>
+
+        <!-- Integration Testing -->
+        <section id="integration-testing" class="topic-section">
+            <h2>3. Integration Testing</h2>
+
+            <h3>Database Integration Tests</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace Tests\Integration;
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+use App\Models\Order;
+
+class OrderRepositoryTest extends TestCase
+{
+    use RefreshDatabase;
+    
+    /** @test */
+    public function it_creates_order_with_items()
+    {
+        // Arrange
+        $user = User::factory()->create();
+        $repository = app(OrderRepository::class);
+        
+        $orderData = [
+            'user_id' => $user->id,
+            'items' => [
+                ['product_id' => 1, 'quantity' => 2, 'price' => 50],
+                ['product_id' => 2, 'quantity' => 1, 'price' => 100],
+            ],
+        ];
+        
+        // Act
+        $order = $repository->createWithItems($orderData);
+        
+        // Assert
+        $this->assertDatabaseHas('orders', [
+            'id' => $order->id,
+            'user_id' => $user->id,
+            'total' => 200,
+        ]);
+        
+        $this->assertDatabaseCount('order_items', 2);
+        $this->assertEquals(2, $order->items->count());
+    }
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Integration Testing:</strong> Focus on testing how different components work together. Use real database interactions but mock external API calls.
+            </div>
+        </section>
+
+        <!-- Feature Testing -->
+        <section id="feature-testing" class="topic-section">
+            <h2>4. Feature Testing (E2E)</h2>
+
+            <h3>HTTP Feature Tests</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
+use App\Models\Post;
+
+class PostManagementTest extends TestCase
+{
+    use RefreshDatabase;
+    
+    /** @test */
+    public function authenticated_user_can_create_post()
+    {
+        $user = User::factory()->create();
+        
+        $response = $this->actingAs($user)
+            ->post('/api/posts', [
+                'title' => 'Test Post',
+                'content' => 'This is test content',
+            ]);
+        
+        $response->assertStatus(201)
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'title',
+                    'content',
+                    'created_at',
+                ]
+            ]);
+        
+        $this->assertDatabaseHas('posts', [
+            'title' => 'Test Post',
+            'user_id' => $user->id,
+        ]);
+    }
+    
+    /** @test */
+    public function guest_cannot_create_post()
+    {
+        $response = $this->postJson('/api/posts', [
+            'title' => 'Test Post',
+            'content' => 'Content',
+        ]);
+        
+        $response->assertStatus(401);
+        $this->assertDatabaseCount('posts', 0);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Testing File Uploads</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+
+class FileUploadTest extends TestCase
+{
+    use RefreshDatabase;
+    
+    /** @test */
+    public function user_can_upload_avatar()
+    {
+        Storage::fake('public');
+        $user = User::factory()->create();
+        
+        $file = UploadedFile::fake()->image('avatar.jpg', 600, 600);
+        
+        $response = $this->actingAs($user)
+            ->post('/api/profile/avatar', [
+                'avatar' => $file,
+            ]);
+        
+        $response->assertStatus(200);
+        
+        Storage::disk('public')->assertExists('avatars/' . $file->hashName());
+        
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'avatar' => 'avatars/' . $file->hashName(),
+        ]);
+    }
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Feature Testing:</strong> Test complete user workflows from start to finish, including authentication, validation, and database interactions.
+            </div>
+        </section>
+
+        <!-- PHPUnit -->
+        <section id="phpunit" class="topic-section">
+            <h2>5. PHPUnit Framework</h2>
+
+            <h3>PHPUnit Assertions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Equality assertions
+$this->assertEquals($expected, $actual);
+$this->assertSame($expected, $actual); // Strict comparison
+$this->assertNotEquals($expected, $actual);
+
+// Boolean assertions
+$this->assertTrue($condition);
+$this->assertFalse($condition);
+$this->assertNull($variable);
+$this->assertNotNull($variable);
+
+// String assertions
+$this->assertStringContainsString('substring', $string);
+$this->assertStringStartsWith('prefix', $string);
+$this->assertStringEndsWith('suffix', $string);
+$this->assertMatchesRegularExpression('/pattern/', $string);
+
+// Array assertions
+$this->assertContains($needle, $haystack);
+$this->assertArrayHasKey('key', $array);
+$this->assertCount(5, $array);
+$this->assertEmpty($array);
+
+// Object assertions
+$this->assertInstanceOf(User::class, $object);
+
+// Exception assertions
+$this->expectException(InvalidArgumentException::class);
+$this->expectExceptionMessage('Invalid argument');
+
+// JSON assertions (Laravel)
+$response->assertJson(['key' => 'value']);
+$response->assertJsonCount(5, 'data');
+$response->assertJsonStructure(['data' => ['id', 'name']]);</code></pre>
+            </div>
+
+            <h3>Test Lifecycle Methods</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace Tests\Unit;
+
+use PHPUnit\Framework\TestCase;
+
+class ServiceTest extends TestCase
+{
+    private $service;
+    
+    // Runs once before any test in the class
+    public static function setUpBeforeClass(): void
+    {
+        // Initialize expensive resources
+    }
+    
+    // Runs before each test method
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->service = new MyService();
+    }
+    
+    // Runs after each test method
+    protected function tearDown(): void
+    {
+        $this->service = null;
+        parent::tearDown();
+    }
+    
+    // Runs once after all tests in the class
+    public static function tearDownAfterClass(): void
+    {
+        // Clean up shared resources
+    }
+}</code></pre>
+            </div>
+
+            <h3>Running Tests</h3>
+            <div class="code-example">
+                <pre><code class="language-bash"># Run all tests
+php artisan test
+vendor/bin/phpunit
+
+# Run specific test suite
+php artisan test --testsuite=Unit
+php artisan test --testsuite=Feature
+
+# Run specific test file
+php artisan test tests/Unit/ServiceTest.php
+
+# Run with coverage
+php artisan test --coverage
+
+# Run in parallel
+php artisan test --parallel
+
+# Stop on first failure
+php artisan test --stop-on-failure</code></pre>
+            </div>
+        </section>
+
+        <!-- Test Doubles & Mocking -->
+        <section id="test-doubles" class="topic-section">
+            <h2>6. Test Doubles & Mocking</h2>
+
+            <h3>Types of Test Doubles</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Purpose</th>
+                    <th>Verification</th>
+                </tr>
+                <tr>
+                    <td><strong>Stub</strong></td>
+                    <td>Returns predefined responses</td>
+                    <td>State verification</td>
+                </tr>
+                <tr>
+                    <td><strong>Mock</strong></td>
+                    <td>Has expectations about calls</td>
+                    <td>Behavior verification</td>
+                </tr>
+                <tr>
+                    <td><strong>Spy</strong></td>
+                    <td>Records information about calls</td>
+                    <td>Behavior verification</td>
+                </tr>
+                <tr>
+                    <td><strong>Fake</strong></td>
+                    <td>Working implementation (simplified)</td>
+                    <td>State verification</td>
+                </tr>
+            </table>
+
+            <h3>Mocking with Mockery</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace Tests\Unit;
+
+use Tests\TestCase;
+use Mockery;
+use App\Services\PaymentService;
+use App\Gateways\StripeGateway;
+
+class PaymentServiceTest extends TestCase
+{
+    /** @test */
+    public function it_processes_payment_through_gateway()
+    {
+        // Create mock
+        $gateway = Mockery::mock(StripeGateway::class);
+        
+        // Set expectations
+        $gateway->shouldReceive('charge')
+            ->once()
+            ->with(100, 'usd', 'tok_123')
+            ->andReturn([
+                'success' => true,
+                'charge_id' => 'ch_123',
+            ]);
+        
+        $service = new PaymentService($gateway);
+        $result = $service->processPayment(100, 'tok_123');
+        
+        $this->assertTrue($result['success']);
+        $this->assertEquals('ch_123', $result['charge_id']);
+    }
+}</code></pre>
+            </div>
+
+            <h3>Laravel Mocking Facades</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
+use App\Mail\WelcomeEmail;
+use App\Jobs\ProcessOrder;
+
+class UserRegistrationTest extends TestCase
+{
+    /** @test */
+    public function it_sends_welcome_email_on_registration()
+    {
+        Mail::fake();
+        
+        $response = $this->post('/register', [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'password123',
+        ]);
+        
+        $response->assertStatus(201);
+        
+        Mail::assertSent(WelcomeEmail::class, function ($mail) {
+            return $mail->hasTo('john@example.com');
+        });
+    }
+    
+    /** @test */
+    public function it_dispatches_order_processing_job()
+    {
+        Queue::fake();
+        
+        $response = $this->post('/orders', [
+            'product_id' => 1,
+            'quantity' => 2,
+        ]);
+        
+        Queue::assertPushed(ProcessOrder::class);
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Mocking Warning:</strong> Over-mocking can make tests brittle. Mock external dependencies, but test your own code with real implementations when possible.
+            </div>
+        </section>
+
+        <!-- Debugging Techniques -->
+        <section id="debugging-techniques" class="topic-section">
+            <h2>7. Debugging Techniques</h2>
+
+            <h3>Debug Functions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Basic debugging
+var_dump($variable);
+print_r($array);
+
+// Laravel debugging helpers
+dd($variable); // Dump and die
+dump($variable); // Dump and continue
+
+// Debug to log
+\Log::debug('Variable value', ['var' => $variable]);
+logger('Debug message', ['context' => $data]);
+
+// Ray debugging (spatie/ray)
+ray($variable);
+ray($user)->blue();
+ray()->table($array);
+ray()->measure();
+
+// Debug backtrace
+debug_backtrace();
+debug_print_backtrace();</code></pre>
+            </div>
+
+            <h3>Debugging Queries</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+use Illuminate\Support\Facades\DB;
+
+// Enable query log
+DB::enableQueryLog();
+
+// Run your queries
+$users = User::where('active', true)->get();
+
+// Get executed queries
+$queries = DB::getQueryLog();
+dd($queries);
+
+// Log all queries
+DB::listen(function ($query) {
+    logger()->info('Query executed', [
+        'sql' => $query->sql,
+        'bindings' => $query->bindings,
+        'time' => $query->time,
+    ]);
+});
+
+// Debug specific query
+$query = User::where('active', true);
+dd($query->toSql(), $query->getBindings());</code></pre>
+            </div>
+
+            <h3>Debugging Requests</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// In controller
+public function store(Request $request)
+{
+    // Debug request
+    ray($request->all());
+    ray($request->user());
+    ray($request->header('Authorization'));
+    
+    // Debug validation
+    $validated = $request->validate([
+        'name' => 'required',
+        'email' => 'required|email',
+    ]);
+    
+    ray('Validated data:', $validated);
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Debugging Strategy:</strong> Start with logging, use dd() for quick checks, employ Ray for advanced debugging, and leverage Xdebug for complex issues.
+            </div>
+        </section>
+
+        <!-- Debugging Tools -->
+        <section id="debugging-tools" class="topic-section">
+            <h2>8. Debugging Tools</h2>
+
+            <h3>Xdebug Configuration</h3>
+            <div class="code-example">
+                <pre><code class="language-ini">; php.ini configuration
+zend_extension=xdebug.so
+xdebug.mode=debug,coverage
+xdebug.start_with_request=yes
+xdebug.client_host=localhost
+xdebug.client_port=9003
+xdebug.log=/tmp/xdebug.log
+xdebug.idekey=PHPSTORM</code></pre>
+            </div>
+
+            <h3>Laravel Telescope</h3>
+            <div class="code-example">
+                <pre><code class="language-bash"># Install Telescope
+composer require laravel/telescope --dev
+php artisan telescope:install
+php artisan migrate
+
+# Access at: /telescope</code></pre>
+            </div>
+
+            <h3>Laravel Debugbar</h3>
+            <div class="code-example">
+                <pre><code class="language-bash"># Install Debugbar
+composer require barryvdh/laravel-debugbar --dev</code></pre>
+            </div>
+
+            <h3>Ray Debug Tool</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Install Ray
+// composer require spatie/laravel-ray
+
+// Basic usage
+ray('Hello world');
+ray($user, $order, $product);
+
+// Colors
+ray('Info')->blue();
+ray('Warning')->orange();
+ray('Error')->red();
+
+// Display types
+ray()->table($users);
+ray()->json($data);
+
+// Performance measurement
+ray()->measure();
+// ... code to measure
+ray()->measure(); // Shows elapsed time
+
+// Count function calls
+ray()->count('iteration');
+
+// Pause execution
+ray()->pause();</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Tool Selection:</strong> Use Telescope for comprehensive monitoring, Debugbar for quick insights, and Ray for advanced debugging workflows.
+            </div>
+        </section>
+
+        <!-- Code Review -->
+        <section id="code-review" class="topic-section">
+            <h2>9. Code Review Practices</h2>
+
+            <h3>Code Review Checklist</h3>
+            <div class="code-example">
+                <pre><code class="language-plaintext">FUNCTIONALITY:
+☐ Does the code do what it's supposed to do?
+☐ Are there any edge cases not handled?
+☐ Is error handling appropriate?
+☐ Are there any security vulnerabilities?
+
+CODE QUALITY:
+☐ Is the code readable and maintainable?
+☐ Are variables and functions well-named?
+☐ Is there unnecessary code duplication?
+☐ Are functions/methods doing one thing?
+
+TESTING:
+☐ Are there appropriate tests?
+☐ Do tests cover edge cases?
+☐ Do all tests pass?
+
+PERFORMANCE:
+☐ Are there any performance issues?
+☐ Are database queries optimized?
+☐ Are there N+1 query issues?
+
+SECURITY:
+☐ Is user input properly validated?
+☐ Are SQL injection risks mitigated?
+☐ Are XSS vulnerabilities prevented?
+☐ Is authentication/authorization correct?</code></pre>
+            </div>
+
+            <h3>Common Code Smells</h3>
+            <ul>
+                <li><strong>Long Methods:</strong> Methods over 20-30 lines should be split</li>
+                <li><strong>Large Classes:</strong> Classes with too many responsibilities</li>
+                <li><strong>Duplicate Code:</strong> Copy-pasted code blocks</li>
+                <li><strong>Magic Numbers:</strong> Unexplained numeric constants</li>
+                <li><strong>Deep Nesting:</strong> More than 3-4 levels of indentation</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>💡 Code Review Goals:</strong> The goal is to improve code quality and share knowledge, not to criticize. Be respectful, specific, and constructive.
+            </div>
+        </section>
+
+        <!-- Error Handling -->
+        <section id="error-handling" class="topic-section">
+            <h2>10. Error Handling</h2>
+
+            <h3>Exception Handling Basics</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+try {
+    $result = $service->processPayment($amount);
+} catch (PaymentFailedException $e) {
+    \Log::error('Payment failed', [
+        'amount' => $amount,
+        'error' => $e->getMessage(),
+    ]);
+    
+    return response()->json([
+        'error' => 'Payment processing failed',
+    ], 402);
+} catch (\Exception $e) {
+    \Log::error('Unexpected error', ['error' => $e->getMessage()]);
+    
+    return response()->json([
+        'error' => 'An unexpected error occurred',
+    ], 500);
+} finally {
+    $this->cleanup();
+}</code></pre>
+            </div>
+
+            <h3>Custom Exceptions</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Exceptions;
+
+use Exception;
+
+class InsufficientFundsException extends Exception
+{
+    protected $code = 402;
+    
+    public function __construct(
+        public readonly float $required,
+        public readonly float $available
+    ) {
+        parent::__construct(
+            "Insufficient funds. Required: {$required}, Available: {$available}"
+        );
+    }
+    
+    public function render($request)
+    {
+        return response()->json([
+            'error' => 'Insufficient funds',
+            'required' => $this->required,
+            'available' => $this->available,
+        ], $this->code);
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Security Note:</strong> Never expose detailed error messages or stack traces in production. Log detailed errors server-side and return generic messages to users.
+            </div>
+        </section>
+
+        <!-- Logging -->
+        <section id="logging" class="topic-section">
+            <h2>11. Logging Strategies</h2>
+
+            <h3>Log Levels</h3>
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Use Case</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>DEBUG</strong></td>
+                    <td>Detailed debug information</td>
+                    <td>Variable values, function calls</td>
+                </tr>
+                <tr>
+                    <td><strong>INFO</strong></td>
+                    <td>Informational messages</td>
+                    <td>User login, order created</td>
+                </tr>
+                <tr>
+                    <td><strong>WARNING</strong></td>
+                    <td>Warning messages</td>
+                    <td>Deprecated API usage</td>
+                </tr>
+                <tr>
+                    <td><strong>ERROR</strong></td>
+                    <td>Error conditions</td>
+                    <td>Failed API calls, exceptions</td>
+                </tr>
+                <tr>
+                    <td><strong>CRITICAL</strong></td>
+                    <td>Critical conditions</td>
+                    <td>Application component unavailable</td>
+                </tr>
+            </table>
+
+            <h3>Logging in Laravel</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+use Illuminate\Support\Facades\Log;
+
+// Using different log levels
+Log::debug('Debug information', ['variable' => $value]);
+Log::info('User logged in', ['user_id' => $user->id]);
+Log::warning('API rate limit approaching');
+Log::error('Payment failed', ['error' => $e->getMessage()]);
+Log::critical('Database connection lost');
+
+// Contextual logging
+Log::withContext([
+    'user_id' => auth()->id(),
+    'ip' => request()->ip(),
+]);
+
+Log::info('Action performed');
+
+// Channel-specific logging
+Log::channel('slack')->error('Critical error occurred');
+Log::stack(['single', 'slack'])->info('Important message');</code></pre>
+            </div>
+
+            <h3>Structured Logging</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Good: Structured logging
+Log::info('Order created', [
+    'order_id' => $order->id,
+    'user_id' => $order->user_id,
+    'total' => $order->total,
+    'items_count' => $order->items->count(),
+]);
+
+// Bad: Unstructured logging
+Log::info("Order {$order->id} created by user {$order->user_id}");</code></pre>
+            </div>
+        </section>
+
+        <!-- Monitoring -->
+        <section id="monitoring" class="topic-section">
+            <h2>12. Monitoring & Observability</h2>
+
+            <h3>Application Performance Monitoring (APM)</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// New Relic
+// composer require philkra/elastic-apm-laravel
+
+// Sentry Integration
+// composer require sentry/sentry-laravel
+
+// config/sentry.php
+return [
+    'dsn' => env('SENTRY_LARAVEL_DSN'),
+    'traces_sample_rate' => 1.0,
+    'profiles_sample_rate' => 1.0,
+];
+
+// Custom monitoring
+use Sentry\State\Scope;
+
+\Sentry\configureScope(function (Scope $scope) {
+    $scope->setUser([
+        'id' => auth()->id(),
+        'email' => auth()->user()->email,
+    ]);
+});
+
+// Capture custom events
+\Sentry\captureMessage('Something went wrong', 'warning');</code></pre>
+            </div>
+
+            <h3>Health Checks</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
+
+class HealthCheckController extends Controller
+{
+    public function index()
+    {
+        $checks = [
+            'database' => $this->checkDatabase(),
+            'cache' => $this->checkCache(),
+            'redis' => $this->checkRedis(),
+        ];
+        
+        $healthy = !in_array(false, $checks);
+        
+        return response()->json([
+            'status' => $healthy ? 'healthy' : 'unhealthy',
+            'checks' => $checks,
+        ], $healthy ? 200 : 503);
+    }
+    
+    private function checkDatabase(): bool
+    {
+        try {
+            DB::connection()->getPdo();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    
+    private function checkCache(): bool
+    {
+        try {
+            Cache::put('health_check', true, 10);
+            return Cache::get('health_check') === true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    
+    private function checkRedis(): bool
+    {
+        try {
+            Redis::ping();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h3>Metrics and Alerts</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Custom metrics
+use Illuminate\Support\Facades\Log;
+
+class MetricsLogger
+{
+    public static function recordOrderCreated(Order $order)
+    {
+        Log::channel('metrics')->info('order.created', [
+            'order_id' => $order->id,
+            'total' => $order->total,
+            'items' => $order->items->count(),
+        ]);
+    }
+    
+    public static function recordApiCall(string $endpoint, int $duration)
+    {
+        Log::channel('metrics')->info('api.call', [
+            'endpoint' => $endpoint,
+            'duration_ms' => $duration,
+        ]);
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Profiling -->
+        <section id="performance-profiling" class="topic-section">
+            <h2>13. Performance Profiling</h2>
+
+            <h3>Query Performance Analysis</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Identify slow queries
+DB::listen(function ($query) {
+    if ($query->time > 100) { // Queries slower than 100ms
+        Log::warning('Slow query detected', [
+            'sql' => $query->sql,
+            'bindings' => $query->bindings,
+            'time' => $query->time,
+        ]);
+    }
+});
+
+// EXPLAIN queries
+$users = User::where('status', 'active');
+$explain = DB::select('EXPLAIN ' . $users->toSql(), $users->getBindings());
+dd($explain);</code></pre>
+            </div>
+
+            <h3>Profiling with Blackfire</h3>
+            <div class="code-example">
+                <pre><code class="language-bash"># Install Blackfire
+# Follow: https://blackfire.io/docs/up-and-running/installation
+
+# Profile a request
+blackfire curl https://yourapp.com/api/endpoint
+
+# Profile artisan command
+blackfire run php artisan your:command</code></pre>
+            </div>
+
+            <h3>Memory Profiling</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Memory usage tracking
+$startMemory = memory_get_usage();
+
+// Your code here
+$users = User::all();
+
+$endMemory = memory_get_usage();
+$memoryUsed = ($endMemory - $startMemory) / 1024 / 1024;
+
+Log::info('Memory usage', [
+    'mb' => $memoryUsed,
+    'peak_mb' => memory_get_peak_usage(true) / 1024 / 1024,
+]);</code></pre>
+            </div>
+
+            <h3>Response Time Monitoring</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class PerformanceMonitor
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $start = microtime(true);
+        
+        $response = $next($request);
+        
+        $duration = (microtime(true) - $start) * 1000;
+        
+        if ($duration > 1000) { // Log slow requests
+            \Log::warning('Slow request detected', [
+                'url' => $request->fullUrl(),
+                'method' => $request->method(),
+                'duration_ms' => $duration,
+            ]);
+        }
+        
+        $response->headers->set('X-Response-Time', $duration . 'ms');
+        
+        return $response;
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Optimization -->
+        <section id="optimization" class="topic-section">
+            <h2>14. Code Optimization Strategies</h2>
+
+            <h3>Database Query Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// ❌ Bad: N+1 Query Problem
+$posts = Post::all();
+foreach ($posts as $post) {
+    echo $post->user->name; // Triggers separate query for each post
+}
+
+// ✅ Good: Eager Loading
+$posts = Post::with('user')->get();
+foreach ($posts as $post) {
+    echo $post->user->name; // No additional queries
+}
+
+// ❌ Bad: Loading unnecessary data
+$users = User::all();
+
+// ✅ Good: Select only needed columns
+$users = User::select('id', 'name', 'email')->get();
+
+// ❌ Bad: Not using indexes
+User::where('email', 'user@example.com')->first();
+// Make sure 'email' column has index
+
+// ✅ Good: Chunk large datasets
+User::chunk(100, function ($users) {
+    foreach ($users as $user) {
+        // Process user
+    }
+});</code></pre>
+            </div>
+
+            <h3>Caching Strategies</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// Cache database queries
+$users = Cache::remember('users.active', 3600, function () {
+    return User::where('active', true)->get();
+});
+
+// Cache API responses
+public function getProducts()
+{
+    return Cache::tags(['products'])->remember('products.all', 3600, function () {
+        return $this->apiClient->fetchProducts();
+    });
+}
+
+// Invalidate cache when data changes
+public function updateProduct(Product $product, array $data)
+{
+    $product->update($data);
+    Cache::tags(['products'])->flush();
+}
+
+// Fragment caching in views
+@cache('widget.popular-posts', 3600)
+    @include('widgets.popular-posts')
+@endcache</code></pre>
+            </div>
+
+            <h3>Optimization Best Practices</h3>
+            <ul>
+                <li><strong>Use Eager Loading:</strong> Prevent N+1 queries with with() and load()</li>
+                <li><strong>Cache Expensive Operations:</strong> Cache database queries, API calls, and computed values</li>
+                <li><strong>Optimize Images:</strong> Compress and resize images, use CDN</li>
+                <li><strong>Use Queue for Heavy Tasks:</strong> Move time-consuming operations to background jobs</li>
+                <li><strong>Database Indexing:</strong> Add indexes to frequently queried columns</li>
+                <li><strong>Lazy Loading:</strong> Use lazy() for large collections to reduce memory usage</li>
+                <li><strong>Response Compression:</strong> Enable GZIP compression for responses</li>
+                <li><strong>Asset Optimization:</strong> Minify CSS/JS, use asset bundling</li>
+            </ul>
+
+            <h3>Code-Level Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-php">&lt;?php
+
+// ❌ Bad: Inefficient loop
+$total = 0;
+foreach ($orders as $order) {
+    $total += $order->total;
+}
+
+// ✅ Good: Use collection methods
+$total = $orders->sum('total');
+
+// ❌ Bad: Multiple queries in loop
+foreach ($userIds as $userId) {
+    $user = User::find($userId);
+    // Process user
+}
+
+// ✅ Good: Single query
+$users = User::whereIn('id', $userIds)->get();
+foreach ($users as $user) {
+    // Process user
+}
+
+// ❌ Bad: Loading entire collection
+if (Post::all()->count() > 100) {
+    // ...
+}
+
+// ✅ Good: Use count query
+if (Post::count() > 100) {
+    // ...
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Optimization Principle:</strong> Measure first, optimize second. Use profiling tools to identify actual bottlenecks before optimizing.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>📚 Laravel Interview Bank - Testing & Debugging Guide</p>
+        <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">Master testing strategies, debugging techniques, and optimization practices</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
