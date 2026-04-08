@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Technologies - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem 2rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.1rem; opacity: 0.9; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .back-link { display: inline-block; margin-bottom: 2rem; padding: 0.75rem 1.5rem; background: #667eea; color: white; text-decoration: none; border-radius: 6px; transition: all 0.3s; }
+        .back-link:hover { background: #5568d3; transform: translateY(-2px); }
+        .toc { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .toc h2 { color: #667eea; margin-bottom: 1rem; }
+        .toc ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.5rem; }
+        .toc a { color: #764ba2; text-decoration: none; padding: 0.5rem; display: block; border-radius: 4px; transition: all 0.2s; }
+        .toc a:hover { background: #f0f0f0; padding-left: 1rem; }
+        .topic-section { background: white; border-radius: 8px; padding: 2.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .topic-section h2 { color: #667eea; font-size: 2rem; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 3px solid #667eea; }
+        .topic-section h3 { color: #764ba2; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; }
+        .topic-section h4 { color: #555; font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .topic-section p { margin-bottom: 1rem; color: #555; }
+        .topic-section ul, .topic-section ol { margin-left: 2rem; margin-bottom: 1rem; }
+        .topic-section li { margin-bottom: 0.5rem; color: #555; }
+        .code-example { margin: 1.5rem 0; border-radius: 8px; overflow: hidden; }
+        .code-example pre { margin: 0; border-radius: 8px; }
+        .code-example code { font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 0.9rem; }
+        .demo-box { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+        .demo-box h4 { margin-top: 0; color: #667eea; }
+        .info-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 4px; }
+        .warning-box { background: #fff3e0; border-left: 4px solid #ff9800; padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 4px; }
+        .success-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; font-weight: 600; }
+        tr:hover { background: #f5f5f5; }
+        footer { background: #333; color: white; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .btn { display: inline-block; padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer; margin: 0.25rem; }
+        .btn:hover { background: #5568d3; }
+        input[type="text"], input[type="email"], input[type="password"] { padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; margin: 0.25rem; width: 200px; }
+        .checkbox-demo { margin: 1rem 0; }
+        .checkbox-demo label { display: block; margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌐 Web Technologies</h1>
+        <p>Complete guide to HTML5, CSS3, JavaScript, jQuery, AJAX, DOM, Events & More</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#html5">1. HTML5 Features</a></li>
+                <li><a href="#semantic-html">2. Semantic HTML</a></li>
+                <li><a href="#css3">3. CSS3 & Responsive Design</a></li>
+                <li><a href="#javascript-fundamentals">4. JavaScript Fundamentals</a></li>
+                <li><a href="#dom-manipulation">5. DOM Manipulation</a></li>
+                <li><a href="#event-handling">6. Event Handling</a></li>
+                <li><a href="#event-delegation">7. Event Delegation & Bubbling</a></li>
+                <li><a href="#ajax">8. AJAX Patterns</a></li>
+                <li><a href="#jquery">9. jQuery</a></li>
+                <li><a href="#promises">10. Promises</a></li>
+                <li><a href="#async-await">11. Async/Await</a></li>
+                <li><a href="#form-validation">12. Form Validation</a></li>
+                <li><a href="#frontend-optimization">13. Frontend Optimization</a></li>
+            </ul>
+        </div>
+
+        <section id="html5" class="topic-section">
+            <h2>1. HTML5 Features</h2>
+            
+            <h3>New Semantic Elements</h3>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;HTML5 Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;nav&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#home"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#about"&gt;About&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+    
+    &lt;main&gt;
+        &lt;article&gt;
+            &lt;h1&gt;Article Title&lt;/h1&gt;
+            &lt;section&gt;
+                &lt;h2&gt;Section Heading&lt;/h2&gt;
+                &lt;p&gt;Content goes here...&lt;/p&gt;
+            &lt;/section&gt;
+        &lt;/article&gt;
+        
+        &lt;aside&gt;
+            &lt;h3&gt;Related Links&lt;/h3&gt;
+        &lt;/aside&gt;
+    &lt;/main&gt;
+    
+    &lt;footer&gt;
+        &lt;p&gt;&copy; 2024 Company Name&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <h3>Multimedia Elements</h3>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Video --&gt;
+&lt;video width="640" height="360" controls&gt;
+    &lt;source src="video.mp4" type="video/mp4"&gt;
+    &lt;source src="video.webm" type="video/webm"&gt;
+    Your browser doesn't support video.
+&lt;/video&gt;
+
+&lt;!-- Audio --&gt;
+&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio.ogg" type="audio/ogg"&gt;
+&lt;/audio&gt;
+
+&lt;!-- Canvas --&gt;
+&lt;canvas id="myCanvas" width="400" height="300"&gt;&lt;/canvas&gt;
+
+&lt;script&gt;
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+// Draw rectangle
+ctx.fillStyle = '#667eea';
+ctx.fillRect(50, 50, 200, 100);
+
+// Draw circle
+ctx.beginPath();
+ctx.arc(200, 150, 50, 0, 2 * Math.PI);
+ctx.fillStyle = '#764ba2';
+ctx.fill();
+
+// Draw text
+ctx.font = '30px Arial';
+ctx.fillStyle = '#333';
+ctx.fillText('HTML5 Canvas', 50, 250);
+&lt;/script&gt;</code></pre>
+            </div>
+
+            <h3>New Input Types</h3>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;form&gt;
+    &lt;input type="email" placeholder="Enter email" required&gt;
+    &lt;input type="url" placeholder="Enter URL"&gt;
+    &lt;input type="number" min="1" max="100" step="1"&gt;
+    &lt;input type="range" min="0" max="100" value="50"&gt;
+    &lt;input type="date"&gt;
+    &lt;input type="time"&gt;
+    &lt;input type="color" value="#667eea"&gt;
+    &lt;input type="search" placeholder="Search..."&gt;
+    &lt;input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"&gt;
+&lt;/form&gt;</code></pre>
+            </div>
+
+            <h3>Local Storage & Session Storage</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Local Storage - persists after browser close
+localStorage.setItem('username', 'john_doe');
+localStorage.setItem('theme', 'dark');
+
+const username = localStorage.getItem('username');
+console.log(username); // 'john_doe'
+
+localStorage.removeItem('username');
+localStorage.clear();
+
+// Storing objects
+const user = { name: 'John', age: 30, email: 'john@example.com' };
+localStorage.setItem('user', JSON.stringify(user));
+
+const storedUser = JSON.parse(localStorage.getItem('user'));
+console.log(storedUser.name); // 'John'
+
+// Session Storage - cleared when tab closes
+sessionStorage.setItem('sessionId', 'abc123');
+const sessionId = sessionStorage.getItem('sessionId');
+
+// Storage event listener
+window.addEventListener('storage', function(e) {
+    console.log('Storage changed:', e.key, e.newValue);
+});</code></pre>
+            </div>
+
+            <h3>Geolocation API</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+            
+            console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+            console.log(`Accuracy: ${accuracy} meters`);
+        },
+        function(error) {
+            console.error('Error:', error.message);
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        }
+    );
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="semantic-html" class="topic-section">
+            <h2>2. Semantic HTML</h2>
+            
+            <p>Semantic HTML uses meaningful tags that describe the content's purpose, improving accessibility, SEO, and code maintainability.</p>
+
+            <h3>Semantic vs Non-Semantic Elements</h3>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Non-Semantic (BAD) --&gt;
+&lt;div class="header"&gt;
+    &lt;div class="nav"&gt;
+        &lt;div class="nav-item"&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="content"&gt;
+    &lt;div class="post"&gt;
+        &lt;div class="title"&gt;Article Title&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Semantic (GOOD) --&gt;
+&lt;header&gt;
+    &lt;nav&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+    &lt;article&gt;
+        &lt;h1&gt;Article Title&lt;/h1&gt;
+        &lt;p&gt;Article content...&lt;/p&gt;
+    &lt;/article&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;/footer&gt;</code></pre>
+            </div>
+
+            <h3>Complete Semantic Structure</h3>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;article&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Understanding Semantic HTML&lt;/h1&gt;
+        &lt;p&gt;
+            &lt;time datetime="2024-01-15"&gt;January 15, 2024&lt;/time&gt;
+            by &lt;address&gt;&lt;a href="mailto:john@example.com"&gt;John Doe&lt;/a&gt;&lt;/address&gt;
+        &lt;/p&gt;
+    &lt;/header&gt;
+    
+    &lt;section&gt;
+        &lt;h2&gt;Introduction&lt;/h2&gt;
+        &lt;p&gt;Main content goes here...&lt;/p&gt;
+        
+        &lt;figure&gt;
+            &lt;img src="diagram.png" alt="HTML Structure Diagram"&gt;
+            &lt;figcaption&gt;Figure 1: HTML5 semantic structure&lt;/figcaption&gt;
+        &lt;/figure&gt;
+    &lt;/section&gt;
+    
+    &lt;aside&gt;
+        &lt;h3&gt;Related Articles&lt;/h3&gt;
+        &lt;nav&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#"&gt;CSS Best Practices&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/aside&gt;
+    
+    &lt;footer&gt;
+        &lt;p&gt;Last updated: &lt;time datetime="2024-01-20"&gt;January 20, 2024&lt;/time&gt;&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/article&gt;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Benefits of Semantic HTML:</strong>
+                <ul>
+                    <li><strong>Accessibility:</strong> Screen readers can navigate content better</li>
+                    <li><strong>SEO:</strong> Search engines understand content structure</li>
+                    <li><strong>Maintainability:</strong> Code is self-documenting</li>
+                    <li><strong>Consistency:</strong> Standard meaning across browsers</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="css3" class="topic-section">
+            <h2>3. CSS3 & Responsive Design</h2>
+            
+            <h3>Flexbox Layout</h3>
+            <div class="code-example">
+                <pre><code class="language-css">/* Flexbox Container */
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Flexbox Items */
+.item {
+    flex: 1 1 300px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 300px;
+    align-self: flex-start;
+    order: 2;
+}
+
+/* Practical Example */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}</code></pre>
+            </div>
+
+            <h3>Grid Layout</h3>
+            <div class="code-example">
+                <pre><code class="language-css">/* Grid Container */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+    grid-template-areas:
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+}
+
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.footer { grid-area: footer; }
+
+/* Responsive Grid */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}</code></pre>
+            </div>
+
+            <h3>Media Queries & Responsive Design</h3>
+            <div class="code-example">
+                <pre><code class="language-css">/* Mobile First */
+.container {
+    width: 100%;
+    padding: 1rem;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+        margin: 0 auto;
+    }
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 960px;
+    }
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #333;
+        color: #fff;
+    }
+}</code></pre>
+            </div>
+
+            <h3>CSS3 Features</h3>
+            <div class="code-example">
+                <pre><code class="language-css">/* Transitions */
+.button {
+    background: #667eea;
+    transition: all 0.3s ease;
+}
+.button:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.animated {
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Gradients */
+.gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* CSS Variables */
+:root {
+    --primary-color: #667eea;
+    --spacing: 1rem;
+}
+.element {
+    color: var(--primary-color);
+    padding: var(--spacing);
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="javascript-fundamentals" class="topic-section">
+            <h2>4. JavaScript Fundamentals</h2>
+            
+            <h3>Variables and Data Types</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// var, let, const
+let newWay = 'block-scoped';
+const constant = 'cannot reassign';
+
+// Primitive types
+const string = 'Hello World';
+const number = 42;
+const boolean = true;
+const nullValue = null;
+const undefinedValue = undefined;
+
+// Reference types
+const object = { name: 'John', age: 30 };
+const array = [1, 2, 3, 4, 5];
+
+// Template literals
+const name = 'John';
+const greeting = `Hello, ${name}!`;
+
+// Destructuring
+const { name: userName, age } = object;
+const [first, second, ...rest] = array;
+
+// Spread operator
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combined = [...arr1, ...arr2];
+
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+const merged = { ...obj1, ...obj2 };</code></pre>
+            </div>
+
+            <h3>Functions</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Function declaration
+function add(a, b) {
+    return a + b;
+}
+
+// Arrow function
+const multiply = (a, b) => a * b;
+const square = x => x * x;
+
+// Default parameters
+function greetUser(name = 'Guest') {
+    return `Welcome, ${name}!`;
+}
+
+// Rest parameters
+function sum(...numbers) {
+    return numbers.reduce((total, num) => total + num, 0);
+}
+
+// Closures
+function createCounter() {
+    let count = 0;
+    return {
+        increment() { return ++count; },
+        decrement() { return --count; },
+        getCount() { return count; }
+    };
+}
+
+const counter = createCounter();
+console.log(counter.increment()); // 1
+console.log(counter.increment()); // 2</code></pre>
+            </div>
+
+            <h3>Classes</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// ES6 Classes
+class User {
+    constructor(name, email) {
+        this.name = name;
+        this.email = email;
+    }
+    
+    greet() {
+        return `Hello, I'm ${this.name}`;
+    }
+    
+    get displayName() {
+        return this.name.toUpperCase();
+    }
+    
+    static create(name, email) {
+        return new User(name, email);
+    }
+}
+
+// Inheritance
+class Admin extends User {
+    constructor(name, email, role) {
+        super(name, email);
+        this.role = role;
+    }
+    
+    greet() {
+        return `${super.greet()}, I'm an ${this.role}`;
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="dom-manipulation" class="topic-section">
+            <h2>5. DOM Manipulation</h2>
+            
+            <h3>Selecting Elements</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Single element selectors
+const elementById = document.getElementById('myId');
+const elementByQuery = document.querySelector('.myClass');
+
+// Multiple elements selectors
+const elementsByClass = document.getElementsByClassName('myClass');
+const elementsByQuery = document.querySelectorAll('.myClass');
+
+// Convert to Array
+const elementsArray = Array.from(elementsByQuery);
+const elementsSpread = [...elementsByQuery];
+
+// Relative selectors
+const parent = element.parentElement;
+const children = element.children;
+const nextSibling = element.nextElementSibling;
+
+// Closest parent
+const closestDiv = element.closest('div');</code></pre>
+            </div>
+
+            <h3>Creating and Modifying Elements</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Creating elements
+const div = document.createElement('div');
+const text = document.createTextNode('Hello');
+
+// Setting attributes
+div.id = 'myDiv';
+div.className = 'container active';
+div.setAttribute('data-id', '123');
+
+// Data attributes
+div.dataset.userId = '456';
+console.log(div.dataset.userId); // '456'
+
+// Class manipulation
+div.classList.add('new-class');
+div.classList.remove('old-class');
+div.classList.toggle('active');
+div.classList.contains('active');
+
+// Content manipulation
+div.textContent = 'Plain text';
+div.innerHTML = '<strong>HTML content</strong>';
+
+// Style manipulation
+div.style.color = 'blue';
+div.style.backgroundColor = '#f0f0f0';
+div.style.cssText = 'color: blue; background: #f0f0f0;';
+
+// Get computed styles
+const styles = window.getComputedStyle(div);
+console.log(styles.color);</code></pre>
+            </div>
+
+            <h3>Adding and Removing Elements</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Appending elements
+const parent = document.getElementById('parent');
+const child = document.createElement('div');
+
+parent.appendChild(child);
+parent.append(child, 'text', otherElement);
+parent.prepend(child);
+
+sibling.before(child);
+sibling.after(child);
+
+// Insert HTML
+parent.insertAdjacentHTML('beforebegin', '<div>Before</div>');
+parent.insertAdjacentHTML('afterbegin', '<div>First child</div>');
+parent.insertAdjacentHTML('beforeend', '<div>Last child</div>');
+parent.insertAdjacentHTML('afterend', '<div>After</div>');
+
+// Removing elements
+child.remove();
+parent.removeChild(child);
+
+// Replacing elements
+oldChild.replaceWith(newChild);
+
+// Cloning elements
+const clone = element.cloneNode(false); // Shallow
+const deepClone = element.cloneNode(true); // Deep
+
+// DocumentFragment for performance
+const fragment = document.createDocumentFragment();
+for (let i = 0; i < 1000; i++) {
+    const li = document.createElement('li');
+    li.textContent = `Item ${i}`;
+    fragment.appendChild(li);
+}
+list.appendChild(fragment);</code></pre>
+            </div>
+        </section>
+
+        <section id="event-handling" class="topic-section">
+            <h2>6. Event Handling</h2>
+            
+            <h3>Adding Event Listeners</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Basic event listener
+const button = document.getElementById('myButton');
+
+button.addEventListener('click', function(event) {
+    console.log('Button clicked!', event);
+});
+
+// Arrow function
+button.addEventListener('click', (e) => {
+    console.log('Clicked!', e.target);
+});
+
+// Named function
+function handleClick(event) {
+    console.log('Handling click');
+}
+button.addEventListener('click', handleClick);
+
+// Remove event listener
+button.removeEventListener('click', handleClick);
+
+// Event options
+button.addEventListener('click', handleClick, {
+    once: true,      // Run only once
+    passive: true,   // Won't call preventDefault()
+    capture: false   // Use capturing phase
+});
+
+// Common events
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded');
+});
+
+window.addEventListener('load', () => {
+    console.log('Page fully loaded');
+});
+
+window.addEventListener('scroll', () => {
+    console.log('Scrolling...', window.scrollY);
+});</code></pre>
+            </div>
+
+            <h3>Event Object</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">element.addEventListener('click', function(event) {
+    // Event properties
+    console.log(event.type);           // 'click'
+    console.log(event.target);         // Triggered element
+    console.log(event.currentTarget);  // Element with listener
+    
+    // Mouse events
+    console.log(event.clientX, event.clientY);
+    console.log(event.pageX, event.pageY);
+    console.log(event.button); // 0=left, 1=middle, 2=right
+    
+    // Keyboard events
+    console.log(event.key);      // 'a', 'Enter'
+    console.log(event.code);     // 'KeyA', 'Enter'
+    console.log(event.ctrlKey);  // Ctrl pressed
+    console.log(event.shiftKey); // Shift pressed
+    
+    // Event methods
+    event.preventDefault();
+    event.stopPropagation();
+});
+
+// Keyboard example
+input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+    }
+    
+    if (e.ctrlKey && e.key === 's') {
+        console.log('Ctrl+S pressed');
+        e.preventDefault();
+    }
+});</code></pre>
+            </div>
+
+            <h3>Debouncing and Throttling</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// DEBOUNCING - Execute after delay
+function debounce(func, delay) {
+    let timeoutId;
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}
+
+// Usage: Search input
+const debouncedSearch = debounce(function(e) {
+    console.log('Searching:', e.target.value);
+}, 300);
+
+searchInput.addEventListener('input', debouncedSearch);
+
+// THROTTLING - Execute at most once per period
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => {
+                inThrottle = false;
+            }, limit);
+        }
+    };
+}
+
+// Usage: Scroll event
+const throttledScroll = throttle(function() {
+    console.log('Scroll:', window.scrollY);
+}, 200);
+
+window.addEventListener('scroll', throttledScroll);</code></pre>
+            </div>
+        </section>
+
+        <section id="event-delegation" class="topic-section">
+            <h2>7. Event Delegation & Bubbling</h2>
+            
+            <h3>Event Bubbling and Capturing</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Event bubbling (default)
+const outer = document.getElementById('outer');
+const inner = document.getElementById('inner');
+const button = document.getElementById('button');
+
+// Bubbling phase
+outer.addEventListener('click', () => console.log('Outer'));
+inner.addEventListener('click', () => console.log('Inner'));
+button.addEventListener('click', () => console.log('Button'));
+
+// Output: Button -> Inner -> Outer
+
+// Capturing phase
+outer.addEventListener('click', () => console.log('Outer (capture)'), true);
+
+// Stop propagation
+inner.addEventListener('click', (e) => {
+    console.log('Inner - stopped');
+    e.stopPropagation();
+});
+
+// Prevent default
+link.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Link clicked but not followed');
+});</code></pre>
+            </div>
+
+            <h3>Event Delegation</h3>
+            <p>Event delegation uses bubbling to handle events on multiple child elements with a single listener on a parent. More efficient and works for dynamically added elements.</p>
+            
+            <div class="code-example">
+                <pre><code class="language-javascript">// BAD: Adding listener to each item
+const items = document.querySelectorAll('.item');
+items.forEach(item => {
+    item.addEventListener('click', handleItemClick);
+});
+
+// GOOD: Event delegation
+const list = document.getElementById('itemList');
+
+list.addEventListener('click', function(e) {
+    // Check if clicked element matches
+    if (e.target.matches('.item')) {
+        handleItemClick(e);
+    }
+    
+    // Or use closest for nested elements
+    const item = e.target.closest('.item');
+    if (item && list.contains(item)) {
+        handleItemClick(e, item);
+    }
+});
+
+// Practical: Todo list
+const todoList = document.getElementById('todoList');
+
+todoList.addEventListener('click', function(e) {
+    const target = e.target;
+    
+    // Delete button
+    if (target.matches('.delete-btn')) {
+        target.closest('li').remove();
+    }
+    
+    // Checkbox
+    if (target.matches('.todo-checkbox')) {
+        target.closest('li').classList.toggle('completed');
+    }
+    
+    // Edit button
+    if (target.matches('.edit-btn')) {
+        const li = target.closest('li');
+        const text = li.querySelector('.todo-text');
+        const newText = prompt('Edit:', text.textContent);
+        if (newText) text.textContent = newText;
+    }
+});
+
+// Add todo dynamically (works with delegation)
+function addTodo(text) {
+    const li = document.createElement('li');
+    li.innerHTML = `
+        <input type="checkbox" class="todo-checkbox">
+        <span class="todo-text">${text}</span>
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn">Delete</button>
+    `;
+    todoList.appendChild(li);
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="ajax" class="topic-section">
+            <h2>8. AJAX Patterns</h2>
+            
+            <h3>XMLHttpRequest</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Basic GET request
+const xhr = new XMLHttpRequest();
+
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        console.log('Success:', data);
+    }
+};
+
+xhr.open('GET', '/api/users', true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send();
+
+// POST request
+const xhrPost = new XMLHttpRequest();
+
+xhrPost.onload = function() {
+    if (xhrPost.status === 200) {
+        console.log('Response:', xhrPost.responseText);
+    }
+};
+
+xhrPost.open('POST', '/api/users', true);
+xhrPost.setRequestHeader('Content-Type', 'application/json');
+
+const userData = {
+    name: 'John Doe',
+    email: 'john@example.com'
+};
+
+xhrPost.send(JSON.stringify(userData));</code></pre>
+            </div>
+
+            <h3>Fetch API</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Basic GET request
+fetch('/api/users')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Users:', data);
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
+
+// Async/await version
+async function fetchUsers() {
+    try {
+        const response = await fetch('/api/users');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
+// POST request
+async function createUser(userData) {
+    const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer token123'
+        },
+        body: JSON.stringify(userData)
+    });
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+}
+
+// PUT request
+async function updateUser(userId, updates) {
+    const response = await fetch(`/api/users/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates)
+    });
+    
+    return await response.json();
+}
+
+// DELETE request
+async function deleteUser(userId) {
+    const response = await fetch(`/api/users/${userId}`, {
+        method: 'DELETE'
+    });
+    
+    if (response.ok) {
+        console.log('User deleted');
+    }
+}
+
+// Timeout
+async function fetchWithTimeout(url, timeout = 5000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    
+    try {
+        const response = await fetch(url, {
+            signal: controller.signal
+        });
+        clearTimeout(id);
+        return response;
+    } catch (error) {
+        clearTimeout(id);
+        throw error;
+    }
+}
+
+// Parallel requests
+async function fetchMultiple() {
+    const [users, posts, comments] = await Promise.all([
+        fetch('/api/users').then(r => r.json()),
+        fetch('/api/posts').then(r => r.json()),
+        fetch('/api/comments').then(r => r.json())
+    ]);
+    
+    return { users, posts, comments };
+}</code></pre>
+            </div>
+
+            <h3>CORS Handling</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// CORS request with credentials
+fetch('https://api.example.com/data', {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('CORS error:', error));
+
+// Handle CORS errors
+async function fetchWithCORS(url) {
+    try {
+        const response = await fetch(url, {
+            mode: 'cors',
+            credentials: 'same-origin'
+        });
+        return await response.json();
+    } catch (error) {
+        if (error.message.includes('CORS')) {
+            console.error('CORS blocked:', url);
+        }
+        throw error;
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="jquery" class="topic-section">
+            <h2>9. jQuery</h2>
+            
+            <h3>Selectors and DOM Manipulation</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// jQuery selectors
+$('#myId');              // By ID
+$('.myClass');           // By class
+$('div');                // By tag
+$('[name="email"]');     // By attribute
+
+// DOM manipulation
+$('#content').text('New text');
+$('#content').html('<strong>HTML</strong>');
+$('#input').val('input value');
+
+// Get values
+const text = $('#content').text();
+const html = $('#content').html();
+const value = $('#input').val();
+
+// Attributes
+$('img').attr('src', 'image.jpg');
+const src = $('img').attr('src');
+
+// Data attributes
+$('#element').data('userId', '123');
+const userId = $('#element').data('userId');
+
+// CSS and classes
+$('.box').addClass('active');
+$('.box').removeClass('active');
+$('.box').toggleClass('active');
+const hasClass = $('.box').hasClass('active');
+
+$('.box').css('color', 'red');
+$('.box').css({
+    color: 'red',
+    backgroundColor: 'blue'
+});
+
+// Show/hide
+$('.element').show();
+$('.element').hide();
+$('.element').toggle();
+$('.element').fadeIn();
+$('.element').fadeOut();</code></pre>
+            </div>
+
+            <h3>Event Handling</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Click event
+$('#button').click(function() {
+    console.log('Clicked!');
+});
+
+// On method (preferred)
+$('#button').on('click', function(e) {
+    console.log('Clicked!', e);
+});
+
+// Event delegation
+$('#list').on('click', '.item', function() {
+    console.log('Item clicked:', $(this).text());
+});
+
+// Multiple events
+$('#element').on('mouseenter mouseleave', function() {
+    $(this).toggleClass('hover');
+});
+
+// Multiple events with handlers
+$('#element').on({
+    mouseenter: function() {
+        $(this).addClass('hover');
+    },
+    mouseleave: function() {
+        $(this).removeClass('hover');
+    },
+    click: function() {
+        console.log('Clicked!');
+    }
+});
+
+// Remove event
+$('#button').off('click');
+
+// One-time event
+$('#button').one('click', function() {
+    console.log('Runs only once');
+});</code></pre>
+            </div>
+
+            <h3>AJAX with jQuery</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// GET request
+$.get('/api/users', function(data) {
+    console.log('Users:', data);
+});
+
+// POST request
+$.post('/api/users', {
+    name: 'John',
+    email: 'john@example.com'
+}, function(response) {
+    console.log('Created:', response);
+});
+
+// Full AJAX method
+$.ajax({
+    url: '/api/users',
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+        'Authorization': 'Bearer token'
+    },
+    success: function(data) {
+        console.log('Success:', data);
+    },
+    error: function(xhr, status, error) {
+        console.error('Error:', error);
+    },
+    complete: function() {
+        console.log('Complete');
+    }
+});
+
+// Promise-style
+$.ajax({
+    url: '/api/users',
+    method: 'POST',
+    data: JSON.stringify({ name: 'John' }),
+    contentType: 'application/json'
+})
+.done(function(data) {
+    console.log('Success:', data);
+})
+.fail(function(xhr, status, error) {
+    console.error('Error:', error);
+})
+.always(function() {
+    console.log('Complete');
+});
+
+// Load HTML
+$('#content').load('/page.html');
+
+// Get JSON
+$.getJSON('/api/data', function(data) {
+    console.log('JSON:', data);
+});</code></pre>
+            </div>
+        </section>
+
+        <section id="promises" class="topic-section">
+            <h2>10. Promises</h2>
+            
+            <h3>Creating Promises</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Basic Promise
+const promise = new Promise((resolve, reject) => {
+    const success = true;
+    
+    if (success) {
+        resolve('Operation successful!');
+    } else {
+        reject(new Error('Operation failed!'));
+    }
+});
+
+// Consuming Promise
+promise
+    .then(result => {
+        console.log('Fulfilled:', result);
+        return 'Next step';
+    })
+    .then(result => {
+        console.log('Chained:', result);
+    })
+    .catch(error => {
+        console.error('Rejected:', error);
+    })
+    .finally(() => {
+        console.log('Cleanup - always runs');
+    });
+
+// Promise with timeout
+function delay(ms) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
+}
+
+await delay(1000);
+console.log('1 second later');
+
+// Practical example
+function fetchUser(userId) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (userId > 0) {
+                resolve({
+                    id: userId,
+                    name: 'John Doe',
+                    email: 'john@example.com'
+                });
+            } else {
+                reject(new Error('Invalid user ID'));
+            }
+        }, 1000);
+    });
+}</code></pre>
+            </div>
+
+            <h3>Promise Methods</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Promise.all - Wait for all
+const p1 = Promise.resolve(3);
+const p2 = Promise.resolve(2);
+const p3 = Promise.resolve(1);
+
+Promise.all([p1, p2, p3])
+    .then(values => {
+        console.log(values); // [3, 2, 1]
+    });
+
+// If any fails, all fails
+Promise.all([Promise.resolve(1), Promise.reject('Error')])
+    .catch(error => {
+        console.error('One failed:', error);
+    });
+
+// Promise.allSettled - Wait for all
+const promises = [
+    Promise.resolve('Success 1'),
+    Promise.reject('Error'),
+    Promise.resolve('Success 2')
+];
+
+Promise.allSettled(promises)
+    .then(results => {
+        results.forEach(result => {
+            if (result.status === 'fulfilled') {
+                console.log('Fulfilled:', result.value);
+            } else {
+                console.log('Rejected:', result.reason);
+            }
+        });
+    });
+
+// Promise.race - First to settle
+const slow = new Promise(resolve => setTimeout(() => resolve('Slow'), 2000));
+const fast = new Promise(resolve => setTimeout(() => resolve('Fast'), 100));
+
+Promise.race([slow, fast])
+    .then(value => {
+        console.log(value); // 'Fast'
+    });
+
+// Parallel API calls
+async function loadDashboard() {
+    const [user, stats, notifications] = await Promise.all([
+        fetch('/api/user').then(r => r.json()),
+        fetch('/api/stats').then(r => r.json()),
+        fetch('/api/notifications').then(r => r.json())
+    ]);
+    
+    return { user, stats, notifications };
+}</code></pre>
+            </div>
+
+            <h3>Promise Chaining</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Sequential operations
+fetch('/api/user')
+    .then(response => response.json())
+    .then(user => {
+        console.log('User:', user);
+        return fetch(`/api/posts?userId=${user.id}`);
+    })
+    .then(response => response.json())
+    .then(posts => {
+        console.log('Posts:', posts);
+        return fetch(`/api/comments?postId=${posts[0].id}`);
+    })
+    .then(response => response.json())
+    .then(comments => {
+        console.log('Comments:', comments);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });</code></pre>
+            </div>
+        </section>
+
+        <section id="async-await" class="topic-section">
+            <h2>11. Async/Await</h2>
+            
+            <h3>Basic Async/Await</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Async function always returns a Promise
+async function greet() {
+    return 'Hello!';
+}
+
+greet().then(msg => console.log(msg));
+
+// Using await
+async function fetchUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        const user = await response.json();
+        console.log('User:', user);
+        return user;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
+// Parallel operations
+async function processParallel() {
+    const [user, posts, settings] = await Promise.all([
+        fetchUser(1),
+        fetchPosts(1),
+        fetchSettings(1)
+    ]);
+    
+    return { user, posts, settings };
+}
+
+// Sequential operations
+async function processSequential() {
+    const user = await fetchUser(1);
+    const posts = await fetchPosts(user.id);
+    const comments = await fetchComments(posts[0].id);
+    
+    return { user, posts, comments };
+}</code></pre>
+            </div>
+
+            <h3>Error Handling</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Try-catch for error handling
+async function fetchWithErrorHandling() {
+    try {
+        const response = await fetch('/api/data');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Fetch error:', error);
+        return null;
+    }
+}
+
+// Finally block
+async function withCleanup() {
+    const connection = await openConnection();
+    
+    try {
+        const result = await connection.query('SELECT * FROM users');
+        return result;
+    } catch (error) {
+        console.error('Query failed:', error);
+        throw error;
+    } finally {
+        await connection.close();
+    }
+}
+
+// Multiple try-catch
+async function complexOperation() {
+    let user, posts;
+    
+    try {
+        user = await fetchUser(1);
+    } catch (error) {
+        console.error('Failed to fetch user:', error);
+        user = getDefaultUser();
+    }
+    
+    try {
+        posts = await fetchPosts(user.id);
+    } catch (error) {
+        console.error('Failed to fetch posts:', error);
+        posts = [];
+    }
+    
+    return { user, posts };
+}</code></pre>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Best Practice:</strong> Use async/await for cleaner asynchronous code. Use Promise.all() for parallel operations. Always handle errors with try-catch.
+            </div>
+        </section>
+
+        <section id="form-validation" class="topic-section">
+            <h2>12. Form Validation</h2>
+            
+            <h3>HTML5 Built-in Validation</h3>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;form id="myForm"&gt;
+    &lt;input type="email" required 
+           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+           placeholder="Email"&gt;
+    
+    &lt;input type="number" min="1" max="100" required&gt;
+    
+    &lt;input type="text" minlength="3" maxlength="20" required&gt;
+    
+    &lt;input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+           title="Must contain uppercase, lowercase, and number"&gt;
+    
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            </div>
+
+            <h3>JavaScript Validation</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Form validation
+const form = document.getElementById('myForm');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = form.email.value;
+    const password = form.password.value;
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showError('email', 'Invalid email address');
+        return;
+    }
+    
+    // Password validation
+    if (password.length < 8) {
+        showError('password', 'Password must be at least 8 characters');
+        return;
+    }
+    
+    // Password strength
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecial = /[!@#$%^&*]/.test(password);
+    
+    if (!hasUpper || !hasLower || !hasNumber) {
+        showError('password', 'Password must contain uppercase, lowercase, and number');
+        return;
+    }
+    
+    // Submit form
+    submitForm(new FormData(form));
+});
+
+function showError(field, message) {
+    const errorElement = document.getElementById(`${field}-error`);
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+    
+    const inputElement = document.getElementById(field);
+    inputElement.classList.add('invalid');
+}
+
+function clearError(field) {
+    const errorElement = document.getElementById(`${field}-error`);
+    errorElement.textContent = '';
+    errorElement.style.display = 'none';
+    
+    const inputElement = document.getElementById(field);
+    inputElement.classList.remove('invalid');
+}</code></pre>
+            </div>
+
+            <h3>Real-time Validation</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Real-time validation with debounce
+const emailInput = document.getElementById('email');
+const emailError = document.getElementById('email-error');
+
+const validateEmail = debounce(function() {
+    const email = emailInput.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!email) {
+        emailError.textContent = 'Email is required';
+        emailInput.classList.add('invalid');
+        emailInput.classList.remove('valid');
+    } else if (!emailRegex.test(email)) {
+        emailError.textContent = 'Invalid email format';
+        emailInput.classList.add('invalid');
+        emailInput.classList.remove('valid');
+    } else {
+        emailError.textContent = '';
+        emailInput.classList.remove('invalid');
+        emailInput.classList.add('valid');
+    }
+}, 300);
+
+emailInput.addEventListener('input', validateEmail);
+
+// Password strength indicator
+const passwordInput = document.getElementById('password');
+const strengthIndicator = document.getElementById('strength');
+
+passwordInput.addEventListener('input', function() {
+    const password = this.value;
+    let strength = 0;
+    
+    if (password.length >= 8) strength++;
+    if (password.match(/[a-z]+/)) strength++;
+    if (password.match(/[A-Z]+/)) strength++;
+    if (password.match(/[0-9]+/)) strength++;
+    if (password.match(/[$@#&!]+/)) strength++;
+    
+    const strengths = ['Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+    const colors = ['#dc3545', '#fd7e14', '#ffc107', '#28a745', '#007bff'];
+    
+    strengthIndicator.textContent = strengths[strength - 1] || 'Too Short';
+    strengthIndicator.style.color = colors[strength - 1] || '#dc3545';
+});</code></pre>
+            </div>
+
+            <h3>Async Form Validation</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Check username availability
+const usernameInput = document.getElementById('username');
+const usernameStatus = document.getElementById('username-status');
+
+const checkUsernameAvailability = debounce(async function() {
+    const username = usernameInput.value.trim();
+    
+    if (username.length < 3) {
+        usernameStatus.textContent = 'Username must be at least 3 characters';
+        usernameStatus.className = 'error';
+        return;
+    }
+    
+    usernameStatus.textContent = 'Checking...';
+    usernameStatus.className = 'checking';
+    
+    try {
+        const response = await fetch(`/api/check-username?username=${username}`);
+        const data = await response.json();
+        
+        if (data.available) {
+            usernameStatus.textContent = '✓ Username available';
+            usernameStatus.className = 'success';
+        } else {
+            usernameStatus.textContent = '✗ Username already taken';
+            usernameStatus.className = 'error';
+        }
+    } catch (error) {
+        usernameStatus.textContent = 'Error checking username';
+        usernameStatus.className = 'error';
+    }
+}, 500);
+
+usernameInput.addEventListener('input', checkUsernameAvailability);</code></pre>
+            </div>
+
+            <div class="demo-box">
+                <h4>Live Demo: Form Validation</h4>
+                <form id="demoForm" onsubmit="event.preventDefault(); validateDemoForm();">
+                    <div>
+                        <input type="email" id="demoEmail" placeholder="Email" required>
+                        <span id="demoEmailError" style="color: red; display: none;"></span>
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <input type="password" id="demoPassword" placeholder="Password" required>
+                        <span id="demoPasswordError" style="color: red; display: none;"></span>
+                    </div>
+                    <button type="submit" class="btn" style="margin-top: 0.5rem;">Validate</button>
+                    <p id="demoResult" style="margin-top: 0.5rem;"></p>
+                </form>
+            </div>
+
+            <script>
+                function validateDemoForm() {
+                    const email = document.getElementById('demoEmail').value;
+                    const password = document.getElementById('demoPassword').value;
+                    const result = document.getElementById('demoResult');
+                    
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    
+                    if (!emailRegex.test(email)) {
+                        result.textContent = '❌ Invalid email format';
+                        result.style.color = 'red';
+                        return;
+                    }
+                    
+                    if (password.length < 8) {
+                        result.textContent = '❌ Password must be at least 8 characters';
+                        result.style.color = 'red';
+                        return;
+                    }
+                    
+                    result.textContent = '✅ Form is valid!';
+                    result.style.color = 'green';
+                }
+            </script>
+        </section>
+
+        <section id="frontend-optimization" class="topic-section">
+            <h2>13. Frontend Optimization</h2>
+            
+            <h3>DOM Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// BAD: Multiple DOM updates
+for (let i = 0; i < 100; i++) {
+    document.getElementById('list').innerHTML += `<li>Item ${i}</li>`;
+}
+
+// GOOD: Single DOM update
+const list = document.getElementById('list');
+let html = '';
+for (let i = 0; i < 100; i++) {
+    html += `<li>Item ${i}</li>`;
+}
+list.innerHTML = html;
+
+// BETTER: DocumentFragment
+const fragment = document.createDocumentFragment();
+for (let i = 0; i < 1000; i++) {
+    const li = document.createElement('li');
+    li.textContent = `Item ${i}`;
+    fragment.appendChild(li);
+}
+list.appendChild(fragment);
+
+// Batch style changes
+element.style.cssText = 'color: red; background: blue; font-size: 20px;';
+
+// Use classes
+element.classList.add('styled');
+
+// Avoid layout thrashing
+// BAD: read-write-read-write
+const h1 = element1.clientHeight;
+element1.style.height = h1 * 2 + 'px';
+const h2 = element2.clientHeight;
+element2.style.height = h2 * 2 + 'px';
+
+// GOOD: read-read-write-write
+const h1 = element1.clientHeight;
+const h2 = element2.clientHeight;
+element1.style.height = h1 * 2 + 'px';
+element2.style.height = h2 * 2 + 'px';</code></pre>
+            </div>
+
+            <h3>Lazy Loading Images</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">// Modern: Intersection Observer API
+const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            observer.unobserve(img);
+        }
+    });
+}, {
+    rootMargin: '50px' // Load 50px before viewport
+});
+
+// Observe all lazy images
+const lazyImages = document.querySelectorAll('img.lazy');
+lazyImages.forEach(img => imageObserver.observe(img));
+
+// HTML:
+// &lt;img class="lazy" data-src="image.jpg" src="placeholder.jpg" alt=""&gt;
+
+// Native lazy loading (modern browsers)
+// &lt;img src="image.jpg" loading="lazy" alt=""&gt;</code></pre>
+            </div>
+
+            <h3>Infinite Scroll</h3>
+            <div class="code-example">
+                <pre><code class="language-javascript">class InfiniteScroll {
+    constructor(container, options = {}) {
+        this.container = container;
+        this.loading = false;
+        this.page = 1;
+        this.hasMore = true;
+        this.threshold = options.threshold || 200;
+        this.onLoad = options.onLoad;
+        
+        this.init();
+    }
+    
+    init() {
+        window.addEventListener('scroll', this.handleScroll.bind(this));
+    }
+    
+    handleScroll() {
+        if (this.loading || !this.hasMore) return;
+        
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        
+        if (scrollTop + clientHeight >= scrollHeight - this.threshold) {
+            this.loadMore();
+        }
+    }
+    
+    async loadMore() {
+        if (this.loading) return;
+        
+        this.loading = true;
+        this.showLoader();
+        
+        try {
+            const data = await this.onLoad(this.page);
+            
+            if (data && data.length > 0) {
+                this.appendItems(data);
+                this.page++;
+            } else {
+                this.hasMore = false;
+            }
+        } catch (error) {
+            console.error('Failed to load more:', error);
+        } finally {
+            this.loading = false;
+            this.hideLoader();
+        }
+    }
+    
+    appendItems(items) {
+        items.forEach(item => {
+            const element = this.createItemElement(item);
+            this.container.appendChild(element);
+        });
+    }
+    
+    createItemElement(item) {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+        `;
+        return div;
+    }
+    
+    showLoader() {
+        document.getElementById('loader').style.display = 'block';
+    }
+    
+    hideLoader() {
+        document.getElementById('loader').style.display = 'none';
+    }
+}
+
+// Usage
+const infiniteScroll = new InfiniteScroll(
+    document.getElementById('content'),
+    {
+        threshold: 200,
+        onLoad: async (page) => {
+            const response = await fetch(`/api/items?page=${page}`);
+            return await response.json();
+        }
+    }
+);</code></pre>
+            </div>
+
+            <h3>Performance Best Practices</h3>
+            <div class="info-box">
+                <strong>💡 Frontend Optimization Tips:</strong>
+                <ul>
+                    <li><strong>Minimize DOM manipulation:</strong> Batch updates, use DocumentFragment</li>
+                    <li><strong>Event delegation:</strong> Use single listeners on parent elements</li>
+                    <li><strong>Debounce/throttle:</strong> Limit expensive event handlers</li>
+                    <li><strong>Lazy loading:</strong> Load images and content on demand</li>
+                    <li><strong>Code splitting:</strong> Load JavaScript modules as needed</li>
+                    <li><strong>Caching:</strong> Use localStorage/sessionStorage appropriately</li>
+                    <li><strong>Minify assets:</strong> Compress CSS, JavaScript, and images</li>
+                    <li><strong>Use CDN:</strong> Serve static assets from CDN</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Laravel Interview Bank - Web Technologies</p>
+        <p style="margin-top: 1rem; opacity: 0.8;">Comprehensive guide covering HTML5, CSS3, JavaScript, jQuery, AJAX, DOM, Events, Promises, Async/Await, Form Validation & Optimization</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
