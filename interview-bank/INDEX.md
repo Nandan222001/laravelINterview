@@ -12,6 +12,10 @@ Quick navigation to all interview questions organized by topic and difficulty le
 | Frontend React & Next.js | 20+ | 5 | 7 | 6 | 2 |
 | **DevOps, Cloud AWS & K8s** | **1000** | **250** | **300** | **300** | **150** |
 | AI, LLM & Serverless | 30+ | 5 | 10 | 12 | 3 |
+| **General PHP Interview** | **1000** | **300** | **350** | **250** | **100** |
+| **Database General** | **600** | **200** | **250** | **120** | **30** |
+| **CMS Platforms** | **130** | **40** | **50** | **30** | **10** |
+| **Web Technologies** | **35** | **10** | **15** | **8** | **2** |
 
 ---
 
@@ -282,6 +286,186 @@ Quick navigation to all interview questions organized by topic and difficulty le
 
 ---
 
+## 🐘 General PHP Interview
+
+**Location**: `/interview-bank/general-php-interview/`
+
+### Key Topics
+- PHP Fundamentals (Variables, Data Types, Operators)
+- Functions & Control Structures
+- Object-Oriented Programming (Classes, Inheritance, Traits)
+- Namespaces & Autoloading
+- File Handling & Sessions
+- Database & SQL (MySQLi, PDO, Prepared Statements)
+- Web Development & Security (Forms, XSS, CSRF, Password Security)
+- Regular Expressions
+- Date and Time Handling
+- JSON and XML Processing
+- Composer & Dependency Management
+- Modern PHP Features (PHP 7+, PHP 8+)
+- Performance Optimization
+- Testing and Debugging
+
+### Question Files
+- [`questions.md`](general-php-interview/questions.md) - 1000 comprehensive questions covering all PHP fundamentals to advanced topics
+
+### Topics Covered (10 Sections)
+1. **PHP Fundamentals** (100 questions)
+   - PHP Basics, Variables & References, Type Comparison, Arrays, String Functions
+2. **Functions & Control Structures** (100 questions)
+   - Functions, Control Structures, Error Types and Handling
+3. **Object-Oriented Programming** (150 questions)
+   - Classes and Objects, Inheritance and Polymorphism, Interfaces and Traits, Magic Methods and Constants
+4. **Namespaces & Autoloading** (50 questions)
+   - Namespaces, Autoloading, PSR-4
+5. **File Handling & Sessions** (100 questions)
+   - File System Operations, Include and Require, Sessions, Cookies
+6. **Database & SQL** (100 questions)
+   - MySQL Basics, SQL Injection Prevention, Query Building & ORM, Database Design & Optimization
+7. **Web Development & Security** (100 questions)
+   - Form Handling, XSS Prevention, CSRF Prevention, Password Security, HTTPS and SSL/TLS
+8. **Advanced PHP Concepts** (100 questions)
+   - Regular Expressions, Date and Time, JSON and XML, Composer
+9. **Modern PHP Features** (100 questions)
+   - PHP 7+ Features, PHP 8+ Features, Performance Optimization, Testing and Debugging
+10. **Security Best Practices & Miscellaneous** (100 questions)
+    - General Security, HTTP and APIs, Best Practices
+
+---
+
+## 🗄️ Database General
+
+**Location**: `/interview-bank/database-general/`
+
+### Key Topics
+- Database Keys (Primary, Unique, Foreign, Composite)
+- Database Objects (Triggers, Views, Stored Procedures, Indexes)
+- Clustered vs Non-Clustered Indexes
+- SQL Joins (Inner, Left, Right, Full Outer, Self, Lateral)
+- Join Optimization & Performance
+- Database Normalization (1NF, 2NF, 3NF, BCNF, 4NF, 5NF)
+- Data Types (Numeric, String, Date/Time)
+- Query Optimization & Analysis
+- MySQL Storage Engines (InnoDB, MyISAM, Memory)
+- SQL Query Writing Exercises
+
+### Question Files
+- [`questions.md`](database-general/questions.md) - 600 questions covering database fundamentals to advanced optimization
+
+### Topics Covered (9 Sections)
+1. **Keys** (50 questions)
+   - Primary Keys, Unique Keys, Foreign Keys, Composite Keys
+2. **Database Objects** (100 questions)
+   - Triggers, Views, Stored Procedures, Indexes - General
+3. **Clustered vs Non-Clustered Indexes** (50 questions)
+   - Clustered Indexes, Non-Clustered Indexes, Index Performance
+4. **Joins** (75 questions)
+   - Join Types, Join Optimization, Complex Join Scenarios
+5. **Normalization** (50 questions)
+   - Normal Forms, Practical Normalization
+6. **Data Types** (50 questions)
+   - Numeric Data Types, String Data Types, Date/Time and Other Data Types
+7. **Query Optimization** (75 questions)
+   - Query Analysis, Query Performance Optimization, Advanced Query Optimization
+8. **MySQL Storage Engines** (50 questions)
+   - InnoDB Storage Engine, MyISAM Storage Engine, Other Storage Engines
+9. **SQL Query Writing Exercises** (100 questions)
+   - Basic Queries, Intermediate Queries, Advanced Queries
+
+---
+
+## 🌐 CMS Platforms
+
+**Location**: `/interview-bank/cms-platforms/`
+
+### Key Topics
+- **WordPress**: Hooks & Filters, Plugins, Themes, Custom Post Types, REST API, WP-CLI
+- **Magento**: EAV Model, Plugins (Interceptors), Observers, Payment Gateways, Module Development
+- **Drupal**: Modules, Hooks, Views, Twig, Configuration API, Entities & Content Types
+
+### Question Files
+- [`questions.md`](cms-platforms/questions.md) - 130 questions covering major CMS platforms
+
+### Topics Covered by Platform
+
+**WordPress** (58 questions)
+- Hooks & Filters (7 questions)
+- Plugins (8 questions)
+- Themes (8 questions)
+- Custom Post Types (7 questions)
+- Deployment & Configuration (7 questions)
+- Optimization (7 questions)
+- Multisite (5 questions)
+- Security (9 questions)
+
+**Magento** (42 questions)
+- EAV (Entity-Attribute-Value) (6 questions)
+- Plugins (Interceptors) (6 questions)
+- Observers (5 questions)
+- Payment Gateways (5 questions)
+- Module Development (8 questions)
+- Performance & Optimization (6 questions)
+- CLI Commands (2 questions)
+
+**Drupal** (30 questions)
+- Modules (5 questions)
+- Hooks (7 questions)
+- Views (7 questions)
+- Twig (9 questions)
+- Configuration & Services (6 questions)
+- Entities & Content Types (5 questions)
+- Forms & Validation (3 questions)
+
+---
+
+## 💻 Web Technologies
+
+**Location**: `/interview-bank/web-technologies/`
+
+### Key Topics
+- HTML Fundamentals & Semantics
+- HTML5 Features (Web Storage, Canvas, Multimedia)
+- CSS (Box Model, Flexbox, Grid, Responsive Design)
+- JavaScript Core Concepts (Variables, Closures, Prototypes)
+- DOM Manipulation
+- Event Handling (Bubbling, Delegation, Debouncing, Throttling)
+- AJAX & HTTP Requests (Fetch API, Axios, CORS)
+- jQuery
+- Promises & Async Programming (async/await)
+- Form Validation
+- Checkbox & Input Handling
+- Third-Party API Integration (OAuth, Rate Limiting)
+- Modern JavaScript Features (ES6+)
+- Performance & Optimization (Lazy Loading, Infinite Scroll)
+
+### Question Files
+- [`questions.md`](web-technologies/questions.md) - 35 comprehensive questions with detailed implementations
+
+### Topics Covered (14 Sections)
+1. **HTML Fundamentals & Semantics** (1 question)
+2. **HTML5 Features & Differences** (2 questions)
+3. **CSS Fundamentals & Advanced** (2 questions)
+4. **JavaScript Core Concepts** (2 questions)
+5. **DOM Manipulation** (3 questions)
+6. **Event Handling** (3 questions)
+7. **AJAX & HTTP Requests** (3 questions)
+8. **jQuery** (2 questions)
+9. **Promises & Async Programming** (2 questions)
+10. **Form Validation** (3 questions)
+11. **Checkbox & Input Handling** (3 questions)
+12. **Third-Party API Integration** (3 questions)
+13. **Modern JavaScript Features** (3 questions)
+14. **Performance & Optimization** (3 questions)
+
+Each question includes:
+- Difficulty rating (⭐ to ⭐⭐⭐⭐)
+- Expected answers with explanations
+- Complete code examples
+- Best practices
+- Real-world use cases
+
+---
+
 ## 📚 Templates & Resources
 
 **Location**: `/templates/`
@@ -382,17 +566,21 @@ Quick navigation to all interview questions organized by topic and difficulty le
 ## 🔍 Search by Technology
 
 ### Languages & Frameworks
-- **PHP 8.x**: php-laravel-api-security/
+- **PHP 8.x**: php-laravel-api-security/, general-php-interview/
+- **PHP General**: general-php-interview/
 - **Laravel 10+**: php-laravel-api-security/
 - **TypeScript**: frontend-react-nextjs/, ai-llm-serverless/
 - **React**: frontend-react-nextjs/
 - **Next.js**: frontend-react-nextjs/
 - **Python**: ai-llm-serverless/ (examples)
 - **Go**: devops-cloud-k8s/ (examples)
+- **HTML/CSS/JavaScript**: web-technologies/
 
 ### Databases & Caching
 - **PostgreSQL**: database-optimization/, php-laravel-api-security/
-- **MySQL**: database-optimization/
+- **MySQL**: database-optimization/, database-general/, general-php-interview/
+- **Database Design**: database-general/
+- **SQL**: database-general/
 - **Redis**: All domains (caching, queues, pub/sub)
 - **Vector DBs**: ai-llm-serverless/ (Pinecone, Weaviate)
 
@@ -409,6 +597,20 @@ Quick navigation to all interview questions organized by topic and difficulty le
 - **LangChain**: ai-llm-serverless/
 - **Vector Search**: ai-llm-serverless/
 - **RAG Systems**: ai-llm-serverless/
+
+### CMS & Content Management
+- **WordPress**: cms-platforms/
+- **Magento**: cms-platforms/
+- **Drupal**: cms-platforms/
+
+### Web Technologies
+- **HTML5**: web-technologies/
+- **CSS3**: web-technologies/
+- **JavaScript (ES6+)**: web-technologies/
+- **jQuery**: web-technologies/
+- **AJAX**: web-technologies/
+- **DOM Manipulation**: web-technologies/
+- **APIs**: web-technologies/
 
 ---
 
@@ -459,5 +661,6 @@ This repository is for educational purposes. Review and adapt all security imple
 ---
 
 **Last Updated**: 2024
-**Total Questions**: 3500+
-**Total Code Examples**: 800+
+**Total Questions**: 5265+
+**Total Code Examples**: 1000+
+**Total Domains**: 10
