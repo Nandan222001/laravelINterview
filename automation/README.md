@@ -62,6 +62,16 @@ Complete automation system for validating, analyzing, and indexing interview que
 - 📱 Responsive design with modern CSS styling
 - 🎯 Automatic diagram detection based on question/answer content
 
+### 7. **Answer Quality Validator** (`validate-answers.php`) ⭐ NEW!
+- ✅ Validates HTML answer files for required sections
+- 📋 Checks for: Overview, Core Concepts, Code Examples, Best Practices, Common Pitfalls
+- 🎨 Ensures all code blocks have language tags for syntax highlighting
+- 🔗 Verifies internal links point to existing sections
+- 📊 Generates comprehensive statistics for each file
+- 📈 Creates quality score and summary reports
+- ⚡ Fast validation of entire answer directory
+- 🎯 Identifies broken links and missing sections
+
 ## 🚀 Quick Start
 
 ### Requirements
@@ -116,6 +126,18 @@ This will:
 php automation/run-validation.php
 ```
 
+**Answer Quality Validation:**
+```bash
+# Validate all answer files
+php automation/validate-answers.php --dir=answers
+
+# Validate a single answer file
+php automation/validate-answers.php --file=answers/laravel-framework-answers.html
+
+# Show help
+php automation/validate-answers.php --help
+```
+
 **Custom Analysis:**
 ```php
 <?php
@@ -163,6 +185,46 @@ All output files are saved to `automation/output/`:
   - Responsive design with modern CSS
   - Organized by topic sections
   - Article-based layout with question/answer pairs
+
+### Answer Quality Validation (NEW!)
+- Terminal output with validation results
+- Per-file statistics and quality metrics
+- Summary report with quality score
+- Identifies missing sections and broken links
+- Code block syntax validation
+
+## 📊 Example: Answer Quality Validation
+
+```
+Validating: laravel-framework-answers.html
+  ⚠️  WARNINGS:
+     - Missing recommended section: 'Common Pitfalls'
+  📊 STATISTICS:
+     - Main sections: 15
+     - Subsections: 89
+     - Code blocks: 145 (145 with language tags)
+     - Internal links: 15 (15 valid, 0 broken)
+     - Info boxes: 12
+     - Tables: 8
+     - File size: 245.67 KB
+     - Has TOC: Yes
+
+======================================================================
+VALIDATION SUMMARY
+======================================================================
+
+Total files validated: 19
+✅ Valid files: 18
+❌ Files with errors: 1
+⚠️  Files with warnings: 5
+
+Total errors: 3
+Total warnings: 8
+
+📈 Quality Score: 94.74%
+
+======================================================================
+```
 
 ## 📊 Example: Statistics Dashboard
 
