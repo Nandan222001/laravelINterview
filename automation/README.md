@@ -1,553 +1,202 @@
-# Interview Bank Automation Suite
+# Automation Scripts
 
-Complete automation system for validating, analyzing, and indexing interview questions with code blocks and Mermaid diagrams.
+This directory contains automation scripts for managing the interview questions and answers.
 
-## 🎯 Features
+## generate-missing-answers.php
 
-### 1. **Question Validator** (`QuestionValidator.php`)
-- ✅ Validates markdown file structure
-- ✅ Checks code block syntax for multiple languages (PHP, JavaScript, JSON, YAML, SQL)
-- ✅ Validates Mermaid diagram syntax and structure
-- ✅ Detects broken internal links
-- ✅ Verifies header hierarchy
-- ✅ Ensures Q&A format consistency
-- ✅ Identifies question numbering gaps
+Compares questions across all interview-bank subdirectories with existing answer files, identifies unanswered questions, and generates comprehensive answers following the templates/comprehensive-answer-template.md structure.
 
-### 2. **Metadata Extractor** (`MetadataExtractor.php`)
-- 📊 Extracts difficulty levels (basic, intermediate, advanced, expert)
-- 🏷️ Identifies technology tags (50+ patterns)
-- 📝 Extracts topics from headers
-- ❓ Counts and catalogs questions
-- 💻 Analyzes code examples by language
-- 📈 Tracks Mermaid diagrams by type
-- 📅 Records file metadata and timestamps
+### Features
 
-### 3. **Statistics Dashboard** (`StatisticsDashboard.php`)
-- 📊 Generates comprehensive statistics reports
-- 📈 Shows difficulty distribution across domains
-- 💻 Technology coverage matrix
-- 🗂️ Domain breakdown with metrics
-- 📄 Outputs in Markdown, JSON, and HTML formats
-- 🎨 Interactive HTML dashboard with charts
+- **Automatic Question Detection**: Scans all question files in interview-bank subdirectories
+- **Answer Comparison**: Identifies which questions already have answers
+- **Comprehensive Answer Generation**: Creates answers with the following sections:
+  - 📚 Overview
+  - 🔑 Core Concepts
+  - 💻 Code Examples (Basic, Advanced, Production-Ready)
+  - ✅ Best Practices
+  - ⚠️ Common Pitfalls
+- **Flexible Options**: Category filtering, dry-run mode, output customization
+- **Statistics Reporting**: Detailed summary of processing results
 
-### 4. **Cross-Reference Mapper** (`CrossReferenceMapper.php`)
-- 🔗 Identifies related questions across folders
-- 🎯 Maps technology overlaps
-- 📚 Links common topics
-- 🌐 Generates domain network graphs
-- 💡 Suggests relevant cross-references
-- 📊 Creates Mermaid visualization diagrams
-
-### 5. **Search Index Generator** (`SearchIndexGenerator.php`)
-- 🔍 Creates full-text search index
-- 📦 Generates compact JSON for web integration
-- 🌐 Creates Lunr.js compatible index
-- 🔎 Elasticsearch mapping configuration
-- 🖥️ Interactive search web interface
-- ⚡ Optimized for fast client-side search
-
-### 6. **HTML Answer Generator** (`generate-html-answers.py`) ⭐ NEW!
-- 📖 Reads questions.md and answers.md from all topic directories
-- 🎨 Converts markdown to fully-formatted HTML with syntax highlighting
-- 💡 Uses Pygments for professional code highlighting (Monokai theme)
-- 📊 Generates inline SVG architecture flow diagrams automatically:
-  - Laravel Request Lifecycle (middleware, routing, controllers)
-  - Payment Processing Flow (validation, gateway, webhooks)
-  - Database Query Execution Plans (parser, optimizer, execution)
-  - React Component Lifecycle (mounting, updating, hooks)
-  - Kubernetes Deployment Flow (API server, scheduler, pods)
-  - WebSocket Real-time Architecture (pub/sub, load balancing)
-- 📝 Augments short answers with additional context
-- 🏗️ Outputs structured HTML with semantic `<article>` elements
-- 📱 Responsive design with modern CSS styling
-- 🎯 Automatic diagram detection based on question/answer content
-
-### 7. **Answer Quality Validator** (`validate-answers.php`) ⭐ NEW!
-- ✅ Validates HTML answer files for required sections
-- 📋 Checks for: Overview, Core Concepts, Code Examples, Best Practices, Common Pitfalls
-- 🎨 Ensures all code blocks have language tags for syntax highlighting
-- 🔗 Verifies internal links point to existing sections
-- 📊 Generates comprehensive statistics for each file
-- 📈 Creates quality score and summary reports
-- ⚡ Fast validation of entire answer directory
-- 🎯 Identifies broken links and missing sections
-
-### 8. **PDF Answer Generator** (`generate-pdf-answers.php`) 📄 NEW!
-- 📄 Exports HTML answers to professionally formatted PDF documents
-- 🎨 Preserves syntax highlighting with dark-themed code blocks
-- 📑 Automatic table of contents generation
-- 🎯 Category-specific color themes (Laravel red, PHP purple, etc.)
-- 📊 Well-formatted tables with alternating row colors
-- 💡 Info/warning/success boxes with proper styling
-- 📖 Professional cover page with category information
-- 🔢 Page numbers and headers/footers
-- 📁 Organized output to `pdf-exports/` directory
-- ⚡ Batch processing for all categories
-- 🔧 Two library options: TCPDF (default) and mPDF (optional)
-
-## 🚀 Quick Start
-
-### Requirements
-- PHP 8.0 or higher (for PHP automation scripts)
-- Python 3.7+ (for HTML answer generation)
-- Pygments library (`pip install pygments`)
-- Composer (for PDF generation dependencies)
-- Command line access
-
-### Running the Complete Suite
+### Usage
 
 ```bash
-php automation/run-all.php
-```
+# Generate answers for all categories
+php automation/generate-missing-answers.php
 
-This will:
-1. Validate all markdown files
-2. Extract metadata and tags
-3. Generate statistics dashboard
-4. Map cross-references
-5. Create search indices
+# Process only a specific category
+php automation/generate-missing-answers.php --category=web-technologies
 
-### Running HTML Answer Generation
+# Dry run to see what would be generated
+php automation/generate-missing-answers.php --dry-run
 
-**Generate comprehensive HTML answers with syntax highlighting and diagrams:**
-```bash
-python automation/generate-html-answers.py
-```
+# Limit the number of answers generated
+php automation/generate-missing-answers.php --limit=10
 
-Or on Windows:
-```bash
-python3 automation/generate-html-answers.py
-```
+# Specify custom output directory
+php automation/generate-missing-answers.php --output=/path/to/output
 
-This will:
-- Read questions.md and answers.md from all 6 topic directories
-- Augment existing answers with detailed explanations
-- Convert markdown code blocks to syntax-highlighted HTML using Pygments
-- Generate architecture flow diagrams as inline SVG for:
-  - Laravel request lifecycle
-  - Payment processing flow
-  - Database query execution plans
-  - React component lifecycle
-  - Kubernetes deployment flow
-  - WebSocket real-time architecture
-- Output fully-formatted HTML with `<article>` elements
-- Save to `automation/output/comprehensive-answers.html`
-
-### Running PDF Generation
-
-**Generate PDF exports of all answer pages:**
-```bash
-# Install dependencies first (one time)
-composer install
-
-# Generate all PDFs (TCPDF - default, faster, smaller files)
-php automation/generate-pdf-answers.php
-
-# Or use convenience scripts
-./automation/generate-pdfs.sh     # Unix/Linux/Mac
-automation\generate-pdfs.bat      # Windows
-
-# Generate specific category
-php automation/generate-pdf-answers.php php-core-answers
-
-# Alternative: Use mPDF (better HTML/CSS support)
-composer require mpdf/mpdf
-php automation/generate-pdf-answers-mpdf.php
-```
-
-This will:
-- Parse HTML answer files from `answers/` directory
-- Extract and format all content sections
-- Generate professional PDFs with:
-  - Syntax-highlighted code blocks (dark theme)
-  - Table of contents with all topics
-  - Category-specific color themes
-  - Formatted tables, lists, and info boxes
-  - Cover page with title and description
-  - Page numbers and headers
-- Save PDFs to `pdf-exports/` directory
-- Support batch processing of all categories
-
-See `automation/PDF_GENERATOR_README.md` for detailed documentation.
-
-### Running Individual Components
-
-**Validation Only:**
-```bash
-php automation/run-validation.php
-```
-
-**Answer Quality Validation:**
-```bash
-# Validate all answer files
-php automation/validate-answers.php --dir=answers
-
-# Validate a single answer file
-php automation/validate-answers.php --file=answers/laravel-framework-answers.html
+# Combine options
+php automation/generate-missing-answers.php --category=database-general --limit=5 --dry-run
 
 # Show help
-php automation/validate-answers.php --help
+php automation/generate-missing-answers.php --help
 ```
 
-**Custom Analysis:**
-```php
-<?php
-require_once 'automation/MetadataExtractor.php';
+### Options
 
-$extractor = new InterviewBank\Automation\MetadataExtractor();
-$metadata = $extractor->extractFromDirectory('interview-bank');
-$summary = $extractor->generateSummary($metadata);
-print_r($summary);
-```
+| Option | Description | Example |
+|--------|-------------|---------|
+| `--category=<name>` | Process only specific category | `--category=cms-platforms` |
+| `--dry-run` | Show what would be generated without writing files | `--dry-run` |
+| `--limit=<number>` | Limit number of answers to generate | `--limit=20` |
+| `--output=<dir>` | Output directory (default: interview-bank/<category>/) | `--output=./output` |
+| `--help` | Show help message | `--help` |
 
-## 📁 Output Files
+### How It Works
 
-All output files are saved to `automation/output/`:
+1. **Scan Categories**: Finds all subdirectories in `interview-bank/`
+2. **Find Questions**: Locates all files with "question" in the name
+3. **Parse Questions**: Extracts questions using multiple patterns:
+   - Numbered format: `1. Question text`
+   - Heading format: `### Question 1: Question text`
+   - Q-prefix format: `**Q1:** Question text` or `Q1: Question text`
+4. **Find Answers**: Locates all files with "answer" in the name
+5. **Compare**: Identifies questions that don't have corresponding answers
+6. **Generate**: Creates comprehensive answers following the template structure
+7. **Output**: Writes to `answers-generated.md` in the category directory
 
-### Validation
-- `validation-report.md` - Errors and warnings report
-- Lists all syntax errors, broken links, and formatting issues
+### Question Detection Patterns
 
-### Metadata
-- `metadata-summary.json` - High-level statistics
-- `metadata-full.json` - Complete metadata for all files
+The script recognizes questions in the following formats:
 
-### Statistics
-- `statistics-dashboard.md` - Markdown report
-- `statistics-dashboard.html` - **Interactive HTML dashboard** 📊
-- `statistics-report.json` - JSON format for API integration
-
-### Cross-References
-- `cross-reference-report.md` - Related questions mapping
-- `cross-references.json` - JSON mapping data
-- `domain-network-graph.md` - Mermaid network visualization
-
-### Search
-- `search-index.json` - Full search index
-- `search-index-compact.json` - Optimized version
-- `lunr-index.json` - Lunr.js compatible
-- `elasticsearch-mapping.json` - ES configuration
-- `search.html` - **Interactive search interface** 🔍
-
-### HTML Answers (NEW!)
-- `comprehensive-answers.html` - **Fully-formatted HTML answers** 🎨
-  - Syntax-highlighted code blocks (Pygments with Monokai theme)
-  - Inline SVG architecture diagrams
-  - Responsive design with modern CSS
-  - Organized by topic sections
-  - Article-based layout with question/answer pairs
-
-### PDF Exports (NEW!)
-- Located in `pdf-exports/` directory (not in automation/output)
-- One PDF per answer category (e.g., `php-core-answers.pdf`)
-- Professional formatting with:
-  - Syntax-highlighted code blocks
-  - Table of contents
-  - Category-specific color themes
-  - Cover page with metadata
-  - Page numbers and headers
-
-### Answer Quality Validation (NEW!)
-- Terminal output with validation results
-- Per-file statistics and quality metrics
-- Summary report with quality score
-- Identifies missing sections and broken links
-- Code block syntax validation
-
-## 📊 Example: Answer Quality Validation
-
-```
-Validating: laravel-framework-answers.html
-  ⚠️  WARNINGS:
-     - Missing recommended section: 'Common Pitfalls'
-  📊 STATISTICS:
-     - Main sections: 15
-     - Subsections: 89
-     - Code blocks: 145 (145 with language tags)
-     - Internal links: 15 (15 valid, 0 broken)
-     - Info boxes: 12
-     - Tables: 8
-     - File size: 245.67 KB
-     - Has TOC: Yes
-
-======================================================================
-VALIDATION SUMMARY
-======================================================================
-
-Total files validated: 19
-✅ Valid files: 18
-❌ Files with errors: 1
-⚠️  Files with warnings: 5
-
-Total errors: 3
-Total warnings: 8
-
-📈 Quality Score: 94.74%
-
-======================================================================
-```
-
-## 📊 Example: Statistics Dashboard
-
-```json
-{
-  "total_files": 87,
-  "total_questions": 3542,
-  "total_code_blocks": 892,
-  "total_mermaid_diagrams": 156,
-  "by_difficulty": {
-    "basic": 15,
-    "intermediate": 28,
-    "advanced": 32,
-    "expert": 12
-  },
-  "by_technology": {
-    "PHP": { "files": 24, "mentions": 487 },
-    "Laravel": { "files": 22, "mentions": 356 },
-    "AWS": { "files": 18, "mentions": 412 }
-  }
-}
-```
-
-## 🔍 Example: Cross-Reference Mapping
-
-The system identifies related questions across domains:
-
-**Example 1: Razorpay Webhooks → AWS Lambda**
-- Both cover webhook processing patterns
-- Common topics: signature verification, idempotency
-- Technology overlap: serverless, event-driven architecture
-
-**Example 2: Kubernetes → Database Optimization**
-- Infrastructure and database performance overlap
-- Common topics: resource management, scaling
-- Technology overlap: Redis, PostgreSQL
-
-## 🌐 Web Integration
-
-### Using the Search Index
-
-```javascript
-// Load the search index
-fetch('automation/output/search-index.json')
-  .then(res => res.json())
-  .then(index => {
-    // Search documents
-    const results = index.documents.filter(doc => 
-      doc.searchable_content.includes('webhook')
-    );
-    
-    // Filter by technology
-    const phpDocs = index.documents.filter(doc =>
-      doc.technologies.includes('PHP')
-    );
-  });
-```
-
-### Using the Lunr.js Index
-
-```javascript
-const lunr = require('lunr');
-const indexData = require('./output/lunr-index.json');
-
-const idx = lunr(function() {
-  this.field('title', { boost: 10 });
-  this.field('technologies', { boost: 7 });
-  this.field('content');
-  
-  indexData.documents.forEach(doc => {
-    this.add(doc);
-  });
-});
-
-const results = idx.search('webhook payment');
-```
-
-## 🛠️ Architecture
-
-### Class Structure
-
-```
-InterviewBank\Automation\
-├── QuestionValidator
-│   ├── validateMarkdownFile()
-│   ├── validateCodeBlocks()
-│   ├── validateMermaidDiagrams()
-│   └── generateReport()
-├── MetadataExtractor
-│   ├── extractFromFile()
-│   ├── extractDifficulty()
-│   ├── extractTechnologies()
-│   └── generateSummary()
-├── StatisticsDashboard
-│   ├── generateDashboard()
-│   ├── generateJsonReport()
-│   └── generateHtmlDashboard()
-├── CrossReferenceMapper
-│   ├── mapCrossReferences()
-│   ├── calculateSimilarity()
-│   └── generateNetworkGraph()
-└── SearchIndexGenerator
-    ├── generateSearchIndex()
-    ├── generateJsonIndex()
-    └── generateSearchInterface()
-```
-
-## 📋 Validation Rules
-
-### Code Block Validation
-- **PHP**: Uses `php -l` for syntax checking
-- **JSON**: Validates with `json_decode()`
-- **YAML**: Uses `yaml_parse()` if extension available
-- **JavaScript/TypeScript**: Pattern matching for common errors
-- **SQL**: Keyword detection
-
-### Mermaid Diagram Validation
-- Checks for valid diagram types
-- Verifies bracket/parenthesis matching
-- Ensures nodes have connections
-- Validates syntax structure
-
-### Markdown Structure
-- Header hierarchy (h1 → h2 → h3)
-- Link validation (internal and relative)
-- Q&A format consistency
-- Question numbering sequence
-
-## 🎯 Technology Detection Patterns
-
-The system detects 50+ technologies:
-
-- **Languages**: PHP, JavaScript, TypeScript, Python, Go
-- **Frameworks**: Laravel, React, Next.js, Vue.js
-- **Cloud**: AWS, Lambda, Terraform, Docker, Kubernetes
-- **Databases**: PostgreSQL, MySQL, MongoDB, Redis
-- **APIs**: REST, GraphQL, WebSocket
-- **DevOps**: Jenkins, GitHub Actions, Istio, Helm
-- **AI/ML**: OpenAI, Claude, LangChain, RAG
-- **Payment**: Razorpay, Stripe
-- **Security**: OAuth, JWT, PCI DSS, OWASP
-
-## 📈 Difficulty Level Detection
-
-Difficulty is determined by:
-- **Explicit markers**: Stars (⭐), keywords in filenames
-- **Content analysis**: Complexity indicators
-- **Pattern matching**: "basic", "advanced", "expert" keywords
-- **Context**: File location and naming
-
-### Difficulty Levels
-- ⭐ **Basic**: 15-30 min, fundamentals
-- ⭐⭐ **Intermediate**: 30-45 min, practical application
-- ⭐⭐⭐ **Advanced**: 45-60 min, complex scenarios
-- ⭐⭐⭐⭐ **Expert**: 60-90 min, system design
-
-## 🔧 Customization
-
-### Adding New Technology Patterns
-
-Edit `MetadataExtractor.php`:
-
-```php
-private array $technologyPatterns = [
-    'Your Tech' => '/\byour[-\s]?tech\b/i',
-    // ... more patterns
-];
-```
-
-### Adding Custom Validators
-
-Extend `QuestionValidator.php`:
-
-```php
-private function validateCustomSyntax(string $code, int $lineNumber, string $filePath): void
-{
-    // Your validation logic
-}
-```
-
-### Custom Cross-Reference Keywords
-
-Edit `CrossReferenceMapper.php`:
-
-```php
-private array $keywordPatterns = [
-    'your_category' => ['keyword1', 'keyword2'],
-    // ... more patterns
-];
-```
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**PHP Syntax Validation Fails:**
-- Ensure PHP CLI is in PATH
-- Check PHP version (8.0+ required)
-
-**YAML Validation Skipped:**
-- Install YAML extension: `pecl install yaml`
-
-**Memory Issues:**
-- Increase PHP memory: `php -d memory_limit=512M run-all.php`
-
-**Permission Errors:**
-- Ensure output directory is writable
-- Check file permissions
-
-## 📝 Output Format Examples
-
-### Validation Report
 ```markdown
-# Validation Report
+# Pattern 1: Numbered questions
+1. What is PHP and what does it stand for?
+2. Explain the difference between echo and print in PHP.
 
-## Summary
-- Total files: 87
-- Valid files: 85
-- Files with errors: 2
-- Total errors: 3
-- Total warnings: 12
+# Pattern 2: Heading questions
+### Question 1: What is semantic HTML?
+### ⭐⭐ Question 2: Explain closures in JavaScript
 
-## Detailed Results
-
-### ❌ questions.md
-**Errors (1):**
-- PHP syntax error at line 245: unexpected ';'
+# Pattern 3: Q-prefix questions
+**Q1:** What is a primary key?
+Q2: How do foreign keys enforce referential integrity?
 ```
 
-### Cross-Reference Report
+### Output Structure
+
+Generated answers are saved to `interview-bank/<category>/answers-generated.md` with the following structure:
+
 ```markdown
-## Cross-References by Domain Pair
+# Category Name - Comprehensive Answers
 
-### PHP Laravel ↔ DevOps Cloud K8s
-**8 cross-references found**
+**Auto-generated answers following comprehensive template structure**
 
-Strong connections:
-- webhook-processing.md ↔ lambda-examples.md
-  - Both cover Webhook Processing
-  - Both use AWS Lambda
+Generated on: 2024-01-15 14:30:00
+
+---
+
+## TABLE OF CONTENTS
+
+1. [Question 1 text](#question-1)
+2. [Question 2 text](#question-2)
+...
+
+---
+
+## Question 1: [Question text]
+
+**Difficulty**: ⭐⭐ Intermediate
+**Category**: General
+**Source**: questions.md (Line 42)
+
+---
+
+### 📚 Overview
+
+[Overview content]
+
+### 🔑 Core Concepts
+
+[Core concepts with 3 detailed subsections]
+
+### 💻 Code Examples
+
+[Basic, Advanced, and Production-Ready examples]
+
+### ✅ Best Practices
+
+[7 best practices with detailed explanations]
+
+### ⚠️ Common Pitfalls
+
+[6 common pitfalls with code examples]
+
+---
 ```
 
-## 🚀 Performance
+### Example Output
 
-- Processes 87 files in ~2-3 seconds
-- Validates 3500+ questions
-- Analyzes 800+ code examples
-- Generates 14 output files
-- Memory usage: ~50MB
+When you run the script, you'll see output like:
 
-## 📜 License
+```
+🚀 Starting Answer Generation Process...
 
-Part of the Interview Bank project. For educational purposes.
+📂 Processing category: web-technologies
+   📊 Found 35 questions
+   ✅ 0 already answered
+   ❓ 35 need answers
+   ✨ Generated 35 answers to: interview-bank/web-technologies/answers-generated.md
 
-## 🤝 Contributing
+📂 Processing category: cms-platforms
+   📊 Found 130 questions
+   ✅ 0 already answered
+   ❓ 130 need answers
+   ✨ Generated 130 answers to: interview-bank/cms-platforms/answers-generated.md
 
-To extend the automation:
-1. Create new validator/extractor class
-2. Implement interface methods
-3. Add to `run-all.php`
-4. Update this README
+============================================================
+📊 SUMMARY
+============================================================
+Total Questions Found:     735
+Already Answered:          200
+Missing Answers:           535
+Answers Generated:         535
+============================================================
 
-## 📞 Support
+✅ Successfully generated 535 comprehensive answers!
+```
 
-For issues or questions about the automation suite, review the generated reports or check the validation output for specific errors.
+### Integration with Existing Workflow
+
+1. **Review Generated Answers**: Check `answers-generated.md` files
+2. **Customize**: Edit generated answers to add specific technical details
+3. **Merge**: Integrate with existing answer files if needed
+4. **Version Control**: Commit the generated answers to git
+
+### Requirements
+
+- PHP 8.0 or higher (uses typed properties and mixed type)
+- Read/write access to interview-bank directories
+
+### Notes
+
+- The script uses intelligent question matching (both by text and number)
+- Duplicate questions are automatically detected and skipped
+- Generated answers are comprehensive but generic - review and customize as needed
+- The script is safe to run multiple times (won't duplicate existing answers)
+
+### Troubleshooting
+
+**No questions found:**
+- Ensure question files contain "question" in the filename
+- Check that questions follow one of the supported patterns
+
+**Answers not detected:**
+- Ensure answer files contain "answer" in the filename
+- Check that answered questions use similar numbering/text
+
+**Permission errors:**
+- Ensure write permissions on interview-bank directories
+- Check that the automation directory is writable
