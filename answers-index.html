@@ -766,6 +766,19 @@
                 </div>
             </div>
 
+            <div class="filters">
+                <span class="filter-label">Category:</span>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">All Categories</button>
+                    <button class="filter-btn" data-category="cms">CMS Platforms</button>
+                    <button class="filter-btn" data-category="web-tech">Web Technologies</button>
+                    <button class="filter-btn" data-category="database">Database</button>
+                    <button class="filter-btn" data-category="php-backend">PHP & Backend</button>
+                    <button class="filter-btn" data-category="frontend">Frontend</button>
+                    <button class="filter-btn" data-category="devops">DevOps</button>
+                </div>
+            </div>
+
             <div class="topic-filters">
                 <div class="topic-filter-group">
                     <span class="filter-label">Filter by Topic:</span>
@@ -782,15 +795,15 @@
 
         <div class="stats-overview">
             <div class="stat-card">
-                <div class="stat-value" id="statCategories">19</div>
+                <div class="stat-value" id="statCategories">23</div>
                 <div class="stat-label">Answer Categories</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">3,800+</div>
+                <div class="stat-value">4,600+</div>
                 <div class="stat-label">Total Answers</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="statVisible">19</div>
+                <div class="stat-value" id="statVisible">23</div>
                 <div class="stat-label">Visible Results</div>
             </div>
             <div class="stat-card">
@@ -803,12 +816,15 @@
             <h2>⚡ Quick Links</h2>
             <div class="quick-links-grid">
                 <a href="answers/php-core-answers.html" class="quick-link-item" data-shortcut="1">PHP Core</a>
+                <a href="answers/general-php-answers.html" class="quick-link-item">General PHP</a>
                 <a href="answers/laravel-framework-answers.html" class="quick-link-item" data-shortcut="2">Laravel Framework</a>
                 <a href="answers/advanced-laravel-answers.html" class="quick-link-item" data-shortcut="3">Advanced Laravel</a>
                 <a href="answers/database-mysql-answers.html" class="quick-link-item" data-shortcut="4">Database & MySQL</a>
+                <a href="answers/database-general-answers.html" class="quick-link-item">Database General</a>
                 <a href="answers/database-advanced-optimization-answers.html" class="quick-link-item" data-shortcut="5">Database Optimization</a>
                 <a href="answers/api-security-answers.html" class="quick-link-item" data-shortcut="6">API & Security</a>
                 <a href="answers/javascript-frontend-answers.html" class="quick-link-item" data-shortcut="7">JavaScript & Frontend</a>
+                <a href="answers/web-technologies-answers.html" class="quick-link-item">Web Technologies</a>
                 <a href="answers/frontend-react-nextjs-advanced-answers.html" class="quick-link-item" data-shortcut="8">React & Next.js</a>
                 <a href="answers/devops-git-answers.html" class="quick-link-item" data-shortcut="9">DevOps & Git</a>
                 <a href="answers/devops-kubernetes-aws-answers.html" class="quick-link-item">Kubernetes & AWS</a>
@@ -816,6 +832,7 @@
                 <a href="answers/testing-debugging-answers.html" class="quick-link-item">Testing & Debugging</a>
                 <a href="answers/cms-wordpress-answers.html" class="quick-link-item">WordPress CMS</a>
                 <a href="answers/cms-magento-drupal-answers.html" class="quick-link-item">Magento & Drupal</a>
+                <a href="answers/cms-platforms-answers.html" class="quick-link-item">CMS Platforms</a>
                 <a href="answers/codeigniter-answers.html" class="quick-link-item">CodeIgniter</a>
                 <a href="answers/cloud-infrastructure-answers.html" class="quick-link-item">Cloud Infrastructure</a>
                 <a href="answers/realtime-communication-answers.html" class="quick-link-item">Realtime Communication</a>
@@ -832,11 +849,11 @@
                 <div class="category-header">
                     <div class="category-info">
                         <h2>🐘 PHP & Backend Development</h2>
-                        <span class="category-count">6 Answer Sets • 1,200+ Answers</span>
+                        <span class="category-count">7 Answer Sets • 1,400+ Answers</span>
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="intermediate" data-topics="php,oop,namespaces,security,performance">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="php,oop,namespaces,security,performance" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">🐘</span>
                             <h3>PHP Core Fundamentals</h3>
@@ -861,7 +878,32 @@
                         <a href="answers/php-core-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="advanced" data-topics="eloquent,middleware,queues,api,testing">
+                    <article class="answer-card" data-difficulty="beginner" data-topics="php,syntax,functions,arrays,strings" data-card-category="php-backend">
+                        <div class="answer-card-header">
+                            <span class="answer-icon">📘</span>
+                            <h3>General PHP Fundamentals</h3>
+                        </div>
+                        <div class="answer-meta">
+                            <div class="meta-item">
+                                <span class="meta-icon">📝</span>
+                                <span>200+ Answers</span>
+                            </div>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                        <p class="answer-description">
+                            Essential PHP programming concepts, syntax fundamentals, data types, control structures, functions, arrays, string manipulation, and file handling basics.
+                        </p>
+                        <div class="topics-list">
+                            <span class="topic-tag">Syntax</span>
+                            <span class="topic-tag">Functions</span>
+                            <span class="topic-tag">Arrays</span>
+                            <span class="topic-tag">Strings</span>
+                            <span class="topic-tag">File Handling</span>
+                        </div>
+                        <a href="answers/general-php-answers.html" class="view-answers-btn">View Answers →</a>
+                    </article>
+
+                    <article class="answer-card" data-difficulty="advanced" data-topics="eloquent,middleware,queues,api,testing" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">🚀</span>
                             <h3>Laravel Framework</h3>
@@ -886,7 +928,7 @@
                         <a href="answers/laravel-framework-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="expert" data-topics="payment,webhooks,idempotency,pci,soap">
+                    <article class="answer-card" data-difficulty="expert" data-topics="payment,webhooks,idempotency,pci,soap" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">💎</span>
                             <h3>Advanced Laravel</h3>
@@ -911,7 +953,7 @@
                         <a href="answers/advanced-laravel-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="advanced" data-topics="rest,oauth,jwt,owasp,encryption">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="rest,oauth,jwt,owasp,encryption" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">🔐</span>
                             <h3>API & Security</h3>
@@ -936,7 +978,7 @@
                         <a href="answers/api-security-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="intermediate" data-topics="solid,design,patterns,di,architecture">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="solid,design,patterns,di,architecture" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">🎯</span>
                             <h3>OOP & Design Patterns</h3>
@@ -960,7 +1002,7 @@
                         <a href="answers/oop-design-patterns-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="intermediate" data-topics="mvc,routing,database,validation">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="mvc,routing,database,validation" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">🔥</span>
                             <h3>CodeIgniter Framework</h3>
@@ -991,11 +1033,11 @@
                 <div class="category-header">
                     <div class="category-info">
                         <h2>🗄️ Database & Storage</h2>
-                        <span class="category-count">2 Answer Sets • 400+ Answers</span>
+                        <span class="category-count">3 Answer Sets • 600+ Answers</span>
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="advanced" data-topics="mysql,indexing,optimization,transactions,scaling">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="mysql,indexing,optimization,transactions,scaling" data-card-category="database">
                         <div class="answer-card-header">
                             <span class="answer-icon">🗄️</span>
                             <h3>Database & MySQL</h3>
@@ -1020,7 +1062,32 @@
                         <a href="answers/database-mysql-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="expert" data-topics="partitioning,sharding,caching,monitoring">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="sql,normalization,relationships,keys,joins" data-card-category="database">
+                        <div class="answer-card-header">
+                            <span class="answer-icon">💾</span>
+                            <h3>Database General Concepts</h3>
+                        </div>
+                        <div class="answer-meta">
+                            <div class="meta-item">
+                                <span class="meta-icon">📝</span>
+                                <span>200+ Answers</span>
+                            </div>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                        <p class="answer-description">
+                            Database fundamentals including SQL basics, normalization forms, relationships, primary and foreign keys, joins, subqueries, and general database design principles.
+                        </p>
+                        <div class="topics-list">
+                            <span class="topic-tag">SQL</span>
+                            <span class="topic-tag">Normalization</span>
+                            <span class="topic-tag">Relationships</span>
+                            <span class="topic-tag">Keys</span>
+                            <span class="topic-tag">Joins</span>
+                        </div>
+                        <a href="answers/database-general-answers.html" class="view-answers-btn">View Answers →</a>
+                    </article>
+
+                    <article class="answer-card" data-difficulty="expert" data-topics="partitioning,sharding,caching,monitoring" data-card-category="database">
                         <div class="answer-card-header">
                             <span class="answer-icon">⚡</span>
                             <h3>Database Advanced Optimization</h3>
@@ -1052,11 +1119,11 @@
                 <div class="category-header">
                     <div class="category-info">
                         <h2>⚛️ Frontend & JavaScript</h2>
-                        <span class="category-count">2 Answer Sets • 400+ Answers</span>
+                        <span class="category-count">3 Answer Sets • 600+ Answers</span>
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="intermediate" data-topics="es6,react,vue,async,state">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="es6,react,vue,async,state" data-card-category="frontend">
                         <div class="answer-card-header">
                             <span class="answer-icon">⚛️</span>
                             <h3>JavaScript & Frontend</h3>
@@ -1081,7 +1148,33 @@
                         <a href="answers/javascript-frontend-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="advanced" data-topics="hooks,nextjs,ssr,ssg,performance">
+                    <article class="answer-card" data-difficulty="beginner" data-topics="html5,css3,javascript,dom,ajax,jquery" data-card-category="web-tech">
+                        <div class="answer-card-header">
+                            <span class="answer-icon">🌐</span>
+                            <h3>Web Technologies</h3>
+                        </div>
+                        <div class="answer-meta">
+                            <div class="meta-item">
+                                <span class="meta-icon">📝</span>
+                                <span>200+ Answers</span>
+                            </div>
+                            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+                        </div>
+                        <p class="answer-description">
+                            HTML5 features, CSS3 styling, JavaScript fundamentals, DOM manipulation, event handling, AJAX patterns, jQuery, form validation, and frontend optimization basics.
+                        </p>
+                        <div class="topics-list">
+                            <span class="topic-tag">HTML5</span>
+                            <span class="topic-tag">CSS3</span>
+                            <span class="topic-tag">JavaScript</span>
+                            <span class="topic-tag">DOM</span>
+                            <span class="topic-tag">AJAX</span>
+                            <span class="topic-tag">jQuery</span>
+                        </div>
+                        <a href="answers/web-technologies-answers.html" class="view-answers-btn">View Answers →</a>
+                    </article>
+
+                    <article class="answer-card" data-difficulty="advanced" data-topics="hooks,nextjs,ssr,ssg,performance" data-card-category="frontend">
                         <div class="answer-card-header">
                             <span class="answer-icon">⚡</span>
                             <h3>React & Next.js Advanced</h3>
@@ -1117,7 +1210,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="advanced" data-topics="git,ci/cd,docker,automation,monitoring">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="git,ci/cd,docker,automation,monitoring" data-card-category="devops">
                         <div class="answer-card-header">
                             <span class="answer-icon">🔧</span>
                             <h3>DevOps & Git</h3>
@@ -1142,7 +1235,7 @@
                         <a href="answers/devops-git-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="expert" data-topics="aws,kubernetes,serverless,microservices,security">
+                    <article class="answer-card" data-difficulty="expert" data-topics="aws,kubernetes,serverless,microservices,security" data-card-category="devops">
                         <div class="answer-card-header">
                             <span class="answer-icon">☁️</span>
                             <h3>Cloud Infrastructure</h3>
@@ -1167,7 +1260,7 @@
                         <a href="answers/cloud-infrastructure-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="expert" data-topics="kubernetes,aws,helm,monitoring">
+                    <article class="answer-card" data-difficulty="expert" data-topics="kubernetes,aws,helm,monitoring" data-card-category="devops">
                         <div class="answer-card-header">
                             <span class="answer-icon">🚢</span>
                             <h3>Kubernetes & AWS DevOps</h3>
@@ -1199,11 +1292,11 @@
                 <div class="category-header">
                     <div class="category-info">
                         <h2>📦 CMS & Platforms</h2>
-                        <span class="category-count">2 Answer Sets • 400+ Answers</span>
+                        <span class="category-count">3 Answer Sets • 600+ Answers</span>
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="intermediate" data-topics="themes,plugins,hooks,woocommerce,rest">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="themes,plugins,hooks,woocommerce,rest,cms" data-card-category="cms">
                         <div class="answer-card-header">
                             <span class="answer-icon">📝</span>
                             <h3>WordPress CMS</h3>
@@ -1228,7 +1321,7 @@
                         <a href="answers/cms-wordpress-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="advanced" data-topics="magento,drupal,modules,ecommerce">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="magento,drupal,modules,ecommerce,cms" data-card-category="cms">
                         <div class="answer-card-header">
                             <span class="answer-icon">🛒</span>
                             <h3>Magento & Drupal</h3>
@@ -1251,6 +1344,31 @@
                         </div>
                         <a href="answers/cms-magento-drupal-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
+
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="wordpress,magento,drupal,cms,platforms" data-card-category="cms">
+                        <div class="answer-card-header">
+                            <span class="answer-icon">🏗️</span>
+                            <h3>CMS Platforms Comprehensive</h3>
+                        </div>
+                        <div class="answer-meta">
+                            <div class="meta-item">
+                                <span class="meta-icon">📝</span>
+                                <span>200+ Answers</span>
+                            </div>
+                            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+                        </div>
+                        <p class="answer-description">
+                            Comprehensive guide covering WordPress, Magento 2, and Drupal development, including themes, plugins, modules, customization, security, and deployment strategies.
+                        </p>
+                        <div class="topics-list">
+                            <span class="topic-tag">WordPress</span>
+                            <span class="topic-tag">Magento 2</span>
+                            <span class="topic-tag">Drupal</span>
+                            <span class="topic-tag">CMS</span>
+                            <span class="topic-tag">Platforms</span>
+                        </div>
+                        <a href="answers/cms-platforms-answers.html" class="view-answers-btn">View Answers →</a>
+                    </article>
                 </div>
             </div>
 
@@ -1263,7 +1381,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="advanced" data-topics="phpunit,tdd,debugging,coverage,automation">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="phpunit,tdd,debugging,coverage,automation" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">🧪</span>
                             <h3>Testing & Debugging</h3>
@@ -1299,7 +1417,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="expert" data-topics="algorithms,data,structures,optimization">
+                    <article class="answer-card" data-difficulty="expert" data-topics="algorithms,data,structures,optimization" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">💡</span>
                             <h3>Coding Challenges</h3>
@@ -1334,7 +1452,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="advanced" data-topics="websockets,socketio,broadcasting,notifications,events">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="websockets,socketio,broadcasting,notifications,events" data-card-category="php-backend">
                         <div class="answer-card-header">
                             <span class="answer-icon">📡</span>
                             <h3>Realtime Communication</h3>
@@ -1370,7 +1488,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="expert" data-topics="llms,openai,serverless,lambda,rag">
+                    <article class="answer-card" data-difficulty="expert" data-topics="llms,openai,serverless,lambda,rag" data-card-category="devops">
                         <div class="answer-card-header">
                             <span class="answer-icon">🤖</span>
                             <h3>AI, LLM & Serverless</h3>
@@ -1486,6 +1604,7 @@
                 this.noResults = document.getElementById('noResults');
                 this.categoryGroups = document.querySelectorAll('.category-group');
                 this.currentDifficulty = 'all';
+                this.currentCategory = 'all';
                 this.activeTopic = null;
                 this.activeTopics = new Set();
             }
@@ -1573,10 +1692,15 @@
                 this.answerCards.forEach(card => {
                     const cardDifficulty = card.getAttribute('data-difficulty');
                     const cardTopics = (card.getAttribute('data-topics') || '').split(',');
+                    const cardCategory = card.getAttribute('data-card-category') || '';
 
                     // Check difficulty filter
                     const matchesDifficulty = this.currentDifficulty === 'all' || 
                                             cardDifficulty === this.currentDifficulty;
+
+                    // Check category filter
+                    const matchesCategory = this.currentCategory === 'all' || 
+                                          cardCategory === this.currentCategory;
 
                     // Check topic filter
                     const matchesTopics = this.activeTopics.size === 0 || 
@@ -1586,7 +1710,7 @@
                     // Check search query
                     const matchesSearch = this.matchesSearch(card, searchTerm);
 
-                    const isVisible = matchesDifficulty && matchesTopics && matchesSearch;
+                    const isVisible = matchesDifficulty && matchesCategory && matchesTopics && matchesSearch;
                     card.style.display = isVisible ? 'block' : 'none';
                     if (isVisible) {
                         visibleCount++;
@@ -1627,6 +1751,23 @@
                     });
                 }
 
+                // Add category filter
+                if (this.currentCategory !== 'all') {
+                    const categoryLabels = {
+                        'cms': 'CMS Platforms',
+                        'web-tech': 'Web Technologies',
+                        'database': 'Database',
+                        'php-backend': 'PHP & Backend',
+                        'frontend': 'Frontend',
+                        'devops': 'DevOps'
+                    };
+                    filters.push({
+                        type: 'category',
+                        value: this.currentCategory,
+                        label: categoryLabels[this.currentCategory] || this.currentCategory
+                    });
+                }
+
                 // Add topic filters
                 this.activeTopics.forEach(topic => {
                     filters.push({
@@ -1664,8 +1805,13 @@
             removeFilter(type, value) {
                 if (type === 'difficulty') {
                     this.currentDifficulty = 'all';
-                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                    document.querySelectorAll('.filter-btn[data-difficulty]').forEach(btn => {
                         btn.classList.toggle('active', btn.getAttribute('data-difficulty') === 'all');
+                    });
+                } else if (type === 'category') {
+                    this.currentCategory = 'all';
+                    document.querySelectorAll('.filter-btn[data-category]').forEach(btn => {
+                        btn.classList.toggle('active', btn.getAttribute('data-category') === 'all');
                     });
                 } else if (type === 'topic') {
                     this.activeTopics.delete(value);
@@ -1678,12 +1824,16 @@
             // Clear all filters
             clearAllFilters() {
                 this.currentDifficulty = 'all';
+                this.currentCategory = 'all';
                 this.activeTopics.clear();
                 this.searchInput.value = '';
 
                 // Reset UI
-                document.querySelectorAll('.filter-btn').forEach(btn => {
+                document.querySelectorAll('.filter-btn[data-difficulty]').forEach(btn => {
                     btn.classList.toggle('active', btn.getAttribute('data-difficulty') === 'all');
+                });
+                document.querySelectorAll('.filter-btn[data-category]').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-category') === 'all');
                 });
                 document.querySelectorAll('.topic-filter-tag').forEach(tag => {
                     tag.classList.remove('active');
@@ -1695,6 +1845,12 @@
             // Set difficulty filter
             setDifficulty(difficulty) {
                 this.currentDifficulty = difficulty;
+                this.applyFilters();
+            }
+
+            // Set category filter
+            setCategory(category) {
+                this.currentCategory = category;
                 this.applyFilters();
             }
 
@@ -1729,11 +1885,20 @@
         });
 
         // Difficulty filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
+        document.querySelectorAll('.filter-btn[data-difficulty]').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.filter-btn[data-difficulty]').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 searchEngine.setDifficulty(btn.getAttribute('data-difficulty'));
+            });
+        });
+
+        // Category filter buttons
+        document.querySelectorAll('.filter-btn[data-category]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn[data-category]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                searchEngine.setCategory(btn.getAttribute('data-category'));
             });
         });
 
