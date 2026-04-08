@@ -164,3 +164,8 @@ automation/*.md
 !automation/IMPLEMENTATION.md
 !automation/HTML_GENERATOR_GUIDE.md
 !automation/EXAMPLE_OUTPUT.md
+
+# PDF Generator - TCPDF
+pdf-exports/
+*.pdf
+!nandan_singh_resume.pdf

@@ -72,12 +72,26 @@ Complete automation system for validating, analyzing, and indexing interview que
 - ⚡ Fast validation of entire answer directory
 - 🎯 Identifies broken links and missing sections
 
+### 8. **PDF Answer Generator** (`generate-pdf-answers.php`) 📄 NEW!
+- 📄 Exports HTML answers to professionally formatted PDF documents
+- 🎨 Preserves syntax highlighting with dark-themed code blocks
+- 📑 Automatic table of contents generation
+- 🎯 Category-specific color themes (Laravel red, PHP purple, etc.)
+- 📊 Well-formatted tables with alternating row colors
+- 💡 Info/warning/success boxes with proper styling
+- 📖 Professional cover page with category information
+- 🔢 Page numbers and headers/footers
+- 📁 Organized output to `pdf-exports/` directory
+- ⚡ Batch processing for all categories
+- 🔧 Two library options: TCPDF (default) and mPDF (optional)
+
 ## 🚀 Quick Start
 
 ### Requirements
 - PHP 8.0 or higher (for PHP automation scripts)
 - Python 3.7+ (for HTML answer generation)
 - Pygments library (`pip install pygments`)
+- Composer (for PDF generation dependencies)
 - Command line access
 
 ### Running the Complete Suite
@@ -118,6 +132,43 @@ This will:
   - WebSocket real-time architecture
 - Output fully-formatted HTML with `<article>` elements
 - Save to `automation/output/comprehensive-answers.html`
+
+### Running PDF Generation
+
+**Generate PDF exports of all answer pages:**
+```bash
+# Install dependencies first (one time)
+composer install
+
+# Generate all PDFs (TCPDF - default, faster, smaller files)
+php automation/generate-pdf-answers.php
+
+# Or use convenience scripts
+./automation/generate-pdfs.sh     # Unix/Linux/Mac
+automation\generate-pdfs.bat      # Windows
+
+# Generate specific category
+php automation/generate-pdf-answers.php php-core-answers
+
+# Alternative: Use mPDF (better HTML/CSS support)
+composer require mpdf/mpdf
+php automation/generate-pdf-answers-mpdf.php
+```
+
+This will:
+- Parse HTML answer files from `answers/` directory
+- Extract and format all content sections
+- Generate professional PDFs with:
+  - Syntax-highlighted code blocks (dark theme)
+  - Table of contents with all topics
+  - Category-specific color themes
+  - Formatted tables, lists, and info boxes
+  - Cover page with title and description
+  - Page numbers and headers
+- Save PDFs to `pdf-exports/` directory
+- Support batch processing of all categories
+
+See `automation/PDF_GENERATOR_README.md` for detailed documentation.
 
 ### Running Individual Components
 
@@ -185,6 +236,16 @@ All output files are saved to `automation/output/`:
   - Responsive design with modern CSS
   - Organized by topic sections
   - Article-based layout with question/answer pairs
+
+### PDF Exports (NEW!)
+- Located in `pdf-exports/` directory (not in automation/output)
+- One PDF per answer category (e.g., `php-core-answers.pdf`)
+- Professional formatting with:
+  - Syntax-highlighted code blocks
+  - Table of contents
+  - Category-specific color themes
+  - Cover page with metadata
+  - Page numbers and headers
 
 ### Answer Quality Validation (NEW!)
 - Terminal output with validation results

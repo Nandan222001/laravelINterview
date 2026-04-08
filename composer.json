@@ -1,0 +1,17 @@
+{
+    "name": "interview-bank/pdf-generator",
+    "description": "Interview questions and answers PDF generator",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "tecnickcom/tcpdf": "^6.6"
+    },
+    "suggest": {
+        "mpdf/mpdf": "^8.0 - Alternative PDF library with better HTML/CSS support"
+    },
+    "autoload": {
+        "psr-4": {
+            "InterviewBank\\": "automation/"
+        }
+    }
+}
