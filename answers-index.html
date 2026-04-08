@@ -85,6 +85,24 @@
             transform: translateY(-2px);
         }
 
+        .keyboard-shortcuts-hint {
+            font-size: 0.85rem;
+            color: #666;
+            padding: 0.5rem 1rem;
+            background: #f0f0f0;
+            border-radius: 6px;
+        }
+
+        .keyboard-shortcuts-hint kbd {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 0.2rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
         .search-filter-section {
             background: white;
             padding: 2rem;
@@ -97,6 +115,7 @@
             display: flex;
             gap: 1rem;
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .search-box input {
@@ -131,11 +150,26 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
+        .search-hints {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .search-hints strong {
+            color: #667eea;
+        }
+
         .filters {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
             align-items: center;
+            margin-bottom: 1.5rem;
         }
 
         .filter-label {
@@ -169,6 +203,94 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border-color: transparent;
+        }
+
+        .topic-filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .topic-filter-group {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .topic-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .topic-filter-tag {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .topic-filter-tag:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .topic-filter-tag.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .active-filter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .active-filter-badge button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+            padding: 0;
+            margin: 0;
+        }
+
+        .clear-filters-btn {
+            padding: 0.5rem 1rem;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .clear-filters-btn:hover {
+            background: #d32f2f;
         }
 
         .stats-overview {
@@ -266,6 +388,15 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
             border-color: #667eea;
+        }
+
+        .answer-card.highlighted {
+            animation: highlightPulse 1s ease-in-out;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+            50% { box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5); }
         }
 
         .answer-card-header {
@@ -464,6 +595,78 @@
             font-size: 1.1rem;
         }
 
+        .keyboard-shortcuts-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .keyboard-shortcuts-modal.active {
+            display: flex;
+        }
+
+        .shortcuts-modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .shortcuts-modal-content h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .shortcuts-list {
+            list-style: none;
+        }
+
+        .shortcuts-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .shortcuts-list kbd {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        .close-modal-btn {
+            margin-top: 1.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-modal-btn:hover {
+            background: #764ba2;
+        }
+
         footer {
             background: white;
             padding: 2rem;
@@ -537,6 +740,9 @@
                 <a href="code-examples.html">💻 Code Examples</a>
                 <a href="#quick-links">⚡ Quick Links</a>
             </div>
+            <div class="keyboard-shortcuts-hint">
+                Press <kbd>?</kbd> for shortcuts
+            </div>
         </nav>
 
         <div class="search-filter-section">
@@ -545,8 +751,12 @@
                 <button type="button" id="searchBtn">🔍 Search</button>
             </div>
             
+            <div class="search-hints">
+                <strong>Search Tips:</strong> Use quotes for exact phrases (e.g., "OAuth 2.0"), OR for multiple terms (e.g., Laravel OR PHP), prefix with - to exclude (e.g., -beginner)
+            </div>
+
             <div class="filters">
-                <span class="filter-label">Filter by Difficulty:</span>
+                <span class="filter-label">Difficulty:</span>
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-difficulty="all">All Levels</button>
                     <button class="filter-btn" data-difficulty="beginner">Beginner</button>
@@ -555,11 +765,24 @@
                     <button class="filter-btn" data-difficulty="expert">Expert</button>
                 </div>
             </div>
+
+            <div class="topic-filters">
+                <div class="topic-filter-group">
+                    <span class="filter-label">Filter by Topic:</span>
+                    <div class="topic-tags-container" id="topicFilters">
+                        <!-- Topics will be dynamically populated -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="active-filters" id="activeFilters" style="display: none;">
+                <!-- Active filters will be shown here -->
+            </div>
         </div>
 
         <div class="stats-overview">
             <div class="stat-card">
-                <div class="stat-value">19</div>
+                <div class="stat-value" id="statCategories">19</div>
                 <div class="stat-label">Answer Categories</div>
             </div>
             <div class="stat-card">
@@ -567,8 +790,8 @@
                 <div class="stat-label">Total Answers</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">7,500+</div>
-                <div class="stat-label">Code Examples</div>
+                <div class="stat-value" id="statVisible">19</div>
+                <div class="stat-label">Visible Results</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value">100%</div>
@@ -579,15 +802,15 @@
         <section class="quick-links" id="quick-links">
             <h2>⚡ Quick Links</h2>
             <div class="quick-links-grid">
-                <a href="answers/php-core-answers.html" class="quick-link-item">PHP Core</a>
-                <a href="answers/laravel-framework-answers.html" class="quick-link-item">Laravel Framework</a>
-                <a href="answers/advanced-laravel-answers.html" class="quick-link-item">Advanced Laravel</a>
-                <a href="answers/database-mysql-answers.html" class="quick-link-item">Database & MySQL</a>
-                <a href="answers/database-advanced-optimization-answers.html" class="quick-link-item">Database Optimization</a>
-                <a href="answers/api-security-answers.html" class="quick-link-item">API & Security</a>
-                <a href="answers/javascript-frontend-answers.html" class="quick-link-item">JavaScript & Frontend</a>
-                <a href="answers/frontend-react-nextjs-advanced-answers.html" class="quick-link-item">React & Next.js</a>
-                <a href="answers/devops-git-answers.html" class="quick-link-item">DevOps & Git</a>
+                <a href="answers/php-core-answers.html" class="quick-link-item" data-shortcut="1">PHP Core</a>
+                <a href="answers/laravel-framework-answers.html" class="quick-link-item" data-shortcut="2">Laravel Framework</a>
+                <a href="answers/advanced-laravel-answers.html" class="quick-link-item" data-shortcut="3">Advanced Laravel</a>
+                <a href="answers/database-mysql-answers.html" class="quick-link-item" data-shortcut="4">Database & MySQL</a>
+                <a href="answers/database-advanced-optimization-answers.html" class="quick-link-item" data-shortcut="5">Database Optimization</a>
+                <a href="answers/api-security-answers.html" class="quick-link-item" data-shortcut="6">API & Security</a>
+                <a href="answers/javascript-frontend-answers.html" class="quick-link-item" data-shortcut="7">JavaScript & Frontend</a>
+                <a href="answers/frontend-react-nextjs-advanced-answers.html" class="quick-link-item" data-shortcut="8">React & Next.js</a>
+                <a href="answers/devops-git-answers.html" class="quick-link-item" data-shortcut="9">DevOps & Git</a>
                 <a href="answers/devops-kubernetes-aws-answers.html" class="quick-link-item">Kubernetes & AWS</a>
                 <a href="answers/oop-design-patterns-answers.html" class="quick-link-item">OOP & Design Patterns</a>
                 <a href="answers/testing-debugging-answers.html" class="quick-link-item">Testing & Debugging</a>
@@ -613,7 +836,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="intermediate">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="php,oop,namespaces,security,performance">
                         <div class="answer-card-header">
                             <span class="answer-icon">🐘</span>
                             <h3>PHP Core Fundamentals</h3>
@@ -638,7 +861,7 @@
                         <a href="answers/php-core-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="advanced">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="eloquent,middleware,queues,api,testing">
                         <div class="answer-card-header">
                             <span class="answer-icon">🚀</span>
                             <h3>Laravel Framework</h3>
@@ -663,7 +886,7 @@
                         <a href="answers/laravel-framework-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="expert">
+                    <article class="answer-card" data-difficulty="expert" data-topics="payment,webhooks,idempotency,pci,soap">
                         <div class="answer-card-header">
                             <span class="answer-icon">💎</span>
                             <h3>Advanced Laravel</h3>
@@ -688,7 +911,7 @@
                         <a href="answers/advanced-laravel-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="advanced">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="rest,oauth,jwt,owasp,encryption">
                         <div class="answer-card-header">
                             <span class="answer-icon">🔐</span>
                             <h3>API & Security</h3>
@@ -713,7 +936,7 @@
                         <a href="answers/api-security-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="intermediate">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="solid,design,patterns,di,architecture">
                         <div class="answer-card-header">
                             <span class="answer-icon">🎯</span>
                             <h3>OOP & Design Patterns</h3>
@@ -737,7 +960,7 @@
                         <a href="answers/oop-design-patterns-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="intermediate">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="mvc,routing,database,validation">
                         <div class="answer-card-header">
                             <span class="answer-icon">🔥</span>
                             <h3>CodeIgniter Framework</h3>
@@ -772,7 +995,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="advanced">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="mysql,indexing,optimization,transactions,scaling">
                         <div class="answer-card-header">
                             <span class="answer-icon">🗄️</span>
                             <h3>Database & MySQL</h3>
@@ -797,7 +1020,7 @@
                         <a href="answers/database-mysql-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="expert">
+                    <article class="answer-card" data-difficulty="expert" data-topics="partitioning,sharding,caching,monitoring">
                         <div class="answer-card-header">
                             <span class="answer-icon">⚡</span>
                             <h3>Database Advanced Optimization</h3>
@@ -833,7 +1056,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="intermediate">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="es6,react,vue,async,state">
                         <div class="answer-card-header">
                             <span class="answer-icon">⚛️</span>
                             <h3>JavaScript & Frontend</h3>
@@ -858,7 +1081,7 @@
                         <a href="answers/javascript-frontend-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="advanced">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="hooks,nextjs,ssr,ssg,performance">
                         <div class="answer-card-header">
                             <span class="answer-icon">⚡</span>
                             <h3>React & Next.js Advanced</h3>
@@ -894,7 +1117,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="advanced">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="git,ci/cd,docker,automation,monitoring">
                         <div class="answer-card-header">
                             <span class="answer-icon">🔧</span>
                             <h3>DevOps & Git</h3>
@@ -919,7 +1142,7 @@
                         <a href="answers/devops-git-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="expert">
+                    <article class="answer-card" data-difficulty="expert" data-topics="aws,kubernetes,serverless,microservices,security">
                         <div class="answer-card-header">
                             <span class="answer-icon">☁️</span>
                             <h3>Cloud Infrastructure</h3>
@@ -944,7 +1167,7 @@
                         <a href="answers/cloud-infrastructure-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="expert">
+                    <article class="answer-card" data-difficulty="expert" data-topics="kubernetes,aws,helm,monitoring">
                         <div class="answer-card-header">
                             <span class="answer-icon">🚢</span>
                             <h3>Kubernetes & AWS DevOps</h3>
@@ -980,7 +1203,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="intermediate">
+                    <article class="answer-card" data-difficulty="intermediate" data-topics="themes,plugins,hooks,woocommerce,rest">
                         <div class="answer-card-header">
                             <span class="answer-icon">📝</span>
                             <h3>WordPress CMS</h3>
@@ -1005,7 +1228,7 @@
                         <a href="answers/cms-wordpress-answers.html" class="view-answers-btn">View Answers →</a>
                     </article>
 
-                    <article class="answer-card" data-difficulty="advanced">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="magento,drupal,modules,ecommerce">
                         <div class="answer-card-header">
                             <span class="answer-icon">🛒</span>
                             <h3>Magento & Drupal</h3>
@@ -1040,7 +1263,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="advanced">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="phpunit,tdd,debugging,coverage,automation">
                         <div class="answer-card-header">
                             <span class="answer-icon">🧪</span>
                             <h3>Testing & Debugging</h3>
@@ -1076,7 +1299,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="expert">
+                    <article class="answer-card" data-difficulty="expert" data-topics="algorithms,data,structures,optimization">
                         <div class="answer-card-header">
                             <span class="answer-icon">💡</span>
                             <h3>Coding Challenges</h3>
@@ -1111,7 +1334,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="advanced">
+                    <article class="answer-card" data-difficulty="advanced" data-topics="websockets,socketio,broadcasting,notifications,events">
                         <div class="answer-card-header">
                             <span class="answer-icon">📡</span>
                             <h3>Realtime Communication</h3>
@@ -1147,7 +1370,7 @@
                     </div>
                 </div>
                 <div class="answers-grid">
-                    <article class="answer-card" data-difficulty="expert">
+                    <article class="answer-card" data-difficulty="expert" data-topics="llms,openai,serverless,lambda,rag">
                         <div class="answer-card-header">
                             <span class="answer-icon">🤖</span>
                             <h3>AI, LLM & Serverless</h3>
@@ -1187,108 +1410,423 @@
         </footer>
     </div>
 
+    <!-- Keyboard Shortcuts Modal -->
+    <div class="keyboard-shortcuts-modal" id="shortcutsModal">
+        <div class="shortcuts-modal-content">
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <ul class="shortcuts-list">
+                <li>
+                    <span>Focus Search</span>
+                    <kbd>/</kbd>
+                </li>
+                <li>
+                    <span>Clear Search</span>
+                    <kbd>Esc</kbd>
+                </li>
+                <li>
+                    <span>Show/Hide Shortcuts</span>
+                    <kbd>?</kbd>
+                </li>
+                <li>
+                    <span>Navigate to PHP Core</span>
+                    <kbd>1</kbd>
+                </li>
+                <li>
+                    <span>Navigate to Laravel</span>
+                    <kbd>2</kbd>
+                </li>
+                <li>
+                    <span>Navigate to Advanced Laravel</span>
+                    <kbd>3</kbd>
+                </li>
+                <li>
+                    <span>Navigate to Database</span>
+                    <kbd>4</kbd>
+                </li>
+                <li>
+                    <span>Navigate to DB Optimization</span>
+                    <kbd>5</kbd>
+                </li>
+                <li>
+                    <span>Navigate to API & Security</span>
+                    <kbd>6</kbd>
+                </li>
+                <li>
+                    <span>Navigate to JavaScript</span>
+                    <kbd>7</kbd>
+                </li>
+                <li>
+                    <span>Navigate to React & Next.js</span>
+                    <kbd>8</kbd>
+                </li>
+                <li>
+                    <span>Navigate to DevOps</span>
+                    <kbd>9</kbd>
+                </li>
+                <li>
+                    <span>Scroll to Top</span>
+                    <kbd>Home</kbd>
+                </li>
+                <li>
+                    <span>Scroll to Bottom</span>
+                    <kbd>End</kbd>
+                </li>
+            </ul>
+            <button class="close-modal-btn" id="closeModalBtn">Close</button>
+        </div>
+    </div>
+
     <script>
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const answerCards = document.querySelectorAll('.answer-card');
-        const noResults = document.getElementById('noResults');
-        const categoryGroups = document.querySelectorAll('.category-group');
+        // Advanced Search Engine with Multi-field Query Support
+        class AdvancedSearchEngine {
+            constructor() {
+                this.searchInput = document.getElementById('searchInput');
+                this.searchBtn = document.getElementById('searchBtn');
+                this.answerCards = document.querySelectorAll('.answer-card');
+                this.noResults = document.getElementById('noResults');
+                this.categoryGroups = document.querySelectorAll('.category-group');
+                this.currentDifficulty = 'all';
+                this.activeTopic = null;
+                this.activeTopics = new Set();
+            }
 
-        function performSearch() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            let visibleCount = 0;
+            // Parse advanced search query
+            parseQuery(query) {
+                const parsed = {
+                    include: [],
+                    exclude: [],
+                    exact: [],
+                    or: []
+                };
 
-            answerCards.forEach(card => {
+                // Extract quoted phrases for exact match
+                const exactMatches = query.match(/"([^"]+)"/g);
+                if (exactMatches) {
+                    exactMatches.forEach(match => {
+                        parsed.exact.push(match.replace(/"/g, '').toLowerCase());
+                        query = query.replace(match, '');
+                    });
+                }
+
+                // Extract OR terms
+                const orParts = query.split(/\s+OR\s+/i);
+                if (orParts.length > 1) {
+                    orParts.forEach(part => {
+                        const trimmed = part.trim().toLowerCase();
+                        if (trimmed) parsed.or.push(trimmed);
+                    });
+                    return parsed;
+                }
+
+                // Extract exclude terms (prefixed with -)
+                const words = query.split(/\s+/);
+                words.forEach(word => {
+                    word = word.trim();
+                    if (word.startsWith('-') && word.length > 1) {
+                        parsed.exclude.push(word.substring(1).toLowerCase());
+                    } else if (word) {
+                        parsed.include.push(word.toLowerCase());
+                    }
+                });
+
+                return parsed;
+            }
+
+            // Check if card matches search query
+            matchesSearch(card, query) {
+                if (!query.trim()) return true;
+
+                const parsed = this.parseQuery(query);
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 const description = card.querySelector('.answer-description').textContent.toLowerCase();
-                const topics = Array.from(card.querySelectorAll('.topic-tag'))
-                    .map(tag => tag.textContent.toLowerCase())
-                    .join(' ');
+                const topics = card.getAttribute('data-topics') || '';
+                const allText = `${title} ${description} ${topics}`.toLowerCase();
 
-                const isVisible = !searchTerm || 
-                    title.includes(searchTerm) || 
-                    description.includes(searchTerm) || 
-                    topics.includes(searchTerm);
+                // Check exact matches
+                if (parsed.exact.length > 0) {
+                    return parsed.exact.every(phrase => allText.includes(phrase));
+                }
 
-                card.style.display = isVisible ? 'block' : 'none';
-                if (isVisible) visibleCount++;
-            });
+                // Check OR matches
+                if (parsed.or.length > 0) {
+                    return parsed.or.some(term => allText.includes(term));
+                }
 
-            // Hide empty category groups
-            categoryGroups.forEach(group => {
-                const visibleCards = group.querySelectorAll('.answer-card[style="display: block;"], .answer-card:not([style])');
-                const hasVisibleCards = Array.from(visibleCards).some(card => 
-                    card.style.display !== 'none'
-                );
-                group.style.display = hasVisibleCards ? 'block' : 'none';
-            });
+                // Check exclude terms
+                if (parsed.exclude.some(term => allText.includes(term))) {
+                    return false;
+                }
 
-            // Show/hide no results message
-            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+                // Check include terms
+                if (parsed.include.length > 0) {
+                    return parsed.include.every(term => allText.includes(term));
+                }
+
+                return true;
+            }
+
+            // Apply all filters
+            applyFilters() {
+                const searchTerm = this.searchInput.value;
+                let visibleCount = 0;
+
+                this.answerCards.forEach(card => {
+                    const cardDifficulty = card.getAttribute('data-difficulty');
+                    const cardTopics = (card.getAttribute('data-topics') || '').split(',');
+
+                    // Check difficulty filter
+                    const matchesDifficulty = this.currentDifficulty === 'all' || 
+                                            cardDifficulty === this.currentDifficulty;
+
+                    // Check topic filter
+                    const matchesTopics = this.activeTopics.size === 0 || 
+                                         Array.from(this.activeTopics).some(topic => 
+                                            cardTopics.includes(topic));
+
+                    // Check search query
+                    const matchesSearch = this.matchesSearch(card, searchTerm);
+
+                    const isVisible = matchesDifficulty && matchesTopics && matchesSearch;
+                    card.style.display = isVisible ? 'block' : 'none';
+                    if (isVisible) {
+                        visibleCount++;
+                        card.classList.remove('highlighted');
+                    }
+                });
+
+                // Hide empty category groups
+                this.categoryGroups.forEach(group => {
+                    const visibleCards = Array.from(group.querySelectorAll('.answer-card'))
+                        .filter(card => card.style.display !== 'none');
+                    group.style.display = visibleCards.length > 0 ? 'block' : 'none';
+                });
+
+                // Update stats
+                document.getElementById('statVisible').textContent = visibleCount;
+
+                // Show/hide no results message
+                this.noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+
+                // Update active filters display
+                this.updateActiveFiltersDisplay();
+            }
+
+            // Update active filters display
+            updateActiveFiltersDisplay() {
+                const container = document.getElementById('activeFilters');
+                container.innerHTML = '';
+
+                const filters = [];
+
+                // Add difficulty filter
+                if (this.currentDifficulty !== 'all') {
+                    filters.push({
+                        type: 'difficulty',
+                        value: this.currentDifficulty,
+                        label: this.currentDifficulty.charAt(0).toUpperCase() + this.currentDifficulty.slice(1)
+                    });
+                }
+
+                // Add topic filters
+                this.activeTopics.forEach(topic => {
+                    filters.push({
+                        type: 'topic',
+                        value: topic,
+                        label: topic.charAt(0).toUpperCase() + topic.slice(1)
+                    });
+                });
+
+                if (filters.length > 0) {
+                    container.style.display = 'flex';
+                    
+                    filters.forEach(filter => {
+                        const badge = document.createElement('div');
+                        badge.className = 'active-filter-badge';
+                        badge.innerHTML = `
+                            ${filter.label}
+                            <button onclick="searchEngine.removeFilter('${filter.type}', '${filter.value}')" aria-label="Remove filter">×</button>
+                        `;
+                        container.appendChild(badge);
+                    });
+
+                    // Add clear all button
+                    const clearBtn = document.createElement('button');
+                    clearBtn.className = 'clear-filters-btn';
+                    clearBtn.textContent = 'Clear All Filters';
+                    clearBtn.onclick = () => this.clearAllFilters();
+                    container.appendChild(clearBtn);
+                } else {
+                    container.style.display = 'none';
+                }
+            }
+
+            // Remove specific filter
+            removeFilter(type, value) {
+                if (type === 'difficulty') {
+                    this.currentDifficulty = 'all';
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.toggle('active', btn.getAttribute('data-difficulty') === 'all');
+                    });
+                } else if (type === 'topic') {
+                    this.activeTopics.delete(value);
+                    const topicBtn = document.querySelector(`.topic-filter-tag[data-topic="${value}"]`);
+                    if (topicBtn) topicBtn.classList.remove('active');
+                }
+                this.applyFilters();
+            }
+
+            // Clear all filters
+            clearAllFilters() {
+                this.currentDifficulty = 'all';
+                this.activeTopics.clear();
+                this.searchInput.value = '';
+
+                // Reset UI
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-difficulty') === 'all');
+                });
+                document.querySelectorAll('.topic-filter-tag').forEach(tag => {
+                    tag.classList.remove('active');
+                });
+
+                this.applyFilters();
+            }
+
+            // Set difficulty filter
+            setDifficulty(difficulty) {
+                this.currentDifficulty = difficulty;
+                this.applyFilters();
+            }
+
+            // Toggle topic filter
+            toggleTopic(topic) {
+                if (this.activeTopics.has(topic)) {
+                    this.activeTopics.delete(topic);
+                } else {
+                    this.activeTopics.add(topic);
+                }
+                this.applyFilters();
+            }
         }
 
-        searchBtn.addEventListener('click', performSearch);
-        searchInput.addEventListener('keyup', (e) => {
+        // Initialize search engine
+        const searchEngine = new AdvancedSearchEngine();
+
+        // Search event listeners
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            searchEngine.applyFilters();
+        });
+
+        document.getElementById('searchInput').addEventListener('keyup', (e) => {
             if (e.key === 'Enter') {
-                performSearch();
+                searchEngine.applyFilters();
             }
         });
 
         // Real-time search
-        searchInput.addEventListener('input', performSearch);
+        document.getElementById('searchInput').addEventListener('input', () => {
+            searchEngine.applyFilters();
+        });
 
-        // Difficulty filter functionality
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        let currentDifficulty = 'all';
-
-        filterBtns.forEach(btn => {
+        // Difficulty filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                // Update active state
-                filterBtns.forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-
-                currentDifficulty = btn.getAttribute('data-difficulty');
-                applyFilters();
+                searchEngine.setDifficulty(btn.getAttribute('data-difficulty'));
             });
         });
 
-        function applyFilters() {
-            let visibleCount = 0;
-
-            answerCards.forEach(card => {
-                const cardDifficulty = card.getAttribute('data-difficulty');
-                const matchesDifficulty = currentDifficulty === 'all' || cardDifficulty === currentDifficulty;
-                
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                const description = card.querySelector('.answer-description').textContent.toLowerCase();
-                const topics = Array.from(card.querySelectorAll('.topic-tag'))
-                    .map(tag => tag.textContent.toLowerCase())
-                    .join(' ');
-
-                const matchesSearch = !searchTerm || 
-                    title.includes(searchTerm) || 
-                    description.includes(searchTerm) || 
-                    topics.includes(searchTerm);
-
-                const isVisible = matchesDifficulty && matchesSearch;
-                card.style.display = isVisible ? 'block' : 'none';
-                if (isVisible) visibleCount++;
+        // Populate topic filters
+        function populateTopicFilters() {
+            const allTopics = new Set();
+            document.querySelectorAll('.answer-card').forEach(card => {
+                const topics = card.getAttribute('data-topics');
+                if (topics) {
+                    topics.split(',').forEach(topic => allTopics.add(topic.trim()));
+                }
             });
 
-            // Hide empty category groups
-            categoryGroups.forEach(group => {
-                const visibleCards = group.querySelectorAll('.answer-card[style="display: block;"], .answer-card:not([style])');
-                const hasVisibleCards = Array.from(visibleCards).some(card => 
-                    card.style.display !== 'none'
-                );
-                group.style.display = hasVisibleCards ? 'block' : 'none';
+            const container = document.getElementById('topicFilters');
+            const sortedTopics = Array.from(allTopics).sort();
+            
+            sortedTopics.forEach(topic => {
+                const tag = document.createElement('button');
+                tag.className = 'topic-filter-tag';
+                tag.setAttribute('data-topic', topic);
+                tag.textContent = topic.charAt(0).toUpperCase() + topic.slice(1);
+                tag.addEventListener('click', () => {
+                    tag.classList.toggle('active');
+                    searchEngine.toggleTopic(topic);
+                });
+                container.appendChild(tag);
             });
-
-            // Show/hide no results message
-            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
         }
+
+        // Keyboard Shortcuts
+        const shortcutsModal = document.getElementById('shortcutsModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Keyboard event handler
+        document.addEventListener('keydown', (e) => {
+            // Ignore if typing in input field (except for Esc)
+            if (e.target.tagName === 'INPUT' && e.key !== 'Escape') {
+                return;
+            }
+
+            switch(e.key) {
+                case '/':
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                    break;
+                case 'Escape':
+                    e.preventDefault();
+                    document.getElementById('searchInput').value = '';
+                    document.getElementById('searchInput').blur();
+                    searchEngine.applyFilters();
+                    shortcutsModal.classList.remove('active');
+                    break;
+                case '?':
+                    e.preventDefault();
+                    shortcutsModal.classList.toggle('active');
+                    break;
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    if (e.target.tagName !== 'INPUT') {
+                        e.preventDefault();
+                        const link = document.querySelector(`.quick-link-item[data-shortcut="${e.key}"]`);
+                        if (link) window.location.href = link.href;
+                    }
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    break;
+            }
+        });
+
+        // Close modal button
+        closeModalBtn.addEventListener('click', () => {
+            shortcutsModal.classList.remove('active');
+        });
+
+        // Close modal on backdrop click
+        shortcutsModal.addEventListener('click', (e) => {
+            if (e.target === shortcutsModal) {
+                shortcutsModal.classList.remove('active');
+            }
+        });
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1304,18 +1842,10 @@
             });
         });
 
-        // Update stats dynamically
-        function updateStats() {
-            const totalCategories = answerCards.length;
-            const totalAnswers = totalCategories * 200;
-            
-            document.querySelector('.stat-card:nth-child(1) .stat-value').textContent = totalCategories;
-            document.querySelector('.stat-card:nth-child(2) .stat-value').textContent = totalAnswers + '+';
-        }
-
-        // Initialize
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Answers Index loaded successfully');
+            populateTopicFilters();
+            console.log('Advanced search functionality initialized');
         });
     </script>
 </body>
