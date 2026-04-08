@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database General Concepts - Comprehensive Answers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .toc h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .toc a:hover {
+            background: #f0f0f0;
+            padding-left: 1rem;
+        }
+        .topic-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .topic-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .topic-section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .topic-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .topic-section ul, .topic-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .topic-section li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        .code-example {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .code-example pre {
+            margin: 0;
+            border-radius: 8px;
+        }
+        .code-example code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .visual-box {
+            background: #f5f5f5;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            white-space: pre;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🗄️ Database General Concepts</h1>
+        <p>Comprehensive guide covering keys, indexes, joins, normalization, triggers, views, and query optimization</p>
+    </header>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Back to Interview Bank</a>
+
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#keys">1. Keys and Constraints</a></li>
+                <li><a href="#index-types">2. Index Types</a></li>
+                <li><a href="#joins">3. Join Types</a></li>
+                <li><a href="#triggers">4. Triggers</a></li>
+                <li><a href="#views">5. Views</a></li>
+                <li><a href="#normalization">6. Normalization (1NF to 3NF)</a></li>
+                <li><a href="#query-optimization">7. Query Optimization</a></li>
+            </ul>
+        </div>
+
+        <!-- Keys and Constraints -->
+        <section id="keys" class="topic-section">
+            <h2>1. Keys and Constraints</h2>
+
+            <h3>Primary Key</h3>
+            <p><strong>Definition:</strong> A primary key uniquely identifies each record in a table. It must contain unique values and cannot contain NULL values.</p>
+            
+            <h4>Characteristics:</h4>
+            <ul>
+                <li><strong>Uniqueness:</strong> No two rows can have the same primary key value</li>
+                <li><strong>Non-null:</strong> Primary key columns cannot contain NULL values</li>
+                <li><strong>Single per table:</strong> Only one primary key per table</li>
+                <li><strong>Immutable:</strong> Should not change after assignment</li>
+                <li><strong>Minimal:</strong> Should use the fewest columns necessary</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Single column primary key
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100),
+    name VARCHAR(100)
+);
+
+-- Composite primary key (multiple columns)
+CREATE TABLE order_items (
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price DECIMAL(10,2),
+    PRIMARY KEY (order_id, product_id)
+);</code></pre>
+            </div>
+
+            <h3>Unique Key</h3>
+            <p><strong>Difference from Primary Key:</strong></p>
+            <ul>
+                <li>Can have multiple unique keys per table</li>
+                <li>Can contain NULL values (one NULL per column in most databases)</li>
+                <li>Not used as the default clustering key</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Unique constraint examples
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE,          -- Single unique constraint
+    username VARCHAR(50) UNIQUE,
+    ssn VARCHAR(11),
+    UNIQUE (ssn)                        -- Alternative syntax
+);
+
+-- Composite unique constraint
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    sku VARCHAR(50),
+    warehouse_id INT,
+    CONSTRAINT uk_sku_warehouse UNIQUE (sku, warehouse_id)
+);</code></pre>
+            </div>
+
+            <h3>Foreign Key</h3>
+            <p><strong>Purpose:</strong> Enforces referential integrity between two tables by ensuring values in one table match values in another table's primary key or unique key.</p>
+
+            <h4>Referential Actions:</h4>
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>ON DELETE</th>
+                    <th>ON UPDATE</th>
+                    <th>Use Case</th>
+                </tr>
+                <tr>
+                    <td><strong>CASCADE</strong></td>
+                    <td>Delete child rows</td>
+                    <td>Update child rows</td>
+                    <td>Order items when order is deleted</td>
+                </tr>
+                <tr>
+                    <td><strong>SET NULL</strong></td>
+                    <td>Set FK to NULL</td>
+                    <td>Set FK to NULL</td>
+                    <td>Optional relationships</td>
+                </tr>
+                <tr>
+                    <td><strong>RESTRICT</strong></td>
+                    <td>Prevent deletion</td>
+                    <td>Prevent update</td>
+                    <td>Enforce data integrity</td>
+                </tr>
+                <tr>
+                    <td><strong>NO ACTION</strong></td>
+                    <td>Similar to RESTRICT</td>
+                    <td>Similar to RESTRICT</td>
+                    <td>Default behavior</td>
+                </tr>
+                <tr>
+                    <td><strong>SET DEFAULT</strong></td>
+                    <td>Set to default value</td>
+                    <td>Set to default value</td>
+                    <td>Rarely used in MySQL</td>
+                </tr>
+            </table>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Foreign key with various actions
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    user_id INT,
+    total DECIMAL(10,2),
+    CONSTRAINT fk_orders_user FOREIGN KEY (user_id) 
+        REFERENCES users(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE comments (
+    id INT PRIMARY KEY,
+    post_id INT,
+    user_id INT,
+    content TEXT,
+    FOREIGN KEY (post_id) REFERENCES posts(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE SET NULL
+);</code></pre>
+            </div>
+
+            <h3>Composite Keys</h3>
+            <p><strong>When to use:</strong></p>
+            <ul>
+                <li>Natural composite uniqueness (e.g., student + course + semester)</li>
+                <li>Junction/bridge tables (many-to-many relationships)</li>
+                <li>Time-series data (entity + timestamp)</li>
+            </ul>
+
+            <h4>Advantages vs Disadvantages:</h4>
+            <table>
+                <tr>
+                    <th>Advantages</th>
+                    <th>Disadvantages</th>
+                </tr>
+                <tr>
+                    <td>Natural business meaning</td>
+                    <td>More complex joins</td>
+                </tr>
+                <tr>
+                    <td>Enforces business rules</td>
+                    <td>Harder to reference in foreign keys</td>
+                </tr>
+                <tr>
+                    <td>No surrogate key needed</td>
+                    <td>Potential performance impact</td>
+                </tr>
+                <tr>
+                    <td>Prevents duplicate combinations</td>
+                    <td>Less portable code</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> For composite keys, order columns by selectivity (most selective first) to optimize index performance. Consider surrogate keys for complex applications with many relationships.
+            </div>
+        </section>
+
+        <!-- Index Types -->
+        <section id="index-types" class="topic-section">
+            <h2>2. Index Types</h2>
+
+            <h3>B-Tree Index (Default)</h3>
+            <p><strong>How it works:</strong> B-Tree (Balanced Tree) indexes organize data in a tree structure where each node can have multiple children. Data is sorted and balanced.</p>
+
+            <h4>Characteristics:</h4>
+            <ul>
+                <li><strong>Structure:</strong> Root → Branch nodes → Leaf nodes (containing actual data or pointers)</li>
+                <li><strong>Performance:</strong> O(log n) for search, insert, update, delete</li>
+                <li><strong>Use cases:</strong> Range queries, equality searches, ORDER BY, GROUP BY</li>
+                <li><strong>Optimization:</strong> Supports leftmost prefix for composite indexes</li>
+            </ul>
+
+            <div class="visual-box">
+B-Tree Index Structure:
+                 [50]
+               /      \
+          [20,35]    [70,90]
+         /  |  \     /  |  \
+      [10] [30] [40] [60] [80] [100]
+      
+Leaf nodes contain: actual data (clustered) or pointers to data (non-clustered)</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- B-Tree index (default type)
+CREATE INDEX idx_email ON users(email);
+
+-- B-Tree supports these queries efficiently:
+SELECT * FROM users WHERE email = 'john@example.com';      -- Equality
+SELECT * FROM users WHERE email > 'a@example.com';         -- Range
+SELECT * FROM users WHERE email LIKE 'john%';              -- Prefix match
+SELECT * FROM users ORDER BY email;                        -- Sorting
+SELECT email FROM users WHERE email BETWEEN 'a' AND 'z';   -- Range
+
+-- Composite B-Tree index (leftmost prefix rule)
+CREATE INDEX idx_name_email ON users(last_name, first_name, email);
+
+-- Can use index for:
+-- ✅ WHERE last_name = 'Smith'
+-- ✅ WHERE last_name = 'Smith' AND first_name = 'John'
+-- ✅ WHERE last_name = 'Smith' AND first_name = 'John' AND email = 'john@example.com'
+-- ❌ WHERE first_name = 'John' (doesn't start with leftmost column)
+-- ❌ WHERE email = 'john@example.com' (doesn't start with leftmost column)</code></pre>
+            </div>
+
+            <h3>Hash Index</h3>
+            <p><strong>How it works:</strong> Uses a hash function to compute the location of data. Provides constant-time O(1) lookups for equality comparisons.</p>
+
+            <h4>Performance Analysis:</h4>
+            <table>
+                <tr>
+                    <th>Operation</th>
+                    <th>B-Tree</th>
+                    <th>Hash</th>
+                </tr>
+                <tr>
+                    <td>Equality (=)</td>
+                    <td>O(log n)</td>
+                    <td>O(1) ⭐</td>
+                </tr>
+                <tr>
+                    <td>Range (&lt;, &gt;, BETWEEN)</td>
+                    <td>O(log n) ⭐</td>
+                    <td>Not supported ❌</td>
+                </tr>
+                <tr>
+                    <td>Prefix (LIKE 'abc%')</td>
+                    <td>O(log n) ⭐</td>
+                    <td>Not supported ❌</td>
+                </tr>
+                <tr>
+                    <td>ORDER BY</td>
+                    <td>Supported ⭐</td>
+                    <td>Not supported ❌</td>
+                </tr>
+            </table>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Hash index (mainly for MEMORY tables)
+CREATE TABLE cache (
+    id INT PRIMARY KEY,
+    key_name VARCHAR(100),
+    value TEXT,
+    INDEX USING HASH (key_name)
+) ENGINE=MEMORY;
+
+-- Hash index is optimal for:
+SELECT * FROM cache WHERE key_name = 'user_123_session';  -- ✅ Equality
+
+-- Hash index CANNOT help with:
+SELECT * FROM cache WHERE key_name > 'user_100';          -- ❌ Range
+SELECT * FROM cache WHERE key_name LIKE 'user_%';         -- ❌ Prefix
+SELECT * FROM cache ORDER BY key_name;                    -- ❌ Sorting</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Note:</strong> InnoDB doesn't support explicit hash indexes. It uses adaptive hash indexing internally and automatically for frequently accessed data.
+            </div>
+
+            <h3>Full-Text Index</h3>
+            <p><strong>Purpose:</strong> Optimized for natural language text search. Supports word-based searching with relevance ranking.</p>
+
+            <h4>Features:</h4>
+            <ul>
+                <li>Natural language search mode (default)</li>
+                <li>Boolean search mode (AND, OR, NOT operators)</li>
+                <li>Query expansion mode</li>
+                <li>Stopword filtering (common words like "the", "is", "and")</li>
+                <li>Minimum word length (default: 4 characters for InnoDB)</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Create full-text index
+CREATE TABLE articles (
+    id INT PRIMARY KEY,
+    title VARCHAR(200),
+    content TEXT,
+    FULLTEXT INDEX idx_fulltext_content (title, content)
+);
+
+-- Natural language search (default)
+SELECT *, MATCH(title, content) AGAINST('database optimization') AS relevance
+FROM articles
+WHERE MATCH(title, content) AGAINST('database optimization')
+ORDER BY relevance DESC;
+
+-- Boolean mode search
+SELECT * FROM articles
+WHERE MATCH(title, content) AGAINST('+mysql -postgresql +optimization' IN BOOLEAN MODE);
+
+-- Boolean operators:
+-- + : Must contain this word
+-- - : Must NOT contain this word
+-- * : Wildcard (word*)
+-- " : Exact phrase ("database optimization")
+-- () : Grouping
+-- > < : Increase/decrease relevance
+
+-- Query expansion (finds related terms)
+SELECT * FROM articles
+WHERE MATCH(title, content) 
+AGAINST('database' WITH QUERY EXPANSION);</code></pre>
+            </div>
+
+            <h3>Clustered Index</h3>
+            <p><strong>Definition:</strong> The clustered index determines the physical order of data in the table. The table data is stored in the leaf nodes of the clustered index.</p>
+
+            <h4>Key Points:</h4>
+            <ul>
+                <li><strong>One per table:</strong> Only one clustered index allowed (because data can only be physically sorted one way)</li>
+                <li><strong>In InnoDB:</strong> The primary key IS the clustered index</li>
+                <li><strong>Data storage:</strong> Table rows are stored in primary key order</li>
+                <li><strong>Performance:</strong> Excellent for range queries on primary key</li>
+                <li><strong>Sequential keys:</strong> AUTO_INCREMENT performs better than UUIDs</li>
+            </ul>
+
+            <div class="visual-box">
+Clustered Index (InnoDB):
+
+Primary Key = Clustered Index
+Table data stored in PK order:
+
+[PK: 100] → [Data: John, john@example.com, ...]
+[PK: 101] → [Data: Jane, jane@example.com, ...]
+[PK: 102] → [Data: Bob, bob@example.com, ...]
+
+Range queries are fast:
+SELECT * FROM users WHERE id BETWEEN 100 AND 105;
+(Data is physically sequential)</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- InnoDB automatically creates clustered index on primary key
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,  -- This becomes the clustered index
+    email VARCHAR(100),
+    name VARCHAR(100)
+) ENGINE=InnoDB;
+
+-- If no primary key, InnoDB uses:
+-- 1. First UNIQUE NOT NULL index
+-- 2. Hidden 6-byte row ID (auto-generated)
+
+-- ✅ GOOD: Sequential primary key
+CREATE TABLE orders (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,  -- Sequential, good for clustered index
+    user_id INT,
+    order_date DATETIME
+);
+
+-- ⚠️ PROBLEMATIC: UUID as clustered index
+CREATE TABLE sessions (
+    session_id CHAR(36) PRIMARY KEY,  -- UUID: random, causes page splits
+    user_id INT,
+    created_at DATETIME
+);
+-- Better: Use AUTO_INCREMENT PK and UUID as unique key</code></pre>
+            </div>
+
+            <h3>Non-Clustered Index (Secondary Index)</h3>
+            <p><strong>Definition:</strong> A separate structure from the table data. Contains indexed columns plus a pointer to the actual row.</p>
+
+            <h4>In InnoDB:</h4>
+            <ul>
+                <li>Leaf nodes contain: indexed column values + primary key value</li>
+                <li>To access full row: Index lookup → Primary key lookup → Data row</li>
+                <li>Multiple non-clustered indexes allowed per table</li>
+            </ul>
+
+            <div class="visual-box">
+Non-Clustered Index Structure (InnoDB):
+
+Secondary Index on email:
+[email: alice@ex.com] → [PK: 105]
+[email: bob@ex.com]   → [PK: 102]
+[email: carol@ex.com] → [PK: 130]
+                           ↓
+                    [Use PK to find data in clustered index]
+
+Two lookups required unless it's a covering index!</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Non-clustered (secondary) indexes
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,     -- Clustered index
+    email VARCHAR(100),
+    name VARCHAR(100),
+    status VARCHAR(20),
+    created_at DATETIME,
+    INDEX idx_email (email),               -- Non-clustered index
+    INDEX idx_status (status),             -- Non-clustered index
+    INDEX idx_created (created_at)         -- Non-clustered index
+);
+
+-- Regular query (two lookups):
+SELECT * FROM users WHERE email = 'john@example.com';
+-- 1. Search idx_email → find PK value
+-- 2. Search clustered index using PK → get full row
+
+-- Covering index (one lookup only):
+CREATE INDEX idx_covering ON users(status, email, name);
+
+SELECT status, email, name FROM users WHERE status = 'active';
+-- All needed columns in index → no table lookup needed!</code></pre>
+            </div>
+
+            <h4>Performance Comparison:</h4>
+            <table>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Clustered Index</th>
+                    <th>Non-Clustered Index</th>
+                </tr>
+                <tr>
+                    <td>Lookups needed</td>
+                    <td>1 (data is in index)</td>
+                    <td>2 (index + table lookup)</td>
+                </tr>
+                <tr>
+                    <td>Range queries</td>
+                    <td>Very fast (sequential)</td>
+                    <td>Slower (random access)</td>
+                </tr>
+                <tr>
+                    <td>Insert performance</td>
+                    <td>Can cause page splits</td>
+                    <td>Faster inserts</td>
+                </tr>
+                <tr>
+                    <td>Number per table</td>
+                    <td>1</td>
+                    <td>Multiple (16-64 typical limit)</td>
+                </tr>
+                <tr>
+                    <td>Storage</td>
+                    <td>Contains actual data</td>
+                    <td>Contains indexed cols + PK</td>
+                </tr>
+            </table>
+
+            <div class="success-box">
+                <strong>✅ Index Selection Strategy:</strong>
+                <ul>
+                    <li><strong>B-Tree:</strong> Default choice for most queries (equality, range, sorting)</li>
+                    <li><strong>Hash:</strong> Only for exact equality lookups on MEMORY tables</li>
+                    <li><strong>Full-Text:</strong> For natural language text search</li>
+                    <li><strong>Clustered:</strong> Automatic on primary key in InnoDB</li>
+                    <li><strong>Non-Clustered:</strong> For additional access paths to data</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Join Types -->
+        <section id="joins" class="topic-section">
+            <h2>3. Join Types with Visual Examples</h2>
+
+            <h3>INNER JOIN</h3>
+            <p><strong>Returns:</strong> Only rows that have matching values in both tables.</p>
+
+            <div class="visual-box">
+Table A (users)          Table B (orders)
+id | name               user_id | total
+1  | Alice              1       | 100
+2  | Bob                1       | 200
+3  | Carol              2       | 150
+4  | David              NULL    | 50
+
+INNER JOIN Result:
+id | name  | total
+1  | Alice | 100
+1  | Alice | 200
+2  | Bob   | 150
+
+Only rows with matching user_id in both tables</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Basic INNER JOIN
+SELECT u.id, u.name, o.total
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id;
+
+-- Multiple INNER JOINs
+SELECT 
+    u.name AS customer,
+    o.id AS order_id,
+    p.name AS product,
+    oi.quantity,
+    oi.price
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id
+INNER JOIN order_items oi ON o.id = oi.order_id
+INNER JOIN products p ON oi.product_id = p.id
+WHERE o.status = 'completed';</code></pre>
+            </div>
+
+            <h3>LEFT JOIN (LEFT OUTER JOIN)</h3>
+            <p><strong>Returns:</strong> All rows from the left table, and matching rows from the right table. NULL for non-matching rows from the right table.</p>
+
+            <div class="visual-box">
+Table A (users)          Table B (orders)
+id | name               user_id | total
+1  | Alice              1       | 100
+2  | Bob                1       | 200
+3  | Carol              2       | 150
+4  | David              NULL    | 50
+
+LEFT JOIN Result:
+id | name  | total
+1  | Alice | 100
+1  | Alice | 200
+2  | Bob   | 150
+3  | Carol | NULL     ← No orders, but Carol is included
+4  | David | NULL     ← No orders, but David is included</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- LEFT JOIN - all users with their orders (if any)
+SELECT u.id, u.name, COUNT(o.id) AS order_count, COALESCE(SUM(o.total), 0) AS total_spent
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name;
+
+-- Find users with NO orders
+SELECT u.id, u.name
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE o.id IS NULL;</code></pre>
+            </div>
+
+            <h3>RIGHT JOIN (RIGHT OUTER JOIN)</h3>
+            <p><strong>Returns:</strong> All rows from the right table, and matching rows from the left table. NULL for non-matching rows from the left table.</p>
+
+            <div class="visual-box">
+Table A (users)          Table B (orders)
+id | name               user_id | total
+1  | Alice              1       | 100
+2  | Bob                2       | 150
+3  | Carol              5       | 300  ← user_id 5 doesn't exist
+
+RIGHT JOIN Result:
+id   | name  | total
+1    | Alice | 100
+2    | Bob   | 150
+NULL | NULL  | 300    ← Order exists but no matching user</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- RIGHT JOIN - all orders with user info (if available)
+SELECT u.name, o.id AS order_id, o.total
+FROM users u
+RIGHT JOIN orders o ON u.id = o.user_id;
+
+-- Find orphaned orders (orders without valid users)
+SELECT o.id, o.total
+FROM users u
+RIGHT JOIN orders o ON u.id = o.user_id
+WHERE u.id IS NULL;</code></pre>
+            </div>
+
+            <h3>FULL OUTER JOIN</h3>
+            <p><strong>Returns:</strong> All rows from both tables. NULL where there's no match.</p>
+
+            <div class="visual-box">
+MySQL doesn't support FULL OUTER JOIN directly.
+Simulate with UNION of LEFT JOIN and RIGHT JOIN:
+
+Table A (users)          Table B (orders)
+1  | Alice              1  | 100
+2  | Bob                5  | 300
+3  | Carol
+
+FULL OUTER JOIN Result:
+id   | name  | total
+1    | Alice | 100
+2    | Bob   | NULL
+3    | Carol | NULL
+NULL | NULL  | 300</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Simulate FULL OUTER JOIN in MySQL
+SELECT u.id, u.name, o.total
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+
+UNION
+
+SELECT u.id, u.name, o.total
+FROM users u
+RIGHT JOIN orders o ON u.id = o.user_id
+WHERE u.id IS NULL;</code></pre>
+            </div>
+
+            <h3>CROSS JOIN</h3>
+            <p><strong>Returns:</strong> Cartesian product - every row from the first table combined with every row from the second table.</p>
+
+            <div class="visual-box">
+Table A (colors)         Table B (sizes)
+color                    size
+Red                      Small
+Blue                     Large
+
+CROSS JOIN Result (2 × 2 = 4 rows):
+color | size
+Red   | Small
+Red   | Large
+Blue  | Small
+Blue  | Large</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- CROSS JOIN
+SELECT c.color, s.size
+FROM colors c
+CROSS JOIN sizes s;
+
+-- Alternative syntax (implicit cross join)
+SELECT c.color, s.size
+FROM colors c, sizes s;
+
+-- Practical use case: Generate all combinations
+SELECT 
+    dates.date,
+    products.name
+FROM 
+    (SELECT DATE_ADD('2024-01-01', INTERVAL n DAY) AS date 
+     FROM numbers WHERE n < 365) dates
+CROSS JOIN products;</code></pre>
+            </div>
+
+            <h3>SELF JOIN</h3>
+            <p><strong>Purpose:</strong> Join a table with itself to compare rows within the same table.</p>
+
+            <div class="visual-box">
+Table: employees
+id | name    | manager_id
+1  | Alice   | NULL      (CEO)
+2  | Bob     | 1         (reports to Alice)
+3  | Carol   | 1         (reports to Alice)
+4  | David   | 2         (reports to Bob)
+
+SELF JOIN Result (employee and their manager):
+employee | manager
+Bob      | Alice
+Carol    | Alice
+David    | Bob</div>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- SELF JOIN - employees and their managers
+SELECT 
+    e.name AS employee,
+    m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;
+
+-- Find employees in the same department
+SELECT 
+    e1.name AS employee1,
+    e2.name AS employee2,
+    e1.department
+FROM employees e1
+INNER JOIN employees e2 ON e1.department = e2.department
+WHERE e1.id < e2.id;  -- Prevent duplicate pairs
+
+-- Find employees earning more than their manager
+SELECT 
+    e.name AS employee,
+    e.salary AS emp_salary,
+    m.name AS manager,
+    m.salary AS mgr_salary
+FROM employees e
+INNER JOIN employees m ON e.manager_id = m.id
+WHERE e.salary > m.salary;</code></pre>
+            </div>
+
+            <h4>Join Performance Tips:</h4>
+            <div class="success-box">
+                <strong>✅ Optimization Strategies:</strong>
+                <ul>
+                    <li><strong>Index foreign keys:</strong> Always index columns used in JOIN conditions</li>
+                    <li><strong>Filter early:</strong> Apply WHERE conditions before joining when possible</li>
+                    <li><strong>Join order:</strong> Join smaller result sets first</li>
+                    <li><strong>Use INNER JOIN when possible:</strong> Faster than OUTER joins</li>
+                    <li><strong>Avoid SELECT *:</strong> Only select needed columns</li>
+                    <li><strong>Covering indexes:</strong> Include all joined and selected columns in index</li>
+                    <li><strong>Use EXPLAIN:</strong> Analyze and verify join strategy</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Triggers -->
+        <section id="triggers" class="topic-section">
+            <h2>4. Triggers - Use Cases and Examples</h2>
+
+            <p><strong>Definition:</strong> A trigger is a stored procedure that automatically executes when a specific event (INSERT, UPDATE, DELETE) occurs on a table.</p>
+
+            <h3>Common Use Cases</h3>
+
+            <h4>1. Automatic Timestamp Management</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Auto-update updated_at timestamp
+DELIMITER //
+CREATE TRIGGER before_user_update
+BEFORE UPDATE ON users
+FOR EACH ROW
+BEGIN
+    SET NEW.updated_at = NOW();
+END;//
+DELIMITER ;
+
+-- Set created_at automatically
+DELIMITER //
+CREATE TRIGGER before_user_insert
+BEFORE INSERT ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.created_at IS NULL THEN
+        SET NEW.created_at = NOW();
+    END IF;
+    IF NEW.updated_at IS NULL THEN
+        SET NEW.updated_at = NOW();
+    END IF;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h4>2. Data Validation and Business Rules</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Validate email format
+DELIMITER //
+CREATE TRIGGER before_user_insert_validate
+BEFORE INSERT ON users
+FOR EACH ROW
+BEGIN
+    -- Ensure email is lowercase
+    SET NEW.email = LOWER(NEW.email);
+    
+    -- Validate email contains @
+    IF NEW.email NOT LIKE '%@%' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid email format';
+    END IF;
+    
+    -- Validate age
+    IF NEW.age IS NOT NULL AND NEW.age < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Age cannot be negative';
+    END IF;
+END;//
+DELIMITER ;
+
+-- Prevent price from being set to zero or negative
+DELIMITER //
+CREATE TRIGGER before_product_update
+BEFORE UPDATE ON products
+FOR EACH ROW
+BEGIN
+    IF NEW.price <= 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Price must be greater than zero';
+    END IF;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h4>3. Audit Trail and Change Tracking</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Audit log table
+CREATE TABLE user_audit_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    action VARCHAR(10),
+    old_email VARCHAR(100),
+    new_email VARCHAR(100),
+    old_name VARCHAR(100),
+    new_name VARCHAR(100),
+    changed_by VARCHAR(100),
+    changed_at DATETIME
+);
+
+-- Track all changes to users table
+DELIMITER //
+CREATE TRIGGER after_user_update_audit
+AFTER UPDATE ON users
+FOR EACH ROW
+BEGIN
+    INSERT INTO user_audit_log (
+        user_id, action, 
+        old_email, new_email,
+        old_name, new_name,
+        changed_by, changed_at
+    ) VALUES (
+        NEW.id, 'UPDATE',
+        OLD.email, NEW.email,
+        OLD.name, NEW.name,
+        USER(), NOW()
+    );
+END;//
+DELIMITER ;
+
+-- Track deletions
+DELIMITER //
+CREATE TRIGGER after_user_delete_audit
+AFTER DELETE ON users
+FOR EACH ROW
+BEGIN
+    INSERT INTO user_audit_log (
+        user_id, action, 
+        old_email, old_name,
+        changed_by, changed_at
+    ) VALUES (
+        OLD.id, 'DELETE',
+        OLD.email, OLD.name,
+        USER(), NOW()
+    );
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h4>4. Maintaining Denormalized Data / Statistics</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Update user statistics when order is placed
+DELIMITER //
+CREATE TRIGGER after_order_insert
+AFTER INSERT ON orders
+FOR EACH ROW
+BEGIN
+    UPDATE user_statistics
+    SET 
+        total_orders = total_orders + 1,
+        total_spent = total_spent + NEW.total,
+        last_order_date = NEW.order_date
+    WHERE user_id = NEW.user_id;
+    
+    -- Insert if doesn't exist
+    INSERT IGNORE INTO user_statistics (
+        user_id, total_orders, total_spent, last_order_date
+    ) VALUES (
+        NEW.user_id, 1, NEW.total, NEW.order_date
+    );
+END;//
+DELIMITER ;
+
+-- Update product inventory on order
+DELIMITER //
+CREATE TRIGGER after_order_item_insert
+AFTER INSERT ON order_items
+FOR EACH ROW
+BEGIN
+    UPDATE products
+    SET stock_quantity = stock_quantity - NEW.quantity
+    WHERE id = NEW.product_id;
+    
+    -- Alert if low stock
+    IF (SELECT stock_quantity FROM products WHERE id = NEW.product_id) < 10 THEN
+        INSERT INTO alerts (message, created_at)
+        VALUES (CONCAT('Low stock for product_id: ', NEW.product_id), NOW());
+    END IF;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h4>5. Enforcing Complex Constraints</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Prevent deleting users with active orders
+DELIMITER //
+CREATE TRIGGER before_user_delete
+BEFORE DELETE ON users
+FOR EACH ROW
+BEGIN
+    DECLARE active_orders INT;
+    
+    SELECT COUNT(*) INTO active_orders
+    FROM orders
+    WHERE user_id = OLD.id AND status = 'active';
+    
+    IF active_orders > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Cannot delete user with active orders';
+    END IF;
+END;//
+DELIMITER ;
+
+-- Prevent modifying certain critical fields
+DELIMITER //
+CREATE TRIGGER before_order_update
+BEFORE UPDATE ON orders
+FOR EACH ROW
+BEGIN
+    -- Prevent changing order_id
+    IF OLD.id != NEW.id THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Order ID cannot be changed';
+    END IF;
+    
+    -- Prevent changing total after order is completed
+    IF OLD.status = 'completed' AND OLD.total != NEW.total THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Cannot modify completed order total';
+    END IF;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h4>6. Cascade Operations (Alternative to FK CASCADE)</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Custom cascade delete logic
+DELIMITER //
+CREATE TRIGGER after_user_delete_cascade
+AFTER DELETE ON users
+FOR EACH ROW
+BEGIN
+    -- Archive orders before deleting
+    INSERT INTO archived_orders 
+    SELECT *, NOW() AS archived_at 
+    FROM orders 
+    WHERE user_id = OLD.id;
+    
+    -- Delete related records
+    DELETE FROM orders WHERE user_id = OLD.id;
+    DELETE FROM user_preferences WHERE user_id = OLD.id;
+    DELETE FROM user_sessions WHERE user_id = OLD.id;
+END;//
+DELIMITER ;</code></pre>
+            </div>
+
+            <h3>Trigger Management</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Show all triggers
+SHOW TRIGGERS;
+
+-- Show triggers for specific table
+SHOW TRIGGERS WHERE `Table` = 'users';
+
+-- Show trigger definition
+SHOW CREATE TRIGGER trigger_name;
+
+-- Drop trigger
+DROP TRIGGER IF EXISTS trigger_name;</code></pre>
+            </div>
+
+            <h3>Trigger Performance Considerations</h3>
+            <div class="warning-box">
+                <strong>⚠️ Performance Impact:</strong>
+                <ul>
+                    <li><strong>Automatic execution:</strong> Triggers fire on every row operation, increasing processing time</li>
+                    <li><strong>Hidden logic:</strong> Difficult to debug and trace performance issues</li>
+                    <li><strong>Lock escalation:</strong> Triggers can hold locks longer, causing contention</li>
+                    <li><strong>Cascade effects:</strong> One trigger can activate another, creating chains</li>
+                    <li><strong>Bulk operations:</strong> Triggers fire for each row in bulk inserts/updates</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practices:</strong>
+                <ul>
+                    <li>Keep trigger logic simple and fast</li>
+                    <li>Avoid complex queries or joins in triggers</li>
+                    <li>Don't call triggers from triggers (avoid recursion)</li>
+                    <li>Use triggers for data integrity, not business logic</li>
+                    <li>Document all triggers thoroughly</li>
+                    <li>Consider application-level logic for complex operations</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Views -->
+        <section id="views" class="topic-section">
+            <h2>5. Views - Benefits and Use Cases</h2>
+
+            <p><strong>Definition:</strong> A view is a virtual table based on a SQL query. It doesn't store data itself but presents data from one or more tables.</p>
+
+            <h3>Key Benefits</h3>
+
+            <h4>1. Simplification - Hide Complex Queries</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Complex query that joins multiple tables
+CREATE VIEW order_summary AS
+SELECT 
+    o.id AS order_id,
+    o.order_date,
+    u.name AS customer_name,
+    u.email AS customer_email,
+    COUNT(oi.id) AS total_items,
+    SUM(oi.quantity) AS total_quantity,
+    SUM(oi.quantity * oi.price) AS total_amount,
+    o.status
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN order_items oi ON o.id = oi.order_id
+GROUP BY o.id, o.order_date, u.name, u.email, o.status;
+
+-- Now users can simply query:
+SELECT * FROM order_summary WHERE status = 'completed';
+
+-- Instead of writing the complex join every time</code></pre>
+            </div>
+
+            <h4>2. Security - Restrict Access to Sensitive Data</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- View exposes only safe columns, hiding sensitive data
+CREATE VIEW public_user_info AS
+SELECT 
+    id,
+    username,
+    first_name,
+    last_name,
+    avatar_url,
+    created_at
+FROM users;
+-- Columns NOT exposed: password_hash, email, ssn, credit_card, etc.
+
+-- Grant access to view, not the underlying table
+GRANT SELECT ON database.public_user_info TO 'app_user'@'localhost';
+
+-- Department-specific view
+CREATE VIEW sales_department_orders AS
+SELECT 
+    o.id,
+    o.order_date,
+    o.total,
+    o.status
+FROM orders o
+JOIN users u ON o.user_id = u.id
+WHERE u.department = 'Sales';
+
+GRANT SELECT ON database.sales_department_orders TO 'sales_team'@'localhost';</code></pre>
+            </div>
+
+            <h4>3. Data Abstraction - Logical Data Independence</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Original table structure
+CREATE TABLE customers (
+    id INT PRIMARY KEY,
+    full_name VARCHAR(200),
+    contact_email VARCHAR(100)
+);
+
+-- Create view with different column names for compatibility
+CREATE VIEW users AS
+SELECT 
+    id,
+    full_name AS name,
+    contact_email AS email
+FROM customers;
+
+-- Applications using "users" view don't break when table changes
+-- You can later refactor the underlying table without affecting applications</code></pre>
+            </div>
+
+            <h4>4. Consistent Calculated Fields</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- View with calculated fields
+CREATE VIEW product_details AS
+SELECT 
+    p.id,
+    p.name,
+    p.price,
+    p.cost,
+    (p.price - p.cost) AS profit,
+    ROUND(((p.price - p.cost) / p.cost) * 100, 2) AS profit_margin_pct,
+    p.stock_quantity,
+    (p.stock_quantity * p.cost) AS inventory_value,
+    CASE 
+        WHEN p.stock_quantity = 0 THEN 'Out of Stock'
+        WHEN p.stock_quantity < 10 THEN 'Low Stock'
+        ELSE 'In Stock'
+    END AS stock_status
+FROM products p;
+
+-- Everyone gets consistent calculations
+SELECT * FROM product_details WHERE stock_status = 'Low Stock';</code></pre>
+            </div>
+
+            <h4>5. Data Formatting and Presentation</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Format dates and combine fields
+CREATE VIEW customer_list AS
+SELECT 
+    id,
+    CONCAT(first_name, ' ', last_name) AS full_name,
+    email,
+    phone,
+    CONCAT(address, ', ', city, ', ', state, ' ', zip_code) AS full_address,
+    DATE_FORMAT(created_at, '%M %d, %Y') AS member_since,
+    DATEDIFF(NOW(), created_at) AS days_active,
+    CASE 
+        WHEN status = 1 THEN 'Active'
+        WHEN status = 0 THEN 'Inactive'
+        ELSE 'Suspended'
+    END AS account_status
+FROM customers;</code></pre>
+            </div>
+
+            <h4>6. Aggregate and Summary Views</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Daily sales summary
+CREATE VIEW daily_sales_summary AS
+SELECT 
+    DATE(order_date) AS sale_date,
+    COUNT(DISTINCT id) AS total_orders,
+    COUNT(DISTINCT user_id) AS unique_customers,
+    SUM(total) AS total_revenue,
+    AVG(total) AS average_order_value,
+    MIN(total) AS min_order,
+    MAX(total) AS max_order
+FROM orders
+WHERE status = 'completed'
+GROUP BY DATE(order_date);
+
+-- User activity summary
+CREATE VIEW user_activity_summary AS
+SELECT 
+    u.id,
+    u.name,
+    u.email,
+    COUNT(o.id) AS total_orders,
+    COALESCE(SUM(o.total), 0) AS lifetime_value,
+    MAX(o.order_date) AS last_order_date,
+    DATEDIFF(NOW(), MAX(o.order_date)) AS days_since_last_order,
+    CASE 
+        WHEN MAX(o.order_date) > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 'Active'
+        WHEN MAX(o.order_date) > DATE_SUB(NOW(), INTERVAL 90 DAY) THEN 'At Risk'
+        ELSE 'Churned'
+    END AS customer_status
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name, u.email;</code></pre>
+            </div>
+
+            <h3>Updatable Views</h3>
+            <p><strong>Conditions for updatable views:</strong></p>
+            <ul>
+                <li>No aggregate functions (SUM, AVG, COUNT, etc.)</li>
+                <li>No DISTINCT clause</li>
+                <li>No GROUP BY or HAVING</li>
+                <li>No UNION</li>
+                <li>No subqueries in SELECT list</li>
+                <li>Only one table in FROM clause (simple views)</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-sql">-- Updatable view (simple, single table)
+CREATE VIEW active_users AS
+SELECT id, name, email, status
+FROM users
+WHERE status = 'active';
+
+-- Can UPDATE through view
+UPDATE active_users SET name = 'John Smith' WHERE id = 1;
+
+-- Can INSERT through view
+INSERT INTO active_users (name, email, status) 
+VALUES ('Jane Doe', 'jane@example.com', 'active');
+
+-- WITH CHECK OPTION prevents updates that violate WHERE clause
+CREATE VIEW active_users_checked AS
+SELECT id, name, email, status
+FROM users
+WHERE status = 'active'
+WITH CHECK OPTION;
+
+-- This will fail (violates WHERE status = 'active')
+UPDATE active_users_checked SET status = 'inactive' WHERE id = 1;</code></pre>
+            </div>
+
+            <h3>View Management</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Show all views
+SHOW FULL TABLES WHERE Table_type = 'VIEW';
+
+-- Show view definition
+SHOW CREATE VIEW view_name;
+
+-- Modify existing view
+CREATE OR REPLACE VIEW order_summary AS
+SELECT 
+    o.id,
+    o.order_date,
+    u.name,
+    o.total,
+    o.status
+FROM orders o
+JOIN users u ON o.user_id = u.id;
+
+-- Drop view
+DROP VIEW IF EXISTS view_name;
+
+-- Drop multiple views
+DROP VIEW IF EXISTS view1, view2, view3;</code></pre>
+            </div>
+
+            <h3>Performance Considerations</h3>
+            <div class="warning-box">
+                <strong>⚠️ Important Notes:</strong>
+                <ul>
+                    <li><strong>Not materialized:</strong> Views execute the underlying query every time (no caching)</li>
+                    <li><strong>Performance:</strong> Same as running the underlying query directly</li>
+                    <li><strong>Indexes:</strong> Cannot create indexes on views (use indexes on base tables)</li>
+                    <li><strong>Nested views:</strong> Views referencing views can impact performance</li>
+                    <li><strong>Complex views:</strong> Multiple joins/aggregations can be slow</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practices:</strong>
+                <ul>
+                    <li>Use views for simplification and security, not performance</li>
+                    <li>Index the underlying tables appropriately</li>
+                    <li>Avoid deep nesting of views (view → view → view)</li>
+                    <li>Consider materialized views for expensive queries (if supported)</li>
+                    <li>Document view purposes and dependencies</li>
+                    <li>Use naming conventions (e.g., vw_order_summary)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Normalization -->
+        <section id="normalization" class="topic-section">
+            <h2>6. Database Normalization (1NF to 3NF)</h2>
+
+            <p><strong>Purpose:</strong> Normalization is the process of organizing database tables to reduce redundancy and improve data integrity.</p>
+
+            <h3>First Normal Form (1NF)</h3>
+            <p><strong>Rules:</strong></p>
+            <ul>
+                <li>Each column contains atomic (indivisible) values</li>
+                <li>Each column contains values of a single type</li>
+                <li>Each column has a unique name</li>
+                <li>The order of rows/columns doesn't matter</li>
+            </ul>
+
+            <h4>❌ Violates 1NF:</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- BAD: Multiple values in single column
+CREATE TABLE students_bad (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    phone_numbers VARCHAR(200),  -- '555-1234, 555-5678, 555-9012'
+    courses VARCHAR(500)          -- 'Math, Science, History, English'
+);
+
+-- Example data:
+id | name  | phone_numbers           | courses
+1  | John  | 555-1234, 555-5678     | Math, Science
+2  | Jane  | 555-9999               | History, English, Art</code></pre>
+            </div>
+
+            <h4>✅ Follows 1NF:</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- GOOD: Atomic values only
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+CREATE TABLE student_phones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    phone_number VARCHAR(20),
+    phone_type ENUM('mobile', 'home', 'work'),
+    FOREIGN KEY (student_id) REFERENCES students(id)
+);
+
+CREATE TABLE courses (
+    id INT PRIMARY KEY,
+    course_name VARCHAR(100)
+);
+
+CREATE TABLE student_courses (
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (course_id) REFERENCES courses(id)
+);</code></pre>
+            </div>
+
+            <h3>Second Normal Form (2NF)</h3>
+            <p><strong>Rules:</strong></p>
+            <ul>
+                <li>Must be in 1NF</li>
+                <li>All non-key columns must depend on the <em>entire</em> primary key (no partial dependencies)</li>
+                <li>Only applies to tables with composite primary keys</li>
+            </ul>
+
+            <h4>❌ Violates 2NF (Partial Dependency):</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- BAD: Partial dependency on composite key
+CREATE TABLE order_items_bad (
+    order_id INT,
+    product_id INT,
+    product_name VARCHAR(100),      -- Depends ONLY on product_id
+    product_category VARCHAR(50),   -- Depends ONLY on product_id
+    product_price DECIMAL(10,2),    -- Depends ONLY on product_id
+    quantity INT,                   -- Depends on BOTH order_id AND product_id
+    PRIMARY KEY (order_id, product_id)
+);
+
+-- Problem: product_name, product_category, product_price depend only on 
+-- part of the primary key (product_id), not the full key (order_id, product_id)
+
+Example data:
+order_id | product_id | product_name | product_category | product_price | quantity
+1        | 101        | Laptop       | Electronics      | 999.99        | 2
+1        | 102        | Mouse        | Electronics      | 29.99         | 1
+2        | 101        | Laptop       | Electronics      | 999.99        | 1
+                       ↑ REDUNDANT DATA (repeated for each order)</code></pre>
+            </div>
+
+            <h4>✅ Follows 2NF (No Partial Dependencies):</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- GOOD: Separate product information
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    category VARCHAR(50),
+    price DECIMAL(10,2)
+);
+
+CREATE TABLE order_items (
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price_at_purchase DECIMAL(10,2),  -- Snapshot of price when ordered
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+-- Now all non-key columns in order_items depend on the FULL composite key</code></pre>
+            </div>
+
+            <h3>Third Normal Form (3NF)</h3>
+            <p><strong>Rules:</strong></p>
+            <ul>
+                <li>Must be in 2NF</li>
+                <li>No transitive dependencies (non-key columns must not depend on other non-key columns)</li>
+                <li>All non-key columns depend directly on the primary key</li>
+            </ul>
+
+            <h4>❌ Violates 3NF (Transitive Dependency):</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- BAD: Transitive dependency
+CREATE TABLE employees_bad (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    department_id INT,
+    department_name VARCHAR(100),    -- Depends on department_id (transitive)
+    department_location VARCHAR(100), -- Depends on department_id (transitive)
+    department_manager VARCHAR(100)   -- Depends on department_id (transitive)
+);
+
+-- Problem: department_name, department_location, department_manager 
+-- depend on department_id, which is NOT the primary key
+-- This is a transitive dependency: id → department_id → department_name
+
+Example data:
+id | name  | dept_id | dept_name | dept_location | dept_manager
+1  | Alice | 10      | Sales     | New York      | Bob Smith
+2  | Carol | 10      | Sales     | New York      | Bob Smith
+3  | David | 20      | IT        | Austin        | Jane Doe
+        ↑ REDUNDANT: Department info repeated for each employee</code></pre>
+            </div>
+
+            <h4>✅ Follows 3NF (No Transitive Dependencies):</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- GOOD: Remove transitive dependencies
+CREATE TABLE departments (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    location VARCHAR(100),
+    manager_name VARCHAR(100)
+);
+
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+
+-- Now all non-key columns depend DIRECTLY on the primary key only
+-- No transitive dependencies</code></pre>
+            </div>
+
+            <h3>Complete Normalization Example</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ UNNORMALIZED TABLE
+CREATE TABLE orders_unnormalized (
+    order_id INT PRIMARY KEY,
+    customer_name VARCHAR(100),
+    customer_email VARCHAR(100),
+    customer_phone VARCHAR(20),
+    customer_address VARCHAR(200),
+    customer_city VARCHAR(50),
+    customer_state VARCHAR(2),
+    customer_zip VARCHAR(10),
+    product_names VARCHAR(500),      -- 'Laptop, Mouse, Keyboard'
+    product_prices VARCHAR(200),     -- '999.99, 29.99, 79.99'
+    product_quantities VARCHAR(100)  -- '1, 2, 1'
+);
+
+-- ✅ NORMALIZED TO 3NF
+-- Customers table (1NF, 2NF, 3NF)
+CREATE TABLE customers (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(20),
+    address_line VARCHAR(200),
+    city VARCHAR(50),
+    state VARCHAR(2),
+    zip_code VARCHAR(10)
+);
+
+-- Products table (1NF, 2NF, 3NF)
+CREATE TABLE products (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    price DECIMAL(10,2),
+    category VARCHAR(50)
+);
+
+-- Orders table (1NF, 2NF, 3NF)
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATETIME,
+    status VARCHAR(20),
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+-- Order items table (1NF, 2NF, 3NF)
+CREATE TABLE order_items (
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price_at_order DECIMAL(10,2),
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);</code></pre>
+            </div>
+
+            <h3>Benefits of Normalization</h3>
+            <div class="success-box">
+                <strong>✅ Advantages:</strong>
+                <ul>
+                    <li><strong>Eliminates redundancy:</strong> Data stored once, reducing storage</li>
+                    <li><strong>Improves data integrity:</strong> Updates in one place affect all references</li>
+                    <li><strong>Easier maintenance:</strong> Changes to data structure are localized</li>
+                    <li><strong>Prevents anomalies:</strong> Avoids insert, update, delete anomalies</li>
+                    <li><strong>Better organization:</strong> Logical separation of concerns</li>
+                </ul>
+            </div>
+
+            <h3>When to Denormalize</h3>
+            <div class="warning-box">
+                <strong>⚠️ Strategic Denormalization:</strong>
+                <ul>
+                    <li><strong>Read-heavy applications:</strong> Reduce joins for frequently accessed data</li>
+                    <li><strong>Performance critical queries:</strong> Materialized computed columns</li>
+                    <li><strong>Reporting/Analytics:</strong> Denormalized data warehouses (OLAP)</li>
+                    <li><strong>Historical snapshots:</strong> Store point-in-time data (e.g., price_at_order)</li>
+                </ul>
+                <p><strong>Trade-off:</strong> Better read performance vs data redundancy and maintenance complexity</p>
+            </div>
+        </section>
+
+        <!-- Query Optimization -->
+        <section id="query-optimization" class="topic-section">
+            <h2>7. Query Optimization Strategies</h2>
+
+            <h3>1. Index Optimization</h3>
+
+            <h4>Use Appropriate Indexes</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: No index on WHERE clause
+SELECT * FROM users WHERE email = 'john@example.com';
+-- Full table scan required
+
+-- ✅ GOOD: Index on frequently queried column
+CREATE INDEX idx_email ON users(email);
+SELECT * FROM users WHERE email = 'john@example.com';
+-- Index seek - much faster
+
+-- ✅ COMPOSITE INDEX for multiple columns
+CREATE INDEX idx_status_date ON orders(status, order_date);
+SELECT * FROM orders 
+WHERE status = 'completed' 
+  AND order_date >= '2024-01-01';</code></pre>
+            </div>
+
+            <h4>Covering Indexes</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ REQUIRES TABLE LOOKUP
+CREATE INDEX idx_user_id ON orders(user_id);
+SELECT user_id, order_date, total FROM orders WHERE user_id = 123;
+-- Index seek + table lookup to get order_date and total
+
+-- ✅ COVERING INDEX (includes all needed columns)
+CREATE INDEX idx_covering ON orders(user_id, order_date, total);
+SELECT user_id, order_date, total FROM orders WHERE user_id = 123;
+-- Index-only scan - no table lookup needed!</code></pre>
+            </div>
+
+            <h3>2. Query Writing Best Practices</h3>
+
+            <h4>Avoid SELECT *</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Fetches all columns (even unused ones)
+SELECT * FROM users WHERE id = 1;
+
+-- ✅ GOOD: Only fetch needed columns
+SELECT id, name, email FROM users WHERE id = 1;
+
+-- Benefits:
+-- 1. Less data transfer
+-- 2. Can use covering indexes
+-- 3. Better cache utilization</code></pre>
+            </div>
+
+            <h4>Optimize WHERE Clauses</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Function on indexed column prevents index usage
+SELECT * FROM users WHERE YEAR(created_at) = 2024;
+
+-- ✅ GOOD: Rewrite to use index
+SELECT * FROM users 
+WHERE created_at >= '2024-01-01' 
+  AND created_at < '2025-01-01';
+
+-- ❌ BAD: Leading wildcard prevents index usage
+SELECT * FROM users WHERE email LIKE '%@gmail.com';
+
+-- ✅ GOOD: Prefix matching uses index
+SELECT * FROM users WHERE email LIKE 'john%';
+
+-- ❌ BAD: Implicit conversion
+SELECT * FROM users WHERE id = '123';  -- id is INT, '123' is string
+
+-- ✅ GOOD: Correct type
+SELECT * FROM users WHERE id = 123;</code></pre>
+            </div>
+
+            <h4>Use EXISTS Instead of IN for Subqueries</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ SLOWER: IN with subquery
+SELECT * FROM users
+WHERE id IN (SELECT user_id FROM orders WHERE total > 1000);
+
+-- ✅ FASTER: EXISTS (stops at first match)
+SELECT * FROM users u
+WHERE EXISTS (
+    SELECT 1 FROM orders o 
+    WHERE o.user_id = u.id AND o.total > 1000
+);
+
+-- EXISTS advantages:
+-- 1. Stops searching after first match
+-- 2. Better for correlated subqueries
+-- 3. Can use indexes more efficiently</code></pre>
+            </div>
+
+            <h3>3. Join Optimization</h3>
+
+            <h4>Index Foreign Keys</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Always index columns used in JOINs
+CREATE INDEX idx_user_id ON orders(user_id);
+CREATE INDEX idx_order_id ON order_items(order_id);
+CREATE INDEX idx_product_id ON order_items(product_id);
+
+-- Now joins are fast
+SELECT u.name, o.total, p.name
+FROM users u
+JOIN orders o ON u.id = o.user_id
+JOIN order_items oi ON o.id = oi.order_id
+JOIN products p ON oi.product_id = p.id;</code></pre>
+            </div>
+
+            <h4>Filter Early</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Filter after joining (joins more rows)
+SELECT u.name, o.total
+FROM users u
+JOIN orders o ON u.id = o.user_id
+WHERE o.status = 'completed' AND o.order_date >= '2024-01-01';
+
+-- ✅ BETTER: Filter in WHERE or use subquery
+SELECT u.name, o.total
+FROM users u
+JOIN (
+    SELECT user_id, total 
+    FROM orders 
+    WHERE status = 'completed' AND order_date >= '2024-01-01'
+) o ON u.id = o.user_id;</code></pre>
+            </div>
+
+            <h3>4. Pagination Optimization</h3>
+
+            <h4>Avoid Large OFFSET</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Large offset (still scans all skipped rows)
+SELECT * FROM orders 
+ORDER BY id 
+LIMIT 20 OFFSET 100000;  -- Scans 100,000 rows then returns 20
+
+-- ✅ GOOD: Keyset pagination (cursor-based)
+SELECT * FROM orders 
+WHERE id > 100000  -- Use last seen ID
+ORDER BY id 
+LIMIT 20;
+
+-- ✅ ALSO GOOD: Deferred join
+SELECT o.* FROM orders o
+JOIN (
+    SELECT id FROM orders ORDER BY id LIMIT 20 OFFSET 100000
+) AS t ON o.id = t.id;</code></pre>
+            </div>
+
+            <h3>5. Aggregation Optimization</h3>
+
+            <h4>Optimize COUNT Queries</h4>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ SLOW: COUNT(*) on large tables
+SELECT COUNT(*) FROM orders;
+
+-- ✅ FASTER: Use approximate counts for large tables
+SELECT table_rows FROM information_schema.tables
+WHERE table_name = 'orders' AND table_schema = DATABASE();
+
+-- ✅ MAINTAIN COUNTER TABLES
+CREATE TABLE order_counts (
+    count BIGINT,
+    updated_at DATETIME
+);
+-- Update via triggers or scheduled jobs
+
+-- ❌ SLOW: COUNT with GROUP BY on unindexed column
+SELECT status, COUNT(*) FROM orders GROUP BY status;
+
+-- ✅ FASTER: Index the GROUP BY column
+CREATE INDEX idx_status ON orders(status);
+SELECT status, COUNT(*) FROM orders GROUP BY status;</code></pre>
+            </div>
+
+            <h3>6. Subquery Optimization</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- ❌ BAD: Correlated subquery (executes for each row)
+SELECT 
+    u.name,
+    (SELECT COUNT(*) FROM orders WHERE user_id = u.id) AS order_count
+FROM users u;
+
+-- ✅ BETTER: JOIN with GROUP BY
+SELECT 
+    u.name,
+    COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name;</code></pre>
+            </div>
+
+            <h3>7. Use EXPLAIN to Analyze Queries</h3>
+            <div class="code-example">
+                <pre><code class="language-sql">-- Analyze query execution plan
+EXPLAIN SELECT u.name, o.total
+FROM users u
+JOIN orders o ON u.id = o.user_id
+WHERE o.status = 'completed';
+
+-- Key things to look for in EXPLAIN:
+-- ✅ type: const, eq_ref, ref (good)
+-- ❌ type: ALL (full table scan - bad)
+-- ✅ key: shows index name (good)
+-- ❌ key: NULL (no index used - bad)
+-- ✅ rows: low number (good)
+-- ❌ rows: high number (bad)
+-- ❌ Extra: Using filesort, Using temporary (potential issues)
+-- ✅ Extra: Using index (good - covering index)</code></pre>
+            </div>
+
+            <h3>Query Optimization Checklist</h3>
+            <div class="success-box">
+                <strong>✅ Optimization Checklist:</strong>
+                <ol>
+                    <li><strong>Index Strategy:</strong>
+                        <ul>
+                            <li>Index WHERE clause columns</li>
+                            <li>Index JOIN columns (foreign keys)</li>
+                            <li>Index ORDER BY columns</li>
+                            <li>Create covering indexes for frequently run queries</li>
+                            <li>Use composite indexes (order: Equality → Range → Sort)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Query Writing:</strong>
+                        <ul>
+                            <li>Select only needed columns (avoid SELECT *)</li>
+                            <li>Avoid functions on indexed columns</li>
+                            <li>Use correct data types (avoid implicit conversion)</li>
+                            <li>Use EXISTS instead of IN for subqueries</li>
+                            <li>Use UNION ALL instead of UNION when possible</li>
+                        </ul>
+                    </li>
+                    <li><strong>Join Optimization:</strong>
+                        <ul>
+                            <li>Always index foreign keys</li>
+                            <li>Filter before joining when possible</li>
+                            <li>Use INNER JOIN when possible (faster than OUTER)</li>
+                            <li>Consider join order (smaller tables first)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Analysis:</strong>
+                        <ul>
+                            <li>Use EXPLAIN to analyze queries</li>
+                            <li>Monitor slow query log</li>
+                            <li>Run ANALYZE TABLE to update statistics</li>
+                            <li>Benchmark before and after optimization</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Pro Tips:</strong>
+                <ul>
+                    <li>Optimize for common queries first (80/20 rule)</li>
+                    <li>Test with production-like data volumes</li>
+                    <li>Monitor actual query performance in production</li>
+                    <li>Balance read vs write performance based on workload</li>
+                    <li>Consider caching for frequently accessed data</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>📚 Comprehensive Database General Concepts Guide</p>
+        <p style="margin-top: 0.5rem;">Master fundamental and advanced database concepts for interviews and real-world applications</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
