@@ -100,6 +100,10 @@
             background-color: #cc1f1a;
         }
 
+        #searchAnswersBtn:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+        }
+
         .main-wrapper {
             display: flex;
             flex: 1;
@@ -444,6 +448,75 @@
             opacity: 0.9;
         }
 
+        .popular-answers-grid {
+            margin-top: 2rem;
+        }
+
+        .popular-answer-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .popular-answer-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popular-answer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .popular-answer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.25);
+            border-color: #667eea;
+        }
+
+        .popular-answer-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .popular-answer-card h3 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .popular-answer-card p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .popular-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         @media (max-width: 1024px) {
             .main-wrapper {
                 flex-direction: column;
@@ -514,6 +587,7 @@
                         <a href="#home">Home</a>
                         <a href="#topics">Topics</a>
                         <a href="answers-index.html">Answers</a>
+                        <a href="#popular-answers">Popular Answers</a>
                         <a href="code-examples.html">Code Examples</a>
                         <a href="#about">About</a>
                     </nav>
@@ -521,6 +595,7 @@
                 <div class="search-bar">
                     <input type="search" id="searchInput" placeholder="Search interview questions, topics, answers, or code examples..." aria-label="Search">
                     <button type="button" id="searchBtn">Search</button>
+                    <button type="button" id="searchAnswersBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0.75rem 1.5rem;">Search Answers</button>
                 </div>
             </div>
         </header>
@@ -533,17 +608,17 @@
                 </section>
 
                 <div class="cta-section">
-                    <h2>📚 Browse Interview Answers</h2>
+                    <h2>📚 Browse All Interview Answers</h2>
                     <p>Access detailed, comprehensive answers to thousands of interview questions across all major technology domains. From PHP and Laravel to Cloud Infrastructure and AI.</p>
-                    <a href="answers-index.html" class="cta-button">View All Answers →</a>
+                    <a href="answers-index.html" class="cta-button">Browse All Answers →</a>
                     <div class="cta-stats">
                         <div class="cta-stat">
-                            <div class="cta-stat-value">2,600+</div>
+                            <div class="cta-stat-value">3,800+</div>
                             <div class="cta-stat-label">Detailed Answers</div>
                         </div>
                         <div class="cta-stat">
-                            <div class="cta-stat-value">13</div>
-                            <div class="cta-stat-label">Categories</div>
+                            <div class="cta-stat-value">19</div>
+                            <div class="cta-stat-label">Answer Categories</div>
                         </div>
                         <div class="cta-stat">
                             <div class="cta-stat-value">100%</div>
@@ -565,6 +640,96 @@
                         <h3>100%</h3>
                         <p>Production-Ready</p>
                     </div>
+                </div>
+
+                <h2 class="section-title">📊 Answer Coverage Statistics</h2>
+                
+                <div class="stats-overview" style="margin-bottom: 3rem;">
+                    <div class="stat-card">
+                        <h3>200+</h3>
+                        <p>PHP Core Answers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>200+</h3>
+                        <p>Laravel Answers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>200+</h3>
+                        <p>Database Answers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>200+</h3>
+                        <p>API Security Answers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>400+</h3>
+                        <p>Frontend Answers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>600+</h3>
+                        <p>DevOps Answers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>400+</h3>
+                        <p>CMS Answers</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>200+</h3>
+                        <p>Testing Answers</p>
+                    </div>
+                </div>
+
+                <h2 class="section-title" id="popular-answers">⭐ Most Popular Answer Categories</h2>
+                
+                <div class="popular-answers-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                    <a href="answers/php-core-answers.html" class="popular-answer-link">
+                        <div class="popular-answer-card">
+                            <div class="popular-answer-icon">🐘</div>
+                            <h3>PHP Core Fundamentals</h3>
+                            <p>200+ detailed answers covering PHP 8.x, OOP, security, and performance</p>
+                            <div class="popular-badge">Most Popular</div>
+                        </div>
+                    </a>
+                    <a href="answers/laravel-framework-answers.html" class="popular-answer-link">
+                        <div class="popular-answer-card">
+                            <div class="popular-answer-icon">🚀</div>
+                            <h3>Laravel Framework</h3>
+                            <p>200+ answers on Eloquent, middleware, queues, and API development</p>
+                            <div class="popular-badge">Trending</div>
+                        </div>
+                    </a>
+                    <a href="answers/database-mysql-answers.html" class="popular-answer-link">
+                        <div class="popular-answer-card">
+                            <div class="popular-answer-icon">🗄️</div>
+                            <h3>Database & MySQL</h3>
+                            <p>200+ answers on optimization, indexing, and query performance</p>
+                            <div class="popular-badge">Essential</div>
+                        </div>
+                    </a>
+                    <a href="answers/api-security-answers.html" class="popular-answer-link">
+                        <div class="popular-answer-card">
+                            <div class="popular-answer-icon">🔐</div>
+                            <h3>API & Security</h3>
+                            <p>200+ answers on REST APIs, OAuth, JWT, and OWASP best practices</p>
+                            <div class="popular-badge">Critical</div>
+                        </div>
+                    </a>
+                    <a href="answers/javascript-frontend-answers.html" class="popular-answer-link">
+                        <div class="popular-answer-card">
+                            <div class="popular-answer-icon">⚛️</div>
+                            <h3>JavaScript & Frontend</h3>
+                            <p>200+ answers on ES6+, React, Vue.js, and state management</p>
+                            <div class="popular-badge">Hot</div>
+                        </div>
+                    </a>
+                    <a href="answers/devops-git-answers.html" class="popular-answer-link">
+                        <div class="popular-answer-card">
+                            <div class="popular-answer-icon">🔧</div>
+                            <h3>DevOps & Git</h3>
+                            <p>200+ answers on CI/CD, Docker, deployment, and automation</p>
+                            <div class="popular-badge">In-Demand</div>
+                        </div>
+                    </a>
                 </div>
 
                 <h2 class="section-title" id="topics">📚 Interview Topics</h2>
@@ -963,6 +1128,7 @@
         // Enhanced search functionality
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchBtn');
+        const searchAnswersBtn = document.getElementById('searchAnswersBtn');
         const topicCards = document.querySelectorAll('.topic-card');
 
         // Search index for answers pages
@@ -1081,6 +1247,16 @@
         }
 
         searchButton.addEventListener('click', performSearch);
+
+        // Search Answers button - redirect to answers index with search query
+        searchAnswersBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `answers-index.html?search=${encodeURIComponent(query)}`;
+            } else {
+                window.location.href = 'answers-index.html';
+            }
+        });
 
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {

@@ -1845,6 +1845,22 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             populateTopicFilters();
+            
+            // Check for search query parameter from home page
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+            if (searchQuery) {
+                document.getElementById('searchInput').value = searchQuery;
+                searchEngine.applyFilters();
+                // Scroll to results
+                setTimeout(() => {
+                    document.getElementById('all-answers').scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start' 
+                    });
+                }, 100);
+            }
+            
             console.log('Advanced search functionality initialized');
         });
     </script>
