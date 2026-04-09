@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP & Laravel Interview Questions - 1000 Q&A</title>
+    <title>PHP & Laravel Interview Questions - 991 Q&A</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <style>
         * {
             margin: 0;
@@ -113,6 +114,29 @@
             align-items: flex-start;
             margin-bottom: 15px;
             gap: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .question-header:hover .question {
+            color: #667eea;
+        }
+
+        .question-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            color: #667eea;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .toggle-icon.expanded {
+            transform: rotate(90deg);
         }
 
         .question {
@@ -163,23 +187,52 @@
             color: #4a5568;
         }
 
+        .answer-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .answer-container.expanded {
+            max-height: 5000px;
+            transition: max-height 0.5s ease-in;
+        }
+
         .answer {
+            padding-top: 15px;
             color: #4a5568;
             line-height: 1.8;
             font-size: 1rem;
         }
 
-        .answer p {
+        .answer-section {
+            margin-bottom: 20px;
+        }
+
+        .answer-section h3 {
+            font-size: 1.1rem;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: 600;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 5px;
+        }
+
+        .answer-section p {
             margin-bottom: 12px;
         }
 
-        .answer ul, .answer ol {
+        .answer-section ul, .answer-section ol {
             margin-left: 25px;
             margin-bottom: 12px;
         }
 
-        .answer li {
+        .answer-section li {
             margin-bottom: 6px;
+        }
+
+        .answer-section strong {
+            color: #2d3748;
         }
 
         pre {
@@ -333,6 +386,63 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
     <script src="../automation/php-laravel-data-complete.js"></script>
+    <script>
+        // Toggle answer visibility
+        function toggleAnswer(element) {
+            const article = element.closest('article');
+            const answerContainer = article.querySelector('.answer-container');
+            const toggleIcon = article.querySelector('.toggle-icon');
+            
+            answerContainer.classList.toggle('expanded');
+            toggleIcon.classList.toggle('expanded');
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const difficulty = document.getElementById('difficulty').value;
+            const tag = document.getElementById('tag').value;
+            const search = document.getElementById('search').value.toLowerCase();
+            
+            const articles = document.querySelectorAll('article');
+            let visibleCount = 0;
+            
+            articles.forEach(article => {
+                const articleDifficulty = article.dataset.difficulty;
+                const articleTags = article.dataset.tags;
+                const questionText = article.querySelector('.question').textContent.toLowerCase();
+                
+                let visible = true;
+                
+                if (difficulty && articleDifficulty !== difficulty) {
+                    visible = false;
+                }
+                
+                if (tag && !articleTags.includes(tag)) {
+                    visible = false;
+                }
+                
+                if (search && !questionText.includes(search)) {
+                    visible = false;
+                }
+                
+                if (visible) {
+                    article.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    article.classList.add('hidden');
+                }
+            });
+            
+            document.getElementById('visibleCount').textContent = visibleCount;
+        }
+
+        // Setup event listeners
+        document.getElementById('difficulty').addEventListener('change', applyFilters);
+        document.getElementById('tag').addEventListener('change', applyFilters);
+        document.getElementById('search').addEventListener('input', applyFilters);
+    </script>
 </body>
 </html>
