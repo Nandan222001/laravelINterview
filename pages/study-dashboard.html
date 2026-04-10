@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study Dashboard - Track your learning progress with personalized statistics and analytics">
+    <meta name="keywords" content="Study Dashboard, Progress Tracking, Learning Analytics, Interview Preparation">
+    <title>Study Dashboard - Laravel Interview Question Bank</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="stylesheet" href="../assets/css/question-pages.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            --danger-gradient: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+            --warning-gradient: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            --info-gradient: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --card-shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            background-color: #f7fafc;
+        }
+
+        .page-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .page-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            margin: 1rem 0 0.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin: 0;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .stat-card.primary { border-left-color: #667eea; }
+        .stat-card.success { border-left-color: #48bb78; }
+        .stat-card.danger { border-left-color: #f56565; }
+        .stat-card.warning { border-left-color: #ed8936; }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .stat-trend {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-trend.up {
+            color: #48bb78;
+        }
+
+        .stat-trend.down {
+            color: #f56565;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-subtitle {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        .chart-wrapper.large {
+            height: 400px;
+        }
+
+        .streak-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .streak-container {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .streak-value {
+            font-size: 4rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+        }
+
+        .heatmap-container {
+            overflow-x: auto;
+        }
+
+        .heatmap {
+            display: grid;
+            grid-template-columns: auto repeat(53, 12px);
+            gap: 3px;
+            margin-top: 1rem;
+        }
+
+        .heatmap-day {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            background-color: #edf2f7;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .heatmap-day:hover {
+            transform: scale(1.5);
+            z-index: 10;
+        }
+
+        .heatmap-day[data-level="0"] { background-color: #edf2f7; }
+        .heatmap-day[data-level="1"] { background-color: #c6f6d5; }
+        .heatmap-day[data-level="2"] { background-color: #9ae6b4; }
+        .heatmap-day[data-level="3"] { background-color: #68d391; }
+        .heatmap-day[data-level="4"] { background-color: #48bb78; }
+        .heatmap-day[data-level="5"] { background-color: #38a169; }
+
+        .heatmap-label {
+            font-size: 0.75rem;
+            color: #718096;
+            display: flex;
+            align-items: center;
+            padding-right: 0.5rem;
+        }
+
+        .heatmap-legend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .recent-questions {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .question-item {
+            padding: 1rem;
+            border-left: 3px solid #e2e8f0;
+            margin-bottom: 1rem;
+            background: #f7fafc;
+            border-radius: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .question-item:hover {
+            border-left-color: #667eea;
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .question-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .weak-areas {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .weak-area-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .weak-area-item:last-child {
+            border-bottom: none;
+        }
+
+        .weak-area-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .weak-area-stats {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .accuracy-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .accuracy-badge.low {
+            background-color: #fed7d7;
+            color: #c53030;
+        }
+
+        .accuracy-badge.medium {
+            background-color: #feebc8;
+            color: #c05621;
+        }
+
+        .accuracy-badge.high {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-btn:hover {
+            border-color: #667eea;
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .action-btn-icon {
+            font-size: 2.5rem;
+        }
+
+        .action-btn-content h3 {
+            font-size: 1.1rem;
+            color: #2d3748;
+            margin: 0 0 0.25rem;
+        }
+
+        .action-btn-content p {
+            font-size: 0.85rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        .two-column-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .two-column-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-title {
+                font-size: 1.75rem;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+
+            .streak-value {
+                font-size: 3rem;
+            }
+
+            .chart-wrapper {
+                height: 250px;
+            }
+
+            .heatmap {
+                grid-template-columns: auto repeat(26, 12px);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #a0aec0;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-ring {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .progress-ring-circle {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="../index.html">🚀 Laravel Interview Question Bank</a>
+                </div>
+                <nav class="breadcrumb">
+                    <a href="../index.html">Home</a>
+                    <span class="separator">›</span>
+                    <span class="current">Study Dashboard</span>
+                </nav>
+            </div>
+            <h1 class="dashboard-title">📊 Study Dashboard</h1>
+            <p class="dashboard-subtitle">Track your progress and stay motivated on your learning journey</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Quick Stats Overview -->
+            <div class="dashboard-grid">
+                <div class="stat-card primary">
+                    <div class="stat-header">
+                        <div class="stat-icon">📚</div>
+                        <div>
+                            <div class="stat-value" id="totalQuestionsCompleted">0</div>
+                            <div class="stat-label">Questions Completed</div>
+                            <div class="stat-trend up" id="completedTrend">
+                                <span>↑</span>
+                                <span>0 this week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card success">
+                    <div class="stat-header">
+                        <div class="stat-icon">✅</div>
+                        <div>
+                            <div class="stat-value" id="accuracyRate">0%</div>
+                            <div class="stat-label">Accuracy Rate</div>
+                            <div class="stat-trend up" id="accuracyTrend">
+                                <span>↑</span>
+                                <span>+0% this week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card warning">
+                    <div class="stat-header">
+                        <div class="stat-icon">⏱️</div>
+                        <div>
+                            <div class="stat-value" id="studyTime">0h</div>
+                            <div class="stat-label">Total Study Time</div>
+                            <div class="stat-trend up" id="studyTimeTrend">
+                                <span>↑</span>
+                                <span>+0h this week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card danger">
+                    <div class="stat-header">
+                        <div class="stat-icon">🎯</div>
+                        <div>
+                            <div class="stat-value" id="weakAreasCount">0</div>
+                            <div class="stat-label">Areas to Improve</div>
+                            <div class="stat-trend down" id="weakAreasTrend" style="display: none;">
+                                <span>↓</span>
+                                <span>-0 this week</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Streak -->
+            <div class="chart-container">
+                <div class="streak-container">
+                    <div class="streak-badge">
+                        <span>🔥</span>
+                        <span id="currentStreak">0</span>
+                        <span>Day Streak</span>
+                    </div>
+                    <div class="streak-value" id="longestStreak">0</div>
+                    <p style="color: #718096;">Longest Streak</p>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="action-buttons">
+                <a href="#" class="action-btn" id="continueBtn">
+                    <div class="action-btn-icon">▶️</div>
+                    <div class="action-btn-content">
+                        <h3>Continue Where You Left Off</h3>
+                        <p id="lastViewedText">No recent activity</p>
+                    </div>
+                </a>
+
+                <a href="#" class="action-btn" id="practiceBtn">
+                    <div class="action-btn-icon">💪</div>
+                    <div class="action-btn-content">
+                        <h3>Recommended Practice</h3>
+                        <p id="recommendedText">Start a practice session</p>
+                    </div>
+                </a>
+
+                <a href="../pages/quiz-mode.html" class="action-btn">
+                    <div class="action-btn-icon">🎲</div>
+                    <div class="action-btn-content">
+                        <h3>Random Quiz Mode</h3>
+                        <p>Test your knowledge with random questions</p>
+                    </div>
+                </a>
+
+                <a href="../pages/flashcards.html" class="action-btn">
+                    <div class="action-btn-icon">🃏</div>
+                    <div class="action-btn-content">
+                        <h3>Flashcard Review</h3>
+                        <p>Quick review with flashcards</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="two-column-grid">
+                <!-- Questions by Topic -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Questions Completed by Topic</h2>
+                        <p class="chart-subtitle">Track your progress across different categories</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="topicChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Success Rate by Category -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Success Rate by Category</h2>
+                        <p class="chart-subtitle">Your accuracy across different topics</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="successRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Time Heatmap -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2 class="chart-title">Study Activity Heatmap</h2>
+                    <p class="chart-subtitle">Your daily study activity over the last year</p>
+                </div>
+                <div class="heatmap-container" id="heatmapContainer">
+                    <div class="heatmap" id="studyHeatmap"></div>
+                    <div class="heatmap-legend">
+                        <span>Less</span>
+                        <div class="legend-item">
+                            <div class="heatmap-day" data-level="0"></div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="heatmap-day" data-level="1"></div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="heatmap-day" data-level="2"></div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="heatmap-day" data-level="3"></div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="heatmap-day" data-level="4"></div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="heatmap-day" data-level="5"></div>
+                        </div>
+                        <span>More</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Difficulty Progression -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2 class="chart-title">Difficulty Level Progression</h2>
+                    <p class="chart-subtitle">Track your improvement across difficulty levels over time</p>
+                </div>
+                <div class="chart-wrapper large">
+                    <canvas id="difficultyProgressionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Two Column Layout for Recent Questions and Weak Areas -->
+            <div class="two-column-grid">
+                <!-- Recently Viewed Questions -->
+                <div class="recent-questions">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Recently Viewed Questions</h2>
+                        <p class="chart-subtitle">Pick up where you left off</p>
+                    </div>
+                    <div id="recentQuestionsContainer">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📖</div>
+                            <p>No recent activity yet</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weak Areas Analysis -->
+                <div class="weak-areas">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Areas to Improve</h2>
+                        <p class="chart-subtitle">Focus on these topics for better results</p>
+                    </div>
+                    <div id="weakAreasContainer">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🎯</div>
+                            <p>No data available yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script src="../assets/js/progress-tracker.js"></script>
+    <script>
+        // Dashboard Data Manager
+        const DashboardManager = {
+            data: {
+                questions: {},
+                studyActivity: {},
+                categoryStats: {},
+                difficultyStats: {}
+            },
+
+            init() {
+                this.loadData();
+                this.renderDashboard();
+                this.setupEventListeners();
+            },
+
+            loadData() {
+                const stored = localStorage.getItem('interview_progress');
+                if (stored) {
+                    const progressData = JSON.parse(stored);
+                    this.data.questions = progressData.questions || {};
+                }
+
+                const activityData = localStorage.getItem('study_activity');
+                if (activityData) {
+                    this.data.studyActivity = JSON.parse(activityData);
+                } else {
+                    this.data.studyActivity = this.generateMockActivity();
+                }
+
+                this.processStatistics();
+            },
+
+            generateMockActivity() {
+                const activity = {};
+                const today = new Date();
+                
+                for (let i = 0; i < 365; i++) {
+                    const date = new Date(today);
+                    date.setDate(date.getDate() - i);
+                    const dateStr = date.toISOString().split('T')[0];
+                    
+                    const random = Math.random();
+                    if (random > 0.3) {
+                        activity[dateStr] = Math.floor(Math.random() * 30) + 1;
+                    }
+                }
+                
+                return activity;
+            },
+
+            processStatistics() {
+                const questions = Object.values(this.data.questions);
+                
+                this.data.categoryStats = {};
+                this.data.difficultyStats = {
+                    beginner: { total: 0, correct: 0 },
+                    intermediate: { total: 0, correct: 0 },
+                    advanced: { total: 0, correct: 0 },
+                    expert: { total: 0, correct: 0 }
+                };
+
+                questions.forEach(q => {
+                    if (q.metadata) {
+                        const category = q.metadata.category || 'Other';
+                        const difficulty = q.metadata.difficulty || 'intermediate';
+
+                        if (!this.data.categoryStats[category]) {
+                            this.data.categoryStats[category] = {
+                                total: 0,
+                                completed: 0,
+                                incorrect: 0,
+                                viewed: 0
+                            };
+                        }
+
+                        this.data.categoryStats[category].total++;
+                        
+                        if (q.status === 'completed') {
+                            this.data.categoryStats[category].completed++;
+                        } else if (q.status === 'incorrect') {
+                            this.data.categoryStats[category].incorrect++;
+                        } else if (q.status === 'viewed') {
+                            this.data.categoryStats[category].viewed++;
+                        }
+
+                        if (this.data.difficultyStats[difficulty]) {
+                            this.data.difficultyStats[difficulty].total++;
+                            if (q.status === 'completed') {
+                                this.data.difficultyStats[difficulty].correct++;
+                            }
+                        }
+                    }
+                });
+            },
+
+            renderDashboard() {
+                this.renderQuickStats();
+                this.renderStreak();
+                this.renderTopicChart();
+                this.renderSuccessRateChart();
+                this.renderHeatmap();
+                this.renderDifficultyProgression();
+                this.renderRecentQuestions();
+                this.renderWeakAreas();
+                this.updateQuickActions();
+            },
+
+            renderQuickStats() {
+                const questions = Object.values(this.data.questions);
+                const totalCompleted = questions.filter(q => q.status === 'completed').length;
+                const totalIncorrect = questions.filter(q => q.status === 'incorrect').length;
+                const totalAttempted = totalCompleted + totalIncorrect;
+                const accuracyRate = totalAttempted > 0 
+                    ? Math.round((totalCompleted / totalAttempted) * 100) 
+                    : 0;
+
+                document.getElementById('totalQuestionsCompleted').textContent = totalCompleted;
+                document.getElementById('accuracyRate').textContent = accuracyRate + '%';
+                
+                const studyMinutes = Object.values(this.data.studyActivity).reduce((a, b) => a + b, 0);
+                const studyHours = Math.round(studyMinutes / 60);
+                document.getElementById('studyTime').textContent = studyHours + 'h';
+
+                const weakAreas = this.getWeakAreas();
+                document.getElementById('weakAreasCount').textContent = weakAreas.length;
+            },
+
+            renderStreak() {
+                const streak = this.calculateStreak();
+                document.getElementById('currentStreak').textContent = streak.current;
+                document.getElementById('longestStreak').textContent = streak.longest;
+            },
+
+            calculateStreak() {
+                const dates = Object.keys(this.data.studyActivity).sort().reverse();
+                let currentStreak = 0;
+                let longestStreak = 0;
+                let tempStreak = 0;
+                const today = new Date().toISOString().split('T')[0];
+                
+                for (let i = 0; i < dates.length; i++) {
+                    const date = new Date(dates[i]);
+                    const nextDate = i < dates.length - 1 ? new Date(dates[i + 1]) : null;
+                    
+                    tempStreak++;
+                    
+                    if (nextDate) {
+                        const diffDays = Math.floor((date - nextDate) / (1000 * 60 * 60 * 24));
+                        if (diffDays > 1) {
+                            if (i === 0 || dates[0] === today) {
+                                currentStreak = tempStreak;
+                            }
+                            longestStreak = Math.max(longestStreak, tempStreak);
+                            tempStreak = 0;
+                        }
+                    } else {
+                        if (dates[0] === today || i === 0) {
+                            currentStreak = tempStreak;
+                        }
+                        longestStreak = Math.max(longestStreak, tempStreak);
+                    }
+                }
+                
+                return {
+                    current: currentStreak || 0,
+                    longest: longestStreak || currentStreak || 0
+                };
+            },
+
+            renderTopicChart() {
+                const ctx = document.getElementById('topicChart');
+                const categories = Object.keys(this.data.categoryStats).slice(0, 8);
+                const data = categories.map(cat => this.data.categoryStats[cat].completed);
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: categories,
+                        datasets: [{
+                            label: 'Questions Completed',
+                            data: data,
+                            backgroundColor: [
+                                'rgba(102, 126, 234, 0.8)',
+                                'rgba(118, 75, 162, 0.8)',
+                                'rgba(72, 187, 120, 0.8)',
+                                'rgba(245, 101, 101, 0.8)',
+                                'rgba(237, 137, 54, 0.8)',
+                                'rgba(66, 153, 225, 0.8)',
+                                'rgba(159, 122, 234, 0.8)',
+                                'rgba(56, 161, 105, 0.8)'
+                            ],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+
+            renderSuccessRateChart() {
+                const ctx = document.getElementById('successRateChart');
+                const categories = Object.keys(this.data.categoryStats).slice(0, 6);
+                const data = categories.map(cat => {
+                    const stats = this.data.categoryStats[cat];
+                    const total = stats.completed + stats.incorrect;
+                    return total > 0 ? Math.round((stats.completed / total) * 100) : 0;
+                });
+
+                const colors = [
+                    'rgba(102, 126, 234, 0.8)',
+                    'rgba(72, 187, 120, 0.8)',
+                    'rgba(245, 101, 101, 0.8)',
+                    'rgba(237, 137, 54, 0.8)',
+                    'rgba(66, 153, 225, 0.8)',
+                    'rgba(159, 122, 234, 0.8)'
+                ];
+
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: categories.map(cat => cat + ': ' + data[categories.indexOf(cat)] + '%'),
+                        datasets: [{
+                            data: data,
+                            backgroundColor: colors,
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            },
+
+            renderHeatmap() {
+                const heatmap = document.getElementById('studyHeatmap');
+                heatmap.innerHTML = '';
+
+                const today = new Date();
+                const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                
+                const activityLevels = Object.values(this.data.studyActivity);
+                const maxActivity = Math.max(...activityLevels, 1);
+
+                for (let day = 0; day < 7; day++) {
+                    const label = document.createElement('div');
+                    label.className = 'heatmap-label';
+                    label.textContent = weekdays[day];
+                    heatmap.appendChild(label);
+
+                    for (let week = 52; week >= 0; week--) {
+                        const date = new Date(today);
+                        date.setDate(date.getDate() - (week * 7 + (6 - day)));
+                        const dateStr = date.toISOString().split('T')[0];
+                        
+                        const cell = document.createElement('div');
+                        cell.className = 'heatmap-day';
+                        
+                        const activity = this.data.studyActivity[dateStr] || 0;
+                        const level = activity === 0 ? 0 : Math.min(5, Math.ceil((activity / maxActivity) * 5));
+                        cell.setAttribute('data-level', level);
+                        cell.setAttribute('data-date', dateStr);
+                        cell.setAttribute('data-activity', activity);
+                        
+                        cell.addEventListener('mouseenter', this.showTooltip.bind(this));
+                        cell.addEventListener('mouseleave', this.hideTooltip.bind(this));
+                        
+                        heatmap.appendChild(cell);
+                    }
+                }
+            },
+
+            showTooltip(e) {
+                const tooltip = document.getElementById('tooltip');
+                const date = e.target.getAttribute('data-date');
+                const activity = e.target.getAttribute('data-activity');
+                
+                tooltip.textContent = `${date}: ${activity} minutes`;
+                tooltip.style.display = 'block';
+                tooltip.style.left = e.pageX + 10 + 'px';
+                tooltip.style.top = e.pageY + 10 + 'px';
+            },
+
+            hideTooltip() {
+                const tooltip = document.getElementById('tooltip');
+                tooltip.style.display = 'none';
+            },
+
+            renderDifficultyProgression() {
+                const ctx = document.getElementById('difficultyProgressionChart');
+                
+                const weeks = 12;
+                const labels = [];
+                for (let i = weeks; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - (i * 7));
+                    labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                }
+
+                const beginnerData = this.generateProgressionData(weeks, 60, 90);
+                const intermediateData = this.generateProgressionData(weeks, 40, 75);
+                const advancedData = this.generateProgressionData(weeks, 20, 65);
+                const expertData = this.generateProgressionData(weeks, 10, 50);
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Beginner',
+                                data: beginnerData,
+                                borderColor: 'rgba(72, 187, 120, 1)',
+                                backgroundColor: 'rgba(72, 187, 120, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Intermediate',
+                                data: intermediateData,
+                                borderColor: 'rgba(237, 137, 54, 1)',
+                                backgroundColor: 'rgba(237, 137, 54, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Advanced',
+                                data: advancedData,
+                                borderColor: 'rgba(245, 101, 101, 1)',
+                                backgroundColor: 'rgba(245, 101, 101, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Expert',
+                                data: expertData,
+                                borderColor: 'rgba(159, 122, 234, 1)',
+                                backgroundColor: 'rgba(159, 122, 234, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+
+            generateProgressionData(weeks, start, end) {
+                const data = [];
+                const increment = (end - start) / weeks;
+                
+                for (let i = 0; i <= weeks; i++) {
+                    const value = start + (increment * i) + (Math.random() * 10 - 5);
+                    data.push(Math.max(0, Math.min(100, value)));
+                }
+                
+                return data;
+            },
+
+            renderRecentQuestions() {
+                const container = document.getElementById('recentQuestionsContainer');
+                const questions = Object.values(this.data.questions)
+                    .sort((a, b) => new Date(b.lastViewedAt || b.viewedAt) - new Date(a.lastViewedAt || a.viewedAt))
+                    .slice(0, 5);
+
+                if (questions.length === 0) {
+                    return;
+                }
+
+                container.innerHTML = questions.map(q => `
+                    <div class="question-item" data-question-id="${q.id}">
+                        <div class="question-title">${q.metadata?.title || 'Question #' + q.id}</div>
+                        <div class="question-meta">
+                            <span>📁 ${q.metadata?.category || 'General'}</span>
+                            <span>📊 ${q.metadata?.difficulty || 'Intermediate'}</span>
+                            <span>🕒 ${this.getRelativeTime(q.lastViewedAt || q.viewedAt)}</span>
+                            <span>${q.status === 'completed' ? '✅ Completed' : q.status === 'incorrect' ? '❌ Incorrect' : '👁️ Viewed'}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                container.querySelectorAll('.question-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const questionId = item.getAttribute('data-question-id');
+                        const question = this.data.questions[questionId];
+                        if (question?.metadata?.url) {
+                            window.location.href = question.metadata.url;
+                        }
+                    });
+                });
+            },
+
+            renderWeakAreas() {
+                const container = document.getElementById('weakAreasContainer');
+                const weakAreas = this.getWeakAreas();
+
+                if (weakAreas.length === 0) {
+                    return;
+                }
+
+                container.innerHTML = weakAreas.map(area => {
+                    const accuracyClass = area.accuracy < 50 ? 'low' : area.accuracy < 70 ? 'medium' : 'high';
+                    return `
+                        <div class="weak-area-item">
+                            <div class="weak-area-name">${area.name}</div>
+                            <div class="weak-area-stats">
+                                <span class="accuracy-badge ${accuracyClass}">${area.accuracy}% Accuracy</span>
+                                <span style="font-size: 0.85rem; color: #718096;">${area.incorrect} incorrect</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            getWeakAreas() {
+                const areas = [];
+                
+                for (const [category, stats] of Object.entries(this.data.categoryStats)) {
+                    const total = stats.completed + stats.incorrect;
+                    if (total > 0) {
+                        const accuracy = Math.round((stats.completed / total) * 100);
+                        if (accuracy < 70 || stats.incorrect > 2) {
+                            areas.push({
+                                name: category,
+                                accuracy: accuracy,
+                                incorrect: stats.incorrect,
+                                total: total
+                            });
+                        }
+                    }
+                }
+                
+                return areas.sort((a, b) => a.accuracy - b.accuracy).slice(0, 5);
+            },
+
+            updateQuickActions() {
+                const questions = Object.values(this.data.questions);
+                const lastViewed = questions.sort((a, b) => 
+                    new Date(b.lastViewedAt || b.viewedAt) - new Date(a.lastViewedAt || a.viewedAt)
+                )[0];
+
+                const continueBtn = document.getElementById('continueBtn');
+                const lastViewedText = document.getElementById('lastViewedText');
+
+                if (lastViewed) {
+                    lastViewedText.textContent = `${lastViewed.metadata?.category || 'General'} - ${this.getRelativeTime(lastViewed.lastViewedAt || lastViewed.viewedAt)}`;
+                    if (lastViewed.metadata?.url) {
+                        continueBtn.href = lastViewed.metadata.url;
+                    }
+                }
+
+                const weakAreas = this.getWeakAreas();
+                const recommendedText = document.getElementById('recommendedText');
+                const practiceBtn = document.getElementById('practiceBtn');
+
+                if (weakAreas.length > 0) {
+                    recommendedText.textContent = `Focus on ${weakAreas[0].name} (${weakAreas[0].accuracy}% accuracy)`;
+                    practiceBtn.href = `../index.html#${weakAreas[0].name.toLowerCase().replace(/\s+/g, '-')}`;
+                }
+            },
+
+            getRelativeTime(dateString) {
+                if (!dateString) return 'Unknown';
+                
+                const date = new Date(dateString);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                return date.toLocaleDateString();
+            },
+
+            setupEventListeners() {
+                document.addEventListener('progressSaved', () => {
+                    this.loadData();
+                    this.renderDashboard();
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            DashboardManager.init();
+        });
+    </script>
+</body>
+</html>
