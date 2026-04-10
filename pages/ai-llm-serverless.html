@@ -22,9 +22,64 @@
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 2rem 1rem;
-            text-align: center;
+            padding: 1rem 1rem 2rem 1rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .header-title {
+            text-align: center;
         }
 
         .header h1 {
@@ -57,6 +112,22 @@
         .filters h3 {
             margin-bottom: 1rem;
             color: #667eea;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .filter-buttons {
@@ -222,13 +293,27 @@
 </head>
 <body>
     <div class="header">
-        <h1>🤖 AI/LLM/Serverless Interview Questions</h1>
-        <p>Comprehensive guide covering AWS Lambda, Transformers, RAG, LangChain, Vector Databases, and more</p>
+        <div class="header-nav">
+            <div class="nav-links">
+                <a href="../index.html">🏠 Home</a>
+                <a href="../index.html#dashboard">📊 Dashboard</a>
+                <a href="../index.html#flashcards">🎴 Flashcards</a>
+                <a href="../index.html#quiz">📝 Quiz Mode</a>
+            </div>
+            <div class="header-controls">
+                <button class="theme-toggle" aria-label="Toggle theme">🌙</button>
+            </div>
+        </div>
+        <div class="header-title">
+            <h1>🤖 AI/LLM/Serverless Interview Questions</h1>
+            <p>Comprehensive guide covering AWS Lambda, Transformers, RAG, LangChain, Vector Databases, and more</p>
+        </div>
     </div>
 
     <div class="container">
         <div class="filters">
             <h3>🔍 Filter by Topic</h3>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search questions...">
             <div class="filter-buttons">
                 <button class="filter-btn active" data-filter="all">All Questions</button>
                 <button class="filter-btn" data-filter="lambda">AWS Lambda</button>
@@ -2049,6 +2134,27 @@ def handle_subscription_created(event):
         document.querySelectorAll('pre code').forEach((block) => {
             Prism.highlightElement(block);
         });
+
+        // Enhanced search functionality
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const questions = document.querySelectorAll('.question');
+                
+                questions.forEach(question => {
+                    const text = question.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        question.style.display = 'block';
+                    } else {
+                        question.style.display = 'none';
+                    }
+                });
+            });
+        }
     </script>
+    <script src="../assets/js/progress-tracker.js"></script>
+    <script src="../assets/js/bookmark-system.js"></script>
+    <script src="../assets/js/theme-manager.js"></script>
 </body>
 </html>
