@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel Interview Questions - Mock Interview Practice">
+    <meta name="keywords" content="Laravel, Interview Questions, Mock Interview, Practice">
+    <title>Mock Interview - Laravel Interview Question Bank</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="stylesheet" href="../assets/css/question-pages.css">
+    <link rel="stylesheet" href="../assets/css/mock-interview.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <div class="header-content">
+                <div class="header-top">
+                    <div class="logo">
+                        <a href="../index.html">🚀 Laravel Interview Question Bank</a>
+                    </div>
+                    <nav class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span class="separator">›</span>
+                        <span class="current">Mock Interview</span>
+                    </nav>
+                </div>
+                
+                <div class="topic-header">
+                    <h1 class="topic-title">🎯 Mock Interview Practice</h1>
+                    <p class="topic-description">Simulate a real interview experience with multi-stage questions, time limits, and audio recording.</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-wrapper">
+            <main class="main-content">
+                <div id="setup-screen" class="screen active">
+                    <div class="setup-container">
+                        <div class="setup-header">
+                            <h2>Configure Your Mock Interview</h2>
+                            <p>Choose your interview settings to simulate a realistic interview experience</p>
+                        </div>
+
+                        <div class="setup-form">
+                            <div class="form-group">
+                                <label for="interview-duration">Interview Duration</label>
+                                <select id="interview-duration" class="form-control">
+                                    <option value="30">30 Minutes (Quick Practice)</option>
+                                    <option value="45" selected>45 Minutes (Standard)</option>
+                                    <option value="60">60 Minutes (Full Interview)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Interview Stages</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="stage-behavioral" value="behavioral" checked>
+                                        <span>Behavioral Questions (20% of time)</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="stage-technical" value="technical" checked>
+                                        <span>Technical Questions (50% of time)</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="stage-system-design" value="system-design" checked>
+                                        <span>System Design (30% of time)</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="difficulty-level">Difficulty Level</label>
+                                <select id="difficulty-level" class="form-control">
+                                    <option value="mixed" selected>Mixed (All Levels)</option>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                    <option value="expert">Expert</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="enable-audio" checked>
+                                    <span>Enable Audio Recording (Practice verbal answers)</span>
+                                </label>
+                            </div>
+
+                            <button id="start-interview-btn" class="btn-primary btn-large">
+                                Start Interview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="interview-screen" class="screen">
+                    <div class="interview-header">
+                        <div class="interview-progress">
+                            <div class="stage-info">
+                                <span class="stage-badge" id="current-stage">Behavioral</span>
+                                <span class="question-counter" id="question-counter">Question 1 of 10</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                        </div>
+                        <div class="interview-timers">
+                            <div class="timer-group">
+                                <span class="timer-label">Stage Time:</span>
+                                <span class="timer-value" id="stage-timer">10:00</span>
+                            </div>
+                            <div class="timer-group">
+                                <span class="timer-label">Question Time:</span>
+                                <span class="timer-value" id="question-timer">05:00</span>
+                            </div>
+                            <div class="timer-group">
+                                <span class="timer-label">Total Time:</span>
+                                <span class="timer-value" id="total-timer">45:00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-display">
+                        <div class="question-card">
+                            <div class="question-header-interview">
+                                <h2 id="question-title">Question will appear here</h2>
+                                <div class="question-meta-interview">
+                                    <span class="difficulty-badge" id="question-difficulty">Intermediate</span>
+                                    <span class="tag" id="question-tag">Behavioral</span>
+                                </div>
+                            </div>
+                            <div class="question-content-interview">
+                                <p id="question-text">Loading question...</p>
+                            </div>
+                        </div>
+
+                        <div class="answer-section-interview">
+                            <div class="audio-controls" id="audio-controls">
+                                <button id="record-btn" class="btn-record">
+                                    <span class="icon">🎤</span>
+                                    <span class="text">Start Recording</span>
+                                </button>
+                                <div class="recording-indicator hidden" id="recording-indicator">
+                                    <span class="pulse"></span>
+                                    <span>Recording... <span id="recording-time">00:00</span></span>
+                                </div>
+                                <div class="audio-playback hidden" id="audio-playback">
+                                    <audio id="audio-player" controls></audio>
+                                    <button id="delete-recording-btn" class="btn-delete">Delete</button>
+                                </div>
+                            </div>
+
+                            <div class="answer-input-section">
+                                <label for="answer-notes">Your Answer Notes:</label>
+                                <textarea id="answer-notes" 
+                                          class="answer-textarea" 
+                                          placeholder="Type your answer notes here or use audio recording..."></textarea>
+                            </div>
+
+                            <div class="answer-hints" id="answer-hints">
+                                <h4>💡 Answer Quality Hints:</h4>
+                                <div id="hints-content">
+                                    <p class="hint-placeholder">Start typing or recording to get answer quality hints...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question-actions">
+                            <button id="skip-btn" class="btn-secondary">Skip Question</button>
+                            <button id="next-btn" class="btn-primary">Next Question</button>
+                            <button id="end-interview-btn" class="btn-danger">End Interview</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="summary-screen" class="screen">
+                    <div class="summary-container">
+                        <div class="summary-header">
+                            <h2>🎉 Interview Complete!</h2>
+                            <p>Here's your performance summary</p>
+                        </div>
+
+                        <div class="summary-stats">
+                            <div class="stat-card">
+                                <div class="stat-value" id="total-time-stat">0:00</div>
+                                <div class="stat-label">Total Time</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="questions-answered-stat">0</div>
+                                <div class="stat-label">Questions Answered</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="questions-skipped-stat">0</div>
+                                <div class="stat-label">Questions Skipped</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="avg-time-stat">0:00</div>
+                                <div class="stat-label">Avg Time/Question</div>
+                            </div>
+                        </div>
+
+                        <div class="summary-sections">
+                            <div class="summary-section">
+                                <h3>📊 Stage Performance</h3>
+                                <div id="stage-performance"></div>
+                            </div>
+
+                            <div class="summary-section">
+                                <h3>🎯 Areas Covered</h3>
+                                <div id="areas-covered"></div>
+                            </div>
+
+                            <div class="summary-section">
+                                <h3>⏱️ Time Management</h3>
+                                <div id="time-management"></div>
+                            </div>
+
+                            <div class="summary-section">
+                                <h3>📝 Question Review</h3>
+                                <div id="questions-review"></div>
+                            </div>
+                        </div>
+
+                        <div class="summary-actions">
+                            <button id="download-report-btn" class="btn-primary btn-large">
+                                <span class="icon">📄</span>
+                                Download Interview Report (PDF)
+                            </button>
+                            <button id="restart-interview-btn" class="btn-secondary">
+                                Start New Interview
+                            </button>
+                            <a href="../index.html" class="btn-secondary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="../assets/js/mock-interview.js"></script>
+</body>
+</html>
