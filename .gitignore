@@ -169,3 +169,11 @@ automation/*.md
 pdf-exports/
 *.pdf
 !nandan_singh_resume.pdf
+
+# PWA Icons (generated)
+icons/*.png
+!icons/README.md
+!icons/generate-icons.html
+
+# PWA Screenshots
+screenshots/

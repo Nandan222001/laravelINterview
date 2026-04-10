@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Support Test - Laravel Interview Bank</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#e3342f">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #e3342f;
+            margin-bottom: 1rem;
+        }
+
+        .status-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 2px solid #e0e0e0;
+        }
+
+        .status-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .status-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .status-value {
+            color: #333;
+        }
+
+        .status-value.online {
+            color: #48bb78;
+            font-weight: 700;
+        }
+
+        .status-value.offline {
+            color: #f56565;
+            font-weight: 700;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        button {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #e3342f 0%, #cc1f1a 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #cc1f1a 0%, #b81813 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(227, 52, 47, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .test-results {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .test-results h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .log-entry {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .log-entry.info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .log-entry.success {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .log-entry.error {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .log-entry.warning {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .queue-list {
+            list-style: none;
+        }
+
+        .queue-item {
+            background: white;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .queue-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .queue-item-type {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .queue-item-time {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .queue-item-retries {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 PWA Offline Support Test</h1>
+        <p style="margin-bottom: 2rem; color: #666;">
+            Test the offline functionality and queue system. Try going offline using Chrome DevTools (Network → Offline) to test.
+        </p>
+
+        <div class="status-card">
+            <h2>Connection Status</h2>
+            <div class="status-row">
+                <span class="status-label">Network Status:</span>
+                <span class="status-value" id="networkStatus">Checking...</span>
+            </div>
+            <div class="status-row">
+                <span class="status-label">Service Worker:</span>
+                <span class="status-value" id="swStatus">Checking...</span>
+            </div>
+            <div class="status-row">
+                <span class="status-label">Queue Length:</span>
+                <span class="status-value" id="queueLength">0</span>
+            </div>
+            <div class="status-row">
+                <span class="status-label">Last Updated:</span>
+                <span class="status-value" id="lastUpdated">Never</span>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button onclick="testQueueOperation()">Queue Test Operation</button>
+            <button onclick="manualSync()">Manual Sync</button>
+            <button onclick="getQueueStatus()">Get Queue Status</button>
+            <button onclick="clearQueue()">Clear Queue</button>
+            <button onclick="cacheTestUrls()">Cache Test URLs</button>
+            <button onclick="clearAllCaches()">Clear All Caches</button>
+        </div>
+
+        <div class="test-results">
+            <h3>Test Results & Logs</h3>
+            <div id="logs"></div>
+        </div>
+
+        <div class="status-card">
+            <h2>Queued Operations</h2>
+            <ul class="queue-list" id="queueList">
+                <li style="color: #999; text-align: center; padding: 1rem;">No operations in queue</li>
+            </ul>
+        </div>
+
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <script src="/assets/js/offline-support.js"></script>
+    <script>
+        let logCount = 0;
+
+        function log(message, type = 'info') {
+            const logsContainer = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `[${timestamp}] ${message}`;
+            logsContainer.insertBefore(entry, logsContainer.firstChild);
+            
+            // Keep only last 20 logs
+            if (logsContainer.children.length > 20) {
+                logsContainer.removeChild(logsContainer.lastChild);
+            }
+        }
+
+        function updateStatus() {
+            if (!window.offlineSupport) {
+                setTimeout(updateStatus, 100);
+                return;
+            }
+
+            const status = window.offlineSupport.getQueueStatus();
+            
+            // Update network status
+            const networkStatusEl = document.getElementById('networkStatus');
+            networkStatusEl.textContent = status.isOnline ? '🟢 Online' : '🔴 Offline';
+            networkStatusEl.className = `status-value ${status.isOnline ? 'online' : 'offline'}`;
+
+            // Update service worker status
+            const swStatus = document.getElementById('swStatus');
+            if (navigator.serviceWorker.controller) {
+                swStatus.textContent = '✅ Active';
+                swStatus.className = 'status-value online';
+            } else {
+                swStatus.textContent = '❌ Not Active';
+                swStatus.className = 'status-value offline';
+            }
+
+            // Update queue length
+            document.getElementById('queueLength').textContent = status.queueLength;
+
+            // Update timestamp
+            document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
+
+            // Update queue list
+            updateQueueList(status.operations);
+        }
+
+        function updateQueueList(operations) {
+            const queueList = document.getElementById('queueList');
+            
+            if (operations.length === 0) {
+                queueList.innerHTML = '<li style="color: #999; text-align: center; padding: 1rem;">No operations in queue</li>';
+                return;
+            }
+
+            queueList.innerHTML = operations.map(op => `
+                <li class="queue-item">
+                    <div class="queue-item-header">
+                        <span class="queue-item-type">${op.operation}</span>
+                        <span class="queue-item-time">${new Date(op.timestamp).toLocaleTimeString()}</span>
+                    </div>
+                    <div class="queue-item-retries">Retries: ${op.retries} / 3</div>
+                </li>
+            `).join('');
+        }
+
+        function testQueueOperation() {
+            if (!window.offlineSupport) {
+                log('Offline support not initialized yet', 'error');
+                return;
+            }
+
+            const operations = [
+                { type: 'save_progress', data: { questionId: 'Q' + Date.now(), status: 'completed' } },
+                { type: 'save_bookmark', data: { questionId: 'Q' + Date.now(), bookmarked: true } },
+                { type: 'save_note', data: { questionId: 'Q' + Date.now(), note: 'Test note' } }
+            ];
+
+            const randomOp = operations[Math.floor(Math.random() * operations.length)];
+            
+            try {
+                const id = window.offlineSupport.queueOperation(randomOp);
+                log(`Queued operation: ${randomOp.type} (ID: ${id})`, 'success');
+                updateStatus();
+            } catch (error) {
+                log(`Failed to queue operation: ${error.message}`, 'error');
+            }
+        }
+
+        async function manualSync() {
+            if (!window.offlineSupport) {
+                log('Offline support not initialized yet', 'error');
+                return;
+            }
+
+            try {
+                log('Starting manual sync...', 'info');
+                await window.offlineSupport.sync();
+                log('Manual sync completed', 'success');
+                updateStatus();
+            } catch (error) {
+                log(`Sync failed: ${error.message}`, 'error');
+            }
+        }
+
+        function getQueueStatus() {
+            if (!window.offlineSupport) {
+                log('Offline support not initialized yet', 'error');
+                return;
+            }
+
+            const status = window.offlineSupport.getQueueStatus();
+            log(`Queue Status - Online: ${status.isOnline}, Queue: ${status.queueLength} operations`, 'info');
+            updateStatus();
+        }
+
+        function clearQueue() {
+            if (!window.offlineSupport) {
+                log('Offline support not initialized yet', 'error');
+                return;
+            }
+
+            if (confirm('Are you sure you want to clear the queue? This cannot be undone.')) {
+                window.offlineSupport.clearQueue();
+                log('Queue cleared', 'warning');
+                updateStatus();
+            }
+        }
+
+        function cacheTestUrls() {
+            if (!window.offlineSupport) {
+                log('Offline support not initialized yet', 'error');
+                return;
+            }
+
+            const urls = [
+                '/index.html',
+                '/answers-index.html',
+                '/code-examples.html'
+            ];
+
+            window.offlineSupport.cacheUrls(urls);
+            log(`Requested caching of ${urls.length} URLs`, 'success');
+        }
+
+        function clearAllCaches() {
+            if (!window.offlineSupport) {
+                log('Offline support not initialized yet', 'error');
+                return;
+            }
+
+            if (confirm('Are you sure you want to clear all caches? The app will reload.')) {
+                window.offlineSupport.clearCache();
+                log('Cache clear requested - reloading...', 'warning');
+                setTimeout(() => location.reload(), 2000);
+            }
+        }
+
+        // Auto-update status every 2 seconds
+        setInterval(updateStatus, 2000);
+
+        // Initial update
+        setTimeout(() => {
+            updateStatus();
+            log('Test page loaded', 'success');
+        }, 500);
+
+        // Log service worker events
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                log('Service Worker updated', 'info');
+                updateStatus();
+            });
+        }
+
+        // Log online/offline events
+        window.addEventListener('online', () => {
+            log('Connection restored - now online', 'success');
+            updateStatus();
+        });
+
+        window.addEventListener('offline', () => {
+            log('Connection lost - now offline', 'warning');
+            updateStatus();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate PWA Icons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #e3342f;
+        }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        button {
+            background: linear-gradient(135deg, #e3342f 0%, #cc1f1a 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 5px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #cc1f1a 0%, #b81813 100%);
+        }
+        .icons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .icon-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .icon-item canvas {
+            display: block;
+            margin: 0 auto 10px;
+            border: 1px solid #ddd;
+        }
+        .icon-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 PWA Icon Generator</h1>
+    
+    <div class="controls">
+        <h2>Generate Icons</h2>
+        <p>Click the button below to generate all required PWA icons.</p>
+        <button onclick="generateAllIcons()">Generate All Icons</button>
+        <button onclick="downloadAllIcons()">Download All Icons</button>
+    </div>
+
+    <div id="icons-container" class="icons-grid"></div>
+
+    <script>
+        const iconSizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const generatedIcons = [];
+
+        function generateIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#e3342f');
+            gradient.addColorStop(1, '#cc1f1a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Add rounded corners
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.beginPath();
+            const radius = size * 0.15;
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+            ctx.fill();
+
+            // Reset composite operation
+            ctx.globalCompositeOperation = 'source-over';
+
+            // Redraw gradient with rounded corners
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+            ctx.fill();
+
+            // Add Laravel logo (simplified)
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('L', size / 2, size / 2);
+
+            // Add question mark
+            ctx.font = `bold ${size * 0.25}px Arial`;
+            ctx.fillText('?', size * 0.7, size * 0.3);
+
+            return canvas;
+        }
+
+        function generateAllIcons() {
+            const container = document.getElementById('icons-container');
+            container.innerHTML = '';
+            generatedIcons.length = 0;
+
+            iconSizes.forEach(size => {
+                const canvas = generateIcon(size);
+                generatedIcons.push({ size, canvas });
+
+                const item = document.createElement('div');
+                item.className = 'icon-item';
+                
+                const displayCanvas = generateIcon(size);
+                displayCanvas.style.width = '100%';
+                displayCanvas.style.height = 'auto';
+                
+                const label = document.createElement('p');
+                label.textContent = `${size}x${size}`;
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.textContent = 'Download';
+                downloadBtn.style.padding = '6px 12px';
+                downloadBtn.style.fontSize = '12px';
+                downloadBtn.style.margin = '5px 0 0 0';
+                downloadBtn.onclick = () => downloadIcon(size, canvas);
+                
+                item.appendChild(displayCanvas);
+                item.appendChild(label);
+                item.appendChild(downloadBtn);
+                container.appendChild(item);
+            });
+        }
+
+        function downloadIcon(size, canvas) {
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}x${size}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        function downloadAllIcons() {
+            if (generatedIcons.length === 0) {
+                alert('Please generate icons first!');
+                return;
+            }
+
+            generatedIcons.forEach(({ size, canvas }) => {
+                setTimeout(() => {
+                    downloadIcon(size, canvas);
+                }, size); // Stagger downloads
+            });
+
+            alert(`Downloading ${generatedIcons.length} icons...`);
+        }
+
+        // Generate icons on load
+        window.addEventListener('load', generateAllIcons);
+    </script>
+</body>
+</html>

@@ -1,38 +1,48 @@
 // ============================================================================
-// SERVICE WORKER FOR OFFLINE SUPPORT
-// Caches static assets and question data for offline access
+// SERVICE WORKER FOR PWA OFFLINE SUPPORT
+// Implements cache-first strategy for all HTML/CSS/JS files
 // ============================================================================
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const STATIC_CACHE_NAME = `laravel-interview-bank-static-${CACHE_VERSION}`;
 const DATA_CACHE_NAME = `laravel-interview-bank-data-${CACHE_VERSION}`;
 const RUNTIME_CACHE_NAME = `laravel-interview-bank-runtime-${CACHE_VERSION}`;
 
-// Static assets to cache on install
+// Core static assets to cache on install
 const STATIC_ASSETS = [
     '/',
     '/index.html',
+    '/answers-index.html',
+    '/code-examples.html',
+    '/manifest.json',
     '/assets/css/styles.css',
+    '/assets/css/enhanced-ui.css',
+    '/assets/css/question-pages.css',
+    '/assets/css/mock-interview.css',
+    '/assets/css/syntax-highlighting.css',
+    '/assets/css/print.css',
+    '/assets/css/answer-diagrams.css',
     '/assets/js/app.js',
+    '/assets/js/offline-support.js',
     '/assets/js/enhancements.js',
     '/assets/js/markdown-renderer.js',
     '/assets/js/search.js',
+    '/assets/js/search-engine.js',
     '/assets/js/ui-controller.js',
     '/assets/js/data-loader.js',
-    '/favicon.png'
-];
-
-// API endpoints to cache
-const API_ENDPOINTS = [
-    '/api/questions',
-    '/data/questions.json'
+    '/assets/js/theme-manager.js',
+    '/assets/js/bookmark-system.js',
+    '/assets/js/progress-tracker.js',
+    '/assets/js/export-import.js',
+    '/assets/js/filter-controller.js',
+    '/assets/js/mock-interview.js'
 ];
 
 // Maximum age for cached items (in milliseconds)
 const MAX_AGE = {
     static: 30 * 24 * 60 * 60 * 1000,  // 30 days
     data: 24 * 60 * 60 * 1000,          // 1 day
-    runtime: 60 * 60 * 1000             // 1 hour
+    runtime: 7 * 24 * 60 * 60 * 1000    // 7 days for HTML/CSS/JS
 };
 
 // ============================================================================
@@ -41,20 +51,28 @@ const MAX_AGE = {
 // ============================================================================
 
 self.addEventListener('install', (event) => {
-    console.log('[ServiceWorker] Installing...');
+    console.log('[ServiceWorker] Installing version', CACHE_VERSION);
     
     event.waitUntil(
         caches.open(STATIC_CACHE_NAME)
             .then((cache) => {
                 console.log('[ServiceWorker] Caching static assets');
-                return cache.addAll(STATIC_ASSETS.map(url => new Request(url, { cache: 'reload' })));
+                // Try to cache all assets, but don't fail if some are missing
+                return Promise.allSettled(
+                    STATIC_ASSETS.map(url => 
+                        cache.add(new Request(url, { cache: 'reload' }))
+                            .catch(error => {
+                                console.warn('[ServiceWorker] Failed to cache:', url, error);
+                            })
+                    )
+                );
             })
             .then(() => {
                 console.log('[ServiceWorker] Static assets cached');
                 return self.skipWaiting();
             })
             .catch((error) => {
-                console.error('[ServiceWorker] Failed to cache static assets:', error);
+                console.error('[ServiceWorker] Installation failed:', error);
             })
     );
 });
@@ -65,7 +83,7 @@ self.addEventListener('install', (event) => {
 // ============================================================================
 
 self.addEventListener('activate', (event) => {
-    console.log('[ServiceWorker] Activating...');
+    console.log('[ServiceWorker] Activating version', CACHE_VERSION);
     
     event.waitUntil(
         caches.keys()
@@ -73,7 +91,6 @@ self.addEventListener('activate', (event) => {
                 return Promise.all(
                     cacheNames
                         .filter((cacheName) => {
-                            // Delete old versions of caches
                             return cacheName.startsWith('laravel-interview-bank-') &&
                                    cacheName !== STATIC_CACHE_NAME &&
                                    cacheName !== DATA_CACHE_NAME &&
@@ -94,7 +111,7 @@ self.addEventListener('activate', (event) => {
 
 // ============================================================================
 // FETCH EVENT
-// Intercept network requests and serve from cache when offline
+// Intercept network requests with cache-first strategy for static assets
 // ============================================================================
 
 self.addEventListener('fetch', (event) => {
@@ -111,59 +128,87 @@ self.addEventListener('fetch', (event) => {
         return;
     }
     
+    // Skip external domains
+    if (url.origin !== location.origin) {
+        return;
+    }
+    
     // Handle different types of requests
     if (isStaticAsset(url)) {
-        event.respondWith(handleStaticAssetRequest(request));
+        // Cache-first strategy for HTML, CSS, JS
+        event.respondWith(cacheFirstStrategy(request, STATIC_CACHE_NAME, MAX_AGE.static));
     } else if (isDataRequest(url)) {
-        event.respondWith(handleDataRequest(request));
+        // Network-first for data/API requests
+        event.respondWith(networkFirstStrategy(request, DATA_CACHE_NAME));
     } else {
-        event.respondWith(handleRuntimeRequest(request));
+        // Cache-first for other resources (images, fonts, etc.)
+        event.respondWith(cacheFirstStrategy(request, RUNTIME_CACHE_NAME, MAX_AGE.runtime));
     }
 });
 
 // ============================================================================
-// REQUEST HANDLERS
+// CACHING STRATEGIES
 // ============================================================================
 
 /**
- * Handle static asset requests (Cache First strategy)
+ * Cache-first strategy: Try cache first, fallback to network
+ * Perfect for static assets (HTML, CSS, JS)
  */
-async function handleStaticAssetRequest(request) {
+async function cacheFirstStrategy(request, cacheName, maxAge) {
     try {
-        const cache = await caches.open(STATIC_CACHE_NAME);
+        const cache = await caches.open(cacheName);
         const cachedResponse = await cache.match(request);
         
         if (cachedResponse) {
-            // Check if cache is stale
-            const cacheDate = new Date(cachedResponse.headers.get('date'));
+            // Check if cache is still fresh
+            const cacheDate = new Date(cachedResponse.headers.get('date') || 0);
             const now = new Date();
             const age = now - cacheDate;
             
-            if (age < MAX_AGE.static) {
+            if (age < maxAge) {
+                console.log('[ServiceWorker] Serving from cache:', request.url);
+                
+                // Update cache in background if it's getting old (> 50% of maxAge)
+                if (age > maxAge * 0.5) {
+                    updateCacheInBackground(request, cache);
+                }
+                
                 return cachedResponse;
+            } else {
+                console.log('[ServiceWorker] Cache is stale, fetching fresh:', request.url);
             }
         }
         
-        // Fetch from network and update cache
+        // Fetch from network
         const networkResponse = await fetch(request);
         
         if (networkResponse && networkResponse.status === 200) {
+            // Clone the response before caching
             const responseToCache = networkResponse.clone();
             cache.put(request, responseToCache);
+            console.log('[ServiceWorker] Cached from network:', request.url);
         }
         
         return networkResponse;
     } catch (error) {
-        // Network failed, return cached version even if stale
-        const cache = await caches.open(STATIC_CACHE_NAME);
+        console.error('[ServiceWorker] Network failed, trying cache:', error);
+        
+        // Network failed, return stale cache if available
+        const cache = await caches.open(cacheName);
         const cachedResponse = await cache.match(request);
         
         if (cachedResponse) {
+            console.log('[ServiceWorker] Serving stale cache (offline):', request.url);
             return cachedResponse;
         }
         
-        // Return offline page or error response
-        return new Response('Offline - Asset not available', {
+        // Return offline page for HTML requests
+        if (request.headers.get('accept')?.includes('text/html')) {
+            return createOfflinePage();
+        }
+        
+        // Return error response for other requests
+        return new Response('Offline - Resource not available', {
             status: 503,
             statusText: 'Service Unavailable',
             headers: new Headers({
@@ -174,33 +219,32 @@ async function handleStaticAssetRequest(request) {
 }
 
 /**
- * Handle data requests (Network First with cache fallback)
+ * Network-first strategy: Try network first, fallback to cache
+ * Good for data/API requests
  */
-async function handleDataRequest(request) {
+async function networkFirstStrategy(request, cacheName) {
     try {
-        // Try network first
         const networkResponse = await fetch(request);
         
         if (networkResponse && networkResponse.status === 200) {
-            // Cache the response
-            const cache = await caches.open(DATA_CACHE_NAME);
+            const cache = await caches.open(cacheName);
             const responseToCache = networkResponse.clone();
             cache.put(request, responseToCache);
-            
-            return networkResponse;
+            console.log('[ServiceWorker] Updated cache from network:', request.url);
         }
         
-        throw new Error('Network response not ok');
+        return networkResponse;
     } catch (error) {
-        // Network failed, try cache
-        const cache = await caches.open(DATA_CACHE_NAME);
+        console.error('[ServiceWorker] Network failed, trying cache:', error);
+        
+        const cache = await caches.open(cacheName);
         const cachedResponse = await cache.match(request);
         
         if (cachedResponse) {
+            console.log('[ServiceWorker] Serving from cache (offline):', request.url);
             return cachedResponse;
         }
         
-        // No cache available
         return new Response(JSON.stringify({
             error: 'Offline - Data not available',
             offline: true
@@ -215,40 +259,97 @@ async function handleDataRequest(request) {
 }
 
 /**
- * Handle runtime requests (Network First with cache fallback)
+ * Update cache in background without blocking the response
  */
-async function handleRuntimeRequest(request) {
-    try {
-        const networkResponse = await fetch(request);
-        
-        if (networkResponse && networkResponse.status === 200) {
-            // Cache successful responses
-            const cache = await caches.open(RUNTIME_CACHE_NAME);
-            const responseToCache = networkResponse.clone();
-            
-            // Don't cache if response is too large
-            const contentLength = networkResponse.headers.get('content-length');
-            if (!contentLength || parseInt(contentLength) < 5 * 1024 * 1024) { // 5MB limit
-                cache.put(request, responseToCache);
+function updateCacheInBackground(request, cache) {
+    fetch(request)
+        .then(response => {
+            if (response && response.status === 200) {
+                cache.put(request, response);
+                console.log('[ServiceWorker] Background cache update:', request.url);
             }
-        }
-        
-        return networkResponse;
-    } catch (error) {
-        // Try cache
-        const cache = await caches.open(RUNTIME_CACHE_NAME);
-        const cachedResponse = await cache.match(request);
-        
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-        
-        // Return offline fallback
-        return new Response('Offline', {
-            status: 503,
-            statusText: 'Service Unavailable'
+        })
+        .catch(error => {
+            console.warn('[ServiceWorker] Background update failed:', error);
         });
-    }
+}
+
+/**
+ * Create offline fallback page
+ */
+function createOfflinePage() {
+    const html = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Offline - Laravel Interview Bank</title>
+            <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    text-align: center;
+                    padding: 2rem;
+                }
+                .container {
+                    max-width: 500px;
+                }
+                .icon {
+                    font-size: 5rem;
+                    margin-bottom: 1rem;
+                }
+                h1 {
+                    font-size: 2rem;
+                    margin-bottom: 1rem;
+                }
+                p {
+                    font-size: 1.1rem;
+                    margin-bottom: 2rem;
+                    opacity: 0.95;
+                }
+                button {
+                    padding: 1rem 2rem;
+                    font-size: 1rem;
+                    background: white;
+                    color: #667eea;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    transition: transform 0.2s;
+                }
+                button:hover {
+                    transform: translateY(-2px);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="icon">📡</div>
+                <h1>You're Offline</h1>
+                <p>This page isn't available offline. Please check your internet connection and try again.</p>
+                <button onclick="location.reload()">Retry</button>
+                <br><br>
+                <button onclick="location.href='/'">Go Home</button>
+            </div>
+        </body>
+        </html>
+    `;
+    
+    return new Response(html, {
+        status: 503,
+        statusText: 'Service Unavailable',
+        headers: new Headers({
+            'Content-Type': 'text/html'
+        })
+    });
 }
 
 // ============================================================================
@@ -256,29 +357,20 @@ async function handleRuntimeRequest(request) {
 // ============================================================================
 
 /**
- * Check if URL is a static asset
+ * Check if URL is a static asset (HTML, CSS, JS)
  */
 function isStaticAsset(url) {
     const pathname = url.pathname;
     
-    return pathname.endsWith('.css') ||
+    return pathname.endsWith('.html') ||
+           pathname.endsWith('.css') ||
            pathname.endsWith('.js') ||
-           pathname.endsWith('.png') ||
-           pathname.endsWith('.jpg') ||
-           pathname.endsWith('.jpeg') ||
-           pathname.endsWith('.gif') ||
-           pathname.endsWith('.svg') ||
-           pathname.endsWith('.ico') ||
-           pathname.endsWith('.woff') ||
-           pathname.endsWith('.woff2') ||
-           pathname.endsWith('.ttf') ||
-           pathname.endsWith('.eot') ||
            pathname === '/' ||
-           pathname.endsWith('.html');
+           pathname.endsWith('/');
 }
 
 /**
- * Check if URL is a data request
+ * Check if URL is a data/API request
  */
 function isDataRequest(url) {
     const pathname = url.pathname;
@@ -286,34 +378,6 @@ function isDataRequest(url) {
     return pathname.includes('/api/') ||
            pathname.endsWith('.json') ||
            pathname.includes('/data/');
-}
-
-/**
- * Clean up old cache entries
- */
-async function cleanupOldCaches(cacheName, maxAge) {
-    try {
-        const cache = await caches.open(cacheName);
-        const requests = await cache.keys();
-        const now = new Date();
-        
-        const deletePromises = requests.map(async (request) => {
-            const response = await cache.match(request);
-            if (response) {
-                const cacheDate = new Date(response.headers.get('date'));
-                const age = now - cacheDate;
-                
-                if (age > maxAge) {
-                    console.log('[ServiceWorker] Deleting stale cache entry:', request.url);
-                    return cache.delete(request);
-                }
-            }
-        });
-        
-        await Promise.all(deletePromises);
-    } catch (error) {
-        console.error('[ServiceWorker] Error cleaning up caches:', error);
-    }
 }
 
 // ============================================================================
@@ -338,9 +402,7 @@ self.addEventListener('message', (event) => {
     }
     
     if (event.data && event.data.type === 'CLEANUP') {
-        cleanupOldCaches(STATIC_CACHE_NAME, MAX_AGE.static);
-        cleanupOldCaches(DATA_CACHE_NAME, MAX_AGE.data);
-        cleanupOldCaches(RUNTIME_CACHE_NAME, MAX_AGE.runtime);
+        cleanupOldCaches();
     }
 });
 
@@ -350,7 +412,13 @@ self.addEventListener('message', (event) => {
 async function cacheUrls(urls) {
     try {
         const cache = await caches.open(RUNTIME_CACHE_NAME);
-        await cache.addAll(urls);
+        await Promise.allSettled(
+            urls.map(url => 
+                cache.add(url).catch(error => {
+                    console.warn('[ServiceWorker] Failed to cache URL:', url, error);
+                })
+            )
+        );
         console.log('[ServiceWorker] URLs cached:', urls);
     } catch (error) {
         console.error('[ServiceWorker] Failed to cache URLs:', error);
@@ -372,6 +440,40 @@ async function clearAllCaches() {
     }
 }
 
+/**
+ * Clean up old cache entries
+ */
+async function cleanupOldCaches() {
+    const cacheNamesList = [STATIC_CACHE_NAME, DATA_CACHE_NAME, RUNTIME_CACHE_NAME];
+    
+    for (const cacheName of cacheNamesList) {
+        try {
+            const cache = await caches.open(cacheName);
+            const requests = await cache.keys();
+            const now = new Date();
+            
+            const maxAge = cacheName.includes('static') ? MAX_AGE.static :
+                          cacheName.includes('data') ? MAX_AGE.data :
+                          MAX_AGE.runtime;
+            
+            for (const request of requests) {
+                const response = await cache.match(request);
+                if (response) {
+                    const cacheDate = new Date(response.headers.get('date') || 0);
+                    const age = now - cacheDate;
+                    
+                    if (age > maxAge) {
+                        console.log('[ServiceWorker] Deleting stale cache entry:', request.url);
+                        await cache.delete(request);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('[ServiceWorker] Error cleaning cache:', cacheName, error);
+        }
+    }
+}
+
 // ============================================================================
 // BACKGROUND SYNC
 // Sync data when connection is restored
@@ -380,59 +482,44 @@ async function clearAllCaches() {
 self.addEventListener('sync', (event) => {
     console.log('[ServiceWorker] Background sync:', event.tag);
     
-    if (event.tag === 'sync-questions') {
-        event.waitUntil(syncQuestions());
+    if (event.tag === 'sync-data') {
+        event.waitUntil(syncData());
     }
 });
 
 /**
- * Sync question data in the background
+ * Sync data in the background
  */
-async function syncQuestions() {
+async function syncData() {
     try {
-        const response = await fetch('/api/questions');
+        // This would sync queued operations from localStorage
+        // For now, just refresh critical caches
+        const cache = await caches.open(DATA_CACHE_NAME);
         
-        if (response && response.status === 200) {
-            const cache = await caches.open(DATA_CACHE_NAME);
-            cache.put('/api/questions', response);
-            console.log('[ServiceWorker] Questions synced');
-        }
+        // Re-cache critical pages
+        const criticalUrls = ['/index.html', '/answers-index.html'];
+        await Promise.allSettled(
+            criticalUrls.map(url => fetch(url).then(response => {
+                if (response.ok) {
+                    cache.put(url, response);
+                }
+            }))
+        );
+        
+        console.log('[ServiceWorker] Data synced');
     } catch (error) {
-        console.error('[ServiceWorker] Failed to sync questions:', error);
+        console.error('[ServiceWorker] Failed to sync data:', error);
     }
 }
 
 // ============================================================================
-// PUSH NOTIFICATIONS (Optional - for future enhancements)
+// PERIODIC CACHE CLEANUP
+// Run cleanup every hour
 // ============================================================================
 
-self.addEventListener('push', (event) => {
-    console.log('[ServiceWorker] Push notification received');
-    
-    const options = {
-        body: event.data ? event.data.text() : 'New content available!',
-        icon: '/favicon.png',
-        badge: '/favicon.png',
-        vibrate: [100, 50, 100],
-        data: {
-            dateOfArrival: Date.now(),
-            primaryKey: 1
-        }
-    };
-    
-    event.waitUntil(
-        self.registration.showNotification('Laravel Interview Bank', options)
-    );
-});
+// Clean up stale caches periodically
+setInterval(() => {
+    cleanupOldCaches();
+}, 60 * 60 * 1000); // Every hour
 
-self.addEventListener('notificationclick', (event) => {
-    console.log('[ServiceWorker] Notification clicked');
-    
-    event.notification.close();
-    
-    event.waitUntil(
-        clients.openWindow('/')
-    );
-});
-
-console.log('[ServiceWorker] Service Worker loaded');
+console.log('[ServiceWorker] Service Worker loaded - Cache-first strategy enabled');
