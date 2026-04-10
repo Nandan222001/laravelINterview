@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Flashcard Practice Mode - Laravel Interview Questions">
+    <meta name="keywords" content="Laravel, Interview Questions, Flashcards, Spaced Repetition, Practice">
+    <title>Flashcard Practice Mode - Laravel Interview Question Bank</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .breadcrumb {
+            padding: 15px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #6c757d;
+            margin: 0 8px;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: #f8f9fa;
+            padding: 25px 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+
+        .filter-group select {
+            padding: 8px 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background: white;
+            cursor: pointer;
+            min-width: 150px;
+            transition: all 0.3s;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .difficulty-filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .filter-info {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Flashcard Section */
+        .flashcard-section {
+            padding: 40px 30px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-info {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .progress-counter {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .progress-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-correct {
+            color: #28a745;
+        }
+
+        .stat-incorrect {
+            color: #dc3545;
+        }
+
+        /* 3D Flip Card */
+        .flashcard-wrapper {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .card-back {
+            background: white;
+            color: #333;
+            transform: rotateY(180deg);
+            border: 2px solid #667eea;
+        }
+
+        .card-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .card-front .card-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card-back .card-label {
+            color: #667eea;
+        }
+
+        .card-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .answer-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        .answer-text p {
+            margin-bottom: 12px;
+        }
+
+        .answer-text ul {
+            margin-left: 25px;
+            margin-bottom: 12px;
+        }
+
+        .answer-text li {
+            margin-bottom: 8px;
+        }
+
+        .answer-text strong {
+            color: #667eea;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-difficulty {
+            color: white;
+        }
+
+        .badge-beginner, .badge-basic {
+            background: #28a745;
+        }
+
+        .badge-intermediate {
+            background: #fd7e14;
+        }
+
+        .badge-advanced {
+            background: #dc3545;
+        }
+
+        .badge-expert {
+            background: #6f42c1;
+        }
+
+        .badge-tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .card-back .badge-tag {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        /* Controls */
+        .flashcard-controls {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-nav {
+            padding: 12px 30px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-flip {
+            padding: 12px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-flip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .mark-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-mark {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .btn-correct {
+            background: #28a745;
+        }
+
+        .btn-correct:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .btn-incorrect {
+            background: #dc3545;
+        }
+
+        .btn-incorrect:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* Keyboard shortcuts help */
+        .shortcuts-help {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .shortcuts-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .shortcuts-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .shortcut-key {
+            padding: 2px 8px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        /* Loading state */
+        .loading-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 20px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Next review info */
+        .review-info {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #fff3cd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #856404;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .flashcard-section {
+                padding: 20px 15px;
+            }
+
+            .flashcard-wrapper {
+                height: 400px;
+            }
+
+            .card-face {
+                padding: 25px;
+            }
+
+            .question-text {
+                font-size: 1.2rem;
+            }
+
+            .answer-text {
+                font-size: 1rem;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group select {
+                width: 100%;
+            }
+
+            .nav-controls {
+                flex-direction: column;
+            }
+
+            .btn-nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .shortcuts-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎴 Flashcard Practice Mode</h1>
+            <p>Master Laravel interview questions with spaced repetition</p>
+        </header>
+
+        <nav class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <span>›</span>
+            <span>Flashcard Practice</span>
+        </nav>
+
+        <div class="filter-section">
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="topic-filter">Topic</label>
+                    <select id="topic-filter">
+                        <option value="all">All Topics</option>
+                        <option value="php-laravel">PHP & Laravel</option>
+                        <option value="database">Database Optimization</option>
+                        <option value="devops">DevOps & Cloud</option>
+                        <option value="frontend">Frontend React/Next.js</option>
+                        <option value="realtime">Realtime Communication</option>
+                        <option value="ai-serverless">AI & Serverless</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Difficulty</label>
+                    <div class="difficulty-filters">
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="difficulty-filter" value="beginner" checked>
+                            <span>Beginner</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="difficulty-filter" value="basic" checked>
+                            <span>Basic</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="difficulty-filter" value="intermediate" checked>
+                            <span>Intermediate</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="difficulty-filter" value="advanced" checked>
+                            <span>Advanced</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="difficulty-filter" value="expert" checked>
+                            <span>Expert</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button class="btn-primary" id="start-practice">Start Practice</button>
+                <button class="btn-secondary" id="reset-progress">Reset Progress</button>
+                <span class="filter-info" id="available-count">0 questions available</span>
+            </div>
+        </div>
+
+        <div class="flashcard-section" id="flashcard-section">
+            <div class="loading-state" id="loading-state">
+                <div class="loading-spinner"></div>
+                <p>Loading questions...</p>
+            </div>
+
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <div class="empty-state-icon">📚</div>
+                <h2>No Questions Available</h2>
+                <p>Select your preferences and click "Start Practice" to begin.</p>
+            </div>
+
+            <div id="practice-area" style="display: none;">
+                <div class="progress-info">
+                    <div class="progress-counter" id="progress-counter">
+                        Card 1 of 10
+                    </div>
+                    <div class="progress-stats">
+                        <div class="stat-item stat-correct">
+                            ✓ <span id="correct-count">0</span>
+                        </div>
+                        <div class="stat-item stat-incorrect">
+                            ✗ <span id="incorrect-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" id="flashcard">
+                        <div class="card-face card-front">
+                            <div class="card-label">Question</div>
+                            <div class="card-content">
+                                <div class="question-text" id="question-text">
+                                    Loading question...
+                                </div>
+                            </div>
+                            <div class="card-meta" id="front-meta">
+                                <!-- Badges will be inserted here -->
+                            </div>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="card-label">Answer</div>
+                            <div class="card-content">
+                                <div class="answer-text" id="answer-text">
+                                    Loading answer...
+                                </div>
+                            </div>
+                            <div class="card-meta" id="back-meta">
+                                <!-- Badges will be inserted here -->
+                            </div>
+                            <div class="review-info" id="review-info" style="display: none;">
+                                <!-- Review schedule info will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard-controls">
+                    <div class="nav-controls">
+                        <button class="btn-nav" id="prev-btn" disabled>
+                            <span>←</span> Previous
+                        </button>
+                        <button class="btn-flip" id="flip-btn">
+                            Flip Card (Space)
+                        </button>
+                        <button class="btn-nav" id="next-btn">
+                            Next <span>→</span>
+                        </button>
+                    </div>
+
+                    <div class="mark-controls">
+                        <button class="btn-mark btn-correct" id="mark-correct">
+                            ✓ Mark Correct (C)
+                        </button>
+                        <button class="btn-mark btn-incorrect" id="mark-incorrect">
+                            ✗ Mark Incorrect (I)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="shortcuts-help">
+                    <div class="shortcuts-title">⌨️ Keyboard Shortcuts</div>
+                    <div class="shortcuts-list">
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">Space</span>
+                            <span>Flip card</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">→</span>
+                            <span>Next card</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">←</span>
+                            <span>Previous card</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">C</span>
+                            <span>Mark correct</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span class="shortcut-key">I</span>
+                            <span>Mark incorrect</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../automation/php-laravel-data-complete.js"></script>
+    <script src="../assets/js/database-questions.js"></script>
+    <script src="../pages/data/devops-questions-core.js"></script>
+    <script>
+        // Flashcard Practice Mode with Spaced Repetition
+        (function() {
+            'use strict';
+
+            // State management
+            const state = {
+                allQuestions: [],
+                filteredQuestions: [],
+                currentIndex: 0,
+                isFlipped: false,
+                correctCount: 0,
+                incorrectCount: 0,
+                isPracticing: false
+            };
+
+            // DOM elements
+            const elements = {
+                topicFilter: document.getElementById('topic-filter'),
+                difficultyFilters: document.querySelectorAll('.difficulty-filter'),
+                startBtn: document.getElementById('start-practice'),
+                resetBtn: document.getElementById('reset-progress'),
+                availableCount: document.getElementById('available-count'),
+                loadingState: document.getElementById('loading-state'),
+                emptyState: document.getElementById('empty-state'),
+                practiceArea: document.getElementById('practice-area'),
+                flashcard: document.getElementById('flashcard'),
+                questionText: document.getElementById('question-text'),
+                answerText: document.getElementById('answer-text'),
+                frontMeta: document.getElementById('front-meta'),
+                backMeta: document.getElementById('back-meta'),
+                reviewInfo: document.getElementById('review-info'),
+                progressCounter: document.getElementById('progress-counter'),
+                correctCount: document.getElementById('correct-count'),
+                incorrectCount: document.getElementById('incorrect-count'),
+                prevBtn: document.getElementById('prev-btn'),
+                nextBtn: document.getElementById('next-btn'),
+                flipBtn: document.getElementById('flip-btn'),
+                markCorrect: document.getElementById('mark-correct'),
+                markIncorrect: document.getElementById('mark-incorrect')
+            };
+
+            // Spaced Repetition Algorithm
+            const spacedRepetition = {
+                intervals: {
+                    correct: [1, 3, 7, 14, 30], // Days until next review
+                    incorrect: [0.25] // 6 hours
+                },
+
+                calculateNextReview(questionId, isCorrect) {
+                    const data = this.getQuestionData(questionId);
+                    const level = isCorrect ? Math.min(data.level + 1, 4) : 0;
+                    const interval = isCorrect 
+                        ? this.intervals.correct[level]
+                        : this.intervals.incorrect[0];
+                    
+                    const nextReview = new Date();
+                    nextReview.setDate(nextReview.getDate() + interval);
+                    
+                    return {
+                        level,
+                        nextReview: nextReview.toISOString(),
+                        lastReviewed: new Date().toISOString(),
+                        correctCount: data.correctCount + (isCorrect ? 1 : 0),
+                        incorrectCount: data.incorrectCount + (isCorrect ? 0 : 1)
+                    };
+                },
+
+                getQuestionData(questionId) {
+                    const key = `flashcard_${questionId}`;
+                    const data = localStorage.getItem(key);
+                    if (data) {
+                        return JSON.parse(data);
+                    }
+                    return {
+                        level: 0,
+                        nextReview: null,
+                        lastReviewed: null,
+                        correctCount: 0,
+                        incorrectCount: 0
+                    };
+                },
+
+                saveQuestionData(questionId, data) {
+                    const key = `flashcard_${questionId}`;
+                    localStorage.setItem(key, JSON.stringify(data));
+                },
+
+                shouldShowQuestion(questionId) {
+                    const data = this.getQuestionData(questionId);
+                    if (!data.nextReview) return true;
+                    
+                    const nextReview = new Date(data.nextReview);
+                    const now = new Date();
+                    return now >= nextReview;
+                },
+
+                getNextReviewText(questionId) {
+                    const data = this.getQuestionData(questionId);
+                    if (!data.nextReview) return null;
+                    
+                    const nextReview = new Date(data.nextReview);
+                    const now = new Date();
+                    const diffMs = nextReview - now;
+                    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays < 0) {
+                        return 'Due for review now';
+                    } else if (diffDays === 0) {
+                        const diffHours = Math.ceil(diffMs / (1000 * 60 * 60));
+                        return `Next review in ${diffHours} hour${diffHours !== 1 ? 's' : ''}`;
+                    } else if (diffDays === 1) {
+                        return 'Next review tomorrow';
+                    } else if (diffDays < 7) {
+                        return `Next review in ${diffDays} days`;
+                    } else if (diffDays < 30) {
+                        const weeks = Math.floor(diffDays / 7);
+                        return `Next review in ${weeks} week${weeks !== 1 ? 's' : ''}`;
+                    } else {
+                        const months = Math.floor(diffDays / 30);
+                        return `Next review in ${months} month${months !== 1 ? 's' : ''}`;
+                    }
+                }
+            };
+
+            // Load questions from all available sources
+            function loadAllQuestions() {
+                const questions = [];
+
+                // Load from PHP Laravel data if available
+                if (typeof window.phpLaravelQuestions !== 'undefined') {
+                    window.phpLaravelQuestions.forEach(q => {
+                        questions.push(normalizeQuestion(q, 'php-laravel'));
+                    });
+                } else if (typeof questionDatabase !== 'undefined') {
+                    questionDatabase.forEach(q => {
+                        questions.push(normalizeQuestion(q, 'php-laravel'));
+                    });
+                }
+
+                // Load from database questions if available
+                if (typeof databaseQuestions !== 'undefined') {
+                    databaseQuestions.forEach(q => {
+                        questions.push(normalizeQuestion(q, 'database'));
+                    });
+                }
+
+                // Load from DevOps questions if available
+                if (typeof window.generateComprehensiveQuestions === 'function') {
+                    const devopsQuestions = window.generateComprehensiveQuestions();
+                    devopsQuestions.forEach(q => {
+                        questions.push(normalizeQuestion(q, 'devops'));
+                    });
+                }
+
+                // Add sample questions if no data loaded
+                if (questions.length === 0) {
+                    questions.push(...getSampleQuestions());
+                }
+
+                return questions;
+            }
+
+            // Normalize question format from different sources
+            function normalizeQuestion(q, topic) {
+                const normalized = {
+                    id: q.id || Math.random().toString(36).substr(2, 9),
+                    topic: topic,
+                    question: q.question || '',
+                    answer: q.answer || q.overview || '',
+                    difficulty: (q.difficulty || 'intermediate').toLowerCase(),
+                    tags: Array.isArray(q.tags) ? q.tags : []
+                };
+
+                // Build comprehensive answer from structured data
+                if (q.keyConcepts || q.codeExample || q.bestPractices) {
+                    let fullAnswer = '';
+                    if (q.overview) fullAnswer += q.overview;
+                    if (q.keyConcepts) fullAnswer += q.keyConcepts;
+                    if (q.codeExample) fullAnswer += q.codeExample;
+                    if (q.bestPractices) fullAnswer += '<h3>Best Practices:</h3>' + q.bestPractices;
+                    if (q.commonPitfalls) fullAnswer += '<h3>Common Pitfalls:</h3>' + q.commonPitfalls;
+                    normalized.answer = fullAnswer;
+                }
+
+                // Handle diagram and code separately
+                if (q.diagram) {
+                    normalized.answer += '<pre class="diagram">' + q.diagram + '</pre>';
+                }
+                if (q.code && !normalized.answer.includes(q.code)) {
+                    normalized.answer += '<pre><code>' + q.code + '</code></pre>';
+                }
+
+                return normalized;
+            }
+
+            // Sample questions for testing
+            function getSampleQuestions() {
+                return [
+                    {
+                        id: 'sample1',
+                        topic: 'php-laravel',
+                        question: 'What is the Laravel Service Container?',
+                        answer: '<p>The Laravel Service Container is a powerful tool for managing class dependencies and performing dependency injection. It\'s a central registry where services are bound and resolved throughout the application.</p><ul><li><strong>Dependency Injection:</strong> Automatically resolves class dependencies</li><li><strong>Binding:</strong> Register implementations for interfaces</li><li><strong>Singleton:</strong> Share single instance across application</li><li><strong>Contextual Binding:</strong> Different implementations based on context</li></ul>',
+                        difficulty: 'intermediate',
+                        tags: ['laravel', 'architecture']
+                    },
+                    {
+                        id: 'sample2',
+                        topic: 'database',
+                        question: 'How do B-tree indexes work in MySQL?',
+                        answer: '<p>B-tree indexes are self-balancing tree data structures that maintain sorted data and allow searches, sequential access, insertions, and deletions in logarithmic time O(log n).</p><ul><li><strong>Balanced Structure:</strong> All leaf nodes at same depth</li><li><strong>Range Queries:</strong> Sequential leaf nodes enable efficient scans</li><li><strong>Disk-Friendly:</strong> Node size matches disk page size</li><li><strong>Versatile:</strong> Supports equality, range, and prefix matching</li></ul>',
+                        difficulty: 'advanced',
+                        tags: ['database', 'indexing']
+                    },
+                    {
+                        id: 'sample3',
+                        topic: 'devops',
+                        question: 'What is Kubernetes and why use it?',
+                        answer: '<p>Kubernetes is an open-source container orchestration platform that automates deployment, scaling, and management of containerized applications.</p><ul><li><strong>Auto-scaling:</strong> Horizontal and vertical pod scaling</li><li><strong>Self-healing:</strong> Automatic restart and replacement of failed containers</li><li><strong>Service Discovery:</strong> Built-in DNS and load balancing</li><li><strong>Rolling Updates:</strong> Zero-downtime deployments</li></ul>',
+                        difficulty: 'intermediate',
+                        tags: ['kubernetes', 'devops']
+                    }
+                ];
+            }
+
+            // Filter questions based on user preferences
+            function filterQuestions() {
+                const topic = elements.topicFilter.value;
+                const selectedDifficulties = Array.from(elements.difficultyFilters)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+
+                state.filteredQuestions = state.allQuestions.filter(q => {
+                    // Filter by topic
+                    if (topic !== 'all' && q.topic !== topic) {
+                        return false;
+                    }
+
+                    // Filter by difficulty
+                    if (!selectedDifficulties.includes(q.difficulty)) {
+                        return false;
+                    }
+
+                    // Filter by spaced repetition (only show due cards)
+                    if (!spacedRepetition.shouldShowQuestion(q.id)) {
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                // Shuffle questions
+                state.filteredQuestions.sort(() => Math.random() - 0.5);
+
+                updateAvailableCount();
+            }
+
+            // Update available question count
+            function updateAvailableCount() {
+                elements.availableCount.textContent = 
+                    `${state.filteredQuestions.length} question${state.filteredQuestions.length !== 1 ? 's' : ''} available`;
+            }
+
+            // Start practice session
+            function startPractice() {
+                filterQuestions();
+
+                if (state.filteredQuestions.length === 0) {
+                    elements.loadingState.style.display = 'none';
+                    elements.emptyState.style.display = 'block';
+                    elements.practiceArea.style.display = 'none';
+                    return;
+                }
+
+                state.isPracticing = true;
+                state.currentIndex = 0;
+                state.isFlipped = false;
+                state.correctCount = 0;
+                state.incorrectCount = 0;
+
+                elements.loadingState.style.display = 'none';
+                elements.emptyState.style.display = 'none';
+                elements.practiceArea.style.display = 'block';
+
+                displayCurrentCard();
+            }
+
+            // Display current flashcard
+            function displayCurrentCard() {
+                if (state.currentIndex >= state.filteredQuestions.length) {
+                    showCompletionMessage();
+                    return;
+                }
+
+                const question = state.filteredQuestions[state.currentIndex];
+                
+                // Reset flip state
+                state.isFlipped = false;
+                elements.flashcard.classList.remove('flipped');
+
+                // Update question
+                elements.questionText.textContent = question.question;
+
+                // Update answer (sanitize HTML to prevent XSS but allow safe tags)
+                elements.answerText.innerHTML = question.answer;
+
+                // Update metadata
+                updateCardMeta(question);
+
+                // Update progress
+                elements.progressCounter.textContent = 
+                    `Card ${state.currentIndex + 1} of ${state.filteredQuestions.length}`;
+                elements.correctCount.textContent = state.correctCount;
+                elements.incorrectCount.textContent = state.incorrectCount;
+
+                // Update navigation buttons
+                elements.prevBtn.disabled = state.currentIndex === 0;
+                elements.nextBtn.disabled = false;
+
+                // Update review info
+                updateReviewInfo(question.id);
+            }
+
+            // Update card metadata (badges)
+            function updateCardMeta(question) {
+                const meta = `
+                    <span class="badge badge-difficulty badge-${question.difficulty}">
+                        ${question.difficulty}
+                    </span>
+                    ${question.tags.slice(0, 3).map(tag => 
+                        `<span class="badge badge-tag">${tag}</span>`
+                    ).join('')}
+                `;
+                elements.frontMeta.innerHTML = meta;
+                elements.backMeta.innerHTML = meta;
+            }
+
+            // Update review information
+            function updateReviewInfo(questionId) {
+                const reviewText = spacedRepetition.getNextReviewText(questionId);
+                if (reviewText) {
+                    elements.reviewInfo.textContent = reviewText;
+                    elements.reviewInfo.style.display = 'block';
+                } else {
+                    elements.reviewInfo.style.display = 'none';
+                }
+            }
+
+            // Flip card
+            function flipCard() {
+                state.isFlipped = !state.isFlipped;
+                elements.flashcard.classList.toggle('flipped');
+            }
+
+            // Navigate to previous card
+            function previousCard() {
+                if (state.currentIndex > 0) {
+                    state.currentIndex--;
+                    displayCurrentCard();
+                }
+            }
+
+            // Navigate to next card
+            function nextCard() {
+                if (state.currentIndex < state.filteredQuestions.length - 1) {
+                    state.currentIndex++;
+                    displayCurrentCard();
+                }
+            }
+
+            // Mark card as correct
+            function markCorrect() {
+                const question = state.filteredQuestions[state.currentIndex];
+                const reviewData = spacedRepetition.calculateNextReview(question.id, true);
+                spacedRepetition.saveQuestionData(question.id, reviewData);
+                
+                state.correctCount++;
+                elements.correctCount.textContent = state.correctCount;
+                
+                // Show feedback
+                showFeedback('correct');
+                
+                // Auto-advance after short delay
+                setTimeout(() => {
+                    if (state.currentIndex < state.filteredQuestions.length - 1) {
+                        nextCard();
+                    } else {
+                        showCompletionMessage();
+                    }
+                }, 500);
+            }
+
+            // Mark card as incorrect
+            function markIncorrect() {
+                const question = state.filteredQuestions[state.currentIndex];
+                const reviewData = spacedRepetition.calculateNextReview(question.id, false);
+                spacedRepetition.saveQuestionData(question.id, reviewData);
+                
+                state.incorrectCount++;
+                elements.incorrectCount.textContent = state.incorrectCount;
+                
+                // Show feedback
+                showFeedback('incorrect');
+                
+                // Auto-advance after short delay
+                setTimeout(() => {
+                    if (state.currentIndex < state.filteredQuestions.length - 1) {
+                        nextCard();
+                    } else {
+                        showCompletionMessage();
+                    }
+                }, 500);
+            }
+
+            // Show feedback animation
+            function showFeedback(type) {
+                const flashcard = elements.flashcard;
+                const originalBorder = flashcard.parentElement.style.border;
+                
+                if (type === 'correct') {
+                    flashcard.parentElement.style.transition = 'all 0.3s';
+                    flashcard.parentElement.style.boxShadow = '0 0 30px rgba(40, 167, 69, 0.5)';
+                } else {
+                    flashcard.parentElement.style.transition = 'all 0.3s';
+                    flashcard.parentElement.style.boxShadow = '0 0 30px rgba(220, 53, 69, 0.5)';
+                }
+                
+                setTimeout(() => {
+                    flashcard.parentElement.style.boxShadow = '';
+                }, 500);
+            }
+
+            // Show completion message
+            function showCompletionMessage() {
+                const accuracy = state.filteredQuestions.length > 0
+                    ? Math.round((state.correctCount / state.filteredQuestions.length) * 100)
+                    : 0;
+
+                elements.questionText.textContent = '🎉 Practice Session Complete!';
+                elements.answerText.innerHTML = `
+                    <p>Great job! You've completed this practice session.</p>
+                    <ul>
+                        <li><strong>Total Cards:</strong> ${state.filteredQuestions.length}</li>
+                        <li><strong>Correct:</strong> ${state.correctCount}</li>
+                        <li><strong>Incorrect:</strong> ${state.incorrectCount}</li>
+                        <li><strong>Accuracy:</strong> ${accuracy}%</li>
+                    </ul>
+                    <p>Questions you marked incorrect will be shown again sooner for review.</p>
+                `;
+                
+                elements.frontMeta.innerHTML = '';
+                elements.backMeta.innerHTML = '';
+                elements.reviewInfo.style.display = 'none';
+                elements.nextBtn.disabled = true;
+                
+                state.isPracticing = false;
+            }
+
+            // Reset all progress
+            function resetProgress() {
+                if (!confirm('Are you sure you want to reset all practice progress? This cannot be undone.')) {
+                    return;
+                }
+
+                // Clear all flashcard data from localStorage
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('flashcard_')) {
+                        localStorage.removeItem(key);
+                        i--; // Adjust index after removal
+                    }
+                }
+
+                alert('Progress reset successfully!');
+                filterQuestions();
+            }
+
+            // Keyboard shortcuts
+            function handleKeyPress(e) {
+                if (!state.isPracticing) return;
+
+                // Ignore if user is typing in an input
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                switch(e.key.toLowerCase()) {
+                    case ' ':
+                        e.preventDefault();
+                        flipCard();
+                        break;
+                    case 'arrowright':
+                        e.preventDefault();
+                        nextCard();
+                        break;
+                    case 'arrowleft':
+                        e.preventDefault();
+                        previousCard();
+                        break;
+                    case 'c':
+                        e.preventDefault();
+                        markCorrect();
+                        break;
+                    case 'i':
+                        e.preventDefault();
+                        markIncorrect();
+                        break;
+                }
+            }
+
+            // Event listeners
+            function setupEventListeners() {
+                elements.topicFilter.addEventListener('change', filterQuestions);
+                elements.difficultyFilters.forEach(cb => {
+                    cb.addEventListener('change', filterQuestions);
+                });
+                elements.startBtn.addEventListener('click', startPractice);
+                elements.resetBtn.addEventListener('click', resetProgress);
+                
+                elements.flashcard.addEventListener('click', flipCard);
+                elements.flipBtn.addEventListener('click', flipCard);
+                elements.prevBtn.addEventListener('click', previousCard);
+                elements.nextBtn.addEventListener('click', nextCard);
+                elements.markCorrect.addEventListener('click', markCorrect);
+                elements.markIncorrect.addEventListener('click', markIncorrect);
+                
+                document.addEventListener('keydown', handleKeyPress);
+            }
+
+            // Initialize
+            function init() {
+                // Load all questions
+                state.allQuestions = loadAllQuestions();
+                
+                // Initial filter
+                filterQuestions();
+                
+                // Setup event listeners
+                setupEventListeners();
+                
+                // Hide loading, show empty state
+                elements.loadingState.style.display = 'none';
+                elements.emptyState.style.display = 'block';
+            }
+
+            // Start when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+</html>
