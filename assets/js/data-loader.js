@@ -113,22 +113,28 @@ const DataLoader = (() => {
      */
     const discoverQuestionFiles = async () => {
         const knownDirectories = [
-            'realtime-communication',
-            'php-laravel-api-security',
-            'database-optimization',
-            'ai-llm-serverless',
-            'devops-cloud-k8s',
-            'frontend-react-nextjs'
+            { dir: 'realtime-communication', name: 'Realtime Communication' },
+            { dir: 'php-laravel-api-security', name: 'PHP Laravel API Security' },
+            { dir: 'database-optimization', name: 'Database Optimization' },
+            { dir: 'database-general', name: 'Database General' },
+            { dir: 'ai-llm-serverless', name: 'AI LLM Serverless' },
+            { dir: 'devops-cloud-k8s', name: 'DevOps Cloud K8s' },
+            { dir: 'frontend-react-nextjs', name: 'Frontend React NextJS' },
+            { dir: 'cms-platforms', name: 'CMS Platforms' },
+            { dir: 'general-php-interview', name: 'General PHP Interview' },
+            { dir: 'web-technologies', name: 'Web Technologies' }
         ];
 
         const files = [];
 
-        for (const dir of knownDirectories) {
+        for (const { dir, name } of knownDirectories) {
             // Try multiple file name patterns
             const patterns = [
                 `questions.md`,
                 `questions_${dir}.md`,
-                `questions_${dir}_1000.md`
+                `questions_${dir}_1000.md`,
+                `${dir}-questions.md`,
+                `${dir}.md`
             ];
 
             for (const pattern of patterns) {
@@ -136,7 +142,7 @@ const DataLoader = (() => {
                 files.push({
                     path: filePath,
                     directory: dir,
-                    category: dir.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+                    category: name
                 });
             }
         }

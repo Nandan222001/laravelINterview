@@ -118,8 +118,13 @@
             position: relative;
         }
 
-        .search-box input {
+        .search-input-wrapper {
             flex: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
             padding: 1rem 1.5rem;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
@@ -146,6 +151,254 @@
         }
 
         .search-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Auto-complete Suggestions Dropdown */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #667eea;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .search-suggestions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .clear-history-btn {
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .clear-history-btn:hover {
+            text-decoration: underline;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .suggestion-item:hover,
+        .suggestion-item.selected {
+            background: #f8f9fa;
+        }
+
+        .suggestion-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .suggestion-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .suggestion-text {
+            font-size: 0.95rem;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .suggestion-text mark {
+            background: #fff3cd;
+            color: #856404;
+            padding: 0 0.2rem;
+            border-radius: 2px;
+        }
+
+        .suggestion-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .suggestion-category {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .suggestion-difficulty {
+            color: #999;
+        }
+
+        /* Search Results */
+        .search-results-container {
+            margin-top: 2rem;
+        }
+
+        .search-result-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .search-result-card:hover,
+        .search-result-card.keyboard-selected {
+            border-color: #667eea;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .result-title mark {
+            background: #fff3cd;
+            color: #856404;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+
+        .result-score {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .result-meta {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .result-category {
+            background: #e6f2ff;
+            color: #0066cc;
+            padding: 0.4rem 0.9rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .result-difficulty {
+            padding: 0.4rem 0.9rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .result-difficulty.difficulty-beginner {
+            background: #e6f7ed;
+            color: #2d7a4f;
+        }
+
+        .result-difficulty.difficulty-intermediate,
+        .result-difficulty.difficulty-medium {
+            background: #fff3e6;
+            color: #cc5500;
+        }
+
+        .result-difficulty.difficulty-advanced {
+            background: #ffe6e6;
+            color: #cc0000;
+        }
+
+        .result-difficulty.difficulty-expert {
+            background: #f3e6ff;
+            color: #6b2d9f;
+        }
+
+        .result-tag {
+            background: #f0f0f0;
+            color: #555;
+            padding: 0.4rem 0.9rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .result-answer {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .result-answer mark {
+            background: #fff3cd;
+            color: #856404;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .view-answer-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .view-answer-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
@@ -747,12 +1000,15 @@
 
         <div class="search-filter-section">
             <div class="search-box">
-                <input type="search" id="searchInput" placeholder="Search answers by topic, keyword, or technology..." aria-label="Search answers">
+                <div class="search-input-wrapper">
+                    <input type="search" id="searchInput" placeholder="Search answers by topic, keyword, or technology..." aria-label="Search answers" autocomplete="off">
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
                 <button type="button" id="searchBtn">🔍 Search</button>
             </div>
             
             <div class="search-hints">
-                <strong>Search Tips:</strong> Use quotes for exact phrases (e.g., "OAuth 2.0"), OR for multiple terms (e.g., Laravel OR PHP), prefix with - to exclude (e.g., -beginner)
+                <strong>Search Tips:</strong> Type to see suggestions, use arrow keys to navigate, Enter to select. Supports fuzzy matching for typos.
             </div>
 
             <div class="filters">
@@ -810,6 +1066,12 @@
                 <div class="stat-value">100%</div>
                 <div class="stat-label">Production Ready</div>
             </div>
+        </div>
+
+        <!-- Search Results Container (Hidden by default) -->
+        <div class="search-results-container" id="searchResultsContainer" style="display: none;">
+            <h2 class="section-title">🔍 Search Results</h2>
+            <div id="searchResultsList"></div>
         </div>
 
         <section class="quick-links" id="quick-links">
@@ -1582,6 +1844,14 @@
                     <kbd>9</kbd>
                 </li>
                 <li>
+                    <span>Navigate Results (Up/Down)</span>
+                    <kbd>↑</kbd> <kbd>↓</kbd>
+                </li>
+                <li>
+                    <span>Select Result</span>
+                    <kbd>Enter</kbd>
+                </li>
+                <li>
                     <span>Scroll to Top</span>
                     <kbd>Home</kbd>
                 </li>
@@ -1594,9 +1864,18 @@
         </div>
     </div>
 
+    <!-- Include Fuse.js for fuzzy search -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    
+    <!-- Include Data Loader -->
+    <script src="assets/js/data-loader.js"></script>
+    
+    <!-- Include Search Engine -->
+    <script src="assets/js/search-engine.js"></script>
+
     <script>
-        // Advanced Search Engine with Multi-field Query Support
-        class AdvancedSearchEngine {
+        // Legacy Search Engine for backwards compatibility with existing card filtering
+        class LegacySearchEngine {
             constructor() {
                 this.searchInput = document.getElementById('searchInput');
                 this.searchBtn = document.getElementById('searchBtn');
@@ -2007,26 +2286,190 @@
             });
         });
 
+        // Initialize legacy search engine for card filtering
+        const legacySearchEngine = new LegacySearchEngine();
+
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             populateTopicFilters();
+            
+            // Initialize the new advanced search engine
+            try {
+                await SearchEngine.init({
+                    searchInput: document.getElementById('searchInput'),
+                    searchButton: document.getElementById('searchBtn'),
+                    suggestionsDropdown: document.getElementById('searchSuggestions'),
+                    resultsContainer: document.getElementById('searchResultsList'),
+                    activeFiltersContainer: document.getElementById('activeFilters'),
+                    noResultsMessage: document.getElementById('noResults')
+                });
+
+                console.log('Advanced search engine initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize advanced search engine:', error);
+                // Fall back to legacy search
+                console.log('Using legacy search engine');
+            }
+
+            // Integrate new search with existing filter buttons
+            setupFilterIntegration();
             
             // Check for search query parameter from home page
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
             if (searchQuery) {
                 document.getElementById('searchInput').value = searchQuery;
-                searchEngine.applyFilters();
+                
+                // Try new search engine first
+                try {
+                    SearchEngine.performSearch(searchQuery);
+                    showSearchResults();
+                } catch (error) {
+                    // Fall back to legacy
+                    legacySearchEngine.applyFilters();
+                }
+                
                 // Scroll to results
                 setTimeout(() => {
-                    document.getElementById('all-answers').scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start' 
-                    });
+                    const resultsSection = document.getElementById('searchResultsContainer');
+                    if (resultsSection && resultsSection.style.display !== 'none') {
+                        resultsSection.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start' 
+                        });
+                    } else {
+                        document.getElementById('all-answers').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start' 
+                        });
+                    }
                 }, 100);
             }
             
             console.log('Advanced search functionality initialized');
+        });
+
+        // Setup filter integration between new and legacy systems
+        function setupFilterIntegration() {
+            // Difficulty filters
+            document.querySelectorAll('.filter-btn[data-difficulty]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const difficulty = btn.getAttribute('data-difficulty');
+                    
+                    // Update legacy search
+                    legacySearchEngine.setDifficulty(difficulty);
+                    
+                    // Update new search if available
+                    if (typeof SearchEngine !== 'undefined') {
+                        if (difficulty === 'all') {
+                            SearchEngine.clearAllFilters();
+                        } else {
+                            SearchEngine.clearAllFilters();
+                            SearchEngine.addDifficultyFilter(difficulty);
+                        }
+                    }
+                });
+            });
+
+            // Category filters
+            document.querySelectorAll('.filter-btn[data-category]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const category = btn.getAttribute('data-category');
+                    
+                    // Update legacy search
+                    legacySearchEngine.setCategory(category);
+                    
+                    // Update new search if available
+                    if (typeof SearchEngine !== 'undefined') {
+                        if (category === 'all') {
+                            SearchEngine.clearAllFilters();
+                        } else {
+                            SearchEngine.clearAllFilters();
+                            SearchEngine.addCategoryFilter(category);
+                        }
+                    }
+                });
+            });
+
+            // Topic filters
+            const topicFilterContainer = document.getElementById('topicFilters');
+            if (topicFilterContainer) {
+                topicFilterContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('topic-filter-tag')) {
+                        const topic = e.target.getAttribute('data-topic');
+                        const isActive = e.target.classList.contains('active');
+                        
+                        // Update legacy search
+                        legacySearchEngine.toggleTopic(topic);
+                        
+                        // Update new search if available
+                        if (typeof SearchEngine !== 'undefined') {
+                            if (isActive) {
+                                SearchEngine.removeTagFilter(topic);
+                            } else {
+                                SearchEngine.addTagFilter(topic);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Toggle between card view and search results view
+        function showSearchResults() {
+            const resultsContainer = document.getElementById('searchResultsContainer');
+            const categoriesSection = document.getElementById('all-answers');
+            const quickLinks = document.getElementById('quick-links');
+            
+            if (resultsContainer) {
+                resultsContainer.style.display = 'block';
+            }
+            if (categoriesSection) {
+                categoriesSection.style.display = 'none';
+            }
+            if (quickLinks) {
+                quickLinks.style.display = 'none';
+            }
+        }
+
+        function showCategoryView() {
+            const resultsContainer = document.getElementById('searchResultsContainer');
+            const categoriesSection = document.getElementById('all-answers');
+            const quickLinks = document.getElementById('quick-links');
+            
+            if (resultsContainer) {
+                resultsContainer.style.display = 'none';
+            }
+            if (categoriesSection) {
+                categoriesSection.style.display = 'block';
+            }
+            if (quickLinks) {
+                quickLinks.style.display = 'block';
+            }
+        }
+
+        // Override search input behavior to show search results view
+        const originalSearchInput = document.getElementById('searchInput');
+        if (originalSearchInput) {
+            originalSearchInput.addEventListener('input', (e) => {
+                if (e.target.value.trim().length > 0) {
+                    setTimeout(() => {
+                        if (document.getElementById('searchResultsList')?.children.length > 0) {
+                            showSearchResults();
+                        }
+                    }, 500);
+                } else {
+                    showCategoryView();
+                }
+            });
+        }
+
+        // Custom event listener for viewing full answers
+        document.addEventListener('viewAnswer', (event) => {
+            const question = event.detail.question;
+            // You can implement a modal or redirect to the answer page
+            alert(`Viewing answer for: ${question.question}\n\nCategory: ${question.category}\nDifficulty: ${question.difficulty}`);
+            // In a real implementation, you might open a modal or navigate to the answer page
         });
     </script>
 </body>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engine Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        
+        .demo-section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 { color: #667eea; }
+        h2 { color: #333; margin-top: 0; }
+        
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        button {
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            background: #5568d3;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        pre {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        
+        .output {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            min-height: 100px;
+            margin-top: 1rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .feature-list li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Advanced Search Engine Demo</h1>
+    
+    <div class="demo-section">
+        <h2>Features Overview</h2>
+        <ul class="feature-list">
+            <li>Client-side full-text search using Fuse.js</li>
+            <li>Auto-complete suggestions dropdown</li>
+            <li>Search term highlighting with &lt;mark&gt; tags</li>
+            <li>Multiple simultaneous filters (categories, tags, difficulty)</li>
+            <li>Search history stored in localStorage</li>
+            <li>Keyboard navigation (arrow keys, Enter to select)</li>
+            <li>Fuzzy matching for typo tolerance</li>
+            <li>Debounced input for performance</li>
+            <li>Relevance scoring</li>
+        </ul>
+    </div>
+    
+    <div class="demo-section">
+        <h2>1. Basic Search</h2>
+        <div class="demo-controls">
+            <input type="text" id="demo1Input" placeholder="Try: Laravel middleware">
+            <button onclick="demo1()">Search</button>
+        </div>
+        <div class="output" id="demo1Output"></div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>2. Fuzzy Search (Typo Tolerance)</h2>
+        <div class="demo-controls">
+            <input type="text" id="demo2Input" placeholder="Try: midleware (misspelled)">
+            <button onclick="demo2()">Search</button>
+        </div>
+        <div class="output" id="demo2Output"></div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>3. Filter by Category</h2>
+        <div class="demo-controls">
+            <button onclick="demo3('PHP Laravel API Security')">PHP Laravel</button>
+            <button onclick="demo3('Frontend React NextJS')">Frontend React</button>
+            <button onclick="demo3('Database Optimization')">Database</button>
+        </div>
+        <div class="output" id="demo3Output"></div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>4. Filter by Difficulty</h2>
+        <div class="demo-controls">
+            <button onclick="demo4('beginner')">Beginner</button>
+            <button onclick="demo4('intermediate')">Intermediate</button>
+            <button onclick="demo4('advanced')">Advanced</button>
+            <button onclick="demo4('expert')">Expert</button>
+        </div>
+        <div class="output" id="demo4Output"></div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>5. Combined Filters</h2>
+        <div class="demo-controls">
+            <button onclick="demo5()">Laravel + Advanced + Security Tag</button>
+        </div>
+        <div class="output" id="demo5Output"></div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>6. Search History</h2>
+        <div class="demo-controls">
+            <button onclick="demo6()">Show Search History</button>
+            <button onclick="clearHistory()">Clear History</button>
+        </div>
+        <div class="output" id="demo6Output"></div>
+    </div>
+    
+    <div class="demo-section">
+        <h2>7. Highlighting</h2>
+        <p>Search terms are automatically highlighted in results using &lt;mark&gt; tags:</p>
+        <pre><code>const highlightedText = highlightSearchTerms(text, query, matches);
+// Result: "What is &lt;mark&gt;Laravel&lt;/mark&gt; &lt;mark&gt;middleware&lt;/mark&gt;?"</code></pre>
+    </div>
+    
+    <div class="demo-section">
+        <h2>8. Keyboard Navigation</h2>
+        <ul>
+            <li><kbd>/</kbd> - Focus search input</li>
+            <li><kbd>↑</kbd> / <kbd>↓</kbd> - Navigate suggestions/results</li>
+            <li><kbd>Enter</kbd> - Select suggestion or open result</li>
+            <li><kbd>Esc</kbd> - Clear search and close suggestions</li>
+        </ul>
+    </div>
+    
+    <div class="demo-section">
+        <h2>Code Examples</h2>
+        
+        <h3>Initialization</h3>
+        <pre><code>await SearchEngine.init({
+    searchInput: document.getElementById('searchInput'),
+    searchButton: document.getElementById('searchBtn'),
+    suggestionsDropdown: document.getElementById('searchSuggestions'),
+    resultsContainer: document.getElementById('searchResultsList'),
+    activeFiltersContainer: document.getElementById('activeFilters'),
+    noResultsMessage: document.getElementById('noResults')
+});</code></pre>
+        
+        <h3>Performing Searches</h3>
+        <pre><code>// Simple search
+SearchEngine.performSearch('Laravel middleware');
+
+// With filters
+SearchEngine.addCategoryFilter('PHP Laravel API Security');
+SearchEngine.addDifficultyFilter('advanced');
+SearchEngine.addTagFilter('security');
+SearchEngine.performSearch('authentication');</code></pre>
+        
+        <h3>Getting Results</h3>
+        <pre><code>const results = SearchEngine.getSearchResults();
+const history = SearchEngine.getSearchHistory();
+const filters = SearchEngine.getCurrentFilters();</code></pre>
+    </div>
+    
+    <!-- Mock implementation for demo -->
+    <script>
+        // Mock SearchEngine for demo purposes
+        const mockData = [
+            {
+                id: '1',
+                question: 'What is Laravel middleware?',
+                answer: 'Middleware provides a convenient mechanism for filtering HTTP requests entering your application.',
+                category: 'PHP Laravel API Security',
+                difficulty: 'intermediate',
+                tags: ['laravel', 'middleware', 'http']
+            },
+            {
+                id: '2',
+                question: 'How does React hooks work?',
+                answer: 'Hooks are functions that let you use state and other React features without writing a class.',
+                category: 'Frontend React NextJS',
+                difficulty: 'advanced',
+                tags: ['react', 'hooks', 'state']
+            },
+            {
+                id: '3',
+                question: 'What is database indexing?',
+                answer: 'Database indexing is a data structure technique to efficiently retrieve records from database files.',
+                category: 'Database Optimization',
+                difficulty: 'intermediate',
+                tags: ['database', 'indexing', 'performance']
+            }
+        ];
+        
+        function demo1() {
+            const query = document.getElementById('demo1Input').value;
+            const results = mockData.filter(item => 
+                item.question.toLowerCase().includes(query.toLowerCase()) ||
+                item.answer.toLowerCase().includes(query.toLowerCase())
+            );
+            displayResults('demo1Output', results, query);
+        }
+        
+        function demo2() {
+            const query = document.getElementById('demo2Input').value;
+            // Simulate fuzzy search
+            const results = mockData.filter(item => 
+                item.tags.some(tag => fuzzyMatch(tag, query)) ||
+                fuzzyMatch(item.question, query)
+            );
+            displayResults('demo2Output', results, query);
+        }
+        
+        function demo3(category) {
+            const results = mockData.filter(item => item.category === category);
+            document.getElementById('demo3Output').innerHTML = 
+                `<strong>Filtered by: ${category}</strong><br>` +
+                `Found ${results.length} results`;
+        }
+        
+        function demo4(difficulty) {
+            const results = mockData.filter(item => item.difficulty === difficulty);
+            document.getElementById('demo4Output').innerHTML = 
+                `<strong>Filtered by: ${difficulty}</strong><br>` +
+                `Found ${results.length} results`;
+        }
+        
+        function demo5() {
+            const results = mockData.filter(item => 
+                item.category.includes('Laravel') &&
+                item.difficulty === 'advanced' &&
+                item.tags.includes('security')
+            );
+            document.getElementById('demo5Output').innerHTML = 
+                `<strong>Combined Filters Applied</strong><br>` +
+                `Category: PHP Laravel | Difficulty: Advanced | Tag: Security<br>` +
+                `Found ${results.length} results`;
+        }
+        
+        function demo6() {
+            const history = ['Laravel middleware', 'React hooks', 'database indexing'];
+            document.getElementById('demo6Output').innerHTML = 
+                `<strong>Recent Searches:</strong><br>` +
+                history.map((h, i) => `${i + 1}. ${h}`).join('<br>');
+        }
+        
+        function clearHistory() {
+            document.getElementById('demo6Output').innerHTML = 
+                '<strong>Search history cleared!</strong>';
+        }
+        
+        function displayResults(elementId, results, query) {
+            const output = document.getElementById(elementId);
+            if (results.length === 0) {
+                output.innerHTML = '<em>No results found</em>';
+                return;
+            }
+            
+            output.innerHTML = `
+                <strong>Found ${results.length} results:</strong><br><br>
+                ${results.map(r => `
+                    <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e0e0e0;">
+                        <strong>${highlightText(r.question, query)}</strong><br>
+                        <small>${r.category} | ${r.difficulty}</small><br>
+                        ${highlightText(r.answer.substring(0, 100), query)}...
+                    </div>
+                `).join('')}
+            `;
+        }
+        
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+        
+        function fuzzyMatch(text, query) {
+            if (!query || !text) return false;
+            text = text.toLowerCase();
+            query = query.toLowerCase();
+            let queryIndex = 0;
+            for (let i = 0; i < text.length && queryIndex < query.length; i++) {
+                if (text[i] === query[queryIndex]) {
+                    queryIndex++;
+                }
+            }
+            return queryIndex === query.length;
+        }
+    </script>
+</body>
+</html>
