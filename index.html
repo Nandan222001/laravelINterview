@@ -104,6 +104,54 @@
             background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
         }
 
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 160px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            margin-top: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1001;
+            display: none;
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-category {
+            font-size: 0.75rem;
+            color: #667eea;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-text {
+            color: #333;
+            font-weight: 500;
+        }
+
         .main-wrapper {
             display: flex;
             flex: 1;
@@ -135,6 +183,282 @@
         .intro p {
             color: #666;
             line-height: 1.8;
+        }
+
+        .welcome-message {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-message h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .welcome-message p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-stats-widget {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .quick-stats-widget h3 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #667eea;
+        }
+
+        .recent-activity {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .recent-activity h3 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            padding: 0.75rem;
+            border-left: 3px solid #667eea;
+            background: #f8f9fa;
+            margin-bottom: 0.75rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .activity-item:hover {
+            background: #e9ecef;
+            transform: translateX(4px);
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-question {
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .activity-empty {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+            font-style: italic;
+        }
+
+        .recommended-topic {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .recommended-topic h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recommended-topic p {
+            margin-bottom: 1rem;
+            opacity: 0.95;
+        }
+
+        .recommended-topic a {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: white;
+            color: #f5576c;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .recommended-topic a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .category-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .category-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+        }
+
+        .category-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .category-stat-item {
+            text-align: center;
+        }
+
+        .category-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .category-stat-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .category-progress {
+            margin-top: 1rem;
+        }
+
+        .category-progress-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .category-progress-bar {
+            height: 24px;
+            background: #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .category-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
         }
 
         .stats-overview {
@@ -571,6 +895,22 @@
             .topics-grid {
                 grid-template-columns: 1fr;
             }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-message h2 {
+                font-size: 1.5rem;
+            }
+
+            .welcome-message p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -594,15 +934,57 @@
                     </nav>
                 </div>
                 <div class="search-bar">
-                    <input type="search" id="searchInput" placeholder="Search PHP, Laravel, CMS, databases, web technologies, and more..." aria-label="Search">
+                    <input type="search" id="searchInput" placeholder="Search PHP, Laravel, CMS, databases, web technologies, and more..." aria-label="Search" autocomplete="off">
                     <button type="button" id="searchBtn">Search</button>
                     <button type="button" id="searchAnswersBtn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0.75rem 1.5rem;">Search Answers</button>
+                    <div class="search-suggestions" id="searchSuggestions"></div>
                 </div>
             </div>
         </header>
 
         <div class="main-wrapper">
             <main id="main-content">
+                <div class="welcome-message" id="welcomeMessage">
+                    <h2 id="welcomeGreeting">Welcome to Laravel Interview Bank! 👋</h2>
+                    <p id="welcomeSubtext">Master your interview skills with comprehensive practice and track your progress.</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="quick-stats-widget">
+                        <h3>📊 Your Quick Stats</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">⏱️ Total Time Studied</span>
+                            <span class="stat-value" id="totalTimeStudied">0m</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">🔥 Current Streak</span>
+                            <span class="stat-value" id="currentStreak">0 days</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">✅ Questions Mastered</span>
+                            <span class="stat-value" id="questionsMastered">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">📚 Questions Viewed</span>
+                            <span class="stat-value" id="questionsViewed">0</span>
+                        </div>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h3>🕐 Recent Activity</h3>
+                        <div class="activity-list" id="recentActivityList">
+                            <div class="activity-empty">No recent activity yet. Start exploring questions!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="recommendedTopicSection"></div>
+
+                <h2 class="section-title">📂 Categories Overview</h2>
+                <div class="category-cards-grid" id="categoryCardsGrid">
+                    <!-- Category cards will be populated by JavaScript -->
+                </div>
+
                 <section class="intro">
                     <h2>Comprehensive Interview Question Bank</h2>
                     <p>A comprehensive collection of 6000+ advanced interview questions and production-ready code for senior-level software engineering positions, covering PHP, Laravel, databases (MySQL, PostgreSQL), CMS platforms (WordPress, Magento, Drupal, CodeIgniter), web technologies, cloud infrastructure, payment systems, and modern AI integration. Newly expanded with 2500+ additional questions across frontend frameworks, DevOps, testing strategies, and enterprise CMS development.</p>
@@ -1210,11 +1592,392 @@
             mainNav.classList.toggle('hidden');
         });
 
+        // ===================================================================
+        // DASHBOARD FUNCTIONALITY
+        // ===================================================================
+
+        const STORAGE_KEYS = {
+            USER_NAME: 'user_name',
+            STUDY_SESSIONS: 'study_sessions',
+            STREAK_DATA: 'streak_data',
+            PROGRESS: 'interview_progress'
+        };
+
+        const categories = [
+            { id: 'php-laravel', name: 'PHP & Laravel', icon: '🐘', totalQuestions: 1000, url: 'pages/php-laravel.html' },
+            { id: 'database', name: 'Database Optimization', icon: '🗄️', totalQuestions: 1000, url: 'pages/database-optimization.html' },
+            { id: 'realtime', name: 'Realtime Communication', icon: '⚡', totalQuestions: 1000, url: 'pages/realtime-communication.html' },
+            { id: 'frontend', name: 'Frontend React & Next.js', icon: '⚛️', totalQuestions: 1000, url: 'pages/frontend-react-nextjs.html' },
+            { id: 'devops', name: 'DevOps, Cloud & K8s', icon: '☁️', totalQuestions: 1000, url: 'pages/devops-cloud-k8s.html' },
+            { id: 'ai', name: 'AI, LLM & Serverless', icon: '🤖', totalQuestions: 1000, url: 'pages/ai-llm-serverless.html' }
+        ];
+
+        function getUserName() {
+            const stored = localStorage.getItem(STORAGE_KEYS.USER_NAME);
+            return stored || null;
+        }
+
+        function setUserName(name) {
+            localStorage.setItem(STORAGE_KEYS.USER_NAME, name);
+        }
+
+        function getTimeOfDay() {
+            const hour = new Date().getHours();
+            if (hour < 12) return 'morning';
+            if (hour < 18) return 'afternoon';
+            return 'evening';
+        }
+
+        function updateWelcomeMessage() {
+            const userName = getUserName();
+            const timeOfDay = getTimeOfDay();
+            const greeting = userName 
+                ? `Good ${timeOfDay}, ${userName}! 👋` 
+                : `Welcome to Laravel Interview Bank! 👋`;
+            
+            const subtext = userName
+                ? `Ready to continue your interview preparation journey?`
+                : `Master your interview skills with comprehensive practice and track your progress.`;
+
+            document.getElementById('welcomeGreeting').textContent = greeting;
+            document.getElementById('welcomeSubtext').textContent = subtext;
+
+            if (!userName) {
+                setTimeout(() => {
+                    const name = prompt('Welcome! What\'s your name? (Optional)');
+                    if (name && name.trim()) {
+                        setUserName(name.trim());
+                        updateWelcomeMessage();
+                    }
+                }, 2000);
+            }
+        }
+
+        function getProgressData() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEYS.PROGRESS);
+                return stored ? JSON.parse(stored) : { questions: {} };
+            } catch (e) {
+                return { questions: {} };
+            }
+        }
+
+        function getStudySessions() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEYS.STUDY_SESSIONS);
+                return stored ? JSON.parse(stored) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function getTotalStudyTime() {
+            const sessions = getStudySessions();
+            const progressData = getProgressData();
+            const questions = Object.values(progressData.questions || {});
+            
+            let totalMinutes = sessions.reduce((sum, session) => sum + session.duration, 0);
+            totalMinutes += questions.length * 2;
+
+            if (totalMinutes < 60) {
+                return `${totalMinutes}m`;
+            } else {
+                const hours = Math.floor(totalMinutes / 60);
+                const minutes = totalMinutes % 60;
+                return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
+            }
+        }
+
+        function getStreakData() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEYS.STREAK_DATA);
+                return stored ? JSON.parse(stored) : { currentStreak: 0, lastVisit: null };
+            } catch (e) {
+                return { currentStreak: 0, lastVisit: null };
+            }
+        }
+
+        function updateStreak() {
+            const streakData = getStreakData();
+            const today = new Date().toDateString();
+            const lastVisit = streakData.lastVisit ? new Date(streakData.lastVisit).toDateString() : null;
+
+            if (lastVisit === today) {
+                return streakData.currentStreak;
+            }
+
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toDateString();
+
+            if (lastVisit === yesterdayStr) {
+                streakData.currentStreak += 1;
+            } else if (lastVisit !== today) {
+                streakData.currentStreak = 1;
+            }
+
+            streakData.lastVisit = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEYS.STREAK_DATA, JSON.stringify(streakData));
+            
+            return streakData.currentStreak;
+        }
+
+        function updateQuickStats() {
+            const progressData = getProgressData();
+            const questions = Object.values(progressData.questions || {});
+            
+            const completed = questions.filter(q => q.status === 'completed').length;
+            const viewed = questions.length;
+            const streak = updateStreak();
+            const studyTime = getTotalStudyTime();
+
+            document.getElementById('totalTimeStudied').textContent = studyTime;
+            document.getElementById('currentStreak').textContent = `${streak} ${streak === 1 ? 'day' : 'days'}`;
+            document.getElementById('questionsMastered').textContent = completed;
+            document.getElementById('questionsViewed').textContent = viewed;
+        }
+
+        function getRecentActivity() {
+            const progressData = getProgressData();
+            const questions = Object.values(progressData.questions || {});
+            
+            return questions
+                .sort((a, b) => {
+                    const aTime = new Date(a.lastViewedAt || a.viewedAt);
+                    const bTime = new Date(b.lastViewedAt || b.viewedAt);
+                    return bTime - aTime;
+                })
+                .slice(0, 10);
+        }
+
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+
+            if (seconds < 60) return 'just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+            if (seconds < 604800) return `${Math.floor(seconds / 86400)} days ago`;
+            return date.toLocaleDateString();
+        }
+
+        function updateRecentActivity() {
+            const activities = getRecentActivity();
+            const container = document.getElementById('recentActivityList');
+
+            if (activities.length === 0) {
+                container.innerHTML = '<div class="activity-empty">No recent activity yet. Start exploring questions!</div>';
+                return;
+            }
+
+            container.innerHTML = activities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-time">${formatTimeAgo(activity.lastViewedAt || activity.viewedAt)}</div>
+                    <div class="activity-question">${activity.id} ${activity.status === 'completed' ? '✓' : ''}</div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryProgress(categoryId) {
+            const progressData = getProgressData();
+            const questions = Object.values(progressData.questions || {});
+            
+            const categoryQuestions = questions.filter(q => 
+                q.metadata && q.metadata.category && q.metadata.category.toLowerCase().includes(categoryId)
+            );
+
+            const completed = categoryQuestions.filter(q => q.status === 'completed').length;
+            const viewed = categoryQuestions.length;
+
+            return {
+                completed,
+                viewed,
+                total: categoryQuestions.length,
+                completionPercentage: categoryQuestions.length > 0 
+                    ? Math.round((completed / categoryQuestions.length) * 100) 
+                    : 0
+            };
+        }
+
+        function updateCategoryCards() {
+            const container = document.getElementById('categoryCardsGrid');
+            
+            container.innerHTML = categories.map(category => {
+                const progress = getCategoryProgress(category.id);
+                const percentage = progress.total > 0 
+                    ? Math.round((progress.completed / category.totalQuestions) * 100)
+                    : 0;
+
+                return `
+                    <div class="category-card" onclick="window.location.href='${category.url}'">
+                        <div class="category-card-header">
+                            <div class="category-icon">${category.icon}</div>
+                            <div class="category-title">${category.name}</div>
+                        </div>
+                        <div class="category-stats">
+                            <div class="category-stat-item">
+                                <div class="category-stat-value">${progress.viewed}</div>
+                                <div class="category-stat-label">Viewed</div>
+                            </div>
+                            <div class="category-stat-item">
+                                <div class="category-stat-value">${progress.completed}</div>
+                                <div class="category-stat-label">Completed</div>
+                            </div>
+                            <div class="category-stat-item">
+                                <div class="category-stat-value">${category.totalQuestions}</div>
+                                <div class="category-stat-label">Total</div>
+                            </div>
+                        </div>
+                        <div class="category-progress">
+                            <div class="category-progress-label">
+                                <span>Completion Progress</span>
+                                <span>${percentage}%</span>
+                            </div>
+                            <div class="category-progress-bar">
+                                <div class="category-progress-fill" style="width: ${percentage}%">
+                                    ${percentage > 10 ? percentage + '%' : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getRecommendedTopic() {
+            const categoriesWithProgress = categories.map(cat => ({
+                ...cat,
+                progress: getCategoryProgress(cat.id)
+            }));
+
+            const incomplete = categoriesWithProgress.filter(cat => 
+                cat.progress.completionPercentage < 100 && cat.progress.completionPercentage > 0
+            );
+
+            if (incomplete.length > 0) {
+                incomplete.sort((a, b) => a.progress.completionPercentage - b.progress.completionPercentage);
+                return incomplete[0];
+            }
+
+            const notStarted = categoriesWithProgress.filter(cat => cat.progress.viewed === 0);
+            if (notStarted.length > 0) {
+                return notStarted[0];
+            }
+
+            return null;
+        }
+
+        function updateRecommendedTopic() {
+            const recommended = getRecommendedTopic();
+            const container = document.getElementById('recommendedTopicSection');
+
+            if (!recommended) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const message = recommended.progress.viewed === 0
+                ? `You haven't started this topic yet. Great place to begin!`
+                : `You're ${recommended.progress.completionPercentage}% complete. Keep going!`;
+
+            container.innerHTML = `
+                <div class="recommended-topic">
+                    <h3>🎯 Recommended Next Topic</h3>
+                    <p><strong>${recommended.icon} ${recommended.name}</strong></p>
+                    <p>${message}</p>
+                    <a href="${recommended.url}">Start Learning →</a>
+                </div>
+            `;
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            updateWelcomeMessage();
+            updateQuickStats();
+            updateRecentActivity();
+            updateCategoryCards();
+            updateRecommendedTopic();
+        });
+
+        // ===================================================================
+        // SEARCH AUTO-SUGGESTIONS
+        // ===================================================================
+
+        const searchSuggestionsData = [
+            { category: 'PHP', text: 'PHP 8.x features', url: 'pages/php-laravel.html' },
+            { category: 'PHP', text: 'PHP OOP concepts', url: 'pages/php-laravel.html' },
+            { category: 'Laravel', text: 'Laravel Eloquent ORM', url: 'pages/php-laravel.html' },
+            { category: 'Laravel', text: 'Laravel middleware', url: 'pages/php-laravel.html' },
+            { category: 'Laravel', text: 'Laravel queues and jobs', url: 'pages/php-laravel.html' },
+            { category: 'Database', text: 'MySQL optimization', url: 'pages/database-optimization.html' },
+            { category: 'Database', text: 'Database indexing', url: 'pages/database-optimization.html' },
+            { category: 'Database', text: 'Query performance', url: 'pages/database-optimization.html' },
+            { category: 'Frontend', text: 'React hooks', url: 'pages/frontend-react-nextjs.html' },
+            { category: 'Frontend', text: 'Next.js SSR', url: 'pages/frontend-react-nextjs.html' },
+            { category: 'Frontend', text: 'State management', url: 'pages/frontend-react-nextjs.html' },
+            { category: 'DevOps', text: 'Docker containers', url: 'pages/devops-cloud-k8s.html' },
+            { category: 'DevOps', text: 'Kubernetes deployment', url: 'pages/devops-cloud-k8s.html' },
+            { category: 'DevOps', text: 'CI/CD pipelines', url: 'pages/devops-cloud-k8s.html' },
+            { category: 'Security', text: 'API security', url: 'pages/php-laravel.html' },
+            { category: 'Security', text: 'OWASP Top 10', url: 'pages/php-laravel.html' },
+            { category: 'AI', text: 'LLM integration', url: 'pages/ai-llm-serverless.html' },
+            { category: 'AI', text: 'Serverless architecture', url: 'pages/ai-llm-serverless.html' }
+        ];
+
+        function showSearchSuggestions(query) {
+            const suggestionsContainer = document.getElementById('searchSuggestions');
+            
+            if (!query || query.length < 2) {
+                suggestionsContainer.classList.remove('active');
+                return;
+            }
+
+            const lowerQuery = query.toLowerCase();
+            const matches = searchSuggestionsData.filter(item =>
+                item.text.toLowerCase().includes(lowerQuery) ||
+                item.category.toLowerCase().includes(lowerQuery)
+            ).slice(0, 5);
+
+            if (matches.length === 0) {
+                suggestionsContainer.classList.remove('active');
+                return;
+            }
+
+            suggestionsContainer.innerHTML = matches.map(item => `
+                <div class="suggestion-item" data-url="${item.url}">
+                    <div class="suggestion-category">${item.category}</div>
+                    <div class="suggestion-text">${item.text}</div>
+                </div>
+            `).join('');
+
+            suggestionsContainer.classList.add('active');
+
+            suggestionsContainer.querySelectorAll('.suggestion-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    window.location.href = item.dataset.url;
+                });
+            });
+        }
+
         // Enhanced search functionality
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchBtn');
         const searchAnswersBtn = document.getElementById('searchAnswersBtn');
         const topicCards = document.querySelectorAll('.topic-card');
+
+        // Auto-suggestions on input
+        searchInput.addEventListener('input', (e) => {
+            showSearchSuggestions(e.target.value);
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            const suggestionsContainer = document.getElementById('searchSuggestions');
+            if (!e.target.closest('.search-bar')) {
+                suggestionsContainer.classList.remove('active');
+            }
+        });
 
         // Search index for answers pages
         const answersIndex = [
